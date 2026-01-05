@@ -1,9 +1,54 @@
-#include "inc/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prompt.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nclavel <nclavel@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/04 21:45:11 by nclavel           #+#    #+#             */
+/*   Updated: 2026/01/04 23:23:33 by nclavel          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int prompt(void)
+#include "inc/minishell.h"
+#include <string.h>
+
+char **parse_command(char *line)
 {
-  char *line = readline("> ");
-  printf("%s\n", line);
-  free(line);
-  return (1);
+	
+}
+
+t_token	*tokenizer(char *line)
+{
+	t_token *token;
+	size_t	i;
+
+	i = 0;
+	token = NULL;
+	if (!line)
+		return (NULL);
+	token = malloc(sizeof(t_token));
+	if (token == NULL)
+		return (NULL);
+	memset(&token, 0, sizeof(token));
+	puts(line);
+	return (token);
+}
+
+t_token	*prompt(void)
+{
+	t_token	*token;
+	char	*line;
+	
+	line = readline("msh > ");
+	if (!line)
+	{
+		if (token)
+			free(token);
+		return (NULL);
+	}
+	token = tokenizer(line);
+	add_history(line);
+	free(line);
+	return (token);
 }
