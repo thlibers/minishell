@@ -40,10 +40,12 @@ typedef struct s_token
 
 typedef struct s_minishell
 {
-	t_environment_vars	*ev;
+	t_environment_vars	ev;
 	t_token				token;
 }	t_minishell;
 
 t_token	*prompt(void);
+int		init_ev(t_environment_vars *ev, char **envp);
+int		env(t_minishell minishell);
 
 #endif

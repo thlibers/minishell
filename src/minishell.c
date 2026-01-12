@@ -13,27 +13,28 @@
 #include "inc/minishell.h"
 
 
-t_minishell	*init_minishell(t_minishell *minishell)
+t_minishell	*init_minishell(t_minishell *minishell, char **envp)
 {
 	memset(minishell, 0, sizeof(t_minishell));
 	if (!minishell)
 		return (NULL);
-	if (init_ev(&minishell->ev) == 0);
+	if (!init_ev(&minishell->ev, envp));
 		return (NULL);
 	return (minishell);
 }
 
-int main(void)
+int main(int argc, char **argv, char **envp)
 {
 	int			status = 0;
 	t_minishell	minishell;
 	
-	init_minishell(&minishell);
-	//while (1)
-	//{
-	//	prompt();
+	init_minishell(&minishell, envp);
+	while (1)
+	{
+		env(minishell);
+		prompt();
 		//free(minishell->token);
-	//}
+	}
 	return (0);
 }
 

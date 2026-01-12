@@ -40,7 +40,7 @@ t_token	*prompt(void)
 	t_token	*token;
 	char	*line;
 	
-	line = readline("msh > ");
+	line = readline("\x1b[0;32mmsh > \e[0m");
 	if (!line)
 	{
 		if (token)

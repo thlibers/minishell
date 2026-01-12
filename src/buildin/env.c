@@ -14,5 +14,9 @@
 
 int	env(t_minishell minishell)
 {
+	t_environment_vars	cp;
 
+	cp = minishell.ev;
+
+	return (0);
 }
