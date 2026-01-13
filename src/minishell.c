@@ -13,14 +13,14 @@
 #include "inc/minishell.h"
 
 
-t_minishell	*init_minishell(t_minishell *minishell, char **envp)
+bool  init_minishell(t_minishell *minishell, char **envp)
 {
 	memset(minishell, 0, sizeof(t_minishell));
 	if (!minishell)
-		return (NULL);
-	if (!init_ev(&minishell->ev, envp));
-		return (NULL);
-	return (minishell);
+		return (false);
+	if (!init_ev(&minishell->ev, envp))
+		return (false);
+	return (true);
 }
 
 int main(int argc, char **argv, char **envp)
@@ -28,10 +28,11 @@ int main(int argc, char **argv, char **envp)
 	int			status = 0;
 	t_minishell	minishell;
 	
-	init_minishell(&minishell, envp);
+	if (!init_minishell(&minishell, envp))
+		return (1);
+	env(minishell);
 	while (1)
 	{
-		env(minishell);
 		prompt();
 		//free(minishell->token);
 	}

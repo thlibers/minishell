@@ -14,9 +14,13 @@
 
 int	env(t_minishell minishell)
 {
-	t_environment_vars	cp;
+	t_ev	*cp;
 
 	cp = minishell.ev;
-
+	while (cp)
+	{
+		printf("%s=%s\n", cp->name, cp->value);
+		cp = cp->next;
+	}
 	return (0);
 }

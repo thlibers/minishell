@@ -12,20 +12,20 @@
 
 #include "inc/minishell.h"
 
-char  **spliter_once(char *vars)
+static char  **spliter_once(char *vars)
 {
 	int	  i;
 	char **tab;
 	char *pos;
 
 	i = 0;
-	tab = malloc(sizeof(char) * (2 + 1));
+	tab = malloc(sizeof(char *) * (2 + 1));
 	if (!tab)
 		return (NULL);
 	pos = strchr(vars, '=');
 	if (!pos)
 		return (NULL);
-	tab[0] = calloc(pos - vars, sizeof(char));
+	tab[0] = calloc(pos - vars + 1, sizeof(char));
 	while (i < pos - vars)
 	{
 		tab[0][i] = vars[i];
@@ -42,41 +42,67 @@ char  **spliter_once(char *vars)
 	return (tab);
 }
 
-void  *envp_to_linked(t_environment_vars **ev, char **envp)
+static void	ev_clean(t_ev *ev, char **tab)
 {
-	t_environment_vars	*cp;
-	char				**tab;
-	int					i;
+	t_ev  *checkpoint;
+
+	if (ev)
+	{
+		while(ev)
+		{
+			checkpoint = ev->next;
+			free(ev->name);
+			free(ev->value);
+			free(ev);
+			ev = checkpoint;
+		}
+	}
+	if (tab)
+	{
+		free(tab[0]);
+		free(tab[1]);
+		free(tab);
+	}
+}
+
+static void  ev_add_back(t_ev **head, t_ev *node)
+{
+	t_ev  *cp;
+
+	cp = *head;
+	while (cp->next)
+		cp = cp->next;
+	cp->next = node;
+}
+
+// TODO : FREE
+bool	  init_ev(t_ev **ev, char **envp)
+{
+	char  **tab;
+	t_ev	*cp;
+	t_ev	*head;
+	int		i;
 
 	i = 0;
-	cp = *ev;
+	head = NULL;
 	while (envp[i])
 	{
 		tab = spliter_once(envp[i]);
 		if (!tab)
-			;	
-		cp = calloc(1, sizeof(t_environment_vars));
+			return (ev_clean(head, NULL), false);
+		cp = calloc(1, sizeof(t_ev));
 		if (!cp)
-		{
-			return (NULL);
-		}
+			return (ev_clean(head, tab), false);
 		cp->name = strdup(tab[0]);
 		cp->value = strdup(tab[1]);
-		cp = cp->next;
+		cp->next = NULL;
+		if (!head)
+			head = cp;
+		else 
+			ev_add_back(&head, cp);
+		ev_clean(NULL, tab);
 		i++;
-		free(tab);
 	}
-	cp = NULL;
-	return (ev);
-}
-
-int	  init_ev(t_environment_vars *ev, char **envp)
-{
-	t_environment_vars	*cp;
-	int					i;
-
-	i = 0;
-
-	ev = envp_to_linked(&ev, envp);
-	return (1);
+	*ev = head;
+	return (true);
 }

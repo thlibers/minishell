@@ -15,12 +15,14 @@
 
 // Define pour les fonction de signal.h
 #define _XOPEN_SOURCE 700
+#define	MSH_HIST  "~/.msh_history"
 
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <ctype.h>
 # include <signal.h>
+# include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -29,7 +31,7 @@ typedef struct s_environment_vars
 	char  *name;
 	char  *value;
 	struct s_environment_vars *next;
-} t_environment_vars;
+} t_ev;
 
 typedef struct s_token
 {
@@ -38,14 +40,19 @@ typedef struct s_token
 	struct s_token	*token_next;
 }	t_token;
 
+typedef	struct s_store
+{
+	int	fd_history;
+}
+
 typedef struct s_minishell
 {
-	t_environment_vars	ev;
-	t_token				token;
+	t_ev	*ev;
+	t_token				*token;
 }	t_minishell;
 
 t_token	*prompt(void);
-int		init_ev(t_environment_vars *ev, char **envp);
+bool		init_ev(t_ev **ev, char **envp);
 int		env(t_minishell minishell);
 
 #endif

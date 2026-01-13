@@ -12,9 +12,9 @@
 
 #include "inc/minishell.h"
 
-void  free_ev(t_environment_vars *vars)
+void  free_ev(t_ev *vars)
 {
-	t_environment_vars	*save;
+	t_ev	*save;
 	
 	while (vars->next)
 	{
