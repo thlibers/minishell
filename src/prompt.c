@@ -13,17 +13,10 @@
 #include "inc/minishell.h"
 #include <string.h>
 
-char **parse_command(char *line)
-{
-	
-}
-
 t_token	*tokenizer(char *line)
 {
 	t_token *token;
-	size_t	i;
 
-	i = 0;
 	token = NULL;
 	if (!line)
 		return (NULL);
@@ -39,7 +32,8 @@ t_token	*prompt(void)
 {
 	t_token	*token;
 	char	*line;
-	
+
+	token = NULL;
 	line = readline("\x1b[0;32mmsh > \e[0m");
 	if (!line)
 	{

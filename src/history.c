@@ -12,18 +12,4 @@
 
 #include "inc/minishell.h"
 
-int	minishell_history(t_minishell *minishell)
-{
-	;
-}
 
-int	msh_add_history()
-{
-	;
-}
-
-bool  init_history(t_minishell *minishell)
-{
-	minishell->fd_history = open(MSH_HIST, O_WRONLY | O_CREAT | O_TRUNC, 00644);
-
-}

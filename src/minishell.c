@@ -25,9 +25,10 @@ bool  init_minishell(t_minishell *minishell, char **envp)
 
 int main(int argc, char **argv, char **envp)
 {
-	int			status = 0;
 	t_minishell	minishell;
-	
+
+	(void)argc;
+	(void)argv;
 	if (!init_minishell(&minishell, envp))
 		return (1);
 	env(minishell);

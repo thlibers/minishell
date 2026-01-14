@@ -10,26 +10,77 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME					=	minishell
-CC						=	cc
-CFLAGS					=	-Wall -Wextra -Werror -lreadline -I.
+# Name
+NAME = minishell
 
-MINISHELL_FILE			=	$(SRCS_DIR)/clean.c\
-							$(SRCS_DIR)/envir_vars.c\
-							$(SRCS_DIR)/history.c\
-							$(SRCS_DIR)/linked_list_utils.c\
-							$(SRCS_DIR)/minishell.c\
-							$(SRCS_DIR)/parsing.c\
-							$(SRCS_DIR)/prompt.c\
-							$(SRCS_DIR)/buildin/env.c\
-							$(SRCS_DIR)/buildin/exit.c
-SRCS_DIR				=	srcs
-OBJS_DIR				=	objs
-OBJS					=   $(MINISHELL_FILE:%.c=%.o)
+# Flags
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -g3 -I. -lreadline
+#CFLAGS = -g3 -I. -lreadline
+INCLUDES = -I./includes 
 
-%.o: %.c
-	@mkdir -p $(OBJS_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+# Paths
+SRC_DIR = src
+OBJ_DIR = obj
 
+# Srcs
+SRCS = $(SRC_DIR)/clean.c\
+	   $(SRC_DIR)/envir_vars.c\
+	   $(SRC_DIR)/history.c\
+	   $(SRC_DIR)/linked_list_utils.c\
+	   $(SRC_DIR)/minishell.c\
+	   $(SRC_DIR)/parsing.c\
+		$(SRC_DIR)/prompt.c\
+		$(SRC_DIR)/buildin/env.c\
+
+
+# Obj
+OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+
+GREEN = \033[0;32m
+RED = \033[0;31m
+BLUE = \033[0;34m
+RESET = \033[0m
+
+all: $(NAME)
+
+# Compilation program
 $(NAME): $(OBJS)
-	$(CC) $^ -o $(NAME) 
+	@echo "$(BLUE)Linking $(NAME)...$(RESET)"
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) -lreadline
+	@echo "$(GREEN)✓ $(NAME) compiled successfully!$(RESET)"
+
+# Compilation files obj
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	@echo "$(BLUE)Compiling $<...$(RESET)"
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+# Compilation mylibft
+$(LIBFT):
+	@echo "$(BLUE)Compiling libft...$(RESET)"
+	@make -C $(LIBFT_DIR)
+	@echo "$(GREEN)✓ libft compiled!$(RESET)"
+
+# Clean obj files
+clean:
+	@echo "$(RED)Cleaning object files...$(RESET)"
+	@rm -rf $(OBJ_DIR)
+	@echo "$(GREEN)✓ Object files cleaned!$(RESET)"
+
+# Complete clean
+fclean: clean
+	@echo "$(RED)Cleaning executables...$(RESET)"
+	@rm -f $(NAME)
+	@echo "$(GREEN)✓ Full clean completed!$(RESET)"
+
+# Complete recompilation
+re: fclean all
+
+# Leaks
+valgrind: $(NAME)
+	@echo "$(BLUE)Checking for memory leaks with valgrind...$(RESET)"
+	@valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
+
+# Rule .PHONY
+.PHONY: all clean fclean re test leaks valgrind

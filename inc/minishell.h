@@ -23,6 +23,7 @@
 # include <ctype.h>
 # include <signal.h>
 # include <stdbool.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -43,7 +44,7 @@ typedef struct s_token
 typedef	struct s_store
 {
 	int	fd_history;
-}
+} t_store;
 
 typedef struct s_minishell
 {

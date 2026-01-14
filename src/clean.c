@@ -12,16 +12,4 @@
 
 #include "inc/minishell.h"
 
-void  free_ev(t_ev *vars)
-{
-	t_ev	*save;
-	
-	while (vars->next)
-	{
-		save->next = vars->next;
-		free(vars->name);
-		free(vars->value);
-		free(vars);
-		vars = save->next;
-	}
-}
+

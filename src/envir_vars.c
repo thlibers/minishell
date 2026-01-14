@@ -32,7 +32,7 @@ static char  **spliter_once(char *vars)
 		i++;
 	}
 	i = 0;
-	tab[1] = calloc(strlen(vars), sizeof(char));
+	tab[1] = calloc(strlen(vars) - (size_t)(pos - vars), sizeof(char));
 	while (pos[1+i])
 	{
 		tab[1][i] = pos[1+i];
