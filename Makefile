@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nclavel <nclavel@student.42lehavre.fr>     +#+  +:+       +#+         #
+#    By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 11:04:15 by nclavel           #+#    #+#              #
-#    Updated: 2026/01/12 11:05:33 by nclavel          ###   ########.fr        #
+#    Updated: 2026/01/15 14:56:24 by thlibers         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,15 @@ NAME = minishell
 
 # Flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3 -I. -lreadline
-#CFLAGS = -g3 -I. -lreadline
+CFLAGS = -Wall -Wextra -Werror -g3 -I.
 INCLUDES = -I./includes 
 
 # Paths
 SRC_DIR = src
 OBJ_DIR = obj
+LIBFT_DIR = mylibft
+
+LIBFT = $(LIBFT_DIR)/libft.a
 
 # Srcs
 SRCS = $(SRC_DIR)/clean.c\
@@ -45,7 +47,7 @@ RESET = \033[0m
 all: $(NAME)
 
 # Compilation program
-$(NAME): $(OBJS)
+$(NAME): $(LIBFT) $(OBJS)
 	@echo "$(BLUE)Linking $(NAME)...$(RESET)"
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) -lreadline
 	@echo "$(GREEN)✓ $(NAME) compiled successfully!$(RESET)"
@@ -66,12 +68,14 @@ $(LIBFT):
 clean:
 	@echo "$(RED)Cleaning object files...$(RESET)"
 	@rm -rf $(OBJ_DIR)
+	@make -C $(LIBFT_DIR) clean
 	@echo "$(GREEN)✓ Object files cleaned!$(RESET)"
 
 # Complete clean
 fclean: clean
 	@echo "$(RED)Cleaning executables...$(RESET)"
 	@rm -f $(NAME)
+	@make -C $(LIBFT_DIR) fclean
 	@echo "$(GREEN)✓ Full clean completed!$(RESET)"
 
 # Complete recompilation
