@@ -1,5 +1,5 @@
 objs/
 # docs/
 *.o
-minishell
+./minishell
 mylibft/libft.a
