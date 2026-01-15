@@ -6,7 +6,7 @@
 #    By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 11:04:15 by nclavel           #+#    #+#              #
-#    Updated: 2026/01/15 14:56:24 by thlibers         ###   ########.fr        #
+#    Updated: 2026/01/15 17:53:06 by thlibers         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,14 +26,14 @@ LIBFT_DIR = mylibft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 # Srcs
-SRCS = $(SRC_DIR)/clean.c\
-	   $(SRC_DIR)/envir_vars.c\
-	   $(SRC_DIR)/history.c\
-	   $(SRC_DIR)/linked_list_utils.c\
-	   $(SRC_DIR)/minishell.c\
-	   $(SRC_DIR)/parsing.c\
-		$(SRC_DIR)/prompt.c\
-		$(SRC_DIR)/buildin/env.c\
+SRCS = $(SRC_DIR)/utils/clean.c\
+		$(SRC_DIR)/utils/history.c\
+		$(SRC_DIR)/parsing/envir_vars.c\
+		$(SRC_DIR)/minishell/minishell.c\
+		$(SRC_DIR)/minishell/main.c\
+		$(SRC_DIR)/parsing/parsing.c\
+		$(SRC_DIR)/parsing/prompt.c\
+		$(SRC_DIR)/buildin/env.c
 
 
 # Obj

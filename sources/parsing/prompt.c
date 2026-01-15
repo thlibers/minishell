@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:11 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/15 15:47:02 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/15 17:43:24 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_token	*prompt(void)
 	char	*line;
 
 	token = NULL;
-	line = readline("\x1b[0;32mmsh > \e[0m");
+	line = readline("\x1b[0;32mminishell > \e[0m");
 	if (!line)
 	{
 		if (token)
@@ -42,7 +42,7 @@ t_token	*prompt(void)
 		return (NULL);
 	}
 	token = tokenizer(line);
-	add_history(line);
+	add_to_history();
 	free(line);
 	return (token);
 }
