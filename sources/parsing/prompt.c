@@ -20,10 +20,9 @@ t_token	*tokenizer(char *line)
 	token = NULL;
 	if (!line)
 		return (NULL);
-	token = malloc(sizeof(t_token));
+	token = ft_calloc(1, sizeof(t_token));
 	if (token == NULL)
 		return (NULL);
-	memset(&token, 0, sizeof(token));
 	puts(line);
 	return (token);
 }

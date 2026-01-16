@@ -19,7 +19,7 @@ int	env(t_minishell minishell)
 	cp = minishell.ev;
 	while (cp)
 	{
-		printf("%s=%s\n", cp->name, cp->value);
+		ft_printf("%s=%s\n", cp->name, cp->value);
 		cp = cp->next;
 	}
 	return (0);

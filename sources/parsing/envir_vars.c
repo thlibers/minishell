@@ -19,20 +19,20 @@ static char  **spliter_once(char *vars)
 	char *pos;
 
 	i = 0;
-	tab = malloc(sizeof(char *) * (2 + 1));
+	tab = ft_calloc(3, sizeof(char *));
 	if (!tab)
 		return (NULL);
-	pos = strchr(vars, '=');
+	pos = ft_strchr(vars, '=');
 	if (!pos)
 		return (NULL);
-	tab[0] = calloc(pos - vars + 1, sizeof(char));
+	tab[0] = ft_calloc(pos - vars + 1, sizeof(char));
 	while (i < pos - vars)
 	{
 		tab[0][i] = vars[i];
 		i++;
 	}
 	i = 0;
-	tab[1] = calloc(strlen(vars) - (size_t)(pos - vars), sizeof(char));
+	tab[1] = ft_calloc(strlen(vars) - (size_t)(pos - vars), sizeof(char));
 	while (pos[1+i])
 	{
 		tab[1][i] = pos[1+i];
@@ -67,7 +67,7 @@ bool	  init_ev(t_ev **ev, char **envp)
 		tab = spliter_once(envp[i]);
 		if (!tab)
 			return (ev_clean(head, NULL), false);
-		cp = calloc(1, sizeof(t_ev));
+		cp = ft_calloc(1, sizeof(t_ev));
 		if (!cp)
 			return (ev_clean(head, tab), false);
 		cp->name = strdup(tab[0]);

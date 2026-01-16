@@ -14,7 +14,7 @@
 
 bool  init_minishell(t_minishell *minishell, char **envp)
 {
-	memset(minishell, 0, sizeof(t_minishell));
+	ft_memset(minishell, 0, sizeof(t_minishell));
 	if (!init_history(minishell))
 		return (false);
 	if (!init_ev(&minishell->ev, envp))

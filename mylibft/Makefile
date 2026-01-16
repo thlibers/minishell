@@ -65,7 +65,7 @@ $(NAME):  $(OBJETS)
 	@ar rc $@ $^
 
 %.o: %.c 
-	@$(CC) -Wall -Wextra -Werror -o $@ -c $<
+	@$(CC) -Wall -Wextra -Werror -g3 -o $@ -c $<
 
 clean :
 	@$(RM) $(OBJETS)

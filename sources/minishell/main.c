@@ -23,7 +23,8 @@ int main(int argc, char **argv, char **envp)
 	env(minishell);
 	while (1)
 	{
-		prompt(minishell);
+		if (!prompt(minishell))
+			break ;
 		//free(minishell->token);
 	}
 	close(minishell.fd_history);
