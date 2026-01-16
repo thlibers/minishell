@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_strisdigit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/04 21:45:27 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/16 17:02:01 by thlibers         ###   ########.fr       */
+/*   Created: 2026/01/16 16:38:29 by thlibers          #+#    #+#             */
+/*   Updated: 2026/01/16 16:50:41 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "libft.h"
 
-void ft_exit(char **args)
+int	ft_strisdigit(char *str)
 {
-	int exit_code;
-	
-	if (args[2])
+	int	i;
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
 	{
-		ft_putendl_fd("exit: too many arguments", STDERR_FILENO);
-		return ;
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
 	}
-	if (!ft_strisdigit(args[1]))
-	{
-		ft_putstr_fd("exit: ", STDERR_FILENO)
-		exit (2);
-	}
-	else if (!args[1])
-	{
-		
-	}
+	return (1);
 }
+
+// int main(int ac, char **av)
+// {
+// 	(void)ac;
+// 	printf("%d", ft_strisdigit(av[1]));
+// 	return (0);
+// }

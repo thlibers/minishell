@@ -6,14 +6,18 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:34:43 by thlibers          #+#    #+#             */
-/*   Updated: 2025/11/04 13:53:54 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/16 17:12:34 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putendl_fd(char *s, int fd)
+size_t	ft_putendl_fd(char *s, int fd)
 {
-	ft_putstr_fd(s, fd);
-	ft_putchar_fd('\n', fd);
+	int	size;
+
+	size = 0;
+	size += ft_putstr_fd(s, fd);
+	size += ft_putchar_fd('\n', fd);
+	return (size);
 }

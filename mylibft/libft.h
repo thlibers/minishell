@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 12:25:39 by thlibers          #+#    #+#             */
-/*   Updated: 2026/01/16 14:45:28 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/16 17:22:44 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,12 @@ char		**ft_split(char const *s, char c);
 char		*ft_itoa(int n);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void		ft_striteri(char *s, void (*f)(unsigned int, char *));
-void		ft_putchar_fd(char c, int fd);
-void		ft_putstr_fd(char *s, int fd);
-void		ft_putendl_fd(char *s, int fd);
-void		ft_putnbr_fd(int n, int fd);
+size_t		ft_putchar_fd(char c, int fd);
+size_t		ft_putstr_fd(char *s, int fd);
+size_t		ft_putendl_fd(char *s, int fd);
+size_t		ft_putnbr_fd(int n, int fd);
 size_t		ft_countword(const char *str, char sep);
+int			ft_strisdigit(char *str);
 
 // Partie bonus
 
@@ -86,9 +87,10 @@ void		ft_lstclear(t_list **lst, void (*del)(void *));
 void		ft_lstiter(t_list *lst, void (*f)(void *));
 t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
-// Partie printf
+// Partie printf / fprintf
 
 int			ft_printf(const char *format, ...);
+int			ft_fprintf(int fd, const char *format, ...);
 size_t		ft_putchar(char c);
 size_t		ft_putstr(char *s);
 size_t		ft_putptr(void *p);

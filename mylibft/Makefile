@@ -50,6 +50,7 @@ SOURCES =    ft_atoi.c\
 			ft_lstnew.c\
             ft_lstsize.c\
 			ft_printf.c\
+			ft_fprintf.c\
             ft_printf_utils.c\
             ft_printf_utils2.c\
             get_next_line.c\

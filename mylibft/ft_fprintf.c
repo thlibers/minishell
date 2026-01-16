@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_fprintf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 12:16:16 by thlibers          #+#    #+#             */
-/*   Updated: 2026/01/16 17:03:19 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/16 17:24:25 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_chooseformat(int type, va_list param)
+static int	ft_chooseformat(int fd, int type, va_list param)
 {
 	if (type == 'c')
-		return (ft_putchar(va_arg(param, int)));
+		return (ft_putchar_fd(va_arg(param, int), fd));
 	if (type == 's')
-		return (ft_putstr(va_arg(param, char *)));
+		return (ft_putstr_fd(va_arg(param, char *), fd));
 	if (type == 'p')
 		return (ft_putptr(va_arg(param, void *)));
 	if (type == 'd' || type == 'i')
-		return (ft_putnbr(va_arg(param, int)));
+		return (ft_putnbr_fd(va_arg(param, int), fd));
 	if (type == 'u')
 		return (ft_putunbr(va_arg(param, unsigned int)));
 	if (type == 'x')
@@ -29,11 +29,11 @@ static int	ft_chooseformat(int type, va_list param)
 	if (type == 'X')
 		return (ft_puthex(va_arg(param, unsigned int), 1));
 	if (type == '%')
-		return (ft_putchar('%'));
+		return (ft_putchar_fd('%', fd));
 	return (0);
 }
 
-int	ft_printf(const char *format, ...)
+int	ft_fprintf(int fd, const char *format, ...)
 {
 	va_list			param;
 	unsigned int	storage;
@@ -48,11 +48,11 @@ int	ft_printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
-			storage += ft_chooseformat(format[i + 1], param);
+			storage += ft_chooseformat(fd, format[i + 1], param);
 			i++;
 		}
 		else
-			storage += ft_putchar(format[i]);
+			storage += ft_putchar_fd(format[i], fd);
 		i++;
 	}
 	va_end(param);
