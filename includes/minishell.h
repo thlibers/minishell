@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:44 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/15 17:49:53 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/16 14:15:47 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,24 @@ typedef struct s_minishell
 
 
 
-t_token	*prompt(void);
 bool		init_ev(t_ev **ev, char **envp);
 int		env(t_minishell minishell);
+
+/* ============= PARSING ============= */
+
+t_token	*prompt(t_minishell minishell);
+
+/* ============= MINISHELL ============= */
+
+bool  init_minishell(t_minishell *minishell, char **envp);
 
 /* ============= HISTORY ============= */
 
 int	init_history(t_minishell *minishell);
 int	add_to_history(int fd, char *line);
+
+/* ============= UTILS ============= */
+
+void	ev_clean(t_ev *ev, char **tab);
 
 #endif

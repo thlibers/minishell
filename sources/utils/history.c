@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 13:07:24 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/15 17:49:23 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/16 14:59:56 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,25 @@
 
 int	init_history(t_minishell *minishell)
 {
-	char *line;
+	char	*line = NULL;
+	char	*backn;
 
-	minishell->fd_history = open(MSH_HIST, O_RDWR | O_CREAT, 0644);
+	minishell->fd_history = open("msh_history", O_RDWR | O_APPEND | O_CREAT, 0644);
 	if (!minishell->fd_history)
 	{
-		return (1);
+		return (0);
 	}
+	line = get_next_line(minishell->fd_history);
 	while(line)
 	{
-		line = get_next_line(minishell->fd_history);
+		backn = ft_strrchr(line, '\n');
+		if (backn)
+			line[backn - line] = '\0';
 		add_history(line);
 		free(line);
+		line = get_next_line(minishell->fd_history);
 	}
-	return (0);
+	return (1);
 }
 
 int	add_to_history(int fd, char *line)
@@ -42,5 +47,7 @@ int	add_to_history(int fd, char *line)
 	{
 		return (1);
 	}
+	else if(size)
+		write(fd, "\n", 1);
 	return (0);
 }

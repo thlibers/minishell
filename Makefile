@@ -6,7 +6,7 @@
 #    By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 11:04:15 by nclavel           #+#    #+#              #
-#    Updated: 2026/01/15 17:53:06 by thlibers         ###   ########.fr        #
+#    Updated: 2026/01/16 14:17:12 by thlibers         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CFLAGS = -Wall -Wextra -Werror -g3 -I.
 INCLUDES = -I./includes 
 
 # Paths
-SRC_DIR = src
+SRC_DIR = sources
 OBJ_DIR = obj
 LIBFT_DIR = mylibft
 

@@ -3,3 +3,4 @@ objs/
 *.o
 ./minishell
 mylibft/libft.a
+msh_history

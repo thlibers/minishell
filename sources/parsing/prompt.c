@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:11 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/15 17:43:24 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:06:11 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_token	*tokenizer(char *line)
 	return (token);
 }
 
-t_token	*prompt(void)
+t_token	*prompt(t_minishell minishell)
 {
 	t_token	*token;
 	char	*line;
@@ -42,7 +42,7 @@ t_token	*prompt(void)
 		return (NULL);
 	}
 	token = tokenizer(line);
-	add_to_history();
+	add_to_history(minishell.fd_history, line);
 	free(line);
 	return (token);
 }
