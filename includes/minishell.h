@@ -52,6 +52,7 @@ typedef struct s_minishell
 	t_ev			*ev;
 	t_token			*token;
 	int				fd_history;
+	int				last_code;
 	struct sigaction		sa;
 }	t_minishell;
 
