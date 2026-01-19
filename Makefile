@@ -6,7 +6,7 @@
 #    By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 11:04:15 by nclavel           #+#    #+#              #
-#    Updated: 2026/01/16 17:26:05 by thlibers         ###   ########.fr        #
+#    Updated: 2026/01/19 15:06:47 by thlibers         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,8 @@ SRCS = $(SRC_DIR)/utils/clean.c\
 		$(SRC_DIR)/minishell/main.c\
 		$(SRC_DIR)/parsing/parsing.c\
 		$(SRC_DIR)/parsing/prompt.c\
-		$(SRC_DIR)/buildin/ft_env.c
+		$(SRC_DIR)/builtin/ft_env.c\
+		$(SRC_DIR)/builtin/ft_exit.c
 
 
 # Obj
