@@ -6,25 +6,25 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:13:06 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/19 14:44:30 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/20 15:14:27 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	ev_clean(t_ev *ev, char **tab)
+void	env_clean(t_env *env, char **tab)
 {
-	t_ev  *checkpoint;
+	t_env  *checkpoint;
 
-	if (ev)
+	if (env)
 	{
-		while(ev)
+		while(env)
 		{
-			checkpoint = ev->next;
-			free(ev->name);
-			free(ev->value);
-			free(ev);
-			ev = checkpoint;
+			checkpoint = env->next;
+			free(env->name);
+			free(env->value);
+			free(env);
+			env = checkpoint;
 		}
 	}
 	if (tab)

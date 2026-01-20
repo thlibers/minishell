@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envir_vars.c                                       :+:      :+:    :+:   */
+/*   env_vars.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 15:28:32 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/15 15:50:41 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/20 16:51:57 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-static char  **spliter_once(char *vars)
+char  **env_spliter(char *vars)
 {
 	int	  i;
 	char **tab;
@@ -35,16 +35,16 @@ static char  **spliter_once(char *vars)
 	tab[1] = ft_calloc(strlen(vars) - (size_t)(pos - vars), sizeof(char));
 	while (pos[1+i])
 	{
-		tab[1][i] = pos[1+i];
+		tab[1][i] = pos[1 + i];
 		i++;
 	}
 	tab[2] = NULL;
 	return (tab);
 }
 
-static void  ev_add_back(t_ev **head, t_ev *node)
+static void  env_add_back(t_env **head, t_env *node)
 {
-	t_ev  *cp;
+	t_env  *cp;
 
 	cp = *head;
 	while (cp->next)
@@ -53,33 +53,45 @@ static void  ev_add_back(t_ev **head, t_ev *node)
 }
 
 // TODO : FREE
-bool	  init_ev(t_ev **ev, char **envp)
+bool	  init_env(t_env **env, char **envp)
 {
 	char  **tab;
-	t_ev	*cp;
-	t_ev	*head;
+	t_env	*cp;
+	t_env	*head;
 	int		i;
 
 	i = 0;
 	head = NULL;
 	while (envp[i])
 	{
-		tab = spliter_once(envp[i]);
+		tab = env_spliter(envp[i]);
 		if (!tab)
-			return (ev_clean(head, NULL), false);
-		cp = ft_calloc(1, sizeof(t_ev));
+			return (env_clean(head, NULL), false);
+		cp = ft_calloc(1, sizeof(t_env));
 		if (!cp)
-			return (ev_clean(head, tab), false);
+			return (env_clean(head, tab), false);
 		cp->name = strdup(tab[0]);
 		cp->value = strdup(tab[1]);
 		cp->next = NULL;
 		if (!head)
 			head = cp;
 		else 
-			ev_add_back(&head, cp);
-		ev_clean(NULL, tab);
+			env_add_back(&head, cp);
+		env_clean(NULL, tab);
 		i++;
 	}
-	*ev = head;
+	*env = head;
 	return (true);
+}
+
+char *ft_getenv(t_env *env, char *to_find)
+{
+	while (env)
+	{
+		if (ft_strcmp(env->name, to_find))
+		{
+			return(env->value);
+		}
+	}
+	return (NULL);
 }

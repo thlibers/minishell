@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 10:47:36 by nclavel           #+#    #+#             */
-/*   Updated: 2025/12/11 17:41:46 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/01/20 15:14:27 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/program/cd.h"
+#include "includes/minishell.h"
 
-char	*path_builder(char *dir)
+char	*path_builder(t_minishell *minishell, char *dir)
 {
 	char	*fullpath;
 	char	*tmp_str;
@@ -22,7 +22,7 @@ char	*path_builder(char *dir)
 		fullpath = ft_strdup(dir);
 		return (fullpath);
 	}
-	tmp_str = ft_strjoin(getenv("PWD"), "/");
+	tmp_str = ft_strjoin(ft_getenv(minishell->env, "PWD"), "/");
 	if (!tmp_str)
 		return (NULL);
 	fullpath = ft_strjoin(tmp_str, dir);
@@ -51,7 +51,7 @@ char	*parsing_dir(char *dir)
 	if (errno == ENOENT)
 		return (printf("cd: The directory '%s' does not exist\n", dir), NULL);
 	if (errno == ELOOP)
-		return (printf("cd: Too many levels of symbolic links\n"),
+		return (printf("cd: Too many lenvels of symbolic links\n"),
 			free(new_path), NULL);
 	return (new_path);
 }

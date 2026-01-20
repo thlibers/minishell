@@ -18,7 +18,7 @@
         │                │                    │
         ▼                ▼                    ▼
    Env vars        User input            Command run
-   (t_ev)          Raw string
+   (t_env)          Raw string
                         │
                         ▼
                   ┌─────────────────┐
@@ -54,13 +54,13 @@
 
 ```
 init_minishell()
-    ├─> init_ev()              ← Initialiser les variables d'environnement
+    ├─> init_env()              ← Initialiser les variables d'environnement
     └─> Préparer structures (t_minishell)
 ```
 
 **Structures utilisées**:
-- `t_minishell` → Conteneur principal (ev + tokens)
-- `t_ev` → Liste chaînée des variables d'environnement
+- `t_minishell` → Conteneur principal (env + tokens)
+- `t_env` → Liste chaînée des variables d'environnement
 
 ---
 
@@ -68,15 +68,15 @@ init_minishell()
 **Responsabilité**: Gérer les variables d'environnement (PATH, HOME, PWD, etc.)
 
 ```
-init_ev(t_ev **ev, char **envp)
-    ├─> Créer une liste chaînée de t_ev
+init_env(t_env **env, char **envp)
+    ├─> Créer une liste chaînée de t_env
     ├─> Parser envp (format NAME=VALUE)
     └─> Stocker chaque paire clé/valeur
 
-t_ev structure:
+t_env structure:
     ├─> name  (char*)    : Nom de la variable
     ├─> value (char*)    : Valeur de la variable
-    └─> next  (t_ev*)    : Pointeur vers la variable suivante
+    └─> next  (t_env*)    : Pointeur vers la variable suivante
 ```
 
 ---
@@ -257,7 +257,7 @@ Utilité générale pour listes chaînées:
 ```
 Nettoyage mémoire:
     ├─> free_tokens()       ← Libérer liste t_token
-    ├─> free_ev()           ← Libérer variables d'env
+    ├─> free_env()           ← Libérer variables d'env
     └─> free_minishell()    ← Libérer structure principale
 ```
 
@@ -268,18 +268,18 @@ Nettoyage mémoire:
 ### `t_minishell`
 ```c
 typedef struct s_minishell {
-    t_ev        *ev;        // Pointeur vers liste variables d'env
+    t_env        *env;        // Pointeur vers liste variables d'env
     t_token     *token;     // Pointeur vers liste de tokens
 } t_minishell;
 ```
 
-### `t_ev` (Variables d'environnement)
+### `t_env` (Variables d'environnement)
 ```c
 typedef struct s_environment_vars {
     char    *name;              // "PATH", "HOME", etc.
     char    *value;             // "/usr/bin:/bin", "/home/user", etc.
     struct s_environment_vars *next;  // Pointeur vers variable suivante
-} t_ev;
+} t_env;
 ```
 
 ### `t_token` (Tokens/Commandes)
@@ -354,8 +354,8 @@ Utilisateur tape: ls -la | grep ".c" > output.txt
 ## 📝 Checklist d'implémentation
 
 ### ✅ FAIT
-- [x] Structures de base (t_minishell, t_ev, t_token)
-- [x] Variables d'environnement (init_ev)
+- [x] Structures de base (t_minishell, t_env, t_token)
+- [x] Variables d'environnement (init_env)
 - [x] Builtin env
 - [x] Historique (readline support)
 
@@ -385,7 +385,7 @@ Utilisateur tape: ls -la | grep ".c" > output.txt
 
 ```
 minishell.c
-    ├─> init_ev() [envir_vars.c]
+    ├─> init_env() [envir_vars.c]
     ├─> prompt() [prompt.c]
     │   ├─> readline() [readline library]
     │   ├─> history() [history.c]
@@ -413,10 +413,10 @@ minishell.c
     │   └─> unset.c
     │
     ├─> linked_list_utils() [linked_list_utils.c]
-    │   └─> Gestion listes t_ev et t_token
+    │   └─> Gestion listes t_env et t_token
     │
     ├─> clean() [clean.c]
-    │   └─> free_tokens(), free_ev()
+    │   └─> free_tokens(), free_env()
     │
     └─> libft/ [mylibft/]
         └─> ft_* functions
@@ -430,7 +430,7 @@ minishell.c
 |--------|---------|
 | **Main loop** | while(1) → prompt() → parse() → execute() |
 | **Signaux** | Signal handlers pour Ctrl+C, Ctrl+D |
-| **Variables env** | Liste chaînée t_ev, expansion $VAR |
+| **Variables env** | Liste chaînée t_env, expansion $VAR |
 | **Pipes** | fork() + pipe() + dup2() pour connexions |
 | **Redirections** | dup2() pour >, >>, <, connaissance file desc |
 | **Builtins** | Aucun fork, modification d'état du shell |

@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:46:29 by thlibers          #+#    #+#             */
-/*   Updated: 2026/01/19 14:20:39 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/20 17:35:32 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (!init_minishell(&minishell, envp))
 		return (1);
-	env(minishell);
+	t_env *aaa = sort_env(&minishell.env);
+	ft_env(aaa);
 	while (1)
 	{
 		if (!prompt(minishell))

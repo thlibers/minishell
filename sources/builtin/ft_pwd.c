@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 09:23:52 by nclavel           #+#    #+#             */
-/*   Updated: 2025/12/11 17:39:12 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/01/20 17:39:15 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/program/pwd.h"
+#include "includes/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_pwd(t_env *env)
 {
 	int	i;
-	(void)argv;
-	(void)argc;
 
 	i = 0;
-	while (envp[i])
+	while (env)
 	{
-		if (ft_strnstr(envp[i], "PWD", 4))
+		if (ft_strncmp(env->name, "PWD", strlen(env->name)))
 		{
-			return (printf("%s\n", &envp[i][4]), 0);
+			printf("%s\n", env->value);
+			return (0);
 		}
 		i++;
 	}
