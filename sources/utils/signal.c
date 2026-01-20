@@ -20,7 +20,6 @@ bool  init_signal(t_minishell *minishell)
 	if (!sigaddset(&minishell->sa, SA_SIGQUIT))
 		return (false);
 	minishell->sa.sa_flags = SA_SIGINFO;
-	minishell->sa.sa_handler = SA_SIGINT;
+	minishell->sa.sa_handler = NULL;
 	sigaction(SA_SIGINT, &minishell->sa, NULL);		// Ignore SIGQUIT signal
-	mini
 }
