@@ -15,15 +15,7 @@
 
 // Define pour les fonction de signal.h
 # define _XOPEN_SOURCE 700
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-# define MSH_HIST "~/.minishell_history"
-=======
 # define	MSH_HIST  "msh_history"
->>>>>>> Stashed changes
-=======
-# define	MSH_HIST  "msh_history"
->>>>>>> Stashed changes
 
 # include "mylibft/libft.h"
 # include <ctype.h>
@@ -45,15 +37,6 @@ typedef struct s_env
 
 typedef struct s_token
 {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-	char				**command;
-	char				*next_operator;
-	struct s_token		*token_next;
-}						t_token;
-=======
-=======
->>>>>>> Stashed changes
 	char			*commad;
 	char			**argument;
 	char			*next_operator;
@@ -64,7 +47,6 @@ typedef struct s_token
 // {
 // 	int				fd_history;
 // } t_store;
->>>>>>> Stashed changes
 
 typedef struct s_minishell
 {
@@ -86,19 +68,13 @@ char					**env_spliter(char *vars);
 
 /* ============= MINISHELL ============= */
 
-<<<<<<< Updated upstream
 bool					init_minishell(t_minishell *minishell, char **envp);
+bool  init_signal(t_minishell *minishell);
 
 /* ============= BULTIN ============= */
 
 int	ft_env(t_env *env);
-=======
-bool  init_minishell(t_minishell *minishell, char **envp);
 bool  init_signal(t_minishell *minishell);
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
 /* ============= HISTORY ============= */
 
