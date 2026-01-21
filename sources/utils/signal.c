@@ -12,14 +12,22 @@
 
 #include "includes/minishell.h"
 
+void  handler_sigquit(int signum)
+{
+	(void)signum;
+	rl_redisplay();
+}
+
+
+void  handler_sigint(int signum)
+{
+	(void)signum;
+}
+
 bool  init_signal(t_minishell *minishell)
 {
-	ft_memset(&minishell->sa)
-	if (sigemptyset(&minishell->sa.sa_mask) == -1)
-		return (false);
-	if (!sigaddset(&minishell->sa, SA_SIGQUIT))
-		return (false);
-	minishell->sa.sa_flags = SA_SIGINFO;
-	minishell->sa.sa_handler = NULL;
-	sigaction(SA_SIGINT, &minishell->sa, NULL);		// Ignore SIGQUIT signal
+	(void)minishell;
+	signal(SIGQUIT, handler_sigquit);
+	signal(SIGINT, handler_sigint);
+	return (true);
 }

@@ -17,7 +17,7 @@ int	init_history(t_minishell *minishell)
 	char	*line = NULL;
 	char	*backn;
 
-	minishell->fd_history = open("msh_history", O_RDWR | O_APPEND | O_CREAT, 0644);
+	minishell->fd_history = open(MSH_HIST, O_RDWR | O_APPEND | O_CREAT, 0644);
 	if (!minishell->fd_history)
 	{
 		return (0);

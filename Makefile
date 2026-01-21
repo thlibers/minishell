@@ -30,6 +30,7 @@ SRCS = $(SRC_DIR)/utils/clean.c\
 		$(SRC_DIR)/utils/history.c\
 		$(SRC_DIR)/utils/env_utils.c\
 		$(SRC_DIR)/parsing/env_vars.c\
+		$(SRC_DIR)/utils/signal.c\
 		$(SRC_DIR)/minishell/minishell.c\
 		$(SRC_DIR)/minishell/main.c\
 		$(SRC_DIR)/parsing/parsing.c\
