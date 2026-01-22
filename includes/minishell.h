@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:44 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/20 17:36:21 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/22 14:54:33 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,9 @@ int						add_to_history(int fd, char *line);
 /* ============= UTILS ============= */
 
 void					env_clean(t_env *env, char **tab);
+t_env					*env_cpy(t_env *env);
+void  env_add_back(t_env **head, t_env *node);
+
 
 // env_utils.c
 t_env					*ft_envnew(void *content);
