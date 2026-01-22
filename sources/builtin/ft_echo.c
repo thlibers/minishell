@@ -12,10 +12,10 @@
 
 #include "includes/minishell.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	bool	new_line;
-	int	i;
+	int		i;
 
 	i = 1;
 	new_line = true;

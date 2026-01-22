@@ -59,11 +59,10 @@ char	*parsing_dir(char *dir)
 int	main(int argc, char **argv)
 {
 	char	*path;
-	
+
 	if (argc > 2)
 		return (ft_putstr_fd("Too many args for cd command", 1), 1);
 	path = parsing_dir(argv[1]);
 	if (!path)
 		return (1);
-	
 }

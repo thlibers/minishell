@@ -12,22 +12,22 @@
 
 #include "includes/minishell.h"
 
-void  handler_sigquit(int signum)
+void	handler_sigquit(int signum)
 {
 	(void)signum;
+}
+
+void	handler_sigint(int signum)
+{
+	(void)signum;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
-
-void  handler_sigint(int signum)
+void	init_signal(void)
 {
-	(void)signum;
-}
-
-bool  init_signal(t_minishell *minishell)
-{
-	(void)minishell;
-	signal(SIGQUIT, handler_sigquit);
+	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, handler_sigint);
-	return (true);
 }

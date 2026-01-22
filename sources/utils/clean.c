@@ -14,11 +14,11 @@
 
 void	env_clean(t_env *env, char **tab)
 {
-	t_env  *checkpoint;
+	t_env	*checkpoint;
 
 	if (env)
 	{
-		while(env)
+		while (env)
 		{
 			checkpoint = env->next;
 			free(env->name);
@@ -34,4 +34,3 @@ void	env_clean(t_env *env, char **tab)
 		free(tab);
 	}
 }
-

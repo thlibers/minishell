@@ -25,9 +25,9 @@ t_env	*new_env_node(void *name, void *content)
 	return (node);
 }
 
-void 	*add_env_back(t_env **head, t_env *node)
+void	*add_env_back(t_env **head, t_env *node)
 {
-	t_env  *cp;
+	t_env	*cp;
 
 	if (!node)
 		return (NULL);
@@ -45,8 +45,8 @@ void 	*add_env_back(t_env **head, t_env *node)
 
 void	swap_env_value(t_env **env)
 {
-	char *tmp;
-	char *tmp2;
+	char	*tmp;
+	char	*tmp2;
 
 	tmp = ft_strdup((*env)->value);
 	free((*env)->value);

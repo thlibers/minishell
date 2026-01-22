@@ -12,13 +12,12 @@
 
 #include "includes/minishell.h"
 
-bool  init_minishell(t_minishell *minishell, char **envp)
+bool	init_minishell(t_minishell *minishell, char **envp)
 {
 	ft_memset(minishell, 0, sizeof(t_minishell));
 	if (!init_history(minishell))
 		return (false);
 	if (!init_env(&minishell->env, envp))
 		return (false);
-	init_signal(minishell);
 	return (true);
 }

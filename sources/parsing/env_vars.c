@@ -12,11 +12,11 @@
 
 #include "includes/minishell.h"
 
-char  **env_spliter(char *vars)
+char	**env_spliter(char *vars)
 {
-	int	  i;
-	char **tab;
-	char *pos;
+	int		i;
+	char	**tab;
+	char	*pos;
 
 	i = 0;
 	tab = ft_calloc(3, sizeof(char *));
@@ -33,7 +33,7 @@ char  **env_spliter(char *vars)
 	}
 	i = 0;
 	tab[1] = ft_calloc(strlen(vars) - (size_t)(pos - vars), sizeof(char));
-	while (pos[1+i])
+	while (pos[1 + i])
 	{
 		tab[1][i] = pos[1 + i];
 		i++;
@@ -43,9 +43,9 @@ char  **env_spliter(char *vars)
 }
 
 // TODO : FREE
-bool	  init_env(t_env **env, char **envp)
+bool	init_env(t_env **env, char **envp)
 {
-	char  **tab;
+	char	**tab;
 	t_env	*cp;
 	t_env	*head;
 	int		i;
@@ -65,7 +65,7 @@ bool	  init_env(t_env **env, char **envp)
 		cp->next = NULL;
 		if (!head)
 			head = cp;
-		else 
+		else
 			env_add_back(&head, cp);
 		env_clean(NULL, tab);
 		i++;
@@ -74,13 +74,13 @@ bool	  init_env(t_env **env, char **envp)
 	return (true);
 }
 
-char *ft_getenv(t_env *env, char *to_find)
+char	*ft_getenv(t_env *env, char *to_find)
 {
 	while (env)
 	{
 		if (ft_strcmp(env->name, to_find))
 		{
-			return(env->value);
+			return (env->value);
 		}
 	}
 	return (NULL);

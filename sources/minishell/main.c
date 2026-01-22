@@ -12,7 +12,7 @@
 
 #include "includes/minishell.h"
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	minishell;
 
@@ -20,13 +20,14 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (!init_minishell(&minishell, envp))
 		return (1);
-	t_env *aaa = env_cpy(minishell.env);
-	ft_env(sort_env(&aaa));
+	//	t_env *aaa = sort_env(&minishell.env);
+	ft_env(minishell.env);
 	while (1)
 	{
+		init_signal();
 		if (!prompt(minishell))
 			break ;
-		//free(minishell->token);
+		// free(minishell->token);
 	}
 	close(minishell.fd_history);
 	return (0);

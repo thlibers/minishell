@@ -25,7 +25,7 @@ void	*ft_memchr(const void *s, int c, size_t n)
 		n--;
 	}
 	if (!c && n > 0)
-		return ((void *)&result[ft_strlen((char *) s)]);
+		return ((void *)&result[ft_strlen((char *)s)]);
 	return (NULL);
 }
 

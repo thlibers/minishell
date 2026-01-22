@@ -15,11 +15,9 @@
 
 t_token	*tokenizer(char *line)
 {
-	t_token *token;
+	t_token	*token;
 
 	token = NULL;
-	if (!line)
-		return (NULL);
 	token = ft_calloc(1, sizeof(t_token));
 	if (token == NULL)
 		return (NULL);

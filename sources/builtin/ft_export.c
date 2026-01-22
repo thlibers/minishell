@@ -14,13 +14,13 @@
 
 t_env	*env_cpy(t_env *env)
 {
-	t_env 	*cpy;
+	t_env	*cpy;
 	t_env	*head;
 
 	head = NULL;
 	while (env)
 	{
-		cpy = calloc(1 ,sizeof(t_env));
+		cpy = calloc(1, sizeof(t_env));
 		if (!cpy)
 			return (NULL);
 		cpy->name = ft_strdup(env->name);
@@ -68,13 +68,13 @@ int	ft_export_arg(t_minishell *minishell, char *str)
 	t_env	*head;
 	char	**tab;
 	int		status;
-	
+
 	head = minishell->env;
 	tab = env_spliter(str);
 	if (!tab)
-		return(1);
+		return (1);
 	status = 0;
-	while(minishell->env && status == 0)
+	while (minishell->env && status == 0)
 	{
 		if (strcmp(minishell->env->name, tab[0]))
 		{
@@ -94,9 +94,10 @@ int	ft_export_arg(t_minishell *minishell, char *str)
 void	ft_export_(t_minishell *minishell)
 {
 	t_env	*cpy;
+
 	cpy = env_cpy(minishell->env);
 	sort_env(cpy);
-	while(minishell->env->next)
+	while (minishell->env->next)
 	{
 		printf("export %s=%s\n", cpy->name, cpy->value);
 		minishell->env->next;
