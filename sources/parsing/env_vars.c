@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 15:28:32 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/22 14:54:18 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/22 17:23:10 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,6 @@ char  **env_spliter(char *vars)
 	}
 	tab[2] = NULL;
 	return (tab);
-}
-
-void  env_add_back(t_env **head, t_env *node)
-{
-	t_env  *cp;
-
-	cp = *head;
-	while (cp->next)
-		cp = cp->next;
-	cp->next = node;
 }
 
 // TODO : FREE

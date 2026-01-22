@@ -6,76 +6,44 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 16:36:31 by thlibers          #+#    #+#             */
-/*   Updated: 2026/01/22 16:29:40 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/22 17:24:44 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-t_env	*ft_envnew(void *content)
+t_env	*new_env_node(void *name, void *content)
 {
 	t_env	*node;
 
-	node = malloc(sizeof(t_list));
+	node = malloc(sizeof(t_env));
 	if (node == NULL)
 		return (NULL);
+	node->name = name;
 	node->value = content;
 	node->next = NULL;
 	return (node);
 }
 
-static t_env	*ft_envlast(t_env *env)
+void 	*add_env_back(t_env **head, t_env *node)
 {
-	t_env	*tmp;
+	t_env  *cp;
 
-	tmp = env;
-	if (env == NULL)
+	if (!node)
 		return (NULL);
-	while (tmp->next)
-		tmp = tmp->next;
-	return (tmp);
-}
-
-void	*ft_envadd_back(t_env **env, t_env *new)
-{
-	t_env	*tmp;
-
-	if (!new)
-		return (NULL);
-	if (*env == NULL)
+	if (*head == NULL)
 	{
-		*env = new;
-		return (NULL);
+		*head = node;
+		return (*head);
 	}
-	tmp = ft_envlast(*env);
-	tmp->next = new;
-	return (*env);
+	cp = *head;
+	while (cp->next)
+		cp = cp->next;
+	cp->next = node;
+	return (*head);
 }
 
-t_env	*env_cpy(t_env *env)
-{
-	t_env 	*cpy;
-	t_env	*head;
-
-	head = NULL;
-	while (env)
-	{
-		cpy = calloc(1 ,sizeof(t_env));
-		if (!cpy)
-			return (NULL);
-		cpy->name = ft_strdup(env->name);
-		cpy->value = ft_strdup(env->value);
-		cpy->next = NULL;
-		if (!head)
-			head = cpy;
-		else
-			env_add_back(&head, cpy);
-		env = env->next;
-	}
-	return (head);
-}
-
-void	swap_env(t_env **env)
+void	swap_env_value(t_env **env)
 {
 	char *tmp;
 	char *tmp2;
@@ -92,29 +60,4 @@ void	swap_env(t_env **env)
 	free(tmp);
 	(*env)->next->name = ft_strdup(tmp2);
 	free(tmp2);
-}
-
-void	*sort_env(t_env **env)
-{
-	t_env	*head;
-	int		sort;
-
-	head = *env;
-	sort = 0;
-	while (!sort)
-	{
-		sort = 1;
-		*env = head;
-		while ((*env)->next)
-		{
-			if (ft_strcmp((*env)->name, (*env)->next->name) > 0)
-			{
-				swap_env(env);
-				sort = 0;
-			}
-			*env = (*env)->next;
-		}
-	}
-	*env = head;
-	return (*env);
 }
