@@ -19,6 +19,7 @@
 
 # include "mylibft/libft.h"
 # include <ctype.h>
+# include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -40,7 +41,7 @@ typedef struct s_token
 {
 	char				*commad;
 	char				**argument;
-	char				*next_operator;
+	char				*operator;
 	struct s_token		*token_next;
 }						t_token;
 
@@ -59,7 +60,6 @@ typedef struct s_minishell
 }						t_minishell;
 
 int						env(t_minishell minishell);
-bool					init_signal(t_minishell *minishell);
 
 /* ============= BULTIN ============= */
 
@@ -92,6 +92,7 @@ char					*ft_getenv(t_env *env, char *to_find);
 
 t_token					*prompt(t_minishell minishell);
 char					*ft_getenv(t_env *env, char *to_find);
+t_token					lexer(char *line);
 
 /* ============= UTILS ============= */
 

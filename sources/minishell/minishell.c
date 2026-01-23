@@ -19,5 +19,6 @@ bool	init_minishell(t_minishell *minishell, char **envp)
 		return (false);
 	if (!init_env(&minishell->env, envp))
 		return (false);
+	init_signal();
 	return (true);
 }

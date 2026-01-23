@@ -24,7 +24,6 @@ int	main(int argc, char **argv, char **envp)
 	ft_env(minishell.env);
 	while (1)
 	{
-		init_signal();
 		if (!prompt(minishell))
 			break ;
 		// free(minishell->token);

@@ -24,7 +24,7 @@ char	**env_spliter(char *vars)
 		return (NULL);
 	pos = ft_strchr(vars, '=');
 	if (!pos)
-		return (NULL);
+		return (tab[0] = ft_strdup(vars), tab[1] = NULL, tab);
 	tab[0] = ft_calloc(pos - vars + 1, sizeof(char));
 	while (i < pos - vars)
 	{
@@ -66,7 +66,7 @@ bool	init_env(t_env **env, char **envp)
 		if (!head)
 			head = cp;
 		else
-			env_add_back(&head, cp);
+			add_env_back(&head, cp);
 		env_clean(NULL, tab);
 		i++;
 	}

@@ -91,7 +91,7 @@ int	ft_export_arg(t_minishell *minishell, char *str)
 	return (0);
 }
 
-void	ft_export_(t_minishell *minishell)
+void	ft_export(t_minishell *minishell)
 {
 	t_env	*cpy;
 

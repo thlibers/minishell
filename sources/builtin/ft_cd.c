@@ -12,7 +12,7 @@
 
 #include "includes/minishell.h"
 
-char	*path_builder(t_minishell *minishell, char *dir)
+char	*path_builder(char *dir)
 {
 	char	*fullpath;
 	char	*tmp_str;
@@ -22,7 +22,7 @@ char	*path_builder(t_minishell *minishell, char *dir)
 		fullpath = ft_strdup(dir);
 		return (fullpath);
 	}
-	tmp_str = ft_strjoin(ft_getenv(minishell->env, "PWD"), "/");
+	tmp_str = ft_strjoin(getenv("PWD"), "/");
 	if (!tmp_str)
 		return (NULL);
 	fullpath = ft_strjoin(tmp_str, dir);

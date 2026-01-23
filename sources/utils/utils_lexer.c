@@ -1,33 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   utils_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/14 17:31:13 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/15 15:47:12 by thlibers         ###   ########.fr       */
+/*   Created: 2026/01/23 17:01:13 by nclavel           #+#    #+#             */
+/*   Updated: 2026/01/23 17:01:27 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-t_token	init_lexer(void)
+bool	is_operator(char c)
 {
-	t_token	*token;
-
-	token = calloc(1, t_token);
-	if (!token)
-		return (NULL);
-	return (token);
-}
-
-t_token	lexer(char *line)
-{
-	t_token	*token;
-
-	token = init_lexer();
-	if (!token)
-		return (NULL);
-	return (token);
+	if (c == '|')
+		return (true);
+	return (false);
 }
