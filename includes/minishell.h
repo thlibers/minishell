@@ -39,9 +39,11 @@ typedef struct s_env
 
 typedef struct s_token
 {
-	char				*commad;
-	char				**argument;
-	char				*operator;
+	char				*T_COMM;
+	char				*T_ARG;
+	char				*T_OPE;
+	char				*T_NXT_OPE;
+	char				*T_EOF;
 	struct s_token		*token_next;
 }						t_token;
 
@@ -63,6 +65,8 @@ int						env(t_minishell minishell);
 
 /* ============= BULTIN ============= */
 
+void  selector(t_minishell *minishell, char *command);
+
 // ft_cd.c
 
 // ft_echo.c
@@ -71,6 +75,7 @@ int						env(t_minishell minishell);
 int						ft_env(t_env *env);
 
 // ft_exit.c
+void	ft_exit(t_minishell *minishell, char **args);
 
 // ft_export.c
 void					*sort_env(t_env **env);
@@ -96,6 +101,8 @@ t_token					lexer(char *line);
 
 /* ============= UTILS ============= */
 
+
+void  ft_clear(t_minishell	*minishell);
 void					env_clean(t_env *env, char **tab);
 t_env					*env_cpy(t_env *env);
 

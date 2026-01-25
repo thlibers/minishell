@@ -1,0 +1,109 @@
+# Usage: valgrind --suppressions=readline.supp ./your_program
+
+{
+   readline_add_history_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect
+   ...
+   fun:add_history
+}
+
+{
+   readline_init_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect
+   ...
+   fun:readline
+}
+
+{
+   readline_rl_initialize
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect
+   ...
+   fun:rl_initialize
+}
+
+{
+   readline_using_history
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect
+   ...
+   fun:using_history
+}
+
+{
+   readline_read_history
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect
+   ...
+   fun:read_history
+}
+
+{
+   readline_stifle_history
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect
+   ...
+   fun:stifle_history
+}
+
+{
+   readline_rl_bind_key
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect
+   ...
+   fun:rl_bind_key
+}
+
+{
+   readline_rl_parse_and_bind
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect
+   ...
+   fun:rl_parse_and_bind
+}
+
+{
+   readline_completion
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect
+   ...
+   fun:rl_completion_matches
+}
+
+{
+   readline_tilde_expand
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect
+   ...
+   fun:tilde_expand
+}
+
+{
+   readline_generic_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libreadline.so*
+}
+
+{
+   readline_ncurses_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect
+   ...
+   obj:*/libncurses*.so*
+   ...
+   fun:readline
+}
+
+{
+   readline_termcap_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:tgetent
+   ...
+   obj:*/libreadline.so*
+}

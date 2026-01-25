@@ -12,9 +12,23 @@
 
 #include "includes/minishell.h"
 
-bool	is_operator(char c)
+bool	is_operator(char *word)
 {
-	if (c == '|')
+	if (ft_strcmp(word, "|"))
+		return (true);
+	else if (ft_strcmp(word, ">>"))
+		return (true);
+	else if (ft_strcmp(word, ">"))
+		return (true);
+	else if (ft_strcmp(word, "<<"))
+		return (true);
+	else if (ft_strcmp(word, "<"))
+		return (true);
+	else if (ft_strcmp(word, ">>"))
+		return (true);
+	else if (ft_strcmp(word, "||"))
+		return (true);
+	else if (ft_strcmp(word, "&&"))
 		return (true);
 	return (false);
 }

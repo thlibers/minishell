@@ -12,6 +12,11 @@
 
 #include "includes/minishell.h"
 
+void  ft_clear(t_minishell	*minishell)
+{
+	env_clean(minishell->env, NULL);
+}
+
 void	env_clean(t_env *env, char **tab)
 {
 	t_env	*checkpoint;
