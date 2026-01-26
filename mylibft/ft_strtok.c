@@ -14,7 +14,7 @@
 
 static bool	ft_isset(char c, const char *set)
 {
-	while (set && c != *set)
+	while (*set && c != *set)
 		set++;
 	return (c == *set);
 }

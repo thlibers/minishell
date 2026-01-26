@@ -6,12 +6,12 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 17:31:13 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/26 15:50:52 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/26 17:47:59 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-
+/*
 static t_token	*create_token(char *line)
 {
 	t_token	*node;
@@ -46,22 +46,27 @@ static void	token_add_back(t_token **head, t_token *node)
 		*head = (*head)->next(*head)->next = node;
 	*head = checkpoint;
 }
-
-t_token	lexer(char *line)
+*/
+t_token	*lexer(t_minishell *minishell, char *line)
 {
-	t_token	*head;
-	t_token	*node;
-	int		i;
+	char	*tmp;
 
-	i = 0;
-	head = NULL;
-	while (line[i])
+	(void)minishell;
+
+	tmp = ft_strtok(line, "|");
+	while (tmp)
 	{
-		while (line[i] == ' ')
-			i++;
-		node = create_token(line);
-		token_add_back(&head, node);
-		i++;
+		tmp = ft_strtrim(tmp, " ");
+//		minishell->token = calloc(1, sizeof(t_token));
+//		if (!minishell->token)
+//			return (NULL);
+//		ft_strlcpy(minishell->token->command[0], tmp, ft_strlen(tmp));
+//		ft_strlcpy(minishell->token->command[1], ft_strchr(tmp, ' '), ft_strlen(ft_strchr(tmp, ' ')));
+
+		printf("%s\n", tmp);
+		tmp = ft_strtok(NULL, "|");
+//		node = create_token(line);
+//		token_add_back(&head, node);
 	}
-	return (token);
+	return (NULL);
 }

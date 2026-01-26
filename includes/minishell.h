@@ -51,7 +51,7 @@ enum					e_data_type
 
 typedef struct s_token
 {
-	char				*data;
+	char				**command;
 	enum e_data_type	type;
 	struct s_token		*token_next;
 }						t_token;
@@ -105,7 +105,7 @@ char					*ft_getenv(t_env *env, char *to_find);
 
 t_token					*prompt(t_minishell minishell);
 char					*ft_getenv(t_env *env, char *to_find);
-t_token					lexer(char *line);
+t_token	*lexer(t_minishell *minishell, char *line);
 
 /* ============= UTILS ============= */
 

@@ -28,6 +28,7 @@ t_token	*prompt(t_minishell minishell)
 	}
 	add_to_history(minishell.fd_history, line);
 	selector(&minishell, line);
+	lexer(&minishell, line);
 	free(line);
 	return (token);
 }

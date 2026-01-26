@@ -31,7 +31,3 @@ bool	is_operator(char *word)
 	return (false);
 }
 
-bool	is_quoted(char *word)
-{
-	if ()
-}
