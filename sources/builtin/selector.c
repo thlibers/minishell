@@ -12,10 +12,10 @@
 
 #include "includes/minishell.h"
 
-void  selector(t_minishell *minishell, char *command)
+void	selector(t_minishell *minishell, char *command)
 {
-	if (strcmp(command, "exit"))
-		ft_exit(minishell, 0);
-//	else if (strcmp(command, "cd"))
-//		;
+	if (strcmp(command, "exit") == 0)
+		ft_exit(minishell, NULL);
+	//	else if (strcmp(command, "cd"))
+	//		;
 }

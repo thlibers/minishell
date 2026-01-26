@@ -12,9 +12,10 @@
 
 #include "includes/minishell.h"
 
-void  ft_clear(t_minishell	*minishell)
+void	ft_clear(t_minishell *minishell)
 {
 	env_clean(minishell->env, NULL);
+	close(minishell->fd_history);
 }
 
 void	env_clean(t_env *env, char **tab)

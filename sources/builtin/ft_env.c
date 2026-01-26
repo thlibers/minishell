@@ -19,7 +19,8 @@ int	ft_env(t_env *env)
 	cp = env;
 	while (cp)
 	{
-		ft_printf("%s=%s\n", cp->name, cp->value);
+		if (cp->value)
+			ft_printf("%s=%s\n", cp->name, cp->value);
 		cp = cp->next;
 	}
 	return (0);

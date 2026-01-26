@@ -46,6 +46,11 @@ void	*sort_env(t_env **env)
 	{
 		sort = 1;
 		*env = head;
+		if (ft_strcmp(*env->name, "_") == 0)
+		{
+			env_add_back(&head, env);
+			continue ;
+		}
 		while ((*env)->next)
 		{
 			if (ft_strcmp((*env)->name, (*env)->next->name) > 0)
