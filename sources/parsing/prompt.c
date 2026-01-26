@@ -18,15 +18,16 @@ t_token	*prompt(t_minishell minishell)
 	t_token	*token;
 	char	*line;
 
-	token = NULL;
+	token = calloc(1, sizeof(t_token));
 	line = readline("\x1b[0;32mminishell > \e[0m");
-//	if (!line)
-//	{
-//		if (token)
-//			free(token);
-//		return (NULL);
-//	}
+	if (!line)
+	{
+		if (token)
+			free(token);
+		return (NULL);
+	}
 	add_to_history(minishell.fd_history, line);
+	selector(&minishell, line);
 	free(line);
 	return (token);
 }

@@ -26,16 +26,16 @@ void	ft_exit(t_minishell *minishell, char **args)
 	{
 		ft_fprintf(STDERR_FILENO, "exit: %s: numeric argument required",
 			args[1]);
-		// ft_clean(minishell)
+		ft_clear(minishell);
 		exit(2);
 	}
 	else if (!args[1])
 	{
 		exit_code = minishell->last_code;
-		// ft_clean(minishell)
+		ft_clear(minishell);
 		exit(exit_code);
 	}
 	exit_code = ft_atoi(args[1]) % 256;
-	// ft_clean(minishell)
+	ft_clear(minishell);
 	exit(exit_code);
 }

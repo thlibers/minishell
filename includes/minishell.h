@@ -37,13 +37,23 @@ typedef struct s_env
 	struct s_env		*next;
 }						t_env;
 
+enum					e_data_type
+{
+	t_comm,
+	t_arg,
+	t_red_in,
+	t_red_in_app,
+	t_red_out,
+	t_red_out_app,
+	t_or,
+	t_and,
+	t_pipe
+};
+
 typedef struct s_token
 {
-	char				*T_COMM;
-	char				*T_ARG;
-	char				*T_OPE;
-	char				*T_NXT_OPE;
-	char				*T_EOF;
+	char				*data;
+	enum e_data_type	type;
 	struct s_token		*token_next;
 }						t_token;
 
@@ -58,14 +68,12 @@ typedef struct s_minishell
 	t_token				*token;
 	int					fd_history;
 	int					last_code;
-	struct sigaction	sa;
 }						t_minishell;
 
 int						env(t_minishell minishell);
 
 /* ============= BULTIN ============= */
-
-void  selector(t_minishell *minishell, char *command);
+void					selector(t_minishell *minishell, char *command);
 
 // ft_cd.c
 
@@ -75,9 +83,10 @@ void  selector(t_minishell *minishell, char *command);
 int						ft_env(t_env *env);
 
 // ft_exit.c
-void	ft_exit(t_minishell *minishell, char **args);
+void					ft_exit(t_minishell *minishell, char **args);
 
 // ft_export.c
+void					ft_export(t_minishell *minishell);
 void					*sort_env(t_env **env);
 
 // ft_pwd.c
@@ -101,15 +110,16 @@ t_token					lexer(char *line);
 
 /* ============= UTILS ============= */
 
-
-void  ft_clear(t_minishell	*minishell);
+void					ft_clear(t_minishell *minishell);
 void					env_clean(t_env *env, char **tab);
 t_env					*env_cpy(t_env *env);
 
+void					*sort_env(t_env **env);
 // env_utils.c
 t_env					*new_env_node(void *name, void *content);
 void					*add_env_back(t_env **head, t_env *node);
 void					swap_env_value(t_env **env);
+void					*sort_env(t_env **env);
 
 // history.c
 int						init_history(t_minishell *minishell);

@@ -20,14 +20,11 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (!init_minishell(&minishell, envp))
 		return (1);
-	//	t_env *aaa = sort_env(&minishell.env);
-	ft_env(minishell.env);
 	while (1)
 	{
 		if (!prompt(minishell))
 			break ;
-		// free(minishell->token);
 	}
-	close(minishell.fd_history);
+	ft_clear(&minishell);
 	return (0);
 }
