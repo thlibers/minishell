@@ -39,15 +39,14 @@ typedef struct s_env
 
 enum					e_data_type
 {
-	t_comm,
-	t_arg,
-	t_red_in,
-	t_red_in_app,
-	t_red_out,
-	t_red_out_app,
-	t_or,
-	t_and,
-	t_pipe
+	T_COMM = 0,
+	T_ARG = 1,
+	T_RED_IN,
+	T_RED_IN_APP,
+	T_RED_OUT,
+	T_RED_OUT_APP,
+	T_PIPE,
+	T_HEREDOC
 };
 
 typedef struct s_token

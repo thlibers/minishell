@@ -24,11 +24,14 @@ bool	is_operator(char *word)
 		return (true);
 	else if (ft_strcmp(word, "<"))
 		return (true);
-	else if (ft_strcmp(word, ">>"))
-		return (true);
 	else if (ft_strcmp(word, "||"))
 		return (true);
 	else if (ft_strcmp(word, "&&"))
 		return (true);
 	return (false);
+}
+
+bool	is_quoted(char *word)
+{
+	if ()
 }
