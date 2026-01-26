@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 12:25:39 by thlibers          #+#    #+#             */
-/*   Updated: 2026/01/19 15:07:45 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/26 17:03:52 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <stdbool.h>
 
 typedef struct s_list
 {
@@ -89,6 +90,7 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 int					ft_strisdigit(char *str);
+char				*ft_strtok(char *str, const char *delim);
 
 // Partie printf / fprintf
 

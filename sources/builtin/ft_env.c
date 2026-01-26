@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/26 15:35:16 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/26 15:36:11 by nclavel          ###   ########.fr       */
+/*   Created: 2026/01/26 17:02:04 by thlibers          #+#    #+#             */
+/*   Updated: 2026/01/26 17:02:06 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ int	ft_env(t_env *env)
 		cp = cp->next;
 	}
 	if (tmp)
-		printf("%s=%s\n", "_", tmp);
+		printf("_=%s\n", tmp);
 	return (0);
 }

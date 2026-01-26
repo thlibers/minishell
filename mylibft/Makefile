@@ -36,6 +36,7 @@ SOURCES =    ft_atoi.c\
             ft_strncmp.c\
             ft_strnstr.c\
             ft_strrchr.c\
+            ft_strtok.c\
             ft_strtrim.c\
             ft_strisdigit.c\
             ft_substr.c\

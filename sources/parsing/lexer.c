@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 17:31:13 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/15 15:47:12 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/26 15:50:52 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,10 @@ t_token	lexer(char *line)
 	while (line[i])
 	{
 		while (line[i] == ' ')
-			i++ node = create_token(line);
-		token_add_back(&head, node) i++;
+			i++;
+		node = create_token(line);
+		token_add_back(&head, node);
+		i++;
 	}
 	return (token);
 }

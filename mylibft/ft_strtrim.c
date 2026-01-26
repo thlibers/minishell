@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 12:47:36 by thlibers          #+#    #+#             */
-/*   Updated: 2025/10/20 12:39:20 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/26 16:04:41 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 
 // int main ()
 // {
-// 	char set[] = "?/.";
-// 	char str[] = "/?../salut/?/.";
+// 	char set[] = "|> <";
+// 	char str[] = "echo 'hello world' |";
 // 	char *trim = ft_strtrim(str, set);
 // 	printf("%s", trim);
 // 	return(0);

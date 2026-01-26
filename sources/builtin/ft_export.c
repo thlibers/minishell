@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 15:05:28 by thlibers          #+#    #+#             */
-/*   Updated: 2026/01/26 13:18:45 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/26 15:37:44 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	*sort_env(t_env **env)
 	{
 		sort = 1;
 		*env = head;
-		if (ft_strcmp(*env->name, "_") == 0)
+		if (ft_strcmp((*env)->name, "_") == 0)
 		{
 			env_add_back(&head, env);
 			continue ;
