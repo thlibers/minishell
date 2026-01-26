@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 15:05:28 by thlibers          #+#    #+#             */
-/*   Updated: 2026/01/22 17:17:01 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/26 13:18:45 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,3 @@ void	ft_export(t_minishell *minishell)
 		minishell->env->next;
 	}
 }
-
-// la commande export renevoie TOUTES les variables d'env avec leur valeurs ou sans dans l'ordre alphabetique.

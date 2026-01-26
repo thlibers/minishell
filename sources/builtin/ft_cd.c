@@ -6,13 +6,13 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 10:47:36 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/20 15:14:27 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/26 14:33:15 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-char	*path_builder(char *dir)
+char	*path_builder(t_env *env, char *dir)
 {
 	char	*fullpath;
 	char	*tmp_str;
@@ -22,7 +22,7 @@ char	*path_builder(char *dir)
 		fullpath = ft_strdup(dir);
 		return (fullpath);
 	}
-	tmp_str = ft_strjoin(getenv("PWD"), "/");
+	tmp_str = ft_strjoin(ft_getenv(env, "PWD"), "/");
 	if (!tmp_str)
 		return (NULL);
 	fullpath = ft_strjoin(tmp_str, dir);
@@ -33,11 +33,11 @@ char	*path_builder(char *dir)
 }
 
 //	PATH ABSOLUTE = 0 ; PATH RELATIVE = 1
-char	*parsing_dir(char *dir)
+char	*parsing_dir(t_env *env, char *dir)
 {
 	char	*new_path;
 
-	new_path = path_builder(dir);
+	new_path = path_builder(env, dir);
 	if (!new_path)
 		return (NULL);
 	chdir(new_path);
@@ -53,16 +53,25 @@ char	*parsing_dir(char *dir)
 	if (errno == ELOOP)
 		return (printf("cd: Too many lenvels of symbolic links\n"),
 			free(new_path), NULL);
+	if (!ft_getenv(env, "HOME"))
+		return (printf("cd: HOME not set\n"), free(new_path), NULL);
 	return (new_path);
 }
 
-int	main(int argc, char **argv)
+void	ft_cd(t_env *env, char *arg)
 {
-	char	*path;
-
-	if (argc > 2)
-		return (ft_putstr_fd("Too many args for cd command", 1), 1);
-	path = parsing_dir(argv[1]);
-	if (!path)
-		return (1);
+	
 }
+
+// int	main(int argc, char **argv)
+// {
+// 	char	*path;
+
+// 	if (argc > 2)
+// 		return (ft_putstr_fd("Too many args for cd command", 1), 1);
+// 	path = parsing_dir(argv[1]);
+// 	if (!path)
+// 		return (1);
+// }
+
+// unset home "cd" renvoie "cd: HOME not set"
