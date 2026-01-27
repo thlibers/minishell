@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:44 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/22 17:34:00 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/27 10:19:23 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ enum					e_data_type
 typedef struct s_token
 {
 	char				**command;
+	int					isquote;
 	enum e_data_type	type;
 	struct s_token		*token_next;
 }						t_token;

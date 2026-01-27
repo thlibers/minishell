@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_lexer.c                                      :+:      :+:    :+:   */
+/*   check_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 17:01:13 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/23 17:01:27 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/01/27 10:38:02 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,3 +31,33 @@ bool	is_operator(char *word)
 	return (false);
 }
 
+void	is_inquote(t_token *token, char *line)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '"')
+		{
+			j = 1;
+			while(line[i + j] && line[i + j] != '"')
+			{
+				token->isquote = 2;
+				j++;
+			}
+		}
+		else if (line[i] == '\'')
+		{
+			j = 1;
+			while(line[i + j] && line[i + j] != '\'')
+			{
+				token->isquote = 1;
+				j++;
+			}
+		}
+		i++;
+		token->isquote = 0;
+	}
+}
