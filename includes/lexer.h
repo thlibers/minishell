@@ -6,15 +6,13 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 16:55:58 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/28 11:26:36 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:52:18 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 #endif
-
-#include "minishell.h"
 
 enum				e_data_type
 {
@@ -39,8 +37,8 @@ typedef struct s_token
 	t_command			*comm_args;
 	enum e_data_type	type;
 	struct s_token		*token_next;
-}						t_token;
+}						 t_token;
 
-// split_readline.c
+// split_tokens.c
 
 char					**ft_splitnoquote(char *s, char c);

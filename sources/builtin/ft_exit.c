@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:27 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/20 13:08:24 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:37:28 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_exit(t_minishell *minishell, char **args)
 	if (args[2])
 	{
 		ft_putendl_fd("exit: too many arguments", STDERR_FILENO);
-		minishell->last_code = 1;
+		minishell->exit_code = 1;
 		return ;
 	}
 	if (!ft_strisdigit(args[1]))
@@ -31,7 +31,7 @@ void	ft_exit(t_minishell *minishell, char **args)
 	}
 	else if (!args[1])
 	{
-		exit_code = minishell->last_code;
+		exit_code = minishell->exit_code;
 		ft_clear(minishell);
 		exit(exit_code);
 	}

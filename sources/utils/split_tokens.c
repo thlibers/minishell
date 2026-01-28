@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_readline.c                                   :+:      :+:    :+:   */
+/*   split_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 15:11:14 by thlibers          #+#    #+#             */
-/*   Updated: 2026/01/28 10:29:09 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:57:44 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	is_inquote(int *quote_state, char c)
 	}
 }
 
-static size_t	countrl_word(char *s, char sep)
+static size_t	count_word(char *s, char sep)
 {
 	size_t	i;
 	size_t	count;
@@ -56,7 +56,7 @@ static size_t	countrl_word(char *s, char sep)
 	return (count);
 }
 
-static char	*rlword_dup(const char *s, char sep)
+static char	*word_dup(const char *s, char sep)
 {
 	int		i;
 	char	*str;

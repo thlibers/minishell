@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:44 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/28 11:26:55 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:54:56 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,12 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
-
-
 typedef struct s_minishell
 {
 	t_env			*env;
 	t_token			*token;
 	int				fd_history;
-	int				last_code;
+	int				exit_code;
 }					t_minishell;
 
 int					env(t_minishell minishell);
@@ -89,11 +87,12 @@ char				*ft_getenv(t_env *env, char *to_find);
 t_token				*lexer(t_minishell *minishell, char *line);
 
 /* ============= UTILS ============= */
+// check_lexer.c
+bool				is_operator(char *word);
 
+// clean .c
 void				ft_clear(t_minishell *minishell);
 void				env_clean(t_env *env, char **tab);
-t_env				*env_cpy(t_env *env);
-void				*sort_env(t_env **env);
 
 // env_utils.c
 t_env				*new_env_node(void *name, void *content);

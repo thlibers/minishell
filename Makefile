@@ -6,7 +6,7 @@
 #    By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 11:04:15 by nclavel           #+#    #+#              #
-#    Updated: 2026/01/20 17:35:57 by thlibers         ###   ########.fr        #
+#    Updated: 2026/01/28 15:57:02 by thlibers         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRCS = $(SRC_DIR)/utils/clean.c\
 		$(SRC_DIR)/parsing/prompt.c\
 		$(SRC_DIR)/builtin/ft_env.c\
 		$(SRC_DIR)/utils/check_lexer.c\
+		$(SRC_DIR)/utils/split_tokens.c\
 		$(SRC_DIR)/builtin/ft_exit.c\
 		$(SRC_DIR)/builtin/selector.c	
 

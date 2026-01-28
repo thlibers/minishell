@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 15:05:33 by thlibers          #+#    #+#             */
-/*   Updated: 2026/01/28 10:43:53 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:37:28 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ void	ft_unset(t_minishell *minishell, char *arg)
 			free(minishell->env->next->value);
 			free(minishell->env->next);
 			minishell->env->next = minishell->env->next->next;
+			minishell->exit_code = 0;
 		}
 		else
-			minishell->last_code = 0;
+			minishell->exit_code = 1;
 		minishell->env = minishell->env->next;
 	}
 }
 
-// Si unset + une variable qui n'existe pas, pas d'erreur,
-	retourne un code de succès.
+// Si unset + une variable qui n'existe pas, pas d'erreur, retourne un code de succès.

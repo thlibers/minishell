@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 10:47:36 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/26 14:33:15 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:42:02 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,13 @@ char	*parsing_dir(t_env *env, char *dir)
 
 void	ft_cd(t_env *env, char *arg)
 {
+	
 }
+
+// Modifier la variable env PWD, 
+
+
+
 
 // int	main(int argc, char **argv)
 // {
@@ -72,5 +78,3 @@ void	ft_cd(t_env *env, char *arg)
 // 	if (!path)
 // 		return (1);
 // }
-
-// unset home "cd" renvoie "cd: HOME not set"

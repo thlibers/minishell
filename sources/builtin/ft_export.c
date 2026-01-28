@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 15:05:28 by thlibers          #+#    #+#             */
-/*   Updated: 2026/01/28 11:28:19 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:37:28 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_export_arg(t_minishell *minishell, char *arg)
 	head = minishell->env;
 	tab = env_spliter(arg);
 	if (!tab || !check_valarg(minishell, arg))
-		return (minishell->last_code = 1, 1);
+		return (minishell->exit_code = 1, 1);
 	status = 0;
 	while (minishell->env && status == 0)
 	{
@@ -63,7 +63,7 @@ int	ft_export_arg(t_minishell *minishell, char *arg)
 	if (status == 0)
 		add_env_back(minishell->env, env_new_node(tab[0], tab[1]));
 	minishell->env = head;
-	minishell->last_code = 0;
+	minishell->exit_code = 0;
 	return (0);
 }
 
@@ -78,7 +78,7 @@ void	ft_export_noarg(t_minishell *minishell)
 		printf("export %s=%s\n", cpy->name, cpy->value);
 		minishell->env->next;
 	}
-	minishell->last_code = 0;
+	minishell->exit_code = 0;
 }
 
 void	ft_export(t_minishell *minishell, char *arg)
