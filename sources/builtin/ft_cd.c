@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 10:47:36 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/28 15:42:02 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/28 16:43:17 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,15 @@ char	*path_builder(t_env *env, char *dir)
 	char	*fullpath;
 	char	*tmp_str;
 
-	if (ft_strchr(dir, '/') != 0)
+	if (!dir && !ft_getenv(env, "HOME"))
+		return (printf("cd: HOME not set\n"), NULL);
+	if (dir[0] == '/')
 	{
 		fullpath = ft_strdup(dir);
 		return (fullpath);
 	}
+	// A changer car repart de la racine
+	// sprintf ?
 	tmp_str = ft_strjoin(ft_getenv(env, "PWD"), "/");
 	if (!tmp_str)
 		return (NULL);
@@ -31,6 +35,7 @@ char	*path_builder(t_env *env, char *dir)
 		return (NULL);
 	return (fullpath);
 }
+
 
 //	PATH ABSOLUTE = 0 ; PATH RELATIVE = 1
 char	*parsing_dir(t_env *env, char *dir)
@@ -43,18 +48,18 @@ char	*parsing_dir(t_env *env, char *dir)
 	chdir(new_path);
 	if (errno == ENAMETOOLONG)
 		return (printf("cd: Path is too long"), free(new_path), NULL);
-	if (errno == ENOTDIR)
+	else if (errno == ENOENT)
+		return (ft_fprintf(STDERR_FILENO ,"cd: %s: No such file or directory\n", new_path), free(new_path), NULL);
+	else if (errno == ENOTDIR)
 		return (printf("cd: '%s' is not a directory", dir), free(new_path),
 			NULL);
-	if (errno == EACCES)
+	else if (errno == EACCES)
 		return (printf("cd: Permission denied: '%s'\n", dir), NULL);
-	if (errno == ENOENT)
+	else if (errno == ENOENT)
 		return (printf("cd: The directory '%s' does not exist\n", dir), NULL);
-	if (errno == ELOOP)
+	else if (errno == ELOOP)
 		return (printf("cd: Too many lenvels of symbolic links\n"),
 			free(new_path), NULL);
-	if (!ft_getenv(env, "HOME"))
-		return (printf("cd: HOME not set\n"), free(new_path), NULL);
 	return (new_path);
 }
 
@@ -63,7 +68,15 @@ void	ft_cd(t_env *env, char *arg)
 	
 }
 
-// Modifier la variable env PWD, 
+// Modifier la variable env "PWD", si "cd .." suprimer le derner dossier du pwd (si c'est pas la racine)
+// cd ~ et cd -
+
+//cd ~ garde uniquement le home/
+// cd - revient a l'ancien dossier 
+// par exemple (dans msh "cd source/utils" puis "cd -" pour revenir dans msh)
+
+// home/minishell/sources			utiliser "chdir" pour maj notre position.
+// cd ..
 
 
 
