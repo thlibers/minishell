@@ -24,9 +24,9 @@ bool	is_operator(char *word, t_token **node)
 		return ((*node)->type = T_RED_IN_APP, true);
 	else if (ft_strcmp(word, "<") == 0)
 		return ((*node)->type = T_RED_IN, true);
-//	else if (ft_strcmp(word, "||") == 0)
-//		return ((*node)->type = T_OR, true);
-//	else if (ft_strcmp(word, "&&") == 0)
-//		return (true);
+	//	else if (ft_strcmp(word, "||") == 0)
+	//		return ((*node)->type = T_OR, true);
+	//	else if (ft_strcmp(word, "&&") == 0)
+	//		return (true);
 	return (false);
 }

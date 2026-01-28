@@ -36,7 +36,6 @@ char	*path_builder(t_env *env, char *dir)
 	return (fullpath);
 }
 
-
 //	PATH ABSOLUTE = 0 ; PATH RELATIVE = 1
 char	*parsing_dir(t_env *env, char *dir)
 {
@@ -49,7 +48,8 @@ char	*parsing_dir(t_env *env, char *dir)
 	if (errno == ENAMETOOLONG)
 		return (printf("cd: Path is too long"), free(new_path), NULL);
 	else if (errno == ENOENT)
-		return (ft_fprintf(STDERR_FILENO ,"cd: %s: No such file or directory\n", new_path), free(new_path), NULL);
+		return (ft_fprintf(STDERR_FILENO, "cd: %s: No such file or directory\n",
+				new_path), free(new_path), NULL);
 	else if (errno == ENOTDIR)
 		return (printf("cd: '%s' is not a directory", dir), free(new_path),
 			NULL);
@@ -65,21 +65,18 @@ char	*parsing_dir(t_env *env, char *dir)
 
 void	ft_cd(t_env *env, char *arg)
 {
-	
 }
 
-// Modifier la variable env "PWD", si "cd .." suprimer le derner dossier du pwd (si c'est pas la racine)
+// Modifier la variable env "PWD",
+	si "cd .." suprimer le derner dossier du pwd (si c'est pas la racine)
 // cd ~ et cd -
 
-//cd ~ garde uniquement le home/
-// cd - revient a l'ancien dossier 
+// cd ~ garde uniquement le home/
+// cd - revient a l'ancien dossier
 // par exemple (dans msh "cd source/utils" puis "cd -" pour revenir dans msh)
 
 // home/minishell/sources			utiliser "chdir" pour maj notre position.
 // cd ..
-
-
-
 
 // int	main(int argc, char **argv)
 // {

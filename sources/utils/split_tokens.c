@@ -86,7 +86,7 @@ static char	*word_dup(const char *s, char sep)
 	return (str);
 }
 
-static void	free_tab(char **s)
+void	free_tab(char **s)
 {
 	int	i;
 

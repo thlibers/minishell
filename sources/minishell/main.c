@@ -24,6 +24,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		if (!prompt(minishell))
 			break ;
+		clear_token(&minishell.token);
 	}
 	ft_clear(&minishell);
 	return (0);

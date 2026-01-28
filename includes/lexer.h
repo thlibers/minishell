@@ -14,7 +14,7 @@
 # define LEXER_H
 #endif
 
-enum				e_data_type
+enum					e_data_type
 {
 	T_RED_IN = 1,
 	T_RED_IN_APP = 2,
@@ -35,8 +35,9 @@ typedef struct s_token
 	t_command			*comm_args;
 	enum e_data_type	type;
 	struct s_token		*next;
-}						 t_token;
+}						t_token;
 
 // split_tokens.c
 
 char					**ft_splitnoquote(char *s, char c);
+void					clear_token(t_token **head);

@@ -82,7 +82,7 @@ void				init_signal(void);
 char				**env_spliter(char *vars);
 bool				init_env(t_env **env, char **envp);
 char				*ft_getenv(t_env *env, char *to_find);
-t_token				*prompt(t_minishell minishell);
+bool		prompt(t_minishell minishell);
 char				*ft_getenv(t_env *env, char *to_find);
 t_token				*lexer(t_minishell *minishell, char *line);
 
@@ -93,6 +93,7 @@ bool				is_operator(char *word, t_token **node);
 // clean .c
 void				ft_clear(t_minishell *minishell);
 void				env_clean(t_env *env, char **tab);
+void	free_tab(char **s);
 
 // env_utils.c
 t_env				*new_env_node(void *name, void *content);

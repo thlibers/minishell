@@ -12,7 +12,6 @@
 
 #include "includes/minishell.h"
 
-
 static t_token	*create_token(char **splitted)
 {
 	t_token	*node;
@@ -46,25 +45,10 @@ static t_token	*create_token(char **splitted)
 	return (node);
 }
 
-// void	print_token(t_token *head)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (head)
-// 	{
-// 		printf("--- TOKEN %d ---\n", i);
-// 		printf("data = %s\n", head->data);
-// 		printf("e_data = %s\n", head->type);
-// 		head = head->next;
-// 		i++;
-// 	}
-// }
-
-void  clear_token(t_token **head)
+void	clear_token(t_token **head)
 {
 	t_token	*save;
-	int i;
+	int		i;
 
 	while (*head)
 	{
@@ -123,12 +107,12 @@ t_token	*lexer(t_minishell *minishell, char *line)
 			return (NULL);
 		node = create_token(splitted);
 		printf("COMM = %s\n", node->comm_args->command);
-		for (int i = 0;node->comm_args->arguments[i]; i++)
+		for (int i = 0; node->comm_args->arguments[i]; i++)
 		{
 			printf("ARG = %s\n", node->comm_args->arguments[i]); // DEBUG
 		}
 		token_add_back(&minishell->token, node);
-		free(splitted);
+		free_tab(splitted);
 		tmp = ft_strtok(NULL, "|");
 	}
 	clear_token(&minishell->token);

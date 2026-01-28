@@ -13,22 +13,18 @@
 #include "includes/minishell.h"
 #include <string.h>
 
-t_token	*prompt(t_minishell minishell)
+bool	prompt(t_minishell minishell)
 {
-	t_token	*token;
 	char	*line;
 
-	token = calloc(1, sizeof(t_token));
 	line = readline("\x1b[0;32mminishell > \e[0m");
 	if (!line)
 	{
-		if (token)
-			free(token);
-		return (NULL);
+		return (false);
 	}
 	add_to_history(minishell.fd_history, line);
 	selector(&minishell, line);
 	lexer(&minishell, line);
 	free(line);
-	return (token);
+	return (true);
 }
