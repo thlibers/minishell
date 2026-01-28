@@ -16,10 +16,8 @@
 
 enum				e_data_type
 {
-	T_COMM = 0,
-	T_ARG = 1,
-	T_RED_IN,
-	T_RED_IN_APP,
+	T_RED_IN = 1,
+	T_RED_IN_APP = 2,
 	T_RED_OUT,
 	T_RED_OUT_APP,
 	T_PIPE,
@@ -36,7 +34,7 @@ typedef struct s_token
 {
 	t_command			*comm_args;
 	enum e_data_type	type;
-	struct s_token		*token_next;
+	struct s_token		*next;
 }						 t_token;
 
 // split_tokens.c

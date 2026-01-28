@@ -88,7 +88,7 @@ t_token				*lexer(t_minishell *minishell, char *line);
 
 /* ============= UTILS ============= */
 // check_lexer.c
-bool				is_operator(char *word);
+bool				is_operator(char *word, t_token **node);
 
 // clean .c
 void				ft_clear(t_minishell *minishell);
