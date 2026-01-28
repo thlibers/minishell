@@ -11,7 +11,8 @@
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-/*
+
+
 static t_token	*create_token(char *line)
 {
 	t_token	*node;
@@ -37,6 +38,18 @@ void	print_token(t_token *head)
 	}
 }
 
+void  clear_token(t_token **head)
+{
+	t_token	*save;
+
+	while (*head)
+	{
+		save = (*head)->next;
+		
+		head = save;
+	}
+}
+
 static void	token_add_back(t_token **head, t_token *node)
 {
 	t_token	*checkpoint;
@@ -46,27 +59,18 @@ static void	token_add_back(t_token **head, t_token *node)
 		*head = (*head)->next(*head)->next = node;
 	*head = checkpoint;
 }
-*/
+
 t_token	*lexer(t_minishell *minishell, char *line)
 {
 	char	*tmp;
 
 	(void)minishell;
-
 	tmp = ft_strtok(line, "|");
 	while (tmp)
 	{
 		tmp = ft_strtrim(tmp, " ");
-//		minishell->token = calloc(1, sizeof(t_token));
-//		if (!minishell->token)
-//			return (NULL);
-//		ft_strlcpy(minishell->token->command[0], tmp, ft_strlen(tmp));
-//		ft_strlcpy(minishell->token->command[1], ft_strchr(tmp, ' '), ft_strlen(ft_strchr(tmp, ' ')));
-
 		printf("%s\n", tmp);
 		tmp = ft_strtok(NULL, "|");
-//		node = create_token(line);
-//		token_add_back(&head, node);
 	}
 	return (NULL);
 }

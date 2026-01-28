@@ -14,15 +14,33 @@
 # define LEXER_H
 #endif
 
-# include "minishell.h"
+#include "minishell.h"
+
+enum				e_data_type
+{
+	T_COMM = 0,
+	T_ARG = 1,
+	T_RED_IN,
+	T_RED_IN_APP,
+	T_RED_OUT,
+	T_RED_OUT_APP,
+	T_PIPE,
+	T_HEREDOC
+};
+
+typedef struct s_command
+{
+	char				*command;
+	char				**arguments;
+}						t_command;
 
 typedef struct s_token
 {
-	char				**command;
+	t_command			command;
 	enum e_data_type	type;
 	struct s_token		*token_next;
 }						t_token;
 
 // split_readline.c
 
-char	**ft_splitnoquote(char *s, char c);
+char					**ft_splitnoquote(char *s, char c);

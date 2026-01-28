@@ -60,7 +60,6 @@ char	*parsing_dir(t_env *env, char *dir)
 
 void	ft_cd(t_env *env, char *arg)
 {
-	
 }
 
 // int	main(int argc, char **argv)

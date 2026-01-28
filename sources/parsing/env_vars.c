@@ -35,7 +35,7 @@ char	**env_spliter(char *vars)
 	tab[1] = ft_calloc(strlen(vars) - (size_t)(pos - vars), sizeof(char));
 	while (pos[1 + i])
 	{
-		tab[1][i] = pos[1 + i++];
+		tab[1][i] = pos[1 + i];
 		i++;
 	}
 	return (tab[2] = NULL, tab);

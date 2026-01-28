@@ -75,7 +75,7 @@ void	*sort_env(t_env **env)
 		*env = head;
 		if (ft_strcmp((*env)->name, "_") == 0)
 		{
-			env_add_back(&head, env);
+			add_env_back(&head, *env);
 			sort = 0;
 			continue ;
 		}
@@ -110,9 +110,8 @@ t_env	*env_cpy(t_env *env)
 		if (!head)
 			head = cpy;
 		else
-			env_add_back(&head, cpy);
+			add_env_back(&head, cpy);
 		env = env->next;
 	}
 	return (head);
 }
-

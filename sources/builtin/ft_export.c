@@ -29,7 +29,8 @@ static int	check_valarg(t_minishell *minishell, char *arg)
 	{
 		if (!isalnum(arg[i]) || arg[i] != '_')
 		{
-			ft_fprintf(STDERR_FILENO, "export: `%s': not a valid identifier", arg);
+			ft_fprintf(STDERR_FILENO, "export: `%s': not a valid identifier",
+				arg);
 			return (0);
 		}
 		i++;

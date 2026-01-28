@@ -103,6 +103,7 @@ char	**ft_splitnoquote(char *s, char c)
 	char	**tab;
 	size_t	i;
 	size_t	j;
+	int		quote_state;
 
 	if (!s)
 		return (NULL);
@@ -121,7 +122,7 @@ char	**ft_splitnoquote(char *s, char c)
 		if (!tab[j])
 			return (free_tab(tab), NULL);
 		j++;
-		int quote_state = 0;
+		quote_state = 0;
 		while (s[i] && (s[i] != c || quote_state != 0))
 		{
 			is_inquote(&quote_state, s[i]);
@@ -142,7 +143,7 @@ char	**ft_splitnoquote(char *s, char c)
 // 	char str[] = "asdjd \"\'aklsdkjasd\'\"         ";
 // 	char sep = ' ';
 // 	char **s;
-	
+
 // 	s = ft_splitnoquote(str, sep);
 // 	j = 0;
 // 	while (s && s[j])
@@ -150,9 +151,9 @@ char	**ft_splitnoquote(char *s, char c)
 // 		printf("%s\n", s[j]);
 // 		j++;
 // 	}
-	
+
 // 	if (s)
 // 		free_tab(s);
-	
+
 // 	return(0);
 // }
