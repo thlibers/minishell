@@ -50,6 +50,7 @@ enum					e_data_type
 	T_HEREDOC
 };
 
+
 typedef struct s_minishell
 {
 	t_env				*env;
