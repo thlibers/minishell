@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 16:36:31 by thlibers          #+#    #+#             */
-/*   Updated: 2026/01/22 17:24:44 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/28 10:57:38 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,3 +61,58 @@ void	swap_env_value(t_env **env)
 	(*env)->next->name = ft_strdup(tmp2);
 	free(tmp2);
 }
+
+void	*sort_env(t_env **env)
+{
+	t_env	*head;
+	int		sort;
+
+	head = *env;
+	sort = 0;
+	while (!sort)
+	{
+		sort = 1;
+		*env = head;
+		if (ft_strcmp((*env)->name, "_") == 0)
+		{
+			env_add_back(&head, env);
+			sort = 0;
+			continue ;
+		}
+		while ((*env)->next)
+		{
+			if (ft_strcmp((*env)->name, (*env)->next->name) > 0)
+			{
+				swap_env_value(env);
+				sort = 0;
+			}
+			*env = (*env)->next;
+		}
+	}
+	*env = head;
+	return (*env);
+}
+
+t_env	*env_cpy(t_env *env)
+{
+	t_env	*cpy;
+	t_env	*head;
+
+	head = NULL;
+	while (env)
+	{
+		cpy = calloc(1, sizeof(t_env));
+		if (!cpy)
+			return (NULL);
+		cpy->name = ft_strdup(env->name);
+		cpy->value = ft_strdup(env->value);
+		cpy->next = NULL;
+		if (!head)
+			head = cpy;
+		else
+			env_add_back(&head, cpy);
+		env = env->next;
+	}
+	return (head);
+}
+

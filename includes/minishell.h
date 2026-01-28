@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:44 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/27 10:19:23 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/28 11:26:55 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define MSH_HIST "msh_history"
 
 # include "mylibft/libft.h"
+# include "lexer.h"
 # include <ctype.h>
 # include <errno.h>
 # include <fcntl.h>
@@ -49,19 +50,6 @@ enum					e_data_type
 	T_HEREDOC
 };
 
-typedef struct s_token
-{
-	char				**command;
-	int					isquote;
-	enum e_data_type	type;
-	struct s_token		*token_next;
-}						t_token;
-
-// typedef	struct s_store
-// {
-// 	int				fd_history;
-// } t_store;
-
 typedef struct s_minishell
 {
 	t_env				*env;
@@ -73,11 +61,15 @@ typedef struct s_minishell
 int						env(t_minishell minishell);
 
 /* ============= BULTIN ============= */
+
+// ft_selector.c
 void					selector(t_minishell *minishell, char *command);
 
 // ft_cd.c
 
+
 // ft_echo.c
+
 
 // ft_env.c
 int						ft_env(t_env *env);
@@ -86,12 +78,15 @@ int						ft_env(t_env *env);
 void					ft_exit(t_minishell *minishell, char **args);
 
 // ft_export.c
-void					ft_export(t_minishell *minishell);
-void					*sort_env(t_env **env);
+int						ft_export_arg(t_minishell *minishell, char *arg);
+void					ft_export_noarg(t_minishell *minishell);
+void					ft_export(t_minishell *minishell, char *arg);
 
 // ft_pwd.c
 
+
 // ft_unset.c
+
 
 /* ============= MINISHELL ============= */
 
@@ -103,23 +98,23 @@ void					init_signal(void);
 char					**env_spliter(char *vars);
 bool					init_env(t_env **env, char **envp);
 char					*ft_getenv(t_env *env, char *to_find);
-
 t_token					*prompt(t_minishell minishell);
 char					*ft_getenv(t_env *env, char *to_find);
-t_token	*lexer(t_minishell *minishell, char *line);
+t_token					*lexer(t_minishell *minishell, char *line);
 
 /* ============= UTILS ============= */
 
 void					ft_clear(t_minishell *minishell);
 void					env_clean(t_env *env, char **tab);
 t_env					*env_cpy(t_env *env);
-
 void					*sort_env(t_env **env);
+
 // env_utils.c
 t_env					*new_env_node(void *name, void *content);
 void					*add_env_back(t_env **head, t_env *node);
 void					swap_env_value(t_env **env);
 void					*sort_env(t_env **env);
+t_env					*env_cpy(t_env *env);
 
 // history.c
 int						init_history(t_minishell *minishell);

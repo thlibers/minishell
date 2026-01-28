@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 15:28:32 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/26 14:24:17 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/28 11:17:08 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,12 @@ char	**env_spliter(char *vars)
 	tab[1] = ft_calloc(strlen(vars) - (size_t)(pos - vars), sizeof(char));
 	while (pos[1 + i])
 	{
-		tab[1][i] = pos[1 + i];
+		tab[1][i] = pos[1 + i++];
 		i++;
 	}
-	tab[2] = NULL;
-	return (tab);
+	return (tab[2] = NULL, tab);
 }
 
-// TODO : FREE
 bool	init_env(t_env **env, char **envp)
 {
 	char	**tab;

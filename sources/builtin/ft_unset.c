@@ -6,24 +6,26 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 15:05:33 by thlibers          #+#    #+#             */
-/*   Updated: 2026/01/26 14:32:57 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/28 10:43:53 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	ft_unset(t_env *env, char *arg)
+void	ft_unset(t_minishell *minishell, char *arg)
 {
-	while (env->next)
+	while (minishell->env->next)
 	{
-		if (!ft_strcmp(arg, env->next->name))
+		if (!ft_strcmp(arg, minishell->env->next->name))
 		{
-			free(env->next->name);
-			free(env->next->value);
-			free(env->next);
-			env->next = env->next->next;
+			free(minishell->env->next->name);
+			free(minishell->env->next->value);
+			free(minishell->env->next);
+			minishell->env->next = minishell->env->next->next;
 		}
-		env = env->next;
+		else
+			minishell->last_code = 0;
+		minishell->env = minishell->env->next;
 	}
 }
 
