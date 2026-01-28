@@ -36,7 +36,7 @@ typedef struct s_command
 
 typedef struct s_token
 {
-	t_command			command;
+	t_command			*comm_args;
 	enum e_data_type	type;
 	struct s_token		*token_next;
 }						t_token;

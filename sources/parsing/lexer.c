@@ -13,14 +13,31 @@
 #include "includes/minishell.h"
 
 
-static t_token	*create_token(char *line)
+static t_token	*create_token(char **splitted)
 {
 	t_token	*node;
 	int		i;
+	int		j;
 
+	i = 0;
+	j = 0;
 	node = calloc(1, sizeof(t_token));
 	if (!node)
 		return (NULL);
+	node->comm_args = calloc(1, sizeof(t_token));
+	if (!node->comm_args)
+		return (free(node), NULL);
+	while (splitted[i])
+	{
+		if (!node->comm_args->command && !is_operator(splitted[i]))
+			node->comm_args->command = ft_strdup(splitted[i]);
+		else if (!is_operator(splitted[i]))
+		{
+			node->comm_args->arguments[j] = ft_strdup(splitted[i]);
+			j++;
+		}
+		i++;
+	}
 }
 
 void	print_token(t_token *head)
@@ -60,15 +77,19 @@ static void	token_add_back(t_token **head, t_token *node)
 	*head = checkpoint;
 }
 
+
 t_token	*lexer(t_minishell *minishell, char *line)
 {
 	char	*tmp;
+	char	**splitted;
 
-	(void)minishell;
 	tmp = ft_strtok(line, "|");
 	while (tmp)
 	{
 		tmp = ft_strtrim(tmp, " ");
+		splitted = ft_splitnoquote(tmp, ' ')
+		if (!splitted)
+			return (NULL);
 		printf("%s\n", tmp);
 		tmp = ft_strtok(NULL, "|");
 	}
