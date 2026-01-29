@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 10:47:36 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/28 16:43:17 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/29 11:45:08 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_cd(t_env *env, char *arg)
 }
 
 // Modifier la variable env "PWD",
-	si "cd .." suprimer le derner dossier du pwd (si c'est pas la racine)
+//	si "cd .." suprimer le derner dossier du pwd (si c'est pas la racine)
 // cd ~ et cd -
 
 // cd ~ garde uniquement le home/

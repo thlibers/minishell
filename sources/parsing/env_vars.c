@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 15:28:32 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/28 11:17:08 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/29 14:47:07 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ char	*ft_getenv(t_env *env, char *to_find)
 		{
 			return (env->value);
 		}
+		env = env->next;
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 17:31:13 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/28 15:56:33 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/29 12:24:44 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static t_token	*create_token(char **splitted)
 	node->comm_args = calloc(1, sizeof(t_token));
 	if (!node->comm_args)
 		return (free(node), NULL);
-	node->comm_args->arguments = calloc(10, sizeof(char *));
+	node->comm_args->arguments = calloc(10, sizeof(char *));	//word_count a la place de 10.
 	if (!node->comm_args->arguments)
 		return (free(node->comm_args), free(node), NULL);
 	while (splitted[i])
@@ -120,3 +120,8 @@ t_token	*lexer(t_minishell *minishell, char *line)
 }
 
 // check des commandes de droite a gauche. + execution de gauche a droite
+// file < echo "axda">file
+// T_WORD T_OPE
+
+// apres avoir strtok on va parcourir caractere par caractere pour identifier les mots et les operateurs.
+// puis ensuite on fera la difference entre les mots pour savoir si c'est des files, des arg ou des ope.

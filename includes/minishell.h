@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:44 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/28 15:54:56 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/29 12:47:13 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int					env(t_minishell minishell);
 /* ============= BULTIN ============= */
 
 // ft_selector.c
-void				selector(t_minishell *minishell, char *command);
+void				selector(t_minishell *minishell);
 
 // ft_cd.c
 
@@ -65,7 +65,7 @@ void				ft_exit(t_minishell *minishell, t_command *command);
 
 // ft_export.c
 void				ft_export(t_minishell *minishell, t_command *command);
-int					ft_export_arg(t_minishell *minishell, char *arg);
+int					ft_export_arg(t_minishell *minishell, t_command *command);
 void				ft_export_noarg(t_minishell *minishell);
 
 // ft_pwd.c
@@ -82,8 +82,11 @@ void				init_signal(void);
 char				**env_spliter(char *vars);
 bool				init_env(t_env **env, char **envp);
 char				*ft_getenv(t_env *env, char *to_find);
+
+// prompt.c
 bool				prompt(t_minishell minishell);
-char				*ft_getenv(t_env *env, char *to_find);
+
+// lexer.c
 t_token				*lexer(t_minishell *minishell, char *line);
 
 /* ============= UTILS ============= */

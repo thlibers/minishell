@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 10:18:46 by thlibers          #+#    #+#             */
-/*   Updated: 2025/11/04 14:07:04 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/29 15:04:44 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup(const char *s)
 	char	*dup;
 
 	i = 0;
+	if (!s)
+		return (NULL);
 	dup = malloc(ft_strlen(s) + 1);
 	if (!dup)
 		return (NULL);

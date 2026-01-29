@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 17:02:04 by thlibers          #+#    #+#             */
-/*   Updated: 2026/01/26 17:02:06 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/29 15:23:47 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_env(t_env *env)
 	{
 		if (!ft_strcmp(cp->name, "_"))
 			tmp = cp->value;
-		else
+		else if (cp->value)
 			printf("%s=%s\n", cp->name, cp->value);
 		cp = cp->next;
 	}

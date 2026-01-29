@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 15:05:28 by thlibers          #+#    #+#             */
-/*   Updated: 2026/01/28 15:37:28 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/29 15:24:11 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,22 @@
 // Manque :
 //	-Check caracteres valides
 
-static int	check_valarg(char *arg)
+static int	check_valarg(char **tab)
 {
 	int	i;
 
 	i = 0;
-	if (isdigit(arg[0]))
+	if (isdigit(tab[0][0]))
 	{
-		ft_fprintf(STDERR_FILENO, "export: `%s': not a valid identifier", arg);
+		ft_fprintf(STDERR_FILENO, "export: `%s': not a valid identifier\n", tab[0]);
 		return (0);
 	}
-	while (arg[i])
+	while (tab[0][i])
 	{
-		if (!isalnum(arg[i]) || arg[i] != '_')
+		if (!isalnum(tab[0][i]) && tab[0][i] != '_')
 		{
-			ft_fprintf(STDERR_FILENO, "export: `%s': not a valid identifier",
-				arg);
+			ft_fprintf(STDERR_FILENO, "export: `%s': not a valid identifier\n",
+				tab[0]);
 			return (0);
 		}
 		i++;
@@ -38,20 +38,20 @@ static int	check_valarg(char *arg)
 	return (1);
 }
 
-int	ft_export_arg(t_minishell *minishell, char *arg)
+int	ft_export_arg(t_minishell *minishell, t_command *command)
 {
 	t_env	*head;
 	char	**tab;
 	int		status;
 
 	head = minishell->env;
-	tab = env_spliter(arg);
-	if (!tab || !check_valarg(arg))
+	tab = env_spliter(command->arguments[0]);				// A adapter pour plusieurs args.
+	if (!tab || !check_valarg(tab))							// Exemple : export abc=def ghi=ggg
 		return (minishell->exit_code = 1, 1);
 	status = 0;
 	while (minishell->env && status == 0)
 	{
-		if (strcmp(minishell->env->name, tab[0]))
+		if (strcmp(minishell->env->name, tab[0]) == 0)
 		{
 			if (minishell->env->value)
 				free(minishell->env->value);
@@ -60,12 +60,11 @@ int	ft_export_arg(t_minishell *minishell, char *arg)
 		}
 		minishell->env = minishell->env->next;
 	}
+	minishell->env = head;
 	if (status == 0)
 		add_env_back(&minishell->env, new_env_node(tab[0], tab[1]));
-	minishell->env = head;
 	minishell->exit_code = 0;
-	free_tab(tab);
-	return (0);
+	return (free_tab(tab), 0);
 }
 
 void	ft_export_noarg(t_minishell *minishell)
@@ -76,6 +75,7 @@ void	ft_export_noarg(t_minishell *minishell)
 	cpy = env_cpy(minishell->env);
 	sort_env(&cpy);
 	save = cpy;
+	printf("\x1b[0;31m[!] %s=%s\n\x1b[0;0m", "abc", ft_getenv(minishell->env, "abc"));
 	while (cpy)
 	{
 		printf("export %s=%s\n", cpy->name, cpy->value);
@@ -90,5 +90,5 @@ void	ft_export(t_minishell *minishell, t_command *command)
 	if (command->arg_count == 0)
 		ft_export_noarg(minishell);
 	else
-		ft_export_arg(minishell, NULL);
+		ft_export_arg(minishell, command);
 }

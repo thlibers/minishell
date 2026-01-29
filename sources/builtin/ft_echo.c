@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 09:33:32 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/20 13:48:01 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/29 15:33:45 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,3 +37,5 @@ int	main(int argc, char **argv)
 		ft_putchar_fd('\n', 1);
 	return (0);
 }
+
+// Gerer le echo -n.

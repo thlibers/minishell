@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 16:36:31 by thlibers          #+#    #+#             */
-/*   Updated: 2026/01/28 10:57:38 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/29 15:18:47 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ t_env	*new_env_node(void *name, void *content)
 	node = malloc(sizeof(t_env));
 	if (node == NULL)
 		return (NULL);
-	node->name = name;
-	node->value = content;
+	node->name = ft_strdup(name);
+	node->value = ft_strdup(content);
 	node->next = NULL;
 	return (node);
 }
@@ -73,15 +73,9 @@ void	*sort_env(t_env **env)
 	{
 		sort = 1;
 		*env = head;
-		if (ft_strcmp((*env)->name, "_") == 0)
-		{
-			add_env_back(&head, *env);
-			sort = 0;
-			continue ;
-		}
 		while ((*env)->next)
 		{
-			if (ft_strcmp((*env)->name, (*env)->next->name) > 0)
+			if (ft_strcmp((*env)->name, (*env)->next->name) > 0)		
 			{
 				swap_env_value(env);
 				sort = 0;
