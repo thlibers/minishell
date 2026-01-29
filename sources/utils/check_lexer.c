@@ -12,21 +12,25 @@
 
 #include "includes/minishell.h"
 
-bool	is_operator(char *word, t_token **node)
+int	is_operator(char *word)
 {
-	if (ft_strcmp(word, "|") == 0)
-		return ((*node)->type = T_PIPE, true);
-	else if (ft_strcmp(word, ">>") == 0)
-		return ((*node)->type = T_RED_OUT_APP, true);
-	else if (ft_strcmp(word, ">") == 0)
-		return ((*node)->type = T_RED_OUT, true);
-	else if (ft_strcmp(word, "<<") == 0)
-		return ((*node)->type = T_RED_IN_APP, true);
-	else if (ft_strcmp(word, "<") == 0)
-		return ((*node)->type = T_RED_IN, true);
+	if (word[0] == '|')
+		return (1);
+	else if (word[0] == '>')
+	{
+		if (word[1] == '>')
+			return (2);
+		return (3);
+	}
+	else if (word[0] == '<')
+	{
+		if (word[1] == '<')
+			return (4);
+		return (5);
+	}
 	//	else if (ft_strcmp(word, "||") == 0)
 	//		return ((*node)->type = T_OR, true);
 	//	else if (ft_strcmp(word, "&&") == 0)
 	//		return (true);
-	return (false);
+	return (0);
 }

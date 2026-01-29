@@ -16,18 +16,21 @@
 
 typedef enum e_data_type
 {
-	T_RED_IN = 1,
-	T_RED_IN_APP = 2,
+	T_WORD = 1,
+	T_RED_IN = 2,
+	T_RED_IN_APP,
 	T_RED_OUT,
 	T_RED_OUT_APP,
 	T_PIPE,
-	T_HEREDOC
+	T_AND,
+	T_OR
 }						t_data_type;
 
-typedef enum e_node_type
+typedef struct s_tok
 {
-	T_WORD = 1,
-}						t_node_type;
+	t_data_type	  type;
+	struct s_tok *next;
+} t_tok;
 
 typedef struct s_command
 {

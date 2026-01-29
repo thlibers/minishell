@@ -112,4 +112,7 @@ char				*ft_strchr_mod(const char *s, int c);
 char				*ft_strdup_mod(char *s);
 char				*ft_strjoin_mod(char *s1, char *s2);
 
+// Custom
+bool  ft_isspace(char c);
+
 #endif

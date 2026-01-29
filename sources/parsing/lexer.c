@@ -26,14 +26,15 @@ static t_token	*create_token(char **splitted)
 	node->comm_args = calloc(1, sizeof(t_token));
 	if (!node->comm_args)
 		return (free(node), NULL);
-	node->comm_args->arguments = calloc(10, sizeof(char *));	//word_count a la place de 10.
+	node->comm_args->arguments = calloc(10, sizeof(char *));
+		// word_count a la place de 10.
 	if (!node->comm_args->arguments)
 		return (free(node->comm_args), free(node), NULL);
 	while (splitted[i])
 	{
-		if (!node->comm_args->command && !is_operator(splitted[i], &node))
+		if (!node->comm_args->command && !is_operator(splitted[i]))
 			node->comm_args->command = ft_strdup(splitted[i]);
-		else if (!is_operator(splitted[i], &node))
+		else if (!is_operator(splitted[i]))
 		{
 			node->comm_args->arguments[j] = ft_strdup(splitted[i]);
 			j++;
@@ -124,4 +125,5 @@ t_token	*lexer(t_minishell *minishell, char *line)
 // T_WORD T_OPE
 
 // apres avoir strtok on va parcourir caractere par caractere pour identifier les mots et les operateurs.
-// puis ensuite on fera la difference entre les mots pour savoir si c'est des files, des arg ou des ope.
+// puis ensuite on fera la difference entre les mots pour savoir si c'est des files,
+//	des arg ou des ope.

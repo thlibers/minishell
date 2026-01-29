@@ -22,7 +22,8 @@ static int	check_valarg(char **tab)
 	i = 0;
 	if (isdigit(tab[0][0]))
 	{
-		ft_fprintf(STDERR_FILENO, "export: `%s': not a valid identifier\n", tab[0]);
+		ft_fprintf(STDERR_FILENO, "export: `%s': not a valid identifier\n",
+			tab[0]);
 		return (0);
 	}
 	while (tab[0][i])
@@ -45,8 +46,9 @@ int	ft_export_arg(t_minishell *minishell, t_command *command)
 	int		status;
 
 	head = minishell->env;
-	tab = env_spliter(command->arguments[0]);				// A adapter pour plusieurs args.
-	if (!tab || !check_valarg(tab))							// Exemple : export abc=def ghi=ggg
+	tab = env_spliter(command->arguments[0]); // A adapter pour plusieurs args.
+	if (!tab || !check_valarg(tab))          
+		// Exemple : export abc=def ghi=ggg
 		return (minishell->exit_code = 1, 1);
 	status = 0;
 	while (minishell->env && status == 0)
@@ -75,7 +77,8 @@ void	ft_export_noarg(t_minishell *minishell)
 	cpy = env_cpy(minishell->env);
 	sort_env(&cpy);
 	save = cpy;
-	printf("\x1b[0;31m[!] %s=%s\n\x1b[0;0m", "abc", ft_getenv(minishell->env, "abc"));
+	printf("\x1b[0;31m[!] %s=%s\n\x1b[0;0m", "abc", ft_getenv(minishell->env,
+			"abc"));
 	while (cpy)
 	{
 		printf("export %s=%s\n", cpy->name, cpy->value);

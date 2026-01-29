@@ -26,7 +26,8 @@ void	ft_exit(t_minishell *minishell, t_command *command)
 	{
 		ft_fprintf(STDERR_FILENO, "exit: %s: numeric argument required",
 			command->arguments[0]);
-		ft_clear(minishell);															// DOUBLE FREE (suspission du ft_clear "sur a 100%" d'apres nclavel)
+		ft_clear(minishell);
+			// DOUBLE FREE (suspission du ft_clear "sur a 100%" d'apres nclavel)
 		exit(2);
 	}
 	else if (!command->arguments[0])

@@ -18,6 +18,7 @@
 # define MSH_HIST "msh_history"
 
 # include "lexer.h"
+# include "color.h"
 # include "mylibft/libft.h"
 # include <ctype.h>
 # include <errno.h>
@@ -29,6 +30,9 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+// Vars global pour les signaux
+//volatile sig_atomic_t msh_sig = 0;
 
 typedef struct s_env
 {
@@ -89,9 +93,12 @@ bool				prompt(t_minishell minishell);
 // lexer.c
 t_token				*lexer(t_minishell *minishell, char *line);
 
+// tokenizer.c
+void  *tokenize(char *line);
+
 /* ============= UTILS ============= */
 // check_lexer.c
-bool				is_operator(char *word, t_token **node);
+int				is_operator(char *word);
 
 // clean .c
 void				ft_clear(t_minishell *minishell);

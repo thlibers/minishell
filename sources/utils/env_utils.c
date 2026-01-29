@@ -75,7 +75,7 @@ void	*sort_env(t_env **env)
 		*env = head;
 		while ((*env)->next)
 		{
-			if (ft_strcmp((*env)->name, (*env)->next->name) > 0)		
+			if (ft_strcmp((*env)->name, (*env)->next->name) > 0)
 			{
 				swap_env_value(env);
 				sort = 0;
