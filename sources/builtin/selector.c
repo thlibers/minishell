@@ -15,7 +15,9 @@
 void	selector(t_minishell *minishell, char *command)
 {
 	if (strcmp(command, "exit") == 0)
-		ft_exit(minishell, NULL);
+		ft_exit(minishell, minishell->token->comm_args);
+	else if (strcmp(command, "export") == 0)
+		ft_export(minishell, minishell->token->comm_args);
 	// else if (strcmp(command, "export"))
 	// 	ft_export(minishell, );
 	//	else if (strcmp(command, "cd"))

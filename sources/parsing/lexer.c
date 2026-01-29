@@ -40,6 +40,7 @@ static t_token	*create_token(char **splitted)
 		}
 		i++;
 	}
+	node->comm_args->arg_count = j;
 	node->comm_args->arguments[j] = NULL;
 	node->next = NULL;
 	return (node);
@@ -115,7 +116,6 @@ t_token	*lexer(t_minishell *minishell, char *line)
 		free_tab(splitted);
 		tmp = ft_strtok(NULL, "|");
 	}
-	clear_token(&minishell->token);
 	return (NULL);
 }
 

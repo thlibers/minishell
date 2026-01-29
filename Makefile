@@ -40,6 +40,7 @@ SRCS = $(SRC_DIR)/utils/clean.c\
 		$(SRC_DIR)/utils/check_lexer.c\
 		$(SRC_DIR)/utils/split_tokens.c\
 		$(SRC_DIR)/builtin/ft_exit.c\
+		$(SRC_DIR)/builtin/ft_export.c\
 		$(SRC_DIR)/builtin/selector.c	
 
 # Obj

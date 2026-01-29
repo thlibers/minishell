@@ -61,12 +61,12 @@ void				selector(t_minishell *minishell, char *command);
 int					ft_env(t_env *env);
 
 // ft_exit.c
-void				ft_exit(t_minishell *minishell, char **args);
+void				ft_exit(t_minishell *minishell, t_command *command);
 
 // ft_export.c
+void				ft_export(t_minishell *minishell, t_command *command);
 int					ft_export_arg(t_minishell *minishell, char *arg);
 void				ft_export_noarg(t_minishell *minishell);
-void				ft_export(t_minishell *minishell, char *arg);
 
 // ft_pwd.c
 
@@ -82,7 +82,7 @@ void				init_signal(void);
 char				**env_spliter(char *vars);
 bool				init_env(t_env **env, char **envp);
 char				*ft_getenv(t_env *env, char *to_find);
-bool		prompt(t_minishell minishell);
+bool				prompt(t_minishell minishell);
 char				*ft_getenv(t_env *env, char *to_find);
 t_token				*lexer(t_minishell *minishell, char *line);
 
@@ -93,7 +93,7 @@ bool				is_operator(char *word, t_token **node);
 // clean .c
 void				ft_clear(t_minishell *minishell);
 void				env_clean(t_env *env, char **tab);
-void	free_tab(char **s);
+void				free_tab(char **s);
 
 // env_utils.c
 t_env				*new_env_node(void *name, void *content);

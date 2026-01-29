@@ -19,12 +19,10 @@ bool	prompt(t_minishell minishell)
 
 	line = readline("\x1b[0;32mminishell > \e[0m");
 	if (!line)
-	{
 		return (false);
-	}
 	add_to_history(minishell.fd_history, line);
-	selector(&minishell, line);
 	lexer(&minishell, line);
+	selector(&minishell, line);
 	free(line);
 	return (true);
 }

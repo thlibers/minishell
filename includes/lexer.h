@@ -14,7 +14,7 @@
 # define LEXER_H
 #endif
 
-enum					e_data_type
+typedef enum e_data_type
 {
 	T_RED_IN = 1,
 	T_RED_IN_APP = 2,
@@ -22,12 +22,18 @@ enum					e_data_type
 	T_RED_OUT_APP,
 	T_PIPE,
 	T_HEREDOC
-};
+}						t_data_type;
+
+typedef enum e_node_type
+{
+	T_WORD = 1,
+}						t_node_type;
 
 typedef struct s_command
 {
 	char				*command;
 	char				**arguments;
+	int					arg_count;
 }						t_command;
 
 typedef struct s_token
