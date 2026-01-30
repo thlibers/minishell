@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 17:02:55 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/30 10:45:24 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/30 13:28:50 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	selector(t_minishell *minishell)
 		ft_export(minishell, minishell->token->comm_args);
 	else if (strcmp(minishell->token->comm_args->command, "env") == 0)
 		ft_env(minishell);
-	// else if (strcmp(minishell->token->comm_args->command, "cd") == 0)
-	// 	ft_cd(minishell);
+	else if (strcmp(minishell->token->comm_args->command, "cd") == 0)
+		ft_cd(minishell, minishell->token->comm_args);
 	// else if (strcmp(command, "cd"))
 	// 	ft_cd;
 }

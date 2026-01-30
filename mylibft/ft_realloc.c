@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/29 15:59:48 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/30 14:26:37 by thlibers         ###   ########.fr       */
+/*   Created: 2026/01/30 14:22:32 by thlibers          #+#    #+#             */
+/*   Updated: 2026/01/30 14:26:05 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-bool	ft_isspace(char c)
+void	*ft_realloc(void *old, size_t old_size, size_t new_size)
 {
-	if (c == ' ' || (c >= '\t' && c <= '\r'))
-		return (true);
-	return (false);
+	size_t			smallest;
+	unsigned char	*new;
+
+	smallest = old_size;
+	if (new_size < old_size)
+		smallest = new_size;
+	new = malloc(sizeof(char) * (new_size + 1));
+	if (!new)
+		return (free(old), NULL);
+	return (ft_memcpy(new, old, smallest), free(old), new);
 }
