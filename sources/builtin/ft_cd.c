@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 10:47:36 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/30 14:45:43 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/30 16:56:14 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*parsing_dir(t_minishell *minishell, char *dir)
 	if (errno == ENAMETOOLONG)
 		return (printf("cd: Path is too long"), free(new_path), NULL);
 	else if (errno == ENOENT)
-		return (ft_fprintf(STDERR_FILENO, "cd: %s: No such file or directory\n",
+		return (ft_fprintf(STDERR_FILENO, "cd: %s: No such file or directory\n",		// Gerer le uset OLDPWD. "cd: OLDPWD not set\n"
 				new_path), free(new_path), NULL);
 	else if (errno == ENOTDIR)
 		return (printf("cd: '%s' is not a directory", dir), free(new_path),
@@ -109,9 +109,19 @@ void	ft_cd(t_minishell *minishell, t_command *com_arg)
 	{
 		if(com_arg->arguments[0][2] == '/')
 		{
-			
+			 updated_pwd = ft_strdup(ft_getenv(minishell->env, "PWD"));
+			i = ft_strlen(updated_pwd) - 1;
+			while (updated_pwd[i] != '/')
+				i--;
+			if (updated_pwd[i] == '/')												// Gerer "cd msh/source/.."
+			{
+				updated_pwd = ft_realloc(updated_pwd, ft_strlen(updated_pwd), i + ft_strlen(com_arg->arguments[0]) - 1);
+				updated_pwd[i] = '\0';
+				updated_pwd = ft_strjoin(updated_pwd, &com_arg->arguments[0][2]);
+			}
+			parsing_dir(minishell, updated_pwd);
 		}
-		else		// pour le cd..
+		else
 		{
 			updated_pwd = ft_strdup(ft_getenv(minishell->env, "PWD"));
 			i = ft_strlen(updated_pwd) - 1;
@@ -124,6 +134,7 @@ void	ft_cd(t_minishell *minishell, t_command *com_arg)
 			}
 			parsing_dir(minishell, updated_pwd);
 		}
+		free (updated_pwd);
 	}
 	else if(strcmp(com_arg->arguments[0], "-") == 0)
 	{
