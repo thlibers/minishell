@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 17:31:13 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/29 12:24:44 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/30 10:39:46 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,35 +45,6 @@ static t_token	*create_token(char **splitted)
 	node->comm_args->arguments[j] = NULL;
 	node->next = NULL;
 	return (node);
-}
-
-void	clear_token(t_token **head)
-{
-	t_token	*save;
-	int		i;
-
-	while (*head)
-	{
-		i = 0;
-		save = (*head)->next;
-		if (head)
-		{
-			if ((*head)->comm_args)
-			{
-				if ((*head)->comm_args->arguments)
-				{
-					while ((*head)->comm_args->arguments[i])
-						free((*head)->comm_args->arguments[i++]);
-					free((*head)->comm_args->arguments);
-				}
-				if ((*head)->comm_args->command)
-					free((*head)->comm_args->command);
-				free((*head)->comm_args);
-			}
-			free(*head);
-		}
-		*head = save;
-	}
 }
 
 static void	token_add_back(t_token **head, t_token *node)

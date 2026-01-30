@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 10:47:36 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/29 11:45:08 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/30 10:09:07 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,9 @@ char	*parsing_dir(t_env *env, char *dir)
 	return (new_path);
 }
 
-void	ft_cd(t_env *env, char *arg)
+void	ft_cd(t_minishell *minishell)
 {
+	
 }
 
 // Modifier la variable env "PWD",
@@ -77,6 +78,11 @@ void	ft_cd(t_env *env, char *arg)
 
 // home/minishell/sources			utiliser "chdir" pour maj notre position.
 // cd ..
+
+
+
+
+
 
 // int	main(int argc, char **argv)
 // {

@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:44 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/29 12:47:13 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/30 10:44:36 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void				selector(t_minishell *minishell);
 // ft_echo.c
 
 // ft_env.c
-int					ft_env(t_env *env);
+int					ft_env(t_minishell *minishell);
 
 // ft_exit.c
 void				ft_exit(t_minishell *minishell, t_command *command);

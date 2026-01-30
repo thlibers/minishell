@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 15:05:28 by thlibers          #+#    #+#             */
-/*   Updated: 2026/01/29 15:24:11 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/01/30 10:03:57 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,8 @@ int	ft_export_arg(t_minishell *minishell, t_command *command)
 	int		status;
 
 	head = minishell->env;
-	tab = env_spliter(command->arguments[0]); // A adapter pour plusieurs args.
-	if (!tab || !check_valarg(tab))          
-		// Exemple : export abc=def ghi=ggg
+	tab = env_spliter(command->arguments[0]); 	// A adapter pour plusieurs args.
+	if (!tab || !check_valarg(tab))        		// Exemple : export abc=def ghi=ggg
 		return (minishell->exit_code = 1, 1);
 	status = 0;
 	while (minishell->env && status == 0)
@@ -77,8 +76,6 @@ void	ft_export_noarg(t_minishell *minishell)
 	cpy = env_cpy(minishell->env);
 	sort_env(&cpy);
 	save = cpy;
-	printf("\x1b[0;31m[!] %s=%s\n\x1b[0;0m", "abc", ft_getenv(minishell->env,
-			"abc"));
 	while (cpy)
 	{
 		printf("export %s=%s\n", cpy->name, cpy->value);
