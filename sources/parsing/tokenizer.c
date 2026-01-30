@@ -11,8 +11,33 @@
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+#define IN_RESET 0
+#define IN_SINGLE_QUOTE 1
+#define IN_DOUBLE_QUOTE 2
 
-void  *tokenize(char *line)
+
+int	quote_id(char c, int *quote)
+{
+	if (c == '\"')
+	{
+		if (*quote == IN_DOUBLE_QUOTE)
+			*quote = IN_RESET;
+		else if (*quote == IN_RESET)
+			*quote = IN_DOUBLE_QUOTE;
+	}
+	else if (c == '\'')
+	{
+		if (*quote == IN_SINGLE_QUOTE)
+			*quote = IN_RESET;
+		else if (*quote == IN_RESET)
+			*quote = IN_SINGLE_QUOTE;
+	}
+	else if (c == '\0')
+		*quote = IN_RESET;
+	return (*quote);
+}
+
+void  *tokenizer(char *line)
 {
 	int i;
 	bool states;
@@ -22,11 +47,11 @@ void  *tokenize(char *line)
 	printf("--- BEGIN ---\n");
 	while (line[i])
 	{
-		quote = 1;
+		quote = 0;
 		states = false;
 		while (ft_isspace(line[i]) && line[i])
 			i++;
-		while (!ft_isspace(line[i]) && is_operator(&line[i]) == 0 && line[i])
+		while (((!ft_isspace(line[i]) && !is_operator(&line[i])) || quote != 0) && line[i])
 		{
 			is_inquote(&quote, line[i]);
 			if (!states)
@@ -51,5 +76,3 @@ void  *tokenize(char *line)
 	printf("--- END ---\n");
 	return (NULL);
 }
-
-// Ne gere pas les quotes

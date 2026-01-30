@@ -95,7 +95,7 @@ bool				prompt(t_minishell *minishell);
 t_token				*lexer(t_minishell *minishell, char *line);
 
 // tokenizer.c
-void  *tokenize(char *line);
+void  *tokenizer(char *line);
 
 /* ============= UTILS ============= */
 // check_lexer.c

@@ -22,7 +22,7 @@ bool	prompt(t_minishell *minishell)
 		return (false);
 	add_to_history(minishell->fd_history, line);
 
-	tokenize(line);
+	tokenizer(line);
 	lexer(minishell, line);
 	selector(minishell);
 	free(line);

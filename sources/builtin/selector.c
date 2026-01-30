@@ -14,13 +14,13 @@
 
 void	selector(t_minishell *minishell)
 {
-	if (strcmp(minishell->token->comm_args->command, "exit") == 0)
+	if (ft_strcmp(minishell->token->comm_args->command, "exit") == 0)
 		ft_exit(minishell, minishell->token->comm_args);
-	else if (strcmp(minishell->token->comm_args->command, "export") == 0)
+	else if (ft_strcmp(minishell->token->comm_args->command, "export") == 0)
 		ft_export(minishell, minishell->token->comm_args);
-	else if (strcmp(minishell->token->comm_args->command, "env") == 0)
+	else if (ft_strcmp(minishell->token->comm_args->command, "env") == 0)
 		ft_env(minishell);
-	else if (strcmp(minishell->token->comm_args->command, "cd") == 0)
+	else if (ft_strcmp(minishell->token->comm_args->command, "cd") == 0)
 		ft_cd(minishell, minishell->token->comm_args);
 	// else if (strcmp(command, "cd"))
 	// 	ft_cd;
