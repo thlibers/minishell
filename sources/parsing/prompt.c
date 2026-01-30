@@ -13,18 +13,18 @@
 #include "includes/minishell.h"
 #include <string.h>
 
-bool	prompt(t_minishell minishell)
+bool	prompt(t_minishell *minishell)
 {
 	char	*line;
 
 	line = readline(F_GREEN "minishell > " RESET);
 	if (!line)
 		return (false);
-	add_to_history(minishell.fd_history, line);
+	add_to_history(minishell->fd_history, line);
 
 	tokenize(line);
-	lexer(&minishell, line);
-	selector(&minishell);
+	lexer(minishell, line);
+	selector(minishell);
 	free(line);
 	return (true);
 }

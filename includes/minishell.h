@@ -88,7 +88,7 @@ bool				init_env(t_env **env, char **envp);
 char				*ft_getenv(t_env *env, char *to_find);
 
 // prompt.c
-bool				prompt(t_minishell minishell);
+bool				prompt(t_minishell *minishell);
 
 // lexer.c
 t_token				*lexer(t_minishell *minishell, char *line);

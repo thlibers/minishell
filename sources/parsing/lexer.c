@@ -26,8 +26,8 @@ static t_token	*create_token(char **splitted)
 	node->comm_args = calloc(1, sizeof(t_token));
 	if (!node->comm_args)
 		return (free(node), NULL);
-	node->comm_args->arguments = calloc(10, sizeof(char *));
-		// word_count a la place de 10.
+	node->comm_args->arguments = calloc(100, sizeof(char *));
+		// word_count a la place de 100.
 	if (!node->comm_args->arguments)
 		return (free(node->comm_args), free(node), NULL);
 	while (splitted[i])

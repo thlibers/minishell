@@ -12,7 +12,6 @@
 
 #ifndef LEXER_H
 # define LEXER_H
-#endif
 
 typedef enum e_data_type
 {
@@ -50,3 +49,7 @@ typedef struct s_token
 
 char					**ft_splitnoquote(char *s, char c);
 void					clear_token(t_token **head);
+void	is_inquote(int *quote_state, char c);
+
+
+#endif

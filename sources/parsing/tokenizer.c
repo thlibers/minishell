@@ -16,16 +16,19 @@ void  *tokenize(char *line)
 {
 	int i;
 	bool states;
+	int quote;
 
 	i = 0;
 	printf("--- BEGIN ---\n");
 	while (line[i])
 	{
+		quote = 1;
 		states = false;
 		while (ft_isspace(line[i]) && line[i])
 			i++;
 		while (!ft_isspace(line[i]) && is_operator(&line[i]) == 0 && line[i])
 		{
+			is_inquote(&quote, line[i]);
 			if (!states)
 			{
 				states = true;

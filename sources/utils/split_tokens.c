@@ -14,7 +14,7 @@
 
 void	is_inquote(int *quote_state, char c)
 {
-	if (c == '"')
+	if (c == '\"')
 	{
 		if (*quote_state == 2)
 			*quote_state = 0;

@@ -22,7 +22,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	while (1)
 	{
-		if (!prompt(minishell))
+		if (!prompt(&minishell))
 			break ;
 		clear_token(&minishell.token);
 	}
