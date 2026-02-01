@@ -143,7 +143,8 @@ void	ft_cd(t_minishell *minishell, t_command *com_arg)
 	}
 	else		// le path absolu et relatif.
 	{
-		parsing_dir(minishell, com_arg->arguments[0]);	
+		edit_env(&minishell->env, "PWD", "NEW_PWD");
+		//parsing_dir(minishell, com_arg->arguments[0]);	
 	}
 }
 

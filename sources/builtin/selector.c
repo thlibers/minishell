@@ -22,9 +22,6 @@ void	selector(t_minishell *minishell)
 		ft_env(minishell);
 	else if (ft_strcmp(minishell->token->comm_args->command, "cd") == 0)
 		ft_cd(minishell, minishell->token->comm_args);
-	else if (ft_strcmp(minishell->token->comm_args->command, "azerty") == 0)
-		edit_env(&minishell->env, "PATH", "Change asf");
-	//printf("%s\n", ft_getenv(minishell->env, "PATH"));
 	// else if (strcmp(command, "cd"))
 	// 	ft_cd;
 }
