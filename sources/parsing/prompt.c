@@ -24,7 +24,8 @@ bool	prompt(t_minishell *minishell)
 
 	tokenizer(line);
 	lexer(minishell, line);
-	selector(minishell);
+	if (minishell->token)
+		selector(minishell);
 	free(line);
 	return (true);
 }

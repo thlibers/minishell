@@ -30,7 +30,8 @@ char	*path_builder(t_env *env, char *dir)
 	if (!tmp_str)
 		return (NULL);
 	fullpath = ft_strjoin(tmp_str, dir);
-	free(tmp_str);
+	if (!tmp_str)
+		free(tmp_str);
 	if (!fullpath)
 		return (NULL);
 	return (fullpath);
@@ -80,20 +81,20 @@ char	*parsing_dir(t_minishell *minishell, char *dir)
 	if (errno == ENAMETOOLONG)
 		return (printf("cd: Path is too long"), free(new_path), NULL);
 	else if (errno == ENOENT)
-		return (ft_fprintf(STDERR_FILENO, "cd: %s: No such file or directory\n",		// Gerer le uset OLDPWD. "cd: OLDPWD not set\n"
-				new_path), free(new_path), NULL);
+		ft_fprintf(STDERR_FILENO, "cd: %s: No such file or directory\n", new_path);		// Gerer le uset OLDPWD. "cd: OLDPWD not set\n"
 	else if (errno == ENOTDIR)
-		return (printf("cd: '%s' is not a directory", dir), free(new_path),
-			NULL);
+		printf("cd: '%s' is not a directory", dir);
 	else if (errno == EACCES)
-		return (printf("cd: Permission denied: '%s'\n", dir), NULL);
+		printf("cd: Permission denied: '%s'\n", dir);
 	else if (errno == ENOENT)
-		return (printf("cd: The directory '%s' does not exist\n", dir), NULL);
+		printf("cd: The directory '%s' does not exist\n", dir);
 	else if (errno == ELOOP)
-		return (printf("cd: Too many lenvels of symbolic links\n"),
-			free(new_path), NULL);
-	pwd_update(minishell, new_path);
-	return (new_path);
+		printf("cd: Too many lenvels of symbolic links\n");
+	else
+		pwd_update(minishell, new_path);
+	if (new_path)
+		free(new_path);
+	return (NULL);
 }
 
 void	ft_cd(t_minishell *minishell, t_command *com_arg)
@@ -104,7 +105,7 @@ void	ft_cd(t_minishell *minishell, t_command *com_arg)
 	i = 0;
 	updated_pwd = NULL;
 	if(!com_arg->arg_count || strcmp(com_arg->arguments[0], "~") == 0) 				// "cd ~/Exemple" a gerer
-		parsing_dir(minishell, NULL);
+		parsing_dir(minishell, ft_getenv(minishell->env, "HOME"));
 	else if(com_arg->arguments[0][0] == '.' && com_arg->arguments[0][1] == '.')
 	{
 		if(com_arg->arguments[0][2] == '/')
@@ -140,10 +141,10 @@ void	ft_cd(t_minishell *minishell, t_command *com_arg)
 	{
 		parsing_dir(minishell, ft_getenv(minishell->env, "OLDPWD"));
 	}
-	// else		// le path absolu et relatif.
-	// {
-		
-	// }
+	else		// le path absolu et relatif.
+	{
+		parsing_dir(minishell, com_arg->arguments[0]);	
+	}
 }
 
 // Modifier la variable env "PWD",
@@ -158,3 +159,13 @@ void	ft_cd(t_minishell *minishell, t_command *com_arg)
 // cd ../FOLDER a gerer aussi
 
 // deux chdir a faire (un qui revient en arriere et un qui va dans le nouveau dossier)
+//
+// BUG :
+// 1 -	DOUBLE FREE
+//		cd ..
+//		cd aze
+// 2 -	DOUBLE FREE
+//		cd ~
+//		cd ..
+//		cd ~
+//		CTRL + D

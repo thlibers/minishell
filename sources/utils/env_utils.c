@@ -43,6 +43,30 @@ void	*add_env_back(t_env **head, t_env *node)
 	return (*head);
 }
 
+bool  edit_env(t_env **env, char *name, char *new_val)
+{
+	t_env *head;
+
+	head = *env;
+	while (*env)
+	{
+		if (ft_strcmp((*env)->name, name) == 0)
+		{
+			if (ft_strcmp(name, "PWD") == 0)
+			{
+				edit_env(env, "OLDPWD", (*env)->value);
+			}
+			if ((*env)->value)
+				free((*env)->value);
+			(*env)->value = ft_strdup(new_val);
+			break ;
+		}
+		*env = (*env)->next;
+	}
+	*env = head;
+	return (true);
+}
+
 void	swap_env_value(t_env **env)
 {
 	char	*tmp;

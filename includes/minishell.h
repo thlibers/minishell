@@ -112,6 +112,7 @@ void				*add_env_back(t_env **head, t_env *node);
 void				swap_env_value(t_env **env);
 void				*sort_env(t_env **env);
 t_env				*env_cpy(t_env *env);
+bool  edit_env(t_env **env, char *name, char *new_val);
 
 // history.c
 int					init_history(t_minishell *minishell);
