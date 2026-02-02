@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 11:26:05 by thlibers          #+#    #+#             */
-/*   Updated: 2026/01/30 16:41:51 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/02 14:54:38 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ char	*ft_strjoin(char *s1, char const *s2)
 		j++;
 	}
 	join[i + j] = 0;
-	if(s1)
-		free(s1);
 	return (join);
 }
 

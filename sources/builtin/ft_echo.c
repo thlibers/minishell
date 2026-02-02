@@ -6,13 +6,13 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 09:33:32 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/29 15:33:45 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/02 12:58:46 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv)		//a changer
 {
 	bool	new_line;
 	int		i;
@@ -38,4 +38,3 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
-// Gerer le echo -n.

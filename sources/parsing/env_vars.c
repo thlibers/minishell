@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 15:28:32 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/29 14:47:07 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/02 14:43:35 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,7 @@ char	*ft_getenv(t_env *env, char *to_find)
 	while (env)
 	{
 		if (ft_strcmp(env->name, to_find) == 0)
-		{
 			return (env->value);
-		}
 		env = env->next;
 	}
 	return (NULL);

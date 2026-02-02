@@ -6,7 +6,7 @@
 #    By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 11:04:15 by nclavel           #+#    #+#              #
-#    Updated: 2026/01/30 13:25:40 by thlibers         ###   ########.fr        #
+#    Updated: 2026/02/02 13:51:53 by thlibers         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 # Srcs
 SRCS = $(SRC_DIR)/utils/clean.c\
-		$(SRC_DIR)/utils/history.c\
+		$(SRC_DIR)/minishell/history.c\
 		$(SRC_DIR)/utils/env_utils.c\
 		$(SRC_DIR)/parsing/env_vars.c\
 		$(SRC_DIR)/parsing/lexer.c\
@@ -43,7 +43,7 @@ SRCS = $(SRC_DIR)/utils/clean.c\
 		$(SRC_DIR)/builtin/ft_env.c\
 		$(SRC_DIR)/builtin/ft_exit.c\
 		$(SRC_DIR)/builtin/ft_export.c\
-		$(SRC_DIR)/builtin/selector.c	
+		$(SRC_DIR)/minishell/selector.c	
 
 # Obj
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

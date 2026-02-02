@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 10:47:36 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/30 16:56:14 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/02 18:48:27 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,43 +30,9 @@ char	*path_builder(t_env *env, char *dir)
 	if (!tmp_str)
 		return (NULL);
 	fullpath = ft_strjoin(tmp_str, dir);
-	if (!tmp_str)
-		free(tmp_str);
 	if (!fullpath)
 		return (NULL);
 	return (fullpath);
-}
-
-void pwd_update(t_minishell *minishell, char *new_path)
-{
-	t_env	*head;
-	char 	*pwd_save;
-
-	head = minishell->env;
-	while (minishell->env)
-	{
-		if (strcmp(minishell->env->name, "PWD") == 0)
-		{
-			pwd_save = ft_strdup(minishell->env->value);
-			if (minishell->env->value)
-				free(minishell->env->value);
-			minishell->env->value = ft_strdup(new_path);
-		}
-		minishell->env = minishell->env->next;					// A proteger
-	}
-	minishell->env = head;
-	while (minishell->env)
-	{
-		if (strcmp(minishell->env->name, "OLDPWD") == 0)
-		{
-			if (minishell->env->value)
-				free(minishell->env->value);
-			minishell->env->value = ft_strdup(pwd_save);
-		}
-		minishell->env = minishell->env->next;
-	}
-	free (pwd_save);
-	minishell->env = head;
 }
 
 //	PATH ABSOLUTE = 0 ; PATH RELATIVE = 1
@@ -79,11 +45,11 @@ char	*parsing_dir(t_minishell *minishell, char *dir)
 		return (NULL);
 	chdir(new_path);
 	if (errno == ENAMETOOLONG)
-		return (printf("cd: Path is too long"), free(new_path), NULL);
+		printf("cd: Path is too long");
 	else if (errno == ENOENT)
 		ft_fprintf(STDERR_FILENO, "cd: %s: No such file or directory\n", new_path);		// Gerer le uset OLDPWD. "cd: OLDPWD not set\n"
 	else if (errno == ENOTDIR)
-		printf("cd: '%s' is not a directory", dir);
+		printf("cd: '%s' is not a directory\n", dir);
 	else if (errno == EACCES)
 		printf("cd: Permission denied: '%s'\n", dir);
 	else if (errno == ENOENT)
@@ -91,61 +57,92 @@ char	*parsing_dir(t_minishell *minishell, char *dir)
 	else if (errno == ELOOP)
 		printf("cd: Too many lenvels of symbolic links\n");
 	else
-		pwd_update(minishell, new_path);
-	if (new_path)
-		free(new_path);
+		edit_env(&minishell->env, "PWD", new_path);
+	// if (new_path)
+	// 	free(new_path);
 	return (NULL);
 }
 
-void	ft_cd(t_minishell *minishell, t_command *com_arg)
+static void	cd_dotdotslash(t_minishell *minishell, t_command *com_arg)
+{
+	int		i;
+	int		count;
+	char	*updated_pwd;
+
+	count = 0;
+	if (com_arg->arguments[0][0] == '/')
+		updated_pwd = ft_strdup(com_arg->arguments[0]);
+	else
+		updated_pwd = ft_strjoin(ft_getenv(minishell->env, "PWD"), com_arg->arguments[0]);
+	printf("PWD = %s\n", updated_pwd);
+	if (!updated_pwd)
+		return ;
+	i = ft_strlen(updated_pwd) - 1;
+	while (!ft_strnstr(&updated_pwd[i], "../", 3) && i >= 0)
+		i--;
+	while (i >= 0)
+	{
+		if ( i < 0)
+			break ;
+		if (updated_pwd[i] == '.')												// Gerer "cd msh/source/.."
+		{
+			ft_strcat(&updated_pwd[i], &updated_pwd[i + 3]);					// Fonction quand on lui donne un seul "../"
+			count++;
+			printf("PWD cat1 = %s\n", updated_pwd);
+		}
+		if (updated_pwd[i - 1] == '/')
+		{
+			ft_strcat(&updated_pwd[i], &updated_pwd[i + ft_strlen(ft_strrchr(ft_getenv(minishell->env, "PWD"), '/')) - 1]);
+			printf("PWD cat2 = %s\n", updated_pwd);
+			// printf("len du dossier = %zu\n", ft_strlen(ft_strrchr(ft_getenv(minishell->env, "PWD"), '/')) - 1);
+			if (!ft_strnstr(&updated_pwd[i], "../", 3))
+				break ;
+		}
+		i--;
+	}
+	// updated_pwd = ft_realloc(updated_pwd, ft_strlen(updated_pwd), i + ft_strlen(com_arg->arguments[0]) - 1);
+	// parsing_dir(minishell, updated_pwd);
+	free(updated_pwd);
+}
+
+static void	cd_dotdot(t_minishell *minishell)
 {
 	int		i;
 	char	*updated_pwd;
 	
-	i = 0;
-	updated_pwd = NULL;
+	updated_pwd = ft_strdup(ft_getenv(minishell->env, "PWD"));
+	i = ft_strlen(updated_pwd) - 1;
+	while (updated_pwd[i] != '/')
+		i--;
+	if (updated_pwd[i] == '/')
+	{
+		updated_pwd = ft_realloc(updated_pwd, ft_strlen(updated_pwd), i + 1);
+		if (i == 0)
+			updated_pwd[i + 1] = '\0';
+		else
+			updated_pwd[i] = '\0';
+	}
+	parsing_dir(minishell, updated_pwd);
+	free(updated_pwd);
+}
+
+void	ft_cd(t_minishell *minishell, t_command *com_arg)
+{
 	if(!com_arg->arg_count || strcmp(com_arg->arguments[0], "~") == 0) 				// "cd ~/Exemple" a gerer
 		parsing_dir(minishell, ft_getenv(minishell->env, "HOME"));
-	else if(com_arg->arguments[0][0] == '.' && com_arg->arguments[0][1] == '.')
+	else if(ft_strnstr(com_arg->arguments[0], "..", ft_strlen(com_arg->arguments[0])))
 	{
-		if(com_arg->arguments[0][2] == '/')
+		if(ft_strnstr(com_arg->arguments[0], "../", ft_strlen(com_arg->arguments[0])))		// Gerer le cd ../..
 		{
-			 updated_pwd = ft_strdup(ft_getenv(minishell->env, "PWD"));
-			i = ft_strlen(updated_pwd) - 1;
-			while (updated_pwd[i] != '/')
-				i--;
-			if (updated_pwd[i] == '/')												// Gerer "cd msh/source/.."
-			{
-				updated_pwd = ft_realloc(updated_pwd, ft_strlen(updated_pwd), i + ft_strlen(com_arg->arguments[0]) - 1);
-				updated_pwd[i] = '\0';
-				updated_pwd = ft_strjoin(updated_pwd, &com_arg->arguments[0][2]);
-			}
-			parsing_dir(minishell, updated_pwd);
+			cd_dotdotslash(minishell, com_arg);
 		}
-		else
-		{
-			updated_pwd = ft_strdup(ft_getenv(minishell->env, "PWD"));
-			i = ft_strlen(updated_pwd) - 1;
-			while (updated_pwd[i] != '/')
-				i--;
-			if (updated_pwd[i] == '/')
-			{
-				updated_pwd = ft_realloc(updated_pwd, ft_strlen(updated_pwd), i + 1);
-				updated_pwd[i] = '\0';
-			}
-			parsing_dir(minishell, updated_pwd);
-		}
-		free (updated_pwd);
+		else if (com_arg->arguments[0][2] == '\0')
+			cd_dotdot(minishell);
 	}
 	else if(strcmp(com_arg->arguments[0], "-") == 0)
-	{
 		parsing_dir(minishell, ft_getenv(minishell->env, "OLDPWD"));
-	}
-	else		// le path absolu et relatif.
-	{
-		edit_env(&minishell->env, "PWD", "NEW_PWD");
-		//parsing_dir(minishell, com_arg->arguments[0]);	
-	}
+	else
+		parsing_dir(minishell, com_arg->arguments[0]);
 }
 
 // Modifier la variable env "PWD",

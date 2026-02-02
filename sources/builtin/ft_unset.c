@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 15:05:33 by thlibers          #+#    #+#             */
-/*   Updated: 2026/01/28 15:37:28 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/02 12:59:12 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,4 @@ void	ft_unset(t_minishell *minishell, char *arg)
 }
 
 // Si unset + une variable qui n'existe pas, pas d'erreur,
-retourne un code de succès.
+// retourne un code de succès.
