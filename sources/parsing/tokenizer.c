@@ -36,6 +36,13 @@ int	quote_id(char c, int *quote)
 		*quote = IN_RESET;
 	return (*quote);
 }
+/*
+void  assign_ope(char c)
+{
+	if (c == '|')
+
+}
+*/
 
 void  *tokenizer(char *line)
 {
@@ -67,11 +74,13 @@ void  *tokenizer(char *line)
 			if (!states)
 			{
 				states = true;
-				printf("T_OPE\n");
+				if (line[i] == '|')
+					printf("T_PIPE\n");
+				else
+					printf("T_OPE\n");
 			}
 			i++;
 		}
-
 	}
 	printf("--- END ---\n");
 	return (NULL);
