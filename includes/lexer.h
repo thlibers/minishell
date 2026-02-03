@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 16:55:58 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/28 15:52:18 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/03 17:32:50 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 typedef enum e_data_type
 {
+	T_NULL = 0,
 	T_WORD = 1,
 	T_RED_IN = 2,
 	T_RED_IN_APP,

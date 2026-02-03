@@ -21,7 +21,6 @@ bool	prompt(t_minishell *minishell)
 	if (!line)
 		return (false);
 	add_to_history(minishell->fd_history, line);
-
 	tokenizer(line);
 	lexer(minishell, line);
 	if (minishell->token)

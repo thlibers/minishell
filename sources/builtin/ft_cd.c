@@ -153,3 +153,26 @@ void	ft_cd(t_minishell *minishell, t_command *com_arg)
 	else
 		parsing_dir(minishell, com_arg->arguments[0]);
 }
+
+// Modifier la variable env "PWD",
+//	si "cd .." suprimer le derner dossier du pwd (si c'est pas la racine)
+// cd ~ et cd -
+
+// cd ~ garde uniquement le home/
+// cd - revient a l'ancien dossier ($OLDPWD)
+// par exemple (dans msh "cd source/utils" puis "cd -" pour revenir dans msh)
+
+// home/minishell/sources			utiliser "chdir" pour maj notre position.
+// cd ../FOLDER a gerer aussi
+
+// deux chdir a faire (un qui revient en arriere et un qui va dans le nouveau dossier)
+//
+// BUG :
+// 1 -	DOUBLE FREE
+//		cd ..
+//		cd aze
+// 2 -	DOUBLE FREE
+//		cd ~
+//		cd ..
+//		cd ~
+//		CTRL + D

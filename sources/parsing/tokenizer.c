@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 15:51:09 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/30 10:16:09 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/03 17:34:04 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,81 @@ int	quote_id(char c, int *quote)
 		*quote = IN_RESET;
 	return (*quote);
 }
-/*
-void  assign_ope(char c)
-{
-	if (c == '|')
 
+t_tok *tok_create_back(t_tok **tok, t_data_type data_type)
+{
+	t_tok *node;
+	t_tok *head;
+
+	node = calloc(1, sizeof(t_tok));
+	if (!node)
+		return (NULL);
+	node->type = data_type;
+	node->next = NULL;
+	head = *tok;
+	if (*tok == NULL)
+		*tok = node;
+	else
+	{
+		while ((*tok)->next)
+			*tok = (*tok)->next; 
+		(*tok)->next = node;
+		*tok = head;
+	}
+	return (head);
 }
-*/
+
+t_data_type  assign_ope(char *c)
+{
+	t_data_type	type;
+
+	if (c[0] == '|' && c[1] != '|')		  // PIPE
+		type = T_PIPE;
+	else if (c[0] == '|' && c[1] == '|') // OR
+		type = T_OR;
+	else if (c[0] == '<' && c[1] == '<') // APP_IN
+		type = T_RED_IN_APP;
+	else if (c[0] == '<' && c[1] != '<')  // IN
+		type = T_RED_IN;
+	else if (c[0] == '>' && c[1] == '>') // APP_OUT
+		type = T_RED_OUT_APP;
+	else if (c[0] == '>' && c[1] != '>')  // OUT
+		type = T_RED_OUT;
+	else if (c[0] == '&' && c[1] == '&')  // AND
+		type = T_AND;
+	return (type);
+}
+
+
+void  showtok(t_tok *tok)
+{
+	while (tok)
+	{
+		printf("enum val = %d\n", tok->type);
+		tok = tok->next;
+	}
+}
+
+void  free_tok(t_tok **tok)
+{
+	t_tok *save;
+
+	while (*tok)
+	{
+		save = (*tok)->next;
+		free(*tok);
+		*tok = save;
+	}
+}
 
 void  *tokenizer(char *line)
 {
 	int i;
 	bool states;
 	int quote;
+	t_tok *tok = NULL;
 
 	i = 0;
-	printf("--- BEGIN ---\n");
 	while (line[i])
 	{
 		quote = 0;
@@ -64,7 +123,7 @@ void  *tokenizer(char *line)
 			if (!states)
 			{
 				states = true;
-				printf("T_WORD\n");
+				tok_create_back(&tok, T_WORD);
 			}
 			i++;
 		}
@@ -74,14 +133,12 @@ void  *tokenizer(char *line)
 			if (!states)
 			{
 				states = true;
-				if (line[i] == '|')
-					printf("T_PIPE\n");
-				else
-					printf("T_OPE\n");
+				tok_create_back(&tok, assign_ope(&line[i]));
 			}
 			i++;
 		}
 	}
-	printf("--- END ---\n");
+	showtok(tok);
+	free_tok(&tok);
 	return (NULL);
 }
