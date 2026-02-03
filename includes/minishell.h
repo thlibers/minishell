@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:44 by nclavel           #+#    #+#             */
-/*   Updated: 2026/01/30 13:24:51 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/03 16:19:02 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,10 @@ int					ft_export_arg(t_minishell *minishell, t_command *command);
 void				ft_export_noarg(t_minishell *minishell);
 
 // ft_pwd.c
+int					ft_pwd(t_env *env);
 
 // ft_unset.c
+void				ft_unset(t_minishell *minishell, t_command *com_arg);
 
 /* ============= MINISHELL ============= */
 

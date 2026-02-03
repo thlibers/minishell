@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 10:47:36 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/02 18:48:27 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/03 18:13:49 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,15 @@ char	*path_builder(t_env *env, char *dir)
 	char	*tmp_str;
 
 	if (!dir && !ft_getenv(env, "HOME"))
-		return (printf("cd: HOME not set\n"), NULL);
+		return (printf("cd: HOME not set\n"), NULL);			// (OLPWD et HOME) A dissocier
+	else if (!dir && !ft_getenv(env, "OLDPWD"))
+		return (printf("cd: OLDPWD not set\n"), NULL);
 	else if(!dir)
 		return (ft_getenv(env, "HOME"));
 	if (dir[0] == '/')
 	{
-		fullpath = ft_strdup(dir);								// A changer car repart de la racine
-		return (fullpath);										// sprintf ?
+		fullpath = ft_strdup(dir);
+		return (fullpath);
 	}
 	tmp_str = ft_strjoin(ft_getenv(env, "PWD"), "/");
 	if (!tmp_str)
@@ -35,7 +37,6 @@ char	*path_builder(t_env *env, char *dir)
 	return (fullpath);
 }
 
-//	PATH ABSOLUTE = 0 ; PATH RELATIVE = 1
 char	*parsing_dir(t_minishell *minishell, char *dir)
 {
 	char	*new_path;
@@ -47,7 +48,7 @@ char	*parsing_dir(t_minishell *minishell, char *dir)
 	if (errno == ENAMETOOLONG)
 		printf("cd: Path is too long");
 	else if (errno == ENOENT)
-		ft_fprintf(STDERR_FILENO, "cd: %s: No such file or directory\n", new_path);		// Gerer le uset OLDPWD. "cd: OLDPWD not set\n"
+		ft_fprintf(STDERR_FILENO, "cd: %s: No such file or directory\n", new_path);
 	else if (errno == ENOTDIR)
 		printf("cd: '%s' is not a directory\n", dir);
 	else if (errno == EACCES)
@@ -58,50 +59,53 @@ char	*parsing_dir(t_minishell *minishell, char *dir)
 		printf("cd: Too many lenvels of symbolic links\n");
 	else
 		edit_env(&minishell->env, "PWD", new_path);
-	// if (new_path)
-	// 	free(new_path);
+	 if (new_path)
+	 	free(new_path);
 	return (NULL);
 }
 
 static void	cd_dotdotslash(t_minishell *minishell, t_command *com_arg)
 {
 	int		i;
-	int		count;
+	int		pos;
 	char	*updated_pwd;
 
-	count = 0;
 	if (com_arg->arguments[0][0] == '/')
+	{
 		updated_pwd = ft_strdup(com_arg->arguments[0]);
+	}
 	else
-		updated_pwd = ft_strjoin(ft_getenv(minishell->env, "PWD"), com_arg->arguments[0]);
+	{
+		updated_pwd = ft_strjoin(ft_getenv(minishell->env, "PWD"), "/");		// sprintf ?
+		updated_pwd = ft_strjoin(updated_pwd, com_arg->arguments[0]);
+	}
 	printf("PWD = %s\n", updated_pwd);
 	if (!updated_pwd)
 		return ;
 	i = ft_strlen(updated_pwd) - 1;
-	while (!ft_strnstr(&updated_pwd[i], "../", 3) && i >= 0)
-		i--;
 	while (i >= 0)
 	{
+		while (!ft_strnstr(&updated_pwd[i], "../", 3) && i >= 0)
+			i--;
 		if ( i < 0)
 			break ;
-		if (updated_pwd[i] == '.')												// Gerer "cd msh/source/.."
+		if (updated_pwd[i] == '.')
 		{
-			ft_strcat(&updated_pwd[i], &updated_pwd[i + 3]);					// Fonction quand on lui donne un seul "../"
-			count++;
+			ft_strcat(&updated_pwd[i], &updated_pwd[i + 3]);
 			printf("PWD cat1 = %s\n", updated_pwd);
-		}
-		if (updated_pwd[i - 1] == '/')
-		{
-			ft_strcat(&updated_pwd[i], &updated_pwd[i + ft_strlen(ft_strrchr(ft_getenv(minishell->env, "PWD"), '/')) - 1]);
+			pos = i;
+			i--;
+			while (updated_pwd[i - 1] != '/')
+				i--;
+			ft_strcat(&updated_pwd[i], &updated_pwd[pos]);
 			printf("PWD cat2 = %s\n", updated_pwd);
-			// printf("len du dossier = %zu\n", ft_strlen(ft_strrchr(ft_getenv(minishell->env, "PWD"), '/')) - 1);
-			if (!ft_strnstr(&updated_pwd[i], "../", 3))
-				break ;
 		}
 		i--;
 	}
-	// updated_pwd = ft_realloc(updated_pwd, ft_strlen(updated_pwd), i + ft_strlen(com_arg->arguments[0]) - 1);
-	// parsing_dir(minishell, updated_pwd);
+	pos = ft_strlen(updated_pwd);
+	updated_pwd = ft_realloc(updated_pwd, ft_strlen(updated_pwd));
+	updated_pwd[pos] = '\0';
+	parsing_dir(minishell, updated_pwd);
 	free(updated_pwd);
 }
 
@@ -109,14 +113,14 @@ static void	cd_dotdot(t_minishell *minishell)
 {
 	int		i;
 	char	*updated_pwd;
-	
+
 	updated_pwd = ft_strdup(ft_getenv(minishell->env, "PWD"));
 	i = ft_strlen(updated_pwd) - 1;
 	while (updated_pwd[i] != '/')
 		i--;
 	if (updated_pwd[i] == '/')
 	{
-		updated_pwd = ft_realloc(updated_pwd, ft_strlen(updated_pwd), i + 1);
+		updated_pwd = ft_realloc(updated_pwd, i + 1);
 		if (i == 0)
 			updated_pwd[i + 1] = '\0';
 		else
@@ -128,11 +132,16 @@ static void	cd_dotdot(t_minishell *minishell)
 
 void	ft_cd(t_minishell *minishell, t_command *com_arg)
 {
-	if(!com_arg->arg_count || strcmp(com_arg->arguments[0], "~") == 0) 				// "cd ~/Exemple" a gerer
+	int		arg_len;
+
+	arg_len = ft_strlen(com_arg->arguments[0]);
+	if(com_arg->arg_count == 0 || strcmp(com_arg->arguments[0], "~") == 0) 				// "cd ~/Exemple" a gerer (expand)
 		parsing_dir(minishell, ft_getenv(minishell->env, "HOME"));
-	else if(ft_strnstr(com_arg->arguments[0], "..", ft_strlen(com_arg->arguments[0])))
+	if(com_arg->arguments[0][arg_len - 1] == '/' && arg_len > 1)
+		com_arg->arguments[0][arg_len - 1] = '\0';
+	if(ft_strnstr(com_arg->arguments[0], "..", arg_len))
 	{
-		if(ft_strnstr(com_arg->arguments[0], "../", ft_strlen(com_arg->arguments[0])))		// Gerer le cd ../..
+		if(ft_strnstr(com_arg->arguments[0], "../", arg_len))							// Gerer le cd ../..
 		{
 			cd_dotdotslash(minishell, com_arg);
 		}
@@ -144,26 +153,3 @@ void	ft_cd(t_minishell *minishell, t_command *com_arg)
 	else
 		parsing_dir(minishell, com_arg->arguments[0]);
 }
-
-// Modifier la variable env "PWD",
-//	si "cd .." suprimer le derner dossier du pwd (si c'est pas la racine)
-// cd ~ et cd -
-
-// cd ~ garde uniquement le home/
-// cd - revient a l'ancien dossier ($OLDPWD)
-// par exemple (dans msh "cd source/utils" puis "cd -" pour revenir dans msh)
-
-// home/minishell/sources			utiliser "chdir" pour maj notre position.
-// cd ../FOLDER a gerer aussi
-
-// deux chdir a faire (un qui revient en arriere et un qui va dans le nouveau dossier)
-//
-// BUG :
-// 1 -	DOUBLE FREE
-//		cd ..
-//		cd aze
-// 2 -	DOUBLE FREE
-//		cd ~
-//		cd ..
-//		cd ~
-//		CTRL + D

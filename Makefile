@@ -6,7 +6,7 @@
 #    By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 11:04:15 by nclavel           #+#    #+#              #
-#    Updated: 2026/02/02 13:51:53 by thlibers         ###   ########.fr        #
+#    Updated: 2026/02/03 15:48:16 by thlibers         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,8 @@ SRCS = $(SRC_DIR)/utils/clean.c\
 		$(SRC_DIR)/builtin/ft_env.c\
 		$(SRC_DIR)/builtin/ft_exit.c\
 		$(SRC_DIR)/builtin/ft_export.c\
+		$(SRC_DIR)/builtin/ft_pwd.c\
+		$(SRC_DIR)/builtin/ft_unset.c\
 		$(SRC_DIR)/minishell/selector.c	
 
 # Obj
