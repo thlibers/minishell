@@ -18,9 +18,9 @@ typedef enum e_data_type
 	T_NULL = 0,
 	T_WORD = 1,
 	T_RED_IN = 2,
-	T_RED_IN_APP,
 	T_RED_OUT,
 	T_RED_OUT_APP,
+	T_HERE_DOC,
 	T_PIPE,
 	T_AND,
 	T_OR
@@ -29,6 +29,7 @@ typedef enum e_data_type
 typedef struct s_tok
 {
 	t_data_type	  type;
+	char		  *str;
 	struct s_tok *next;
 } t_tok;
 
@@ -50,7 +51,7 @@ typedef struct s_token
 
 char					**ft_splitnoquote(char *s, char c);
 void					clear_token(t_token **head);
-void	is_inquote(int *quote_state, char c);
+int	is_inquote(int *quote, char c);
 
 
 #endif

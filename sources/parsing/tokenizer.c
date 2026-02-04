@@ -11,33 +11,40 @@
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-#define IN_RESET 0
-#define IN_SINGLE_QUOTE 1
-#define IN_DOUBLE_QUOTE 2
 
 
-int	quote_id(char c, int *quote)
+char  *tok_str_save(char *line, t_data_type data_type)
 {
-	if (c == '\"')
+	char *str;
+	int quote;
+	int len;
+	int i;
+
+	i = 0;
+	quote = 0;
+	len = 0;
+	if (data_type == T_WORD)
 	{
-		if (*quote == IN_DOUBLE_QUOTE)
-			*quote = IN_RESET;
-		else if (*quote == IN_RESET)
-			*quote = IN_DOUBLE_QUOTE;
+		while ((line[len] && !is_operator(&line[len]) && line[len] != ' ') || is_inquote(&quote, line[len]))
+			len++;
 	}
-	else if (c == '\'')
+	else
 	{
-		if (*quote == IN_SINGLE_QUOTE)
-			*quote = IN_RESET;
-		else if (*quote == IN_RESET)
-			*quote = IN_SINGLE_QUOTE;
+		while (line[len] && is_operator(&line[len]))
+			len++;
 	}
-	else if (c == '\0')
-		*quote = IN_RESET;
-	return (*quote);
+	str = calloc(len + 1, sizeof(char));
+	if (!str)
+		return (NULL);
+	while (i < len)
+	{
+		str[i] = line[i];
+		i++;
+	}
+	return (str);
 }
 
-t_tok *tok_create_back(t_tok **tok, t_data_type data_type)
+t_tok *tok_create_back(t_tok **tok, t_data_type data_type, char *line)
 {
 	t_tok *node;
 	t_tok *head;
@@ -46,6 +53,7 @@ t_tok *tok_create_back(t_tok **tok, t_data_type data_type)
 	if (!node)
 		return (NULL);
 	node->type = data_type;
+	node->str = tok_str_save(line, data_type);
 	node->next = NULL;
 	head = *tok;
 	if (*tok == NULL)
@@ -64,12 +72,13 @@ t_data_type  assign_ope(char *c)
 {
 	t_data_type	type;
 
+	type = T_NULL;
 	if (c[0] == '|' && c[1] != '|')		  // PIPE
 		type = T_PIPE;
 	else if (c[0] == '|' && c[1] == '|') // OR
 		type = T_OR;
-	else if (c[0] == '<' && c[1] == '<') // APP_IN
-		type = T_RED_IN_APP;
+	else if (c[0] == '<' && c[1] == '<') // HERE_DOC
+		type = T_HERE_DOC;
 	else if (c[0] == '<' && c[1] != '<')  // IN
 		type = T_RED_IN;
 	else if (c[0] == '>' && c[1] == '>') // APP_OUT
@@ -87,6 +96,7 @@ void  showtok(t_tok *tok)
 	while (tok)
 	{
 		printf("enum val = %d\n", tok->type);
+		printf("val = %s\n", tok->str);
 		tok = tok->next;
 	}
 }
@@ -98,6 +108,7 @@ void  free_tok(t_tok **tok)
 	while (*tok)
 	{
 		save = (*tok)->next;
+		free((*tok)->str);
 		free(*tok);
 		*tok = save;
 	}
@@ -111,6 +122,7 @@ void  *tokenizer(char *line)
 	t_tok *tok = NULL;
 
 	i = 0;
+	printf("--- BEGIN ---\n");
 	while (line[i])
 	{
 		quote = 0;
@@ -123,7 +135,7 @@ void  *tokenizer(char *line)
 			if (!states)
 			{
 				states = true;
-				tok_create_back(&tok, T_WORD);
+				tok_create_back(&tok, T_WORD, &line[i]);
 			}
 			i++;
 		}
@@ -133,12 +145,13 @@ void  *tokenizer(char *line)
 			if (!states)
 			{
 				states = true;
-				tok_create_back(&tok, assign_ope(&line[i]));
+				tok_create_back(&tok, assign_ope(&line[i]), &line[i]);
 			}
 			i++;
 		}
 	}
 	showtok(tok);
 	free_tok(&tok);
+	printf("--- END ---\n");
 	return (NULL);
 }

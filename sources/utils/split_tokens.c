@@ -12,6 +12,32 @@
 
 #include "includes/minishell.h"
 
+#define IN_RESET 0
+#define IN_SINGLE_QUOTE 1
+#define IN_DOUBLE_QUOTE 2
+
+
+int	is_inquote(int *quote, char c)
+{
+	if (c == '\"')
+	{
+		if (*quote == IN_DOUBLE_QUOTE)
+			*quote = IN_RESET;
+		else if (*quote == IN_RESET)
+			*quote = IN_DOUBLE_QUOTE;
+	}
+	else if (c == '\'')
+	{
+		if (*quote == IN_SINGLE_QUOTE)
+			*quote = IN_RESET;
+		else if (*quote == IN_RESET)
+			*quote = IN_SINGLE_QUOTE;
+	}
+	else if (c == '\0')
+		*quote = IN_RESET;
+	return (*quote);
+}
+/*
 void	is_inquote(int *quote_state, char c)
 {
 	if (c == '\"')
@@ -29,7 +55,7 @@ void	is_inquote(int *quote_state, char c)
 			*quote_state = 1;
 	}
 }
-
+*/
 static size_t	count_word(char *s, char sep)
 {
 	size_t	i;

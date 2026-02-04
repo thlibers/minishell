@@ -14,9 +14,6 @@
 
 int	ft_pwd(t_env *env)
 {
-	int	i;
-
-	i = 0;
 	while (env)
 	{
 		if (ft_strncmp(env->name, "PWD", strlen(env->name)))
@@ -24,7 +21,6 @@ int	ft_pwd(t_env *env)
 			printf("%s\n", env->value);
 			return (0);
 		}
-		i++;
 	}
 	return (1);
 }
