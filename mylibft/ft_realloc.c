@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 14:22:32 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/03 17:21:34 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/04 15:34:15 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,15 @@ void *ft_realloc(void *ptr, size_t size)
         free(ptr);
         return NULL;
     }
-    new_ptr = malloc(size);
+    new_ptr = malloc(size + 1);
     if (new_ptr == NULL)
         return (NULL);
     memcpy(new_ptr, ptr, size);
-    free(ptr);
+	if (ptr)
+	{
+    	free(ptr);
+		ptr = NULL;	
+	}
     return (new_ptr);
 }
 
