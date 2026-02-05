@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:44 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/03 16:19:02 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/05 14:03:33 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void				selector(t_minishell *minishell);
 void				ft_cd(t_minishell *minishell, t_command *com_arg);
 
 // ft_echo.c
+int					ft_echo(t_command *com_arg);
 
 // ft_env.c
 int					ft_env(t_minishell *minishell);
@@ -101,7 +102,11 @@ void  *tokenizer(char *line);
 
 /* ============= UTILS ============= */
 // check_lexer.c
-int				is_operator(char *word);
+int					dotcount(char *str);
+char				*path_builder(t_env *env, char *dir);
+
+// check_lexer.c
+int					is_operator(char *word);
 
 // clean .c
 void				ft_clear(t_minishell *minishell);
