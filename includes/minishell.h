@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:44 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/05 14:03:33 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/05 15:16:25 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_minishell
 
 int					env(t_minishell minishell);
 
-/* ============= BULTIN ============= */
+/* ======================= BULTINS ======================= */
 
 // ft_selector.c
 void				selector(t_minishell *minishell);
@@ -80,12 +80,15 @@ int					ft_pwd(t_env *env);
 // ft_unset.c
 void				ft_unset(t_minishell *minishell, t_command *com_arg);
 
-/* ============= MINISHELL ============= */
+/* ======================= EXEC ======================= */
+
+
+/* ======================= MINISHELL ======================= */
 
 bool				init_minishell(t_minishell *minishell, char **envp);
 void				init_signal(void);
 
-/* ============= PARSING ============= */
+/* ======================= PARSING ======================= */
 // env_vars.c
 char				**env_spliter(char *vars);
 bool				init_env(t_env **env, char **envp);
@@ -100,7 +103,7 @@ t_token				*lexer(t_minishell *minishell, char *line);
 // tokenizer.c
 void  *tokenizer(char *line);
 
-/* ============= UTILS ============= */
+/* ======================= UTILS ======================= */
 // check_lexer.c
 int					dotcount(char *str);
 char				*path_builder(t_env *env, char *dir);

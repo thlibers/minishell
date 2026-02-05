@@ -6,7 +6,7 @@
 #    By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 11:04:15 by nclavel           #+#    #+#              #
-#    Updated: 2026/02/05 14:03:50 by thlibers         ###   ########.fr        #
+#    Updated: 2026/02/05 15:14:27 by thlibers         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,13 +26,13 @@ LIBFT_DIR = mylibft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 # Srcs
-SRCS = $(SRC_DIR)/builtin/ft_cd.c\
-		$(SRC_DIR)/builtin/ft_echo.c\
-		$(SRC_DIR)/builtin/ft_env.c\
-		$(SRC_DIR)/builtin/ft_exit.c\
-		$(SRC_DIR)/builtin/ft_export.c\
-		$(SRC_DIR)/builtin/ft_pwd.c\
-		$(SRC_DIR)/builtin/ft_unset.c\
+SRCS = $(SRC_DIR)/builtins/ft_cd.c\
+		$(SRC_DIR)/builtins/ft_echo.c\
+		$(SRC_DIR)/builtins/ft_env.c\
+		$(SRC_DIR)/builtins/ft_exit.c\
+		$(SRC_DIR)/builtins/ft_export.c\
+		$(SRC_DIR)/builtins/ft_pwd.c\
+		$(SRC_DIR)/builtins/ft_unset.c\
 		$(SRC_DIR)/minishell/history.c\
 		$(SRC_DIR)/minishell/main.c\
 		$(SRC_DIR)/minishell/minishell.c\
