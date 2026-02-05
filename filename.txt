@@ -1,0 +1,12 @@
+docs
+filename.txt
+includes
+Makefile
+minishell
+msh_history
+mylibft
+obj
+sources
+valgrindrc
+val.supp
+mon texte

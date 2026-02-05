@@ -12,27 +12,20 @@
 
 #include "includes/minishell.h"
 
-
-char  *tok_str_save(char *line, t_data_type data_type)
+char	*tok_str_save(char *line, t_data_type data_type)
 {
-	char *str;
-	int quote;
-	int len;
-	int i;
+	char	*str;
+	int		quote;
+	int		len;
+	int		i;
 
 	i = 0;
 	quote = 0;
 	len = 0;
-	if (data_type == T_WORD)
-	{
-		while ((line[len] && !is_operator(&line[len]) && line[len] != ' ') || is_inquote(&quote, line[len]))
-			len++;
-	}
-	else
-	{
-		while (line[len] && is_operator(&line[len]))
-			len++;
-	}
+	(void)data_type;
+	while ((line[len] && !is_operator(&line[len]) && line[len] != ' ')
+		|| is_inquote(&quote, line[len]) || is_operator(&line[len]))
+		len++;
 	str = calloc(len + 1, sizeof(char));
 	if (!str)
 		return (NULL);
@@ -44,66 +37,69 @@ char  *tok_str_save(char *line, t_data_type data_type)
 	return (str);
 }
 
-t_tok *tok_create_back(t_tok **tok, t_data_type data_type, char *line)
+t_tok	*tok_create_back(t_tok **tok, t_data_type data_type, char *line)
 {
-	t_tok *node;
-	t_tok *head;
+	t_tok	*node;
+	t_tok	*head;
 
 	node = calloc(1, sizeof(t_tok));
 	if (!node)
 		return (NULL);
 	node->type = data_type;
-	node->str = tok_str_save(line, data_type);
-	node->next = NULL;
+	if (data_type == T_WORD)
+		node->str = tok_str_save(line, data_type);
 	head = *tok;
 	if (*tok == NULL)
 		*tok = node;
 	else
 	{
 		while ((*tok)->next)
-			*tok = (*tok)->next; 
+			*tok = (*tok)->next;
 		(*tok)->next = node;
+		node->prev = *tok;
 		*tok = head;
 	}
 	return (head);
 }
 
-t_data_type  assign_ope(char *c)
+t_data_type	assign_ope(char *c)
 {
 	t_data_type	type;
 
 	type = T_NULL;
-	if (c[0] == '|' && c[1] != '|')		  // PIPE
+	if (c[0] == '|' && c[1] != '|') // PIPE
 		type = T_PIPE;
 	else if (c[0] == '|' && c[1] == '|') // OR
 		type = T_OR;
 	else if (c[0] == '<' && c[1] == '<') // HERE_DOC
 		type = T_HERE_DOC;
-	else if (c[0] == '<' && c[1] != '<')  // IN
+	else if (c[0] == '<' && c[1] != '<') // IN
 		type = T_RED_IN;
 	else if (c[0] == '>' && c[1] == '>') // APP_OUT
 		type = T_RED_OUT_APP;
-	else if (c[0] == '>' && c[1] != '>')  // OUT
+	else if (c[0] == '>' && c[1] != '>') // OUT
 		type = T_RED_OUT;
-	else if (c[0] == '&' && c[1] == '&')  // AND
+	else if (c[0] == '&' && c[1] == '&') // AND
 		type = T_AND;
 	return (type);
 }
 
-
-void  showtok(t_tok *tok)
+void	showtok(t_tok *tok)
 {
 	while (tok)
 	{
 		printf("enum val = %d\n", tok->type);
 		printf("val = %s\n", tok->str);
+		if (tok->prev)
+			printf("prev val = %s\n", tok->prev->str);
+		printf("-------\n");
 		tok = tok->next;
 	}
 }
 
-void  free_tok(t_tok **tok)
+void	free_tok(t_tok **tok)
 {
-	t_tok *save;
+	t_tok	*save;
 
 	while (*tok)
 	{
@@ -114,13 +110,14 @@ void  free_tok(t_tok **tok)
 	}
 }
 
-void  *tokenizer(char *line)
+void	*tokenizer(char *line)
 {
-	int i;
-	bool states;
-	int quote;
-	t_tok *tok = NULL;
+	int		i;
+	bool	states;
+	int		quote;
+	t_tok	*tok;
 
+	tok = NULL;
 	i = 0;
 	printf("--- BEGIN ---\n");
 	while (line[i])
@@ -129,7 +126,8 @@ void  *tokenizer(char *line)
 		states = false;
 		while (ft_isspace(line[i]) && line[i])
 			i++;
-		while (((!ft_isspace(line[i]) && !is_operator(&line[i])) || quote != 0) && line[i])
+		while (((!ft_isspace(line[i]) && !is_operator(&line[i])) || quote != 0)
+			&& line[i])
 		{
 			is_inquote(&quote, line[i]);
 			if (!states)

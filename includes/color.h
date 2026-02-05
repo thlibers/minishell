@@ -15,8 +15,18 @@
 
 # define RESET "\e[0m"
 
-# define F_GREEN "\e[0;32m"
+// --- FOREGROUND COLORS ---
 # define F_RED "\e[0;31m"
+# define F_GREEN "\e[0;32m"
+# define F_BLUE "\e[0;34m"
 # define F_YELLOW "\e[0;33m"
+# define F_PURPLE "\e[0;35m"
+
+// --- STYLIZATION ---
+# define S_BOLD "\e[1m"
+# define S_UNDERLINE "\e[4m"
+# define S_SLOW_BLINK "\e[5m"
+# define S_FAST_BLINK "\e[6m"
+
 #endif
 

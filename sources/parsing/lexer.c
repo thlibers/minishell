@@ -27,7 +27,7 @@ static t_token	*create_token(char **splitted)
 	if (!node->comm_args)
 		return (free(node), NULL);
 	node->comm_args->arguments = calloc(100, sizeof(char *));
-		// word_count a la place de 100.
+	// word_count a la place de 100.
 	if (!node->comm_args->arguments)
 		return (free(node->comm_args), free(node), NULL);
 	while (splitted[i])
@@ -36,7 +36,8 @@ static t_token	*create_token(char **splitted)
 			node->comm_args->command = ft_strdup(splitted[i]);
 		else if (!is_operator(splitted[i]))
 		{
-		//	node->comm_args->arguments = ft_realloc(node->comm_args->arguments, j + 2);
+			//	node->comm_args->arguments = ft_realloc(node->comm_args->arguments,
+			//			j + 2);
 			node->comm_args->arguments[j] = ft_strdup(splitted[i]);
 			j++;
 		}
