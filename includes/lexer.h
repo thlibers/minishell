@@ -38,7 +38,7 @@ typedef struct s_tok
 typedef struct s_ast
 {
 	t_data_type	type;
-	char  **data;
+	char  *data;
 	char  *file;
 	struct s_ast *leaf_right;
 	struct s_ast *leaf_left;

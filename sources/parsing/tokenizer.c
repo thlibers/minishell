@@ -148,7 +148,8 @@ void	*tokenizer(char *line)
 			i++;
 		}
 	}
-	showtok(tok);
+  t_ast *ast = create_tree(tok);
+  print_ast(ast);
 	free_tok(&tok);
 	printf("--- END ---\n");
 	return (NULL);

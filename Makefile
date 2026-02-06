@@ -42,6 +42,7 @@ SRCS = $(SRC_DIR)/builtins/ft_cd.c\
 		$(SRC_DIR)/parsing/parsing.c\
 		$(SRC_DIR)/parsing/prompt.c\
 		$(SRC_DIR)/parsing/tokenizer.c\
+		$(SRC_DIR)/parsing/AST.c\
 		$(SRC_DIR)/utils/check_lexer.c\
 		$(SRC_DIR)/utils/clean.c\
 		$(SRC_DIR)/utils/env_utils.c\

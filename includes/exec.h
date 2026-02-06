@@ -12,7 +12,7 @@
 
 #ifndef EXEC_H
 # define EXEC_H
-
+# include <sys/types.h>
 # define HEREDOC_F "/tmp/pipex_heredoc.tmp"
 
 typedef struct s_command

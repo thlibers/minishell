@@ -104,6 +104,10 @@ t_token				*lexer(t_minishell *minishell, char *line);
 // tokenizer.c
 void  *tokenizer(char *line);
 
+// AST.c
+t_ast *create_tree(t_tok *tok);
+void  print_ast(t_ast *ast);
+
 /* ======================= UTILS ======================= */
 // check_lexer.c
 int					dotcount(char *str);
