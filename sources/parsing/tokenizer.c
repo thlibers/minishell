@@ -24,7 +24,7 @@ char	*tok_str_save(char *line, t_data_type data_type)
 	len = 0;
 	(void)data_type;
 	while ((line[len] && !is_operator(&line[len]) && line[len] != ' ')
-		|| is_inquote(&quote, line[len]) || is_operator(&line[len]))
+		|| is_inquote(&quote, line[len]))
 		len++;
 	str = calloc(len + 1, sizeof(char));
 	if (!str)
