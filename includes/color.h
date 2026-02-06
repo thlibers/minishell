@@ -29,4 +29,3 @@
 # define S_FAST_BLINK "\e[6m"
 
 #endif
-

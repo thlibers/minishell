@@ -29,20 +29,20 @@ typedef enum e_data_type
 
 typedef struct s_tok
 {
-	t_data_type	  type;
-	char		  *str;
-	struct s_tok *next;
-	struct s_tok *prev;
-} t_tok;
+	t_data_type			type;
+	char				*str;
+	struct s_tok		*next;
+	struct s_tok		*prev;
+}						t_tok;
 
 typedef struct s_ast
 {
-	t_data_type	type;
-	char  *data;
-	char  *file;
-	struct s_ast *leaf_right;
-	struct s_ast *leaf_left;
-} t_ast;
+	t_data_type			type;
+	char				*data;
+	char				*file;
+	struct s_ast		*leaf_right;
+	struct s_ast		*leaf_left;
+}						t_ast;
 
 typedef struct s_token
 {
@@ -56,6 +56,5 @@ typedef struct s_token
 char					**ft_splitnoquote(char *s, char c);
 void					clear_token(t_token **head);
 int						is_inquote(int *quote, char c);
-
 
 #endif

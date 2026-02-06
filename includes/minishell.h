@@ -17,6 +17,10 @@
 # define _XOPEN_SOURCE 700
 # define MSH_HIST "msh_history"
 
+#define IN_RESET 0
+#define IN_SINGLE_QUOTE 1
+#define IN_DOUBLE_QUOTE 2
+
 # include "color.h"
 # include "exec.h"
 # include "lexer.h"
@@ -33,7 +37,7 @@
 # include <unistd.h>
 
 // Vars global pour les signaux
-//volatile sig_atomic_t msh_sig = 0;
+// volatile sig_atomic_t msh_sig = 0;
 
 typedef struct s_env
 {
@@ -83,7 +87,6 @@ void				ft_unset(t_minishell *minishell, t_command *com_arg);
 
 /* ======================= EXEC ======================= */
 
-
 /* ======================= MINISHELL ======================= */
 
 bool				init_minishell(t_minishell *minishell, char **envp);
@@ -102,11 +105,15 @@ bool				prompt(t_minishell *minishell);
 t_token				*lexer(t_minishell *minishell, char *line);
 
 // tokenizer.c
-void  *tokenizer(char *line);
+void				*tokenizer(char *line);
 
 // AST.c
-t_ast *create_tree(t_tok *tok);
-void  print_ast(t_ast *ast);
+t_ast				*create_tree(t_tok *tok);
+void				print_ast(t_ast *ast);
+void	free_ast(t_ast **ast);
+
+
+bool  check_quote(t_tok *tok);
 
 /* ======================= UTILS ======================= */
 // check_lexer.c
@@ -127,7 +134,7 @@ void				*add_env_back(t_env **head, t_env *node);
 void				swap_env_value(t_env **env);
 void				*sort_env(t_env **env);
 t_env				*env_cpy(t_env *env);
-bool  edit_env(t_env **env, char *name, char *new_val);
+bool				edit_env(t_env **env, char *name, char *new_val);
 
 // history.c
 int					init_history(t_minishell *minishell);

@@ -12,11 +12,6 @@
 
 #include "includes/minishell.h"
 
-#define IN_RESET 0
-#define IN_SINGLE_QUOTE 1
-#define IN_DOUBLE_QUOTE 2
-
-
 int	is_inquote(int *quote, char c)
 {
 	if (c == '\"')

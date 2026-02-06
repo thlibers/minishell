@@ -28,15 +28,15 @@ typedef struct s_exec
 	pid_t		*pid;
 	t_command	*com_args;
 	// char		***cmd_args;	// delete
-	char		**argv;			// delete
-	int			argc;			// delete
+	char **argv; // delete
+	int argc;    // delete
 	char		**env;
 	char		*limiter;
-	int 		(*pipe_fd)[2];
+	int (*pipe_fd)[2];
 	int			infile_fd;
 	int			outfile_fd;
 	int			index;
-	int			heredoc; // ?
+	int heredoc; // ?
 }				t_exec;
 
 #endif

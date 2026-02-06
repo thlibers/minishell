@@ -16,8 +16,6 @@ void	ft_expand(t_minishell *minshell)
 {
 	while (minishell->)
 	{
-		
-		
 	}
 }
 
