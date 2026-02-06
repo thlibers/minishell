@@ -6,13 +6,13 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:29:09 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/05 17:22:40 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/06 16:20:31 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	ft_envsize(t_env *env)
+static int	ft_envsize(t_env *env)
 {
 	int		count;
 	t_env	*tmp;
@@ -49,4 +49,4 @@ char	**convert_env(t_env *env)
 	return (converted_tab);
 }
 
-// le free quand appel0
+// le free quand appel

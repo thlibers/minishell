@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 16:55:58 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/03 17:32:50 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/02/06 13:55:04 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,6 @@ typedef struct s_ast
 	struct s_ast *leaf_right;
 	struct s_ast *leaf_left;
 } t_ast;
-
-typedef struct s_command
-{
-	char				*command;
-	char				**arguments;
-	int					arg_count;
-}						t_command;
 
 typedef struct s_token
 {

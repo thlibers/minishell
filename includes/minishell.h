@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:44 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/05 15:16:25 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/06 13:42:24 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 # define _XOPEN_SOURCE 700
 # define MSH_HIST "msh_history"
 
-# include "lexer.h"
 # include "color.h"
+# include "exec.h"
+# include "lexer.h"
 # include "mylibft/libft.h"
 # include <ctype.h>
 # include <errno.h>
