@@ -149,11 +149,11 @@ void	*tokenizer(char *line)
 			i++;
 		}
 	}
-  check_quote(tok);
+	check_quote(tok);
 	ast = create_tree(tok);
 	print_ast(ast);
-  free_ast(&ast);
 	free_tok(&tok);
+	free_ast(&ast);
 	printf("--- END ---\n");
 	return (NULL);
 }

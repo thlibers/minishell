@@ -13,14 +13,14 @@
 #ifndef COLOR_H
 # define COLOR_H
 
-# define RESET "\e[0m"
+# define RESET "\001\e[0m\002"
 
 // --- FOREGROUND COLORS ---
-# define F_RED "\e[0;31m"
-# define F_GREEN "\e[0;32m"
-# define F_BLUE "\e[0;34m"
-# define F_YELLOW "\e[0;33m"
-# define F_PURPLE "\e[0;35m"
+# define F_RED "\001\e[0;31m\002"
+# define F_GREEN "\001\e[0;32m\002"
+# define F_BLUE "\001\e[0;34m\002"
+# define F_YELLOW "\001\e[0;33m\002"
+# define F_PURPLE "\001\e[0;35m\002"
 
 // --- STYLIZATION ---
 # define S_BOLD "\e[1m"

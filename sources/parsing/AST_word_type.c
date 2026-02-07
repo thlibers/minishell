@@ -21,4 +21,3 @@ bool	is_file(t_tok *tok)
 		return (true);
 	return (false);
 }
-

@@ -17,15 +17,15 @@ t_data_type	next_ope(t_tok *tok)
 	while (tok)
 	{
 		if (tok->type != T_WORD)
-			break ;
+			return (tok->type);
 		tok = tok->next;
 	}
 	return (T_WORD);
 }
 /*
-t_ast last_branch(t_tok)
+t_ast	last_branch(t_tok *tok)
 {
-	t_ast *branch;
+	t_ast	*branch;
 
 	if (tok)
 }
@@ -57,10 +57,8 @@ t_ast	*create_tree(t_tok *tok)
 		tok = tok->next;
 	while (tok->next && tok->next->type == T_WORD)
 		tok = tok->next;
-
 	if (tok->type == T_WORD)
 		tree = create_tree(tok->next);
-
 	node = calloc(1, sizeof(t_ast));
 	if (!node)
 		return (NULL);
@@ -72,16 +70,17 @@ t_ast	*create_tree(t_tok *tok)
 	return (node);
 }
 
-
 /* --- DEBUG --- */
 void	print_ast(t_ast *ast)
 {
 	t_ast	*leaf;
-	int leaf_number = 0;
+	int		leaf_number;
 
+	leaf_number = 0;
 	while (ast)
 	{
 		leaf_number++;
+		printf("leaf %d type %d\n", leaf_number, ast->type);
 		if (ast->leaf_left)
 		{
 			leaf = ast->leaf_left;

@@ -74,6 +74,7 @@ void	env_clean(t_env *env, char **tab)
 void	free_ast(t_ast **ast)
 {
 	t_ast	*save;
+	t_ast	*leaf;
 
 	if (*ast != NULL)
 		free_ast(&(*ast)->leaf_right);
@@ -81,13 +82,14 @@ void	free_ast(t_ast **ast)
   {
     if ((*ast)->leaf_left)
     {
-      while ((*ast)->leaf_left)
+		leaf = (*ast)->leaf_left;
+      while (leaf)
       {
-        save = ((*ast)->leaf_left->leaf_left);
-        if ((*ast)->data)
-          free((*ast)->data);
-        free((*ast)->leaf_left);
-        (*ast)->leaf_left = save;
+        save = leaf->leaf_left;
+        if (leaf)
+			free(leaf->data);
+        free(leaf);
+        leaf = save;
       }
     }
     free(*ast);

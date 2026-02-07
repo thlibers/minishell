@@ -21,6 +21,7 @@ typedef enum e_data_type
 	T_RED_IN,
 	T_RED_OUT,
 	T_RED_OUT_APP,
+	T_LIMITER,
 	T_PIPE,
 	T_FILE,
 	T_AND,
