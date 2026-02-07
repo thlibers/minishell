@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_synthax.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nclavel <nclavel@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/07 12:24:35 by nclavel           #+#    #+#             */
+/*   Updated: 2026/02/07 12:24:38 by nclavel          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "includes/minishell.h"
 
@@ -32,4 +42,4 @@ bool  check_quote(t_tok *tok)
 // CAS MESSAGE ERREUR 
 // QUOTE PAS FERMER
 // OPERATEUR SEUL : "echo 'hello' |"
-// TROP OPERATEUR : "echo 'hello' | | cat -e"
+// TROP OPERATEUR : "echo 'hello' | | cat -e" (redirection compte aussi)

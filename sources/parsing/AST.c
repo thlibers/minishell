@@ -12,27 +12,6 @@
 
 #include "includes/minishell.h"
 
-bool	is_command(t_tok *tok)
-{
-	if (!tok->prev && tok->prev->type != T_WORD)
-		return (true);
-	return (false);
-}
-
-bool	is_argument(t_tok *tok)
-{
-	if (tok->prev->type == T_WORD)
-		return (true);
-	return (false);
-}
-
-bool	is_file(t_tok *tok)
-{
-	if (tok->prev->type != T_WORD || tok->prev->type != T_FILE)
-		return (true);
-	return (false);
-}
-
 t_data_type	next_ope(t_tok *tok)
 {
 	while (tok)
@@ -43,7 +22,14 @@ t_data_type	next_ope(t_tok *tok)
 	}
 	return (T_WORD);
 }
+/*
+t_ast last_branch(t_tok)
+{
+	t_ast *branch;
 
+	if (tok)
+}
+*/
 t_ast	*create_left(t_tok *tok)
 {
 	t_ast	*left;
@@ -67,52 +53,41 @@ t_ast	*create_tree(t_tok *tok)
 
 	if (!tok)
 		return (NULL);
-	if (tok != NULL)
+	while (tok->next && tok->type != T_WORD)
+		tok = tok->next;
+	while (tok->next && tok->next->type == T_WORD)
+		tok = tok->next;
+
+	if (tok->type == T_WORD)
 		tree = create_tree(tok->next);
-	while (tok->prev && tok->prev->type == T_WORD)
-		tok = tok->prev;
+
 	node = calloc(1, sizeof(t_ast));
+	if (!node)
+		return (NULL);
 	node->type = next_ope(tok);
 	node->leaf_right = tree;
+	while (tok->prev && tok->prev->type == T_WORD)
+		tok = tok->prev;
 	node->leaf_left = create_left(tok);
 	return (node);
 }
 
-void	free_ast(t_ast **ast)
-{
-	t_ast	*save;
 
-	if (*ast != NULL)
-		free_ast(&(*ast)->leaf_right);
-  if (*ast)
-  {
-    if ((*ast)->leaf_left)
-    {
-      while ((*ast)->leaf_left)
-      {
-        save = ((*ast)->leaf_left->leaf_left);
-        if ((*ast)->data)
-          free((*ast)->data);
-        free((*ast)->leaf_left);
-        (*ast)->leaf_left = save;
-      }
-    }
-    free(*ast);
-  }
-}
-
+/* --- DEBUG --- */
 void	print_ast(t_ast *ast)
 {
 	t_ast	*leaf;
+	int leaf_number = 0;
 
 	while (ast)
 	{
+		leaf_number++;
 		if (ast->leaf_left)
 		{
 			leaf = ast->leaf_left;
 			while (leaf)
 			{
-				printf("%s\n", leaf->data);
+				printf("leaf %d : %s\n", leaf_number, leaf->data);
 				leaf = leaf->leaf_left;
 			}
 		}

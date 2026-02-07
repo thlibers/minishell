@@ -71,3 +71,27 @@ void	env_clean(t_env *env, char **tab)
 	}
 }
 
+void	free_ast(t_ast **ast)
+{
+	t_ast	*save;
+
+	if (*ast != NULL)
+		free_ast(&(*ast)->leaf_right);
+  if (*ast)
+  {
+    if ((*ast)->leaf_left)
+    {
+      while ((*ast)->leaf_left)
+      {
+        save = ((*ast)->leaf_left->leaf_left);
+        if ((*ast)->data)
+          free((*ast)->data);
+        free((*ast)->leaf_left);
+        (*ast)->leaf_left = save;
+      }
+    }
+    free(*ast);
+  }
+}
+
+
