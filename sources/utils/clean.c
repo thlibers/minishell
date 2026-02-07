@@ -96,4 +96,15 @@ void	free_ast(t_ast **ast)
   }
 }
 
+void	free_tok(t_tok **tok)
+{
+	t_tok	*save;
 
+	while (*tok)
+	{
+		save = (*tok)->next;
+		free((*tok)->str);
+		free(*tok);
+		*tok = save;
+	}
+}

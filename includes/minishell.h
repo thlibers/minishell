@@ -51,6 +51,8 @@ typedef struct s_minishell
 {
 	t_env			*env;
 	t_token			*token;
+	t_tok			*tok;
+	t_ast			*root;
 	int				fd_history;
 	int				exit_code;
 }					t_minishell;
@@ -105,15 +107,15 @@ bool				prompt(t_minishell *minishell);
 t_token				*lexer(t_minishell *minishell, char *line);
 
 // tokenizer.c
-void				*tokenizer(char *line);
+t_tok				*tokenizer(char *line);
 
 // AST.c
 t_ast				*create_tree(t_tok *tok);
 void				print_ast(t_ast *ast);
-void	free_ast(t_ast **ast);
 
 
 bool  check_quote(t_tok *tok);
+bool  check_ope(t_tok *tok);
 
 /* ======================= UTILS ======================= */
 // check_lexer.c
@@ -127,6 +129,8 @@ int					is_operator(char *word);
 void				ft_clear(t_minishell *minishell);
 void				env_clean(t_env *env, char **tab);
 void				free_tab(char **s);
+void	free_tok(t_tok **tok);
+void	free_ast(t_ast **ast);
 
 // env_utils.c
 t_env				*new_env_node(void *name, void *content);

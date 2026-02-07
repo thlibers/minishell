@@ -39,6 +39,23 @@ bool	check_quote(t_tok *tok)
 	return (true);
 }
 
+bool  check_ope(t_tok *tok)
+{
+	while (tok)
+	{
+		if (tok->type != T_WORD)
+		{
+			if (tok->prev->type != T_WORD || !tok->next)
+			{
+				printf("BAD OPE\n");
+				return (false);
+			}
+		}
+		tok = tok->next;
+	}
+	return (true);
+}
+
 // CAS MESSAGE ERREUR
 // QUOTE PAS FERMER
 // OPERATEUR SEUL : "echo 'hello' |"

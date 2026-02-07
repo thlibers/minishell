@@ -97,30 +97,17 @@ void	showtok(t_tok *tok)
 	}
 }
 
-void	free_tok(t_tok **tok)
-{
-	t_tok	*save;
 
-	while (*tok)
-	{
-		save = (*tok)->next;
-		free((*tok)->str);
-		free(*tok);
-		*tok = save;
-	}
-}
 
-void	*tokenizer(char *line)
+t_tok	*tokenizer(char *line)
 {
 	int		i;
 	bool	states;
 	int		quote;
 	t_tok	*tok;
-	t_ast	*ast;
 
-	tok = NULL;
 	i = 0;
-	printf("--- BEGIN ---\n");
+	tok = NULL;
 	while (line[i])
 	{
 		quote = 0;
@@ -149,11 +136,7 @@ void	*tokenizer(char *line)
 			i++;
 		}
 	}
-	check_quote(tok);
-	ast = create_tree(tok);
-	print_ast(ast);
-	free_tok(&tok);
-	free_ast(&ast);
-	printf("--- END ---\n");
-	return (NULL);
+	if (!check_quote(tok) || !check_ope(tok))
+		return (free_tok(&tok), NULL);
+	return (tok);
 }
