@@ -23,9 +23,11 @@ char	*tok_str_save(char *line, t_data_type data_type)
 	quote = 0;
 	len = 0;
 	(void)data_type;
-	while ((line[len] && !is_operator(&line[len]) && line[len] != ' ')
-		|| is_inquote(&quote, line[len]))
+	while ((line[len] && !is_operator(&line[len]) && !ft_isspace(line[len])) || quote != 0)
+	{
+		is_inquote(&quote, line[len]);
 		len++;
+	}
 	str = calloc(len + 1, sizeof(char));
 	if (!str)
 		return (NULL);
@@ -34,6 +36,7 @@ char	*tok_str_save(char *line, t_data_type data_type)
 		str[i] = line[i];
 		i++;
 	}
+	str[i] = '\0';
 	return (str);
 }
 
@@ -104,6 +107,7 @@ t_tok	*tokenizer(char *line)
 	int		i;
 	bool	states;
 	int		quote;
+	int		ope;
 	t_tok	*tok;
 
 	i = 0;
@@ -111,6 +115,7 @@ t_tok	*tokenizer(char *line)
 	while (line[i])
 	{
 		quote = 0;
+		ope = 0;
 		states = false;
 		while (ft_isspace(line[i]) && line[i])
 			i++;
@@ -126,8 +131,9 @@ t_tok	*tokenizer(char *line)
 			i++;
 		}
 		states = false;
-		while (is_operator(&line[i]) != 0)
+		while (is_operator(&line[i]) != 0 && ope < 2)
 		{
+			ope++; // FIX TEMPORAIRE ||| en ope
 			if (!states)
 			{
 				states = true;

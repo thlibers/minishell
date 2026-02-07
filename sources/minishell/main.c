@@ -22,7 +22,6 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	while (1)
 	{
-		printf (F_RED"PWD = %s\n"RESET,  ft_getenv(minishell.env, "PWD"));
 		if (!prompt(&minishell))
 			break ;
 		clear_token(&minishell.token);

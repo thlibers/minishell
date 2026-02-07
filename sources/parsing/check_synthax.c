@@ -45,7 +45,9 @@ bool  check_ope(t_tok *tok)
 	{
 		if (tok->type != T_WORD)
 		{
-			if (tok->prev->type != T_WORD || !tok->next)
+			if (tok->type == T_HERE_DOC && !tok->prev && tok->next)
+				;
+			else if ((!tok->next || !tok->prev) || tok->prev->type != T_WORD)
 			{
 				printf("BAD OPE\n");
 				return (false);
@@ -60,3 +62,4 @@ bool  check_ope(t_tok *tok)
 // QUOTE PAS FERMER
 // OPERATEUR SEUL : "echo 'hello' |"
 // TROP OPERATEUR : "echo 'hello' | | cat -e" (redirection compte aussi)
+//

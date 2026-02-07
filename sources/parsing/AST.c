@@ -62,7 +62,17 @@ t_ast	*create_tree(t_tok *tok)
 	node->leaf_left = create_left(tok);
 	return (node);
 }
+/*
+int	cmd_count(t_ast *ast)
+{
+	int count;
 
+	count = 0;
+	if (!ast)
+		return (0);
+	count = cmd_count(ast->next);
+
+}*/
 /* --- DEBUG --- */
 void  print_type(int leaf_number, t_ast *ast)
 {
