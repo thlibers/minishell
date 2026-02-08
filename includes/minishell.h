@@ -17,9 +17,9 @@
 # define _XOPEN_SOURCE 700
 # define MSH_HIST "msh_history"
 
-#define IN_RESET 0
-#define IN_SINGLE_QUOTE 1
-#define IN_DOUBLE_QUOTE 2
+# define IN_RESET 0
+# define IN_SINGLE_QUOTE 1
+# define IN_DOUBLE_QUOTE 2
 
 # include "color.h"
 # include "exec.h"
@@ -113,9 +113,8 @@ t_tok				*tokenizer(char *line);
 t_ast				*create_tree(t_tok *tok);
 void				print_ast(t_ast *ast);
 
-
-bool  check_quote(t_tok *tok);
-bool  check_ope(t_tok *tok);
+bool				check_quote(t_tok *tok);
+bool				check_ope(t_tok *tok);
 
 /* ======================= UTILS ======================= */
 // check_lexer.c
@@ -129,8 +128,8 @@ int					is_operator(char *word);
 void				ft_clear(t_minishell *minishell);
 void				env_clean(t_env *env, char **tab);
 void				free_tab(char **s);
-void	free_tok(t_tok **tok);
-void	free_ast(t_ast **ast);
+void				free_tok(t_tok **tok);
+void				free_ast(t_ast **ast);
 
 // env_utils.c
 t_env				*new_env_node(void *name, void *content);

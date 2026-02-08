@@ -21,3 +21,8 @@ bool	is_file(t_tok *tok)
 		return (true);
 	return (false);
 }
+/*
+bool	is_limiter(t_ast *ast)
+{
+}
+*/

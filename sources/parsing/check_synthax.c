@@ -39,7 +39,7 @@ bool	check_quote(t_tok *tok)
 	return (true);
 }
 
-bool  check_ope(t_tok *tok)
+bool	check_ope(t_tok *tok)
 {
 	while (tok)
 	{

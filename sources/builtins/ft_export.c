@@ -13,7 +13,10 @@
 #include "includes/minishell.h"
 
 // Manque :
-//	-Check caracteres valides
+//	- Check caracteres valides
+//	- Gerer les export +=
+//	- Gerer les multiple export en une command
+//  - 
 
 static int	check_valarg(char **tab)
 {
