@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:44 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/06 13:42:24 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/09 16:02:38 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,9 @@ void				init_signal(void);
 char				**env_spliter(char *vars);
 bool				init_env(t_env **env, char **envp);
 char				*ft_getenv(t_env *env, char *to_find);
+
+// expand.c
+void				ft_expand(t_env *env, t_tok **token);
 
 // prompt.c
 bool				prompt(t_minishell *minishell);

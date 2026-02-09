@@ -6,7 +6,7 @@
 #    By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 11:04:15 by nclavel           #+#    #+#              #
-#    Updated: 2026/02/05 15:14:27 by thlibers         ###   ########.fr        #
+#    Updated: 2026/02/09 15:58:11 by thlibers         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRCS = $(SRC_DIR)/builtins/ft_cd.c\
 		$(SRC_DIR)/minishell/minishell.c\
 		$(SRC_DIR)/minishell/selector.c\
 		$(SRC_DIR)/parsing/env_vars.c\
+		$(SRC_DIR)/parsing/expand.c\
 		$(SRC_DIR)/parsing/lexer.c\
 		$(SRC_DIR)/parsing/parsing.c\
 		$(SRC_DIR)/parsing/prompt.c\
