@@ -6,7 +6,7 @@
 /*   By: nclavel <nclavel@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 12:24:35 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/07 12:24:38 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/02/10 15:58:58 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,12 @@ bool	check_ope(t_tok *tok)
 	{
 		if (tok->type != T_WORD)
 		{
-			if (tok->type == T_HERE_DOC && !tok->prev && tok->next)
-				;
-			else if ((!tok->next || !tok->prev) || tok->prev->type != T_WORD)
+			if (tok->type == T_HERE_DOC && !tok->next)
+			{
+				printf("heredoc error\n");
+				return (false);
+			}
+			else if (!tok->next || tok->next->type != T_WORD)
 			{
 				printf("BAD OPE\n");
 				return (false);
@@ -62,4 +65,5 @@ bool	check_ope(t_tok *tok)
 // QUOTE PAS FERMER
 // OPERATEUR SEUL : "echo 'hello' |"
 // TROP OPERATEUR : "echo 'hello' | | cat -e" (redirection compte aussi)
-//
+// CAS SPECIAUX : 
+// REDIRECTION (<, >, >>, <<), on peux lui donner uniquement le fichier et il va O_TRUNC le fichier (<, >)

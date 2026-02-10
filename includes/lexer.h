@@ -17,13 +17,11 @@ typedef enum e_data_type
 {
 	T_NULL = 0,
 	T_WORD = 1,
-	T_HERE_DOC = 2,
+	T_PIPE = 2,
+	T_HERE_DOC = 3,
 	T_RED_IN,
 	T_RED_OUT,
 	T_RED_OUT_APP,
-	T_LIMITER,
-	T_PIPE,
-	T_FILE,
 	T_AND,
 	T_OR
 }						t_data_type;
