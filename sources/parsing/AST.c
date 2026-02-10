@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   AST.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 10:05:34 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/06 17:08:42 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/02/10 12:19:36 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_ast	*create_left(t_tok *tok)
 	t_ast	*left;
 	t_ast	*back;
 
+	back = NULL;
 	if (!tok || tok->type != T_WORD)
 		return (NULL);
 	if (tok->type == T_WORD)
