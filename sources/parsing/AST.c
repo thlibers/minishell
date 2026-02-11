@@ -79,7 +79,7 @@ int	cmd_count(t_ast *ast)
 	if (!ast)
 		return (0);
 	count += cmd_count(ast->leaf_right);
-	if (!ast->top && ast->leaf_left) 
+	if (!ast->top && ast->leaf_left)
 		count++;
 	else if (ast->top && ast->top->type < T_HERE_DOC)
 		count++;
@@ -88,76 +88,74 @@ int	cmd_count(t_ast *ast)
 // Le mot apres > ou >> est forcement un file (donc pas une cmd)
 // Le mot apres > ou >> est forcement un file (donc pas une cmd)
 
-/* --- DEBUG --- */ 
- void	print_type(int leaf_number, t_ast *ast)
- {
-		switch (ast->type)
-		{
-		case 0:
-			printf("leaf %d type T_NULL\n", leaf_number);
-			break ;
-		case 1:
-			printf("leaf %d type T_WORD\n", leaf_number);
-			break ;
-		case 2:
-			printf("leaf %d type T_PIPE\n", leaf_number);
-			break ;
-		case 3:
-			printf("leaf %d type T_HERE_DOC\n", leaf_number);
-			break ;
-		case 4:
-			printf("leaf %d type T_RED_IN\n", leaf_number);
-			break ;
-		case 5:
-			printf("leaf %d type T_RED_OUT\n", leaf_number);
-			break ;
-		case 6:
-			printf("leaf %d type T_RED_OUT_APP\n", leaf_number);
-			break ;
-		case 7:
-			printf("leaf %d type T_AND\n", leaf_number);
-			break ;
-		case 8:
-			printf("leaf %d type T_OR\n", leaf_number);
-			break ;
-		default:
-			break ;
-		}
- }
+/* --- DEBUG --- */
+void	print_type(int leaf_number, t_ast *ast)
+{
+	switch (ast->type)
+	{
+	case 0:
+		printf("leaf %d type T_NULL\n", leaf_number);
+		break ;
+	case 1:
+		printf("leaf %d type T_WORD\n", leaf_number);
+		break ;
+	case 2:
+		printf("leaf %d type T_PIPE\n", leaf_number);
+		break ;
+	case 3:
+		printf("leaf %d type T_HERE_DOC\n", leaf_number);
+		break ;
+	case 4:
+		printf("leaf %d type T_RED_IN\n", leaf_number);
+		break ;
+	case 5:
+		printf("leaf %d type T_RED_OUT\n", leaf_number);
+		break ;
+	case 6:
+		printf("leaf %d type T_RED_OUT_APP\n", leaf_number);
+		break ;
+	case 7:
+		printf("leaf %d type T_AND\n", leaf_number);
+		break ;
+	case 8:
+		printf("leaf %d type T_OR\n", leaf_number);
+		break ;
+	default:
+		break ;
+	}
+}
 
- void	print_ast(t_ast *ast)
- {
-		t_ast	*leaf;
-		int		leaf_number;
+void	print_ast(t_ast *ast)
+{
+	t_ast	*leaf;
+	int		leaf_number;
 
-		leaf_number = 0;
-		printf("Tree have %d cmd\n", cmd_count(ast));
-		printf("--- AST DATA ---\n");
-		while (ast)
+	leaf_number = 0;
+	printf("Tree have %d cmd\n", cmd_count(ast));
+	printf("--- AST DATA ---\n");
+	while (ast)
+	{
+		leaf_number++;
+		print_type(leaf_number, ast);
+		if (ast->leaf_left)
 		{
-			leaf_number++;
-			print_type(leaf_number, ast);
-			if (ast->leaf_left)
+			leaf = ast->leaf_left;
+			while (leaf)
 			{
-//				if (ast->top)
-//					printf("leaf %d top n %d data %s \n", leaf_number, leaf_number - 1, ast->top->leaf_left->data);
-				leaf = ast->leaf_left;
-				while (leaf)
-				{
-					printf("leaf %d : %s\n", leaf_number, leaf->data);
-					leaf = leaf->leaf_left;
-				}
+				printf("leaf %d : %s\n", leaf_number, leaf->data);
+				leaf = leaf->leaf_left;
 			}
-			ast = ast->leaf_right;
 		}
-		printf("----------------\n");
- }
+		ast = ast->leaf_right;
+	}
+	printf("----------------\n");
+}
 
 /*
  * PB TROUVER:
  *   - << EOF
- *	  leaf 1 = T_WORD
- *	  EXPECTED: 
+ *		leaf 1 = T_WORD
+ *		EXPECTED:
  *		leaf 1 = T_HERE_DOC
  *		leaf 2 = T_WORD;
  */

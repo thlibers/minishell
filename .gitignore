@@ -4,3 +4,5 @@ objs/
 minishell
 mylibft/libft.a
 msh_history
+
+sprintf.c

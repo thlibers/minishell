@@ -43,14 +43,14 @@ void	ft_expand(t_env *env, t_tok **token)
 	{
 		if ((*token)->type == T_WORD)
 		{
-			
 			i = 0;
 			in_quote = 0;
 			while ((*token)->str[i])
 			{
 				if ((*token)->str[i] == '\'' && in_quote == IN_RESET)
 				{
-					while ((*token)->str[i] && is_inquote(&in_quote , (*token)->str[i]) == IN_SINGLE_QUOTE)
+					while ((*token)->str[i] && is_inquote(&in_quote,
+							(*token)->str[i]) == IN_SINGLE_QUOTE)
 						i++;
 				}
 				else
@@ -60,24 +60,33 @@ void	ft_expand(t_env *env, t_tok **token)
 						y = i;
 						while ((*token)->str[y] && (*token)->str[y + 1] != '"')
 							y++;
-						ft_strlcpy_mod(&(*token)->str[i], &(*token)->str[i + 1], y - i + 1);
+						ft_strlcpy_mod(&(*token)->str[i], &(*token)->str[i + 1],
+							y - i + 1);
 					}
 					if ((*token)->str[i] == '$')
 					{
 						y = i + 1;
-						while ((*token)->str[y] && (ft_isalnum((*token)->str[y]) == true || (*token)->str[y] == '_'))
+						while ((*token)->str[y]
+							&& (ft_isalnum((*token)->str[y]) == true
+								|| (*token)->str[y] == '_'))
 							y++;
 						expand = malloc(sizeof(char) * y - i);
 						// printf("%d\n", y - i);
 						ft_strlcpy(expand, &(*token)->str[i + 1], y - i);
 						env_value = ft_getenv(env, expand);
 						// printf("%s\n", expand);
-						// printf("%ld\n", ft_strlen((*token)->str) - (y - i) + ft_strlen(env_value) + 1);
-						(*token)->str = ft_realloc((*token)->str, ft_strlen((*token)->str) - (y - i) + ft_strlen(env_value) + 1);
-						while((*token)->str[y] && ((*token)->str[y] == ' ' || (*token)->str[y] == '\t'))
+						// printf("%ld\n", ft_strlen((*token)->str) - (y - i)
+							+ ft_strlen(env_value) + 1);
+						(*token)->str = ft_realloc((*token)->str,
+								ft_strlen((*token)->str) - (y - i)
+								+ ft_strlen(env_value) + 1);
+						while ((*token)->str[y] && ((*token)->str[y] == ' '
+								|| (*token)->str[y] == '\t'))
 							y++;
-						ft_strlcpy(&(*token)->str[ft_strlen(env_value)] ,&(*token)->str[y], ft_strlen(&(*token)->str[y]));
-						ft_strlcpy_mod(&(*token)->str[i], env_value, ft_strlen(env_value) + 1);
+						ft_strlcpy(&(*token)->str[ft_strlen(env_value)],
+							&(*token)->str[y], ft_strlen(&(*token)->str[y]));
+						ft_strlcpy_mod(&(*token)->str[i], env_value,
+							ft_strlen(env_value) + 1);
 					}
 				}
 				i++;
@@ -88,13 +97,10 @@ void	ft_expand(t_env *env, t_tok **token)
 	(*token) = head;
 }
 
-
 // probleme avec la chaine apres l'expand (manque un espace et la chaine n'est pas complete).
 // retier les single quote
 // ''"$PWD"'' ??
 // si la variable d'env n'existe pas ne revoie rien
-
-
 
 //		Exemple :
 
@@ -107,10 +113,6 @@ void	ft_expand(t_env *env, t_tok **token)
 
 // echo $PWD+ss		-->		/home/.....+ss
 
+//"$USER" salut
 
-
-
-
-"$USER"salut
-
-thliberssalut
+//	thliberssalut

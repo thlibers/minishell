@@ -17,7 +17,6 @@ bool	prompt(t_minishell *minishell)
 {
 	char	*line;
 
-	printf("\nCTRL+D pour quitter (je le met la j'ai tej le selecter)\n");
 	line = readline(F_GREEN "minishell > " RESET);
 	if (!line)
 		return (false);

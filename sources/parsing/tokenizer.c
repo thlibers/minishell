@@ -88,19 +88,44 @@ t_data_type	assign_ope(char *c)
 	return (type);
 }
 
-void	showtok(t_tok *tok)
+void	create_tok_word(int *i, char *line, t_tok **tok)
 {
-	while (tok)
+	int		quote;
+	bool	states;
+
+	quote = 0;
+	states = false;
+	while (((!ft_isspace(line[*i]) && !is_operator(&line[*i])) || quote != 0)
+		&& line[*i])
 	{
-		printf("enum val = %d\n", tok->type);
-		printf("val = %s\n", tok->str);
-		if (tok->prev)
-			printf("prev val = %s\n", tok->prev->str);
-		printf("-------\n");
-		tok = tok->next;
+		is_inquote(&quote, line[*i]);
+		if (!states)
+		{
+			states = true;
+			tok_create_back(tok, T_WORD, &line[*i]);
+		}
+		(*i)++;
 	}
 }
 
+void	create_tok_ope(int *i, char *line, t_tok **tok)
+{
+	int		ope;
+	bool	states;
+
+	ope = 0;
+	states = false;
+	while (is_operator(&line[*i]) != 0 && ope < 2)
+	{
+		ope++; // FIX TEMPORAIRE ||| en ope
+		if (!states)
+		{
+			states = true;
+			tok_create_back(tok, assign_ope(&line[*i]), &line[*i]);
+		}
+		(*i)++;
+	}
+}
 t_tok	*tokenizer(char *line)
 {
 	int		i;

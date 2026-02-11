@@ -47,12 +47,12 @@ bool	check_ope(t_tok *tok)
 		{
 			if (tok->type == T_HERE_DOC && !tok->next)
 			{
-				printf("heredoc error\n");
+				ft_fprintf(STDOUT_FILENO, "heredoc error\n");
 				return (false);
 			}
 			else if (!tok->next || tok->next->type != T_WORD)
 			{
-				printf("BAD OPE\n");
+				ft_fprintf(STDOUT_FILENO, "BAD OPE\n");
 				return (false);
 			}
 		}
@@ -65,5 +65,6 @@ bool	check_ope(t_tok *tok)
 // QUOTE PAS FERMER
 // OPERATEUR SEUL : "echo 'hello' |"
 // TROP OPERATEUR : "echo 'hello' | | cat -e" (redirection compte aussi)
-// CAS SPECIAUX : 
-// REDIRECTION (<, >, >>, <<), on peux lui donner uniquement le fichier et il va O_TRUNC le fichier (<, >)
+// CAS SPECIAUX :
+// REDIRECTION (<, >, >>, <<),
+//	on peux lui donner uniquement le fichier et il va O_TRUNC le fichier (<, >)
