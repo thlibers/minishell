@@ -6,51 +6,82 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 16:46:00 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/10 18:21:15 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/11 17:14:35 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-// void	remove_quotes(char *str)
-// {
-// 	int		i;
-// 	int		len;
-// 	int		first_quote;
-// 	int		last_quote;
-// 	int		quote_type;
+void	remove_quotes(char **str)
+{
+	int		i;
+	int		len;
+	int		first_quote;
+	int		last_quote;
+	int		quote_type;
 
-// 	i = 0;
-// 	first_quote = -1;
-// 	last_quote = -1;
-// 	quote_type = IN_RESET;
-// 	len = ft_strlen(str);
-// 	while (str[i])
-// 	{
-// 		if (str[i] == '\'' && quote_type == IN_RESET)
-// 		{
-// 			quote_type = IN_SINGLE_QUOTE;
-// 			first_quote = i;	
-// 		}
-// 		else if (str[i] == '"' && quote_type == IN_RESET)
-// 		{
-// 			quote_type = IN_DOUBLE_QUOTE;
-// 			first_quote = i;
-// 		}
-// 		if ((quote_type == IN_SINGLE_QUOTE && str[i] == '\'') || (quote_type == IN_DOUBLE_QUOTE && str[i] == '\"'))
-// 		{
-// 			last_quote = i;
-// 			ft_memmove(&str[first_quote], &str[first_quote + 1], len - 2);
-// 			str[len - 2] = '\0';
-// 			str = ft_realloc(str, len - 1);
-// 			quote_type = IN_RESET;
-// 		}
-// 		i++;
-// 	}
-// }
+	len = ft_strlen(*str);
+	first_quote = -1;
+	last_quote = -1;
+	quote_type = IN_RESET;
+	i = len - 1;
+	while (i >= 0)
+	{
+		if ((*str)[i] == '\'' && quote_type == IN_RESET)
+		{
+			quote_type = IN_SINGLE_QUOTE;
+			last_quote = i;
+			i--;
+		}
+		else if ((*str)[i] == '\"' && quote_type == IN_RESET)
+		{
+			quote_type = IN_DOUBLE_QUOTE;
+			last_quote = i;
+			i--;
+		}
+		if ((quote_type == IN_SINGLE_QUOTE && (*str)[i] == '\'') || (quote_type == IN_DOUBLE_QUOTE && (*str)[i] == '\"'))
+		{
+			first_quote = i;
+			ft_strlcpy(&(*str)[last_quote], &(*str)[last_quote + 1], len - 1);
+			ft_strlcpy(&(*str)[first_quote], &(*str)[first_quote + 1], len - 1);
+			*str = ft_realloc(*str, len - 2);
+			len -= 2;
+			(*str)[len] = '\0';
+			quote_type = IN_RESET;
+		}
+		i--;
+	}
+}
 
+void	ft_tilde(t_env *env, t_tok **token, int i)
+{
+	char	*env_value;
+	char	*arg;
+	int y;
 
-void	ft_expand(t_env *env, t_tok **token)
+	y = i + 1;
+	env_value = ft_getenv(env, "HOME");
+	arg = malloc(ft_strlen((*token)->str) - y + 1);
+	ft_strlcpy(arg, &(*token)->str[y], ft_strlen((*token)->str) - y + 1);
+	(*token)->str = ft_realloc((*token)->str, ft_strlen((*token)->str) - (y - i) + ft_strlen(env_value) + 1);
+	ft_strlcpy(&(*token)->str[i], env_value, ft_strlen(env_value) + 1);
+	(*token)->str = ft_strfreejoin((*token)->str, arg);
+}
+
+void	ft_questionmark(t_minishell *minishell, t_tok **token, int i)
+{
+	char	*arg;
+	int y;
+
+	y = i + 1;
+	arg = malloc(ft_strlen((*token)->str) - y + 1);				// Un byte de trop ?
+	ft_strlcpy(arg, &(*token)->str[y + 1], ft_strlen((*token)->str) - y + 1);
+	(*token)->str = ft_realloc((*token)->str, ft_strlen((*token)->str) - (y - i) + ft_strlen(ft_itoa(minishell->exit_code)) + 1);
+	ft_strlcpy(&(*token)->str[i], ft_itoa(minishell->exit_code), ft_strlen(ft_itoa(minishell->exit_code)) + 1);
+	(*token)->str = ft_strfreejoin((*token)->str, arg);
+}
+
+void	ft_expand(t_minishell *minishell, t_env *env, t_tok **token)
 {
 	int		i;
 	int		y;
@@ -69,6 +100,10 @@ void	ft_expand(t_env *env, t_tok **token)
 			in_quote = 0;
 			while ((*token)->str[i])
 			{
+				if ((*token)->str[i] == '"' && in_quote == IN_RESET)
+					in_quote = IN_DOUBLE_QUOTE;
+				else if ((*token)->str[i] == '"' && in_quote == IN_DOUBLE_QUOTE)
+					in_quote = IN_RESET;
 				if ((*token)->str[i] == '\'' && in_quote == IN_RESET)
 				{
 					while ((*token)->str[i] && is_inquote(&in_quote , (*token)->str[i]) == IN_SINGLE_QUOTE)
@@ -76,40 +111,44 @@ void	ft_expand(t_env *env, t_tok **token)
 				}
 				else
 				{
+					if ((*token)->str[i] == '~')
+					{
+						ft_tilde(env, token, i);
+						return ;
+					}
 					if ((*token)->str[i] == '$')
 					{
+						if ((*token)->str[i + 1] == '?')
+						{
+							ft_questionmark(minishell, token, i);
+							return ;
+						}
 						y = i + 1;
 						while ((*token)->str[y] && (ft_isalnum((*token)->str[y]) == true || (*token)->str[y] == '_'))
 							y++;
 						expand = malloc(sizeof(char) * y - i);
-						printf("exp_len = %d\n", y - i);
 						ft_strlcpy(expand, &(*token)->str[i + 1], y - i);
 						arg = malloc(ft_strlen((*token)->str) - y + 1);
-						ft_strlcpy(arg, &(*token)->str[y + 1], ft_strlen((*token)->str) - y);
+						ft_strlcpy(arg, &(*token)->str[y], ft_strlen((*token)->str) - y + 1);
 						env_value = ft_getenv(env, expand);
-						printf("expand = %s\n", expand);
-						printf("%ld\n", ft_strlen((*token)->str) - (y - i) + ft_strlen(env_value) + 1);
 						(*token)->str = ft_realloc((*token)->str, ft_strlen((*token)->str) - (y - i) + ft_strlen(env_value) + 1);
 						ft_strlcpy(&(*token)->str[i], env_value, ft_strlen(env_value) + 1);
-						(*token)->str = ft_strjoin((*token)->str, arg);				// FREE ANCIEN TOK->STR
-						free(arg);
+						(*token)->str = ft_strfreejoin((*token)->str, arg);
 						free(expand);
+						free(arg);
 					}
 				}
 				i++;
 			}
-			// remove_quotes(token);
+			remove_quotes(&(*token)->str);
 		}
 		*token = (*token)->next;
 	}
 	(*token) = head;
 }
 
-
-// probleme avec la chaine apres l'expand (manque un espace et la chaine n'est pas complete).
-// retier les single quote
-// ''"$PWD"'' ??
-// si la variable d'env n'existe pas ne revoie rien
+// Fonction a reorganiser
+// $"$USER"$'$USER' expand deux foi au lieu d'une
 
 
 

@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:11 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/09 16:07:15 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/11 14:51:12 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	prompt(t_minishell *minishell)
 	minishell->tok = tokenizer(line);
 	if (!minishell->tok)
 		return (free(line), true);
-	ft_expand(minishell->env, &minishell->tok);
+	ft_expand(minishell, minishell->env, &minishell->tok);
 	minishell->root = create_tree(minishell->tok);
 	print_ast(minishell->root);
 	free_tok(&minishell->tok);

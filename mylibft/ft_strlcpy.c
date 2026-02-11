@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 15:21:56 by thlibers          #+#    #+#             */
-/*   Updated: 2025/11/04 12:01:38 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/11 15:10:15 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	len = ft_strlen(src);
 	if (size == 0)
 		return (len);
-	while (src[i] && i < (size - 1))
+	while (src && src[i] && i < (size - 1))
 	{
 		dst[i] = src[i];
 		i++;

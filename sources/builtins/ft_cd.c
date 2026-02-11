@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 10:47:36 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/05 15:10:02 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/11 17:00:52 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static char	*init_newpwd(t_minishell *minishell, t_command *com_arg)
 		new_pwd = ft_strdup(com_arg->arguments[0]);
 	else
 	{
+		pwd = malloc(sizeof(char) * ft_strlen(ft_getenv(minishell->env, "PWD")));
 		pwd = ft_strjoin(ft_getenv(minishell->env, "PWD"), "/");
 		new_pwd = ft_strjoin(pwd, com_arg->arguments[0]);
 		free(pwd);
