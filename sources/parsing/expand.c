@@ -31,20 +31,21 @@ void	remove_quotes(char **str)
 		{
 			quote_type = IN_SINGLE_QUOTE;
 			last_quote = i;
-			i--;
 		}
 		else if ((*str)[i] == '\"' && quote_type == IN_RESET)
 		{
 			quote_type = IN_DOUBLE_QUOTE;
 			last_quote = i;
-			i--;
 		}
-		if ((quote_type == IN_SINGLE_QUOTE && (*str)[i] == '\'') || (quote_type == IN_DOUBLE_QUOTE && (*str)[i] == '\"'))
+		else if ((quote_type == IN_SINGLE_QUOTE && (*str)[i] == '\'') || (quote_type == IN_DOUBLE_QUOTE && (*str)[i] == '\"'))
 		{
 			first_quote = i;
 			ft_strlcpy(&(*str)[last_quote], &(*str)[last_quote + 1], len - 1);
 			ft_strlcpy(&(*str)[first_quote], &(*str)[first_quote + 1], len - 1);
-			*str = ft_realloc(*str, len - 2);
+			if (len - 2 == 0)
+				*str = ft_realloc(*str, 1);
+			else 
+				*str = ft_realloc(*str, len - 2);
 			len -= 2;
 			(*str)[len] = '\0';
 			quote_type = IN_RESET;
