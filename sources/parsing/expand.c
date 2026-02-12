@@ -110,6 +110,7 @@ void	ft_expand(t_minishell *minishell, t_env *env, t_tok **token)
 					while ((*token)->str[i] && is_inquote(&in_quote,
 							(*token)->str[i]) == IN_SINGLE_QUOTE)
 						i++;
+					i++;
 				}
 				else
 				{
@@ -124,6 +125,11 @@ void	ft_expand(t_minishell *minishell, t_env *env, t_tok **token)
 						{
 							ft_questionmark(minishell, token, i);
 							return ;
+						}
+						else if (!(*token)->str[i + 1] || !ft_isalnum((*token)->str[i + 1]))
+						{
+							i++;
+							continue ;
 						}
 						y = i + 1;
 						while ((*token)->str[y]

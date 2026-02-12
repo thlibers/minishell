@@ -81,7 +81,10 @@ void	ft_export_noarg(t_minishell *minishell)
 	save = cpy;
 	while (cpy)
 	{
-		printf("export %s=%s\n", cpy->name, cpy->value);
+		if (cpy->value && cpy->equal)
+			printf("export %s=%s\n", cpy->name, cpy->value);
+		else if (!cpy->value && cpy->equal)
+			printf("export %s=\n", cpy->name);
 		cpy = cpy->next;
 	}
 	env_clean(save, NULL);

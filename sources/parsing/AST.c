@@ -55,7 +55,7 @@ t_ast	*create_tree(t_tok *tok)
 		while (tok->next && tok->next->type == T_WORD)
 			tok = tok->next;
 	}
-	tree = create_tree(tok->next);
+	tree = create_tree(tok->next);			// PROTEGER CONTRE LA LIMITE DE RECURSIVITER
 	node = calloc(1, sizeof(t_ast));
 	if (!node)
 		return (NULL);
