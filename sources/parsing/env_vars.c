@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 15:28:32 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/02 14:43:35 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/12 08:53:23 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,39 @@ char	**env_spliter(char *vars)
 		tab[0][i] = vars[i];
 		i++;
 	}
-	i = 0;
-	tab[1] = ft_calloc(strlen(vars) - (size_t)(pos - vars), sizeof(char));
-	while (pos[1 + i])
-	{
-		tab[1][i] = pos[1 + i];
-		i++;
-	}
+	tab[0][i] = '\0';
+	if (vars[i] == '\0')
+		return (tab[1] = NULL, tab[2] = NULL, tab);
+	tab[1] = ft_strdup(pos + 1); 
+	if (!tab[1])
+		return (free(tab[0]), free(tab), NULL);
 	return (tab[2] = NULL, tab);
+}
+
+t_env *create_env_var(char *name, char *value, char *equal_loc)
+{
+	t_env *var;
+
+	var = NULL;
+	var = calloc(1, sizeof(t_env));
+	if (!var)
+		return (NULL);
+	var->name = strdup(name);
+	var->value = strdup(value);
+	if (!equal_loc)
+		var->equal = false;
+	else 
+		var->equal = true;
+	var->next = NULL;
+	if (!var->name || !var->value)
+		return (free(var), NULL);
+	return (var);
 }
 
 bool	init_env(t_env **env, char **envp)
 {
 	char	**tab;
-	t_env	*cp;
+	t_env	*var;
 	t_env	*head;
 	int		i;
 
@@ -55,16 +74,13 @@ bool	init_env(t_env **env, char **envp)
 		tab = env_spliter(envp[i]);
 		if (!tab)
 			return (env_clean(head, NULL), false);
-		cp = ft_calloc(1, sizeof(t_env));
-		if (!cp)
-			return (env_clean(head, tab), false);
-		cp->name = strdup(tab[0]);
-		cp->value = strdup(tab[1]);
-		cp->next = NULL;
+		var = create_env_var(tab[0], tab[1], ft_strchr(envp[i], '='));
+		if (!var)
+			return (env_clean(head, tab), NULL); // Gestion d'erreur de merde
 		if (!head)
-			head = cp;
+			head = var;
 		else
-			add_env_back(&head, cp);
+			add_env_back(&head, var);
 		env_clean(NULL, tab);
 		i++;
 	}

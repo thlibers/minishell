@@ -66,7 +66,7 @@ int	ft_export_arg(t_minishell *minishell, t_command *command)
 	}
 	minishell->env = head;
 	if (status == 0)
-		add_env_back(&minishell->env, new_env_node(tab[0], tab[1]));
+		add_env_back(&minishell->env, create_env_var(tab[0], tab[1], ft_strchr(command->arguments[0], '=')));
 	minishell->exit_code = 0;
 	return (free_tab(tab), 0);
 }

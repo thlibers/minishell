@@ -25,6 +25,7 @@ t_env	*new_env_node(void *name, void *content)
 	return (node);
 }
 
+
 void	*add_env_back(t_env **head, t_env *node)
 {
 	t_env	*cp;

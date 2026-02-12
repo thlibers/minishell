@@ -43,7 +43,7 @@ void	remove_quotes(char **str)
 			ft_strlcpy(&(*str)[last_quote], &(*str)[last_quote + 1], len - 1);
 			ft_strlcpy(&(*str)[first_quote], &(*str)[first_quote + 1], len - 1);
 			if (len - 2 == 0)
-				*str = ft_realloc(*str, 1);
+				*str = ft_realloc(*str, 1); // fix dans le cas ou l'arguments est juste "", avant le fix on avait un segfault car fassait un malloc de 0
 			else 
 				*str = ft_realloc(*str, len - 2);
 			len -= 2;
@@ -154,7 +154,7 @@ void	ft_expand(t_minishell *minishell, t_env *env, t_tok **token)
 
 // Fonction a reorganiser
 // $"$USER"$'$USER' expand deux fois au lieu d'une
-//   - J'ai dig et ducoup c'est parce que on essaye de faire l'expand de $' (qui n'est pas une variable d'env) donc la quote prend la place du $ ET on incremente i. Donc on passe de ' a notre $ du deuxieme $USER
+//   - J'ai dig et ducoup c'est parce que on essaye de faire l'expand de $' (qui n'est pas une variable d'env) donc la quote prend la place du $ ET on incremente i. Donc on passe de ' a notre $ du deuxieme $USER, donc pour le program il n'est pas dans des quote et il expand
 
 //		Exemple :
 

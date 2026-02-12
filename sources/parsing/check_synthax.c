@@ -67,4 +67,4 @@ bool	check_ope(t_tok *tok)
 // TROP OPERATEUR : "echo 'hello' | | cat -e" (redirection compte aussi)
 // CAS SPECIAUX :
 // REDIRECTION (<, >, >>, <<),
-//	on peux lui donner uniquement le fichier et il va O_TRUNC le fichier (<, >)
+//	on peux lui donner uniquement le fichier et il va O_CREATE + O_TRUNC le fichier (<, >)

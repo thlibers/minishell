@@ -37,7 +37,6 @@
 # include <unistd.h>
 
 // Vars global pour les signaux
-// volatile sig_atomic_t msh_sig = 0;
 
 typedef struct s_env
 {
@@ -141,6 +140,7 @@ void				swap_env_value(t_env **env);
 void				*sort_env(t_env **env);
 t_env				*env_cpy(t_env *env);
 bool				edit_env(t_env **env, char *name, char *new_val);
+t_env *create_env_var(char *name, char *value, char *equal_loc);
 
 // history.c
 int					init_history(t_minishell *minishell);

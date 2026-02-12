@@ -31,8 +31,7 @@ t_ast	*create_left(t_tok *tok)
 	back = NULL;
 	if (!tok || tok->type != T_WORD)
 		return (NULL);
-	if (tok->type == T_WORD)
-		back = create_left(tok->next);
+	back = create_left(tok->next);
 	left = calloc(1, sizeof(t_ast));
 	left->type = tok->type;
 	left->data = ft_strdup(tok->str);
@@ -85,8 +84,6 @@ int	cmd_count(t_ast *ast)
 		count++;
 	return (count);
 }
-// Le mot apres > ou >> est forcement un file (donc pas une cmd)
-// Le mot apres > ou >> est forcement un file (donc pas une cmd)
 
 /* --- DEBUG --- */
 void	print_type(int leaf_number, t_ast *ast)
@@ -151,11 +148,3 @@ void	print_ast(t_ast *ast)
 	printf("----------------\n");
 }
 
-/*
- * PB TROUVER:
- *   - << EOF
- *		leaf 1 = T_WORD
- *		EXPECTED:
- *		leaf 1 = T_HERE_DOC
- *		leaf 2 = T_WORD;
- */
