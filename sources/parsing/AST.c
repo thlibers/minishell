@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 10:05:34 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/10 12:19:36 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/12 11:26:57 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,23 @@ t_ast	*create_left(t_tok *tok)
 t_ast	*create_tree(t_tok *tok)
 {
 	t_ast	*node;
-	t_ast	*tree;
+//	t_ast	*tree;
 
 	if (!tok)
 		return (NULL);
-	if (!tok->prev && tok->type >= T_HERE_DOC)
-		;
-	else
+	else if (!(!tok->prev && tok->type >= T_HERE_DOC))
 	{
 		while (tok->next && tok->type != T_WORD)
 			tok = tok->next;
 		while (tok->next && tok->next->type == T_WORD)
 			tok = tok->next;
 	}
-	tree = create_tree(tok->next);			// PROTEGER CONTRE LA LIMITE DE RECURSIVITER
+	//tree = create_tree(tok->next);			// PROTEGER CONTRE LA LIMITE DE RECURSIVITER
 	node = calloc(1, sizeof(t_ast));
 	if (!node)
 		return (NULL);
 	node->type = next_ope(tok);
-	node->leaf_right = tree;
+	node->leaf_right = create_tree(tok->next);
 	node->top = NULL;
 	if (node->leaf_right)
 		node->leaf_right->top = node;

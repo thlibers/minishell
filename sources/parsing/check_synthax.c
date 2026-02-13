@@ -47,12 +47,12 @@ bool	check_ope(t_tok *tok)
 		{
 			if (tok->type == T_HERE_DOC && !tok->next)
 			{
-				ft_fprintf(STDOUT_FILENO, "heredoc error\n");
+				ft_fprintf(2, "\033[31mminishell: heredoc error\033[0m\n");
 				return (false);
 			}
-			else if (!tok->next || tok->next->type != T_WORD)
+			else if ((!tok->next || tok->next->type != T_WORD) || (!tok->prev && tok->type == T_PIPE))
 			{
-				ft_fprintf(STDOUT_FILENO, "BAD OPE\n");
+				ft_fprintf(2, "\033[31mminishell: syntax error\033[0m\n");
 				return (false);
 			}
 		}
