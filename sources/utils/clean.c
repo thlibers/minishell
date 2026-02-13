@@ -14,7 +14,6 @@
 
 void	ft_clear(t_minishell *minishell)
 {
-	clear_token(&minishell->token);
 	env_clean(minishell->env, NULL);
 	close(minishell->fd_history);
 }

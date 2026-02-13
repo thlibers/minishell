@@ -100,7 +100,9 @@ bool				init_env(t_env **env, char **envp);
 char				*ft_getenv(t_env *env, char *to_find);
 
 // expand.c
-void				ft_expand(t_minishell *minishell, t_env *env, t_tok **token);
+void				ft_expand(t_minishell *minishell, t_env *env,
+						t_tok **token);
+bool	replace_var(t_tok **token, t_env *env, int *i);
 
 // prompt.c
 bool				prompt(t_minishell *minishell);
@@ -140,7 +142,7 @@ void				swap_env_value(t_env **env);
 void				*sort_env(t_env **env);
 t_env				*env_cpy(t_env *env);
 bool				edit_env(t_env **env, char *name, char *new_val);
-t_env *create_env_var(char *name, char *value, char *equal_loc);
+t_env				*create_env_var(char *name, char *value, char *equal_loc);
 
 // history.c
 int					init_history(t_minishell *minishell);

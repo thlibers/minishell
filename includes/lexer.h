@@ -56,5 +56,9 @@ typedef struct s_token
 char					**ft_splitnoquote(char *s, char c);
 void					clear_token(t_token **head);
 int						is_inquote(int *quote, char c);
+char					*tok_str_save(char *line, t_data_type data_type);
+t_tok					*tok_create_back(t_tok **tok, t_data_type data_type,
+							char *line);
+int						cmd_count(t_ast *ast);
 
 #endif

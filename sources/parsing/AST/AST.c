@@ -12,7 +12,8 @@
 
 #include "includes/minishell.h"
 
-t_data_type	next_ope(t_tok *tok)
+// Trouver le type du prochain operateur
+static t_data_type	next_ope(t_tok *tok)
 {
 	while (tok)
 	{
@@ -23,7 +24,8 @@ t_data_type	next_ope(t_tok *tok)
 	return (T_WORD);
 }
 
-t_ast	*create_left(t_tok *tok)
+// Creer la branche de gauche
+static t_ast	*create_left(t_tok *tok)
 {
 	t_ast	*left;
 	t_ast	*back;
@@ -39,10 +41,11 @@ t_ast	*create_left(t_tok *tok)
 	return (left);
 }
 
+// Creer la branche de droite qui va construire notre arbre
 t_ast	*create_tree(t_tok *tok)
 {
 	t_ast	*node;
-//	t_ast	*tree;
+	t_ast	*tree;
 
 	if (!tok)
 		return (NULL);
@@ -53,12 +56,12 @@ t_ast	*create_tree(t_tok *tok)
 		while (tok->next && tok->next->type == T_WORD)
 			tok = tok->next;
 	}
-	//tree = create_tree(tok->next);			// PROTEGER CONTRE LA LIMITE DE RECURSIVITER
+	tree = create_tree(tok->next);
 	node = calloc(1, sizeof(t_ast));
 	if (!node)
 		return (NULL);
 	node->type = next_ope(tok);
-	node->leaf_right = create_tree(tok->next);
+	node->leaf_right = tree;
 	node->top = NULL;
 	if (node->leaf_right)
 		node->leaf_right->top = node;
@@ -68,21 +71,7 @@ t_ast	*create_tree(t_tok *tok)
 	return (node);
 }
 
-int	cmd_count(t_ast *ast)
-{
-	int	count;
-
-	count = 0;
-	if (!ast)
-		return (0);
-	count += cmd_count(ast->leaf_right);
-	if (!ast->top && ast->leaf_left)
-		count++;
-	else if (ast->top && ast->top->type < T_HERE_DOC)
-		count++;
-	return (count);
-}
-
+// Proteger les fonction en recursive contre la recursive max
 /* --- DEBUG --- */
 void	print_type(int leaf_number, t_ast *ast)
 {
@@ -145,4 +134,3 @@ void	print_ast(t_ast *ast)
 	}
 	printf("----------------\n");
 }
-

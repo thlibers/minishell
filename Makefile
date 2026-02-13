@@ -39,12 +39,13 @@ SRCS = $(SRC_DIR)/builtins/ft_cd.c\
 		$(SRC_DIR)/minishell/selector.c\
 		$(SRC_DIR)/parsing/env_vars.c\
 		$(SRC_DIR)/parsing/expand.c\
-		$(SRC_DIR)/parsing/lexer.c\
-		$(SRC_DIR)/parsing/parsing.c\
+		$(SRC_DIR)/parsing/expand_vars.c\
 		$(SRC_DIR)/parsing/prompt.c\
-		$(SRC_DIR)/parsing/tokenizer.c\
+		$(SRC_DIR)/parsing/AST/tokenizer.c\
+		$(SRC_DIR)/parsing/AST/tokenizer_linked_list.c\
 		$(SRC_DIR)/parsing/check_synthax.c\
-		$(SRC_DIR)/parsing/AST.c\
+		$(SRC_DIR)/parsing/AST/AST.c\
+		$(SRC_DIR)/parsing/AST/AST_utils.c\
 		$(SRC_DIR)/utils/check_lexer.c\
 		$(SRC_DIR)/utils/clean.c\
 		$(SRC_DIR)/utils/env_utils.c\
