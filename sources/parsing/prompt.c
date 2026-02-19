@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-#include <string.h>
 
 bool	prompt(t_minishell *minishell)
 {

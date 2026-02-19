@@ -46,7 +46,7 @@ void	remove_quotes(char **str)
 			if (len - 2 == 0)
 				*str = ft_realloc(*str, 1);
 					// fix dans le cas ou l'arguments est juste "",
-					// avant le fix on avait un segfault car fassait un malloc de 0
+					//avant le fix on avait un segfault car fassait un malloc de 0
 			else
 				*str = ft_realloc(*str, len - 2);
 			len -= 2;
