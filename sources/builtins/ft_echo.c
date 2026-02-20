@@ -21,7 +21,8 @@ int	ft_echo(t_command *com_arg)
 	new_line = true;
 	if (com_arg->arg_count == 0)
 		return (ft_putchar_fd('\n', 1), 0);
-	if (ft_strcmp(com_arg->arguments[0], "-n") == 0)		// "echo $PWD"	donne le pwd (expand)
+	if (ft_strcmp(com_arg->arguments[0], "-n") == 0)
+		// "echo $PWD"	donne le pwd (expand)
 		new_line = false;
 	while (com_arg->arguments[i])
 	{

@@ -50,7 +50,8 @@ bool	check_ope(t_tok *tok)
 				ft_fprintf(2, "\033[31mminishell: heredoc error\033[0m\n");
 				return (false);
 			}
-			else if ((!tok->next || tok->next->type != T_WORD) || (!tok->prev && tok->type == T_PIPE))
+			else if ((!tok->next || tok->next->type != T_WORD) || (!tok->prev
+					&& tok->type == T_PIPE))
 			{
 				ft_fprintf(2, "\033[31mminishell: syntax error\033[0m\n");
 				return (false);
@@ -67,4 +68,5 @@ bool	check_ope(t_tok *tok)
 // TROP OPERATEUR : "echo 'hello' | | cat -e" (redirection compte aussi)
 // CAS SPECIAUX :
 // REDIRECTION (<, >, >>, <<),
-//	on peux lui donner uniquement le fichier et il va O_CREATE + O_TRUNC le fichier (<, >)
+//	on peux lui donner uniquement le fichier
+//	et il va O_CREATE + O_TRUNC le fichier (<, >)

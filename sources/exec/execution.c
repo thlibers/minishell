@@ -58,8 +58,8 @@ static void	children_creation(t_pipex *pipex, pid_t *pid)
 
 void	execute_pipex(t_pipex *pipex)
 {
-	int		status;
-	int		i;
+	int	status;
+	int	i;
 
 	i = 0;
 	pipex->pid = NULL;
@@ -77,7 +77,7 @@ void	execute_pipex(t_pipex *pipex)
 		waitpid(pipex->pid[i], &status, 0);
 		printf("%d\n", status);
 		if (WIFEXITED(status))
-            printf("exited, status=%d\n", WEXITSTATUS(status));	
+			printf("exited, status=%d\n", WEXITSTATUS(status));
 		i++;
 	}
 }

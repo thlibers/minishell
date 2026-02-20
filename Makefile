@@ -6,7 +6,7 @@
 #    By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 11:04:15 by nclavel           #+#    #+#              #
-#    Updated: 2026/02/09 15:58:11 by thlibers         ###   ########.fr        #
+#    Updated: 2026/02/20 09:22:35 by nclavel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ LIBFT_DIR = mylibft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 # Srcs
-SRCS = $(SRC_DIR)/builtins/ft_cd.c\
+SRCS =	$(SRC_DIR)/builtins/ft_cd.c\
 		$(SRC_DIR)/builtins/ft_echo.c\
 		$(SRC_DIR)/builtins/ft_env.c\
 		$(SRC_DIR)/builtins/ft_exit.c\
@@ -37,21 +37,22 @@ SRCS = $(SRC_DIR)/builtins/ft_cd.c\
 		$(SRC_DIR)/minishell/main.c\
 		$(SRC_DIR)/minishell/minishell.c\
 		$(SRC_DIR)/minishell/selector.c\
-		$(SRC_DIR)/parsing/env_vars.c\
-		$(SRC_DIR)/parsing/expand.c\
-		$(SRC_DIR)/parsing/expand_vars.c\
+		$(SRC_DIR)/parsing/env/env_vars.c\
+		$(SRC_DIR)/parsing/expand/expand.c\
+		$(SRC_DIR)/parsing/expand/expand_vars.c\
 		$(SRC_DIR)/parsing/prompt.c\
-		$(SRC_DIR)/parsing/AST/tokenizer.c\
-		$(SRC_DIR)/parsing/AST/tokenizer_linked_list.c\
-		$(SRC_DIR)/parsing/check_synthax.c\
+		$(SRC_DIR)/parsing/utils.c\
+		$(SRC_DIR)/parsing/lexer/tokenizer.c\
+		$(SRC_DIR)/parsing/lexer/tokenizer_linked_list.c\
+		$(SRC_DIR)/parsing/lexer/check_synthax.c\
 		$(SRC_DIR)/parsing/AST/AST.c\
 		$(SRC_DIR)/parsing/AST/AST_utils.c\
-		$(SRC_DIR)/utils/check_lexer.c\
+		$(SRC_DIR)/parsing/lexer/check_lexer.c\
 		$(SRC_DIR)/utils/clean.c\
-		$(SRC_DIR)/utils/env_utils.c\
+		$(SRC_DIR)/parsing/env/env_utils.c\
+		$(SRC_DIR)/parsing/env/env_utils2.c\
 		$(SRC_DIR)/utils/cd_utils.c\
-		$(SRC_DIR)/utils/signal.c\
-		$(SRC_DIR)/utils/split_tokens.c
+		$(SRC_DIR)/utils/signal.c
 
 # Obj
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

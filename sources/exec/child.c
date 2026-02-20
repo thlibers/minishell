@@ -64,8 +64,7 @@ static void	init_child(t_pipex *pipex, int child_number)
 	i = 0;
 	if ((child_number == 0 && child_number == pipex->cmd_count - 1))
 		one_command_only(pipex, child_number);
-	else if (child_number == 0
-		|| child_number == pipex->cmd_count - 1)
+	else if (child_number == 0 || child_number == pipex->cmd_count - 1)
 		first_last_command(pipex, child_number);
 	else
 		setup_middle_command(pipex, child_number);

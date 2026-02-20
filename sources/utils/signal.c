@@ -12,7 +12,7 @@
 
 #include "includes/minishell.h"
 
-volatile sig_atomic_t g_msh_sig = 0;
+volatile sig_atomic_t	g_msh_sig = 0;
 
 void	handler_sigint(int signum)
 {

@@ -28,9 +28,10 @@ int	is_operator(char *word)
 			return (4);
 		return (5);
 	}
-	//	else if (ft_strcmp(word, "||") == 0)
-	//		return ((*node)->type = T_OR, true);
-	//	else if (ft_strcmp(word, "&&") == 0)
-	//		return (true);
 	return (0);
 }
+//	else if (ft_strcmp(word, "||") == 0)
+//		return ((*node)->type = T_OR, true);
+//	else if (ft_strcmp(word, "&&") == 0)
+//		return (true);
+//	Pour les || et &&

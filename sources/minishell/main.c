@@ -28,4 +28,3 @@ int	main(int argc, char **argv, char **envp)
 	ft_clear(&minishell);
 	return (0);
 }
-                                                              

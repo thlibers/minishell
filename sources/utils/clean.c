@@ -77,22 +77,22 @@ void	free_ast(t_ast **ast)
 
 	if (*ast != NULL)
 		free_ast(&(*ast)->leaf_right);
-  if (*ast)
-  {
-    if ((*ast)->leaf_left)
-    {
-		leaf = (*ast)->leaf_left;
-      while (leaf)
-      {
-        save = leaf->leaf_left;
-        if (leaf)
-			free(leaf->data);
-        free(leaf);
-        leaf = save;
-      }
-    }
-    free(*ast);
-  }
+	if (*ast)
+	{
+		if ((*ast)->leaf_left)
+		{
+			leaf = (*ast)->leaf_left;
+			while (leaf)
+			{
+				save = leaf->leaf_left;
+				if (leaf)
+					free(leaf->data);
+				free(leaf);
+				leaf = save;
+			}
+		}
+		free(*ast);
+	}
 }
 
 void	free_tok(t_tok **tok)

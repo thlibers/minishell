@@ -63,15 +63,15 @@ int	open_outfile(char *filename)
 // 	{
 // 		if (is_command(tok))
 // 		{
-			
+
 // 		}
 // 		else if()
 // 		{
-			
+
 // 		}
 // 		else if()
 // 		{
-			
+
 // 		}
 // 		tok = tok->next;
 // 	}
@@ -80,7 +80,6 @@ int	open_outfile(char *filename)
 int	init_parsing(t_exec *exec, int argc, char **argv)
 {
 	// int i;
-	
 	exec->argc = argc;
 	exec->argv = argv;
 	exec->com_args->cmd_count = argc - 3;

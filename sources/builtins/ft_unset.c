@@ -14,9 +14,9 @@
 
 void	ft_unset(t_minishell *minishell, t_command *com_arg)
 {
-	t_env *tmp;
-	t_env *head;
-	
+	t_env	*tmp;
+	t_env	*head;
+
 	head = minishell->env;
 	while (minishell->env->next)
 	{

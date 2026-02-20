@@ -12,30 +12,30 @@
 
 #include "libft.h"
 
-void *ft_realloc(void *ptr, size_t size)
+void	*ft_realloc(void *ptr, size_t size)
 {
-    void *new_ptr;
-	
-    if (ptr == NULL)
-        return (malloc(sizeof(char) * size));
-    if (size == 0)
+	void	*new_ptr;
+
+	if (ptr == NULL)
+		return (malloc(sizeof(char) * size));
+	if (size == 0)
 	{
-        free(ptr);
-        return NULL;
-    }
-    new_ptr = malloc(size + 1);
-    if (new_ptr == NULL)
-        return (NULL);
-    ft_memcpy(new_ptr, ptr, size);
+		free(ptr);
+		return (NULL);
+	}
+	new_ptr = malloc(size + 1);
+	if (new_ptr == NULL)
+		return (NULL);
+	ft_memcpy(new_ptr, ptr, size);
 	if (ptr)
 	{
-    	free(ptr);
-		ptr = NULL;	
+		free(ptr);
+		ptr = NULL;
 	}
-    return (new_ptr);
+	return (new_ptr);
 }
 
-//void	*ft_realloc(void *old, size_t old_size, size_t new_size)
+// void	*ft_realloc(void *old, size_t old_size, size_t new_size)
 //{
 //	size_t			smallest;
 //	unsigned char	*new;

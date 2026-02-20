@@ -12,6 +12,8 @@
 
 #include "includes/minishell.h"
 
+// FAIRE UNE MEILLEURE GESTION D'ERREUR
+// Permet de parser la variable d'environement recup en char *
 char	**env_spliter(char *vars)
 {
 	int		i;
@@ -34,15 +36,15 @@ char	**env_spliter(char *vars)
 	tab[0][i] = '\0';
 	if (vars[i] == '\0')
 		return (tab[1] = NULL, tab[2] = NULL, tab);
-	tab[1] = ft_strdup(pos + 1); 
+	tab[1] = ft_strdup(pos + 1);
 	if (!tab[1])
 		return (free(tab[0]), free(tab), NULL);
 	return (tab[2] = NULL, tab);
 }
 
-t_env *create_env_var(char *name, char *value, char *equal_loc)
+t_env	*create_env_var(char *name, char *value, char *equal_loc)
 {
-	t_env *var;
+	t_env	*var;
 
 	var = NULL;
 	var = calloc(1, sizeof(t_env));
@@ -52,7 +54,7 @@ t_env *create_env_var(char *name, char *value, char *equal_loc)
 	var->value = strdup(value);
 	if (!equal_loc)
 		var->equal = false;
-	else 
+	else
 		var->equal = true;
 	var->next = NULL;
 	if (!var->name || !var->value)
@@ -76,7 +78,7 @@ bool	init_env(t_env **env, char **envp)
 			return (env_clean(head, NULL), false);
 		var = create_env_var(tab[0], tab[1], ft_strchr(envp[i], '='));
 		if (!var)
-			return (env_clean(head, tab), NULL); // Gestion d'erreur de merde
+			return (env_clean(head, tab), NULL);
 		if (!head)
 			head = var;
 		else
@@ -86,15 +88,4 @@ bool	init_env(t_env **env, char **envp)
 	}
 	*env = head;
 	return (true);
-}
-
-char	*ft_getenv(t_env *env, char *to_find)
-{
-	while (env)
-	{
-		if (ft_strcmp(env->name, to_find) == 0)
-			return (env->value);
-		env = env->next;
-	}
-	return (NULL);
 }

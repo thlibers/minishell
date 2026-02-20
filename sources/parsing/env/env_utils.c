@@ -25,7 +25,6 @@ t_env	*new_env_node(void *name, void *content)
 	return (node);
 }
 
-
 void	*add_env_back(t_env **head, t_env *node)
 {
 	t_env	*cp;
@@ -44,9 +43,9 @@ void	*add_env_back(t_env **head, t_env *node)
 	return (*head);
 }
 
-bool  edit_env(t_env **env, char *name, char *new_val)
+bool	edit_env(t_env **env, char *name, char *new_val)
 {
-	t_env *head;
+	t_env	*head;
 
 	head = *env;
 	while (*env)
@@ -110,27 +109,4 @@ void	*sort_env(t_env **env)
 	}
 	*env = head;
 	return (*env);
-}
-
-t_env	*env_cpy(t_env *env)
-{
-	t_env	*cpy;
-	t_env	*head;
-
-	head = NULL;
-	while (env)
-	{
-		cpy = calloc(1, sizeof(t_env));
-		if (!cpy)
-			return (NULL);
-		cpy->name = ft_strdup(env->name);
-		cpy->value = ft_strdup(env->value);
-		cpy->next = NULL;
-		if (!head)
-			head = cpy;
-		else
-			add_env_back(&head, cpy);
-		env = env->next;
-	}
-	return (head);
 }

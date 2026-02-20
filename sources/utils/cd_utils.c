@@ -12,11 +12,11 @@
 
 #include "includes/minishell.h"
 
-int		dotcount(char *str)
+int	dotcount(char *str)
 {
-	int i;
-	int count;
-	
+	int	i;
+	int	count;
+
 	i = 0;
 	count = 0;
 	while (str[i])
@@ -34,10 +34,11 @@ char	*path_builder(t_env *env, char *dir)
 	char	*tmp_str;
 
 	if (!dir && !ft_getenv(env, "HOME"))
-		return (printf("cd: HOME not set\n"), NULL);			// (OLPWD et HOME) A dissocier
+		return (printf("cd: HOME not set\n"), NULL);
+	// (OLPWD et HOME) A dissocier
 	else if (!dir && !ft_getenv(env, "OLDPWD"))
 		return (printf("cd: OLDPWD not set\n"), NULL);
-	else if(!dir)
+	else if (!dir)
 		return (ft_getenv(env, "HOME"));
 	if (dir[0] == '/')
 	{

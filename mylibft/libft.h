@@ -92,7 +92,7 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 int					ft_strisdigit(char *str);
 char				*ft_strtok(char *str, const char *delim);
-//void				*ft_realloc(void *old, size_t old_size, size_t new_size);
+// void				*ft_realloc(void *old, size_t old_size, size_t new_size);
 void				*ft_realloc(void *ptr, size_t size);
 char				*ft_strcat(char *dest, char *src);
 

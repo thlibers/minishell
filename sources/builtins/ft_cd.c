@@ -50,7 +50,8 @@ static char	*init_newpwd(t_minishell *minishell, t_command *com_arg)
 		new_pwd = ft_strdup(com_arg->arguments[0]);
 	else
 	{
-		pwd = malloc(sizeof(char) * ft_strlen(ft_getenv(minishell->env, "PWD")));
+		pwd = malloc(sizeof(char) * ft_strlen(ft_getenv(minishell->env,
+						"PWD")));
 		pwd = ft_strjoin(ft_getenv(minishell->env, "PWD"), "/");
 		new_pwd = ft_strjoin(pwd, com_arg->arguments[0]);
 		free(pwd);

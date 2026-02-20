@@ -13,22 +13,22 @@
 #include "includes/minishell.h"
 
 // Trouver de quelle operateur notre token est
-t_data_type	assign_ope(char *c)
+static t_data_type	assign_ope(char *c)
 {
 	t_data_type	type;
 
 	type = T_NULL;
-	if (c[0] == '|' && c[1] != '|') 
+	if (c[0] == '|' && c[1] != '|')
 		type = T_PIPE;
 	else if (c[0] == '|' && c[1] == '|')
 		type = T_OR;
-	else if (c[0] == '<' && c[1] == '<') 
+	else if (c[0] == '<' && c[1] == '<')
 		type = T_HERE_DOC;
-	else if (c[0] == '<' && c[1] != '<') 
+	else if (c[0] == '<' && c[1] != '<')
 		type = T_RED_IN;
 	else if (c[0] == '>' && c[1] == '>')
 		type = T_RED_OUT_APP;
-	else if (c[0] == '>' && c[1] != '>') 
+	else if (c[0] == '>' && c[1] != '>')
 		type = T_RED_OUT;
 	else if (c[0] == '&' && c[1] == '&')
 		type = T_AND;
@@ -36,7 +36,7 @@ t_data_type	assign_ope(char *c)
 }
 
 // Creer notre token de type T_WORD
-void	create_tok_word(int *i, char *line, t_tok **tok)
+static void	create_tok_word(int *i, char *line, t_tok **tok)
 {
 	int		quote;
 	bool	states;
@@ -56,8 +56,8 @@ void	create_tok_word(int *i, char *line, t_tok **tok)
 	}
 }
 
-// Creer notre token d'operateur
-void	create_tok_ope(int *i, char *line, t_tok **tok)
+// Creer notre token d'operateur ; ope++ fix probablement temp |||
+static void	create_tok_ope(int *i, char *line, t_tok **tok)
 {
 	int		ope;
 	bool	states;
@@ -66,7 +66,7 @@ void	create_tok_ope(int *i, char *line, t_tok **tok)
 	states = false;
 	while (is_operator(&line[*i]) != 0 && ope < 2)
 	{
-		ope++; // FIX TEMPORAIRE ||| en ope
+		ope++;
 		if (!states)
 		{
 			states = true;

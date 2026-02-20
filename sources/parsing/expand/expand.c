@@ -12,7 +12,7 @@
 
 #include "includes/minishell.h"
 
-void	remove_quotes(char **str)
+static void	remove_quotes(char **str)
 {
 	int	first_quote;
 	int	last_quote;
@@ -37,16 +37,15 @@ void	remove_quotes(char **str)
 			quote_type = IN_DOUBLE_QUOTE;
 			last_quote = i;
 		}
-		else if ((quote_type == IN_SINGLE_QUOTE && (*str)[i] == '\'')
-				|| (quote_type == IN_DOUBLE_QUOTE && (*str)[i] == '\"'))
+		else if (quote_type && ((*str)[i] == '\'' || (*str)[i] == '\"'))
 		{
 			first_quote = i;
 			ft_strlcpy(&(*str)[last_quote], &(*str)[last_quote + 1], len - 1);
 			ft_strlcpy(&(*str)[first_quote], &(*str)[first_quote + 1], len - 1);
 			if (len - 2 == 0)
 				*str = ft_realloc(*str, 1);
-					// fix dans le cas ou l'arguments est juste "",
-					//avant le fix on avait un segfault car fassait un malloc de 0
+			// fix dans le cas ou l'arguments est juste "",
+			// avant le fix on avait un segfault car fassait un malloc de 0
 			else
 				*str = ft_realloc(*str, len - 2);
 			len -= 2;
@@ -57,40 +56,44 @@ void	remove_quotes(char **str)
 	}
 }
 
-void	ft_tilde(t_env *env, t_tok **token, int i)
+static void	expand_treatements(int *in_quote, t_minishell *minishell,
+		t_env *env, t_tok **token)
 {
-	char	*env_value;
-	char	*arg;
-	int		y;
+	int	i;
 
-	y = i + 1;
-	env_value = ft_getenv(env, "HOME");
-	arg = malloc(ft_strlen((*token)->str) - y + 1);
-	ft_strlcpy(arg, &(*token)->str[y], ft_strlen((*token)->str) - y + 1);
-	(*token)->str = ft_realloc((*token)->str, ft_strlen((*token)->str) - (y - i)
-			+ ft_strlen(env_value) + 1);
-	ft_strlcpy(&(*token)->str[i], env_value, ft_strlen(env_value) + 1);
-	(*token)->str = ft_strfreejoin((*token)->str, arg);
-}
-
-void	ft_questionmark(t_minishell *minishell, t_tok **token, int i)
-{
-	char	*arg;
-	int		y;
-
-	y = i + 1;
-	arg = malloc(ft_strlen((*token)->str) - y + 1); // Un byte de trop ?
-	ft_strlcpy(arg, &(*token)->str[y + 1], ft_strlen((*token)->str) - y + 1);
-	(*token)->str = ft_realloc((*token)->str, ft_strlen((*token)->str) - (y - i)
-			+ ft_strlen(ft_itoa(minishell->exit_code)) + 1);
-	ft_strlcpy(&(*token)->str[i], ft_itoa(minishell->exit_code),
-		ft_strlen(ft_itoa(minishell->exit_code)) + 1);
-	(*token)->str = ft_strfreejoin((*token)->str, arg);
+	i = 0;
+	while ((*token)->str[i])
+	{
+		if ((*token)->str[i] == '\'' && *in_quote == IN_RESET)
+		{
+			while ((*token)->str[i] && is_inquote(in_quote,
+					(*token)->str[i]) == IN_SINGLE_QUOTE)
+				i++;
+			i++;
+		}
+		else
+		{
+			if ((*token)->str[i] == '~')
+				ft_tilde(env, token, i);
+			else if ((*token)->str[i] == '$')
+			{
+				if (!(*token)->str[i + 1] || (*token)->str[i + 1] == ' ')
+				{
+					i++; // Undefinded behavior $$
+					continue ;
+				}
+				if ((*token)->str[i + 1] == '?')
+					ft_questionmark(minishell, token, i);
+				replace_var(token, env, &i);
+			}
+			else
+				i++;
+		}
+	}
 }
 
 void	ft_expand(t_minishell *minishell, t_env *env, t_tok **token)
 {
-	int		i;
 	int		in_quote;
 	t_tok	*head;
 
@@ -99,31 +102,8 @@ void	ft_expand(t_minishell *minishell, t_env *env, t_tok **token)
 	{
 		if ((*token)->type == T_WORD)
 		{
-			i = 0;
-			in_quote = 0;
-			while ((*token)->str[i])
-			{
-				if ((*token)->str[i] == '\'' && in_quote == IN_RESET)
-				{
-					while ((*token)->str[i] && is_inquote(&in_quote,
-							(*token)->str[i]) == IN_SINGLE_QUOTE)
-						i++;
-					i++;
-				}
-				else
-				{
-					if ((*token)->str[i] == '~')
-						ft_tilde(env, token, i);
-					else if ((*token)->str[i] == '$')
-					{
-						if ((*token)->str[i + 1] == '?')
-							ft_questionmark(minishell, token, i);
-						replace_var(token, env, &i);
-					}
-					else
-						i++;
-				}
-			}
+			in_quote = IN_RESET;
+			expand_treatements(&in_quote, minishell, env, token);
 			remove_quotes(&(*token)->str);
 		}
 		*token = (*token)->next;
@@ -148,3 +128,4 @@ void	ft_expand(t_minishell *minishell, t_env *env, t_tok **token)
 // echo '"$PWD"'	-->		"$PWD"
 
 // echo $PWD+ss		-->		/home/.....+ss
+// echo $"$PWD"$'$PWD' --> /home/....$PWD

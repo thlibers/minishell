@@ -16,7 +16,7 @@
 //	- Check caracteres valides
 //	- Gerer les export +=
 //	- Gerer les multiple export en une command
-//  - 
+//  -
 
 static int	check_valarg(char **tab)
 {
@@ -42,15 +42,16 @@ static int	check_valarg(char **tab)
 	return (1);
 }
 
-int	ft_export_arg(t_minishell *minishell, t_command *command)
+static int	ft_export_arg(t_minishell *minishell, t_command *command)
 {
 	t_env	*head;
 	char	**tab;
 	int		status;
 
 	head = minishell->env;
-	tab = env_spliter(command->arguments[0]); 	// A adapter pour plusieurs args.
-	if (!tab || !check_valarg(tab))        		// Exemple : export abc=def ghi=ggg
+	tab = env_spliter(command->arguments[0]); // A adapter pour plusieurs args.
+	if (!tab || !check_valarg(tab))
+		// Exemple : export abc=def ghi=ggg
 		return (minishell->exit_code = 1, 1);
 	status = 0;
 	while (minishell->env && status == 0)
@@ -66,12 +67,13 @@ int	ft_export_arg(t_minishell *minishell, t_command *command)
 	}
 	minishell->env = head;
 	if (status == 0)
-		add_env_back(&minishell->env, create_env_var(tab[0], tab[1], ft_strchr(command->arguments[0], '=')));
+		add_env_back(&minishell->env, create_env_var(tab[0], tab[1],
+				ft_strchr(command->arguments[0], '=')));
 	minishell->exit_code = 0;
 	return (free_tab(tab), 0);
 }
 
-void	ft_export_noarg(t_minishell *minishell)
+static void	ft_export_noarg(t_minishell *minishell)
 {
 	t_env	*cpy;
 	t_env	*save;
