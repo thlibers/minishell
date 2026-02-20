@@ -7,9 +7,9 @@ _This project has been created as part of the 42 curriculum by **nclavel**, **th
 
 ## Description:
  <!--  Tournure de phrase a changer --->
-Minishell is a **shell coded in pure C** with a full preservation history that keeps every command type in memory in a file, multi-piping which allows sending the standard output of a command into the standard input of another command, 7 built-in commands (cd, echo, export, unset, env, exit and pwd), ....
+Minishell is a **shell coded in C** with a full preservation history that keeps every command type in memory in a file, multi-piping which allows sending the standard output of a command into the standard input of another command, 7 built-in commands (cd, echo, export, unset, env, exit and pwd), ....
 
-A shell is a ***C***ommand***L***ine user ***I***nterface ***(CLI)*** that bridges between the user and the system by interpreting the command typed by the user in his terminal. A lot of different shells are available, like sh, bash, zsh, fish and many more.
+A shell is a **C**ommand**L**ine user **I**nterface ***(CLI)*** that bridges between the user and the system by interpreting the command typed by the user in his terminal. A lot of different shells are available, like sh, bash, zsh, fish and many more.
 
 Doing this project has improved the understanding of how UNIX system works and how a program can effectively treat a string to understand and execute in such a way as to do what the user wants to do.
 
@@ -48,7 +48,7 @@ make re
 - [ ] Wildcard expand
 
 ## Technical choice
-A lexer (also known as tokenizer) is a program that reads raw text character by character and breaks it down into meaningful chunks called tokens. We have used a lexer when the user have typed a commande line to split it token with the type T_WORD or any possible operator we have handle (see the list of available operator in [Available features section](https://github.com/thlibers/minishell/?tab=readme-ov-file#description)).
+A lexer (also known as tokenizer) is a program that reads raw text character by character and breaks it down into meaningful chunks called tokens. We have used a lexer when the user have typed a commande line to split it token with the type T_WORD or any possible operator we have handle (see the list of available operator in [Available features section](https://github.com/thlibers/minishell?tab=readme-ov-file#available-features)).
 
 <img src=".images/lexer.png" width=720><br>
 
