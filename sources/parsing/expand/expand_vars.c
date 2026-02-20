@@ -25,32 +25,46 @@ int	get_location_vars_name_end(t_tok **token, int i)
 	return (y);
 }
 
+static bool	init_replace_var(t_expand *expand, t_env *env, t_tok **token)
+{
+	expand->y = get_location_vars_name_end(token, *(expand->i));
+	expand->expanded = malloc(sizeof(char) * expand->y - *(expand->i));
+	if (!expand->expanded)
+		return (false);
+	ft_strlcpy(expand->expanded, &(*token)->str[*(expand->i) + 1], expand->y
+			- *(expand->i));
+	expand->arg = malloc(ft_strlen((*token)->str) - expand->y + 1);
+	if (!expand->arg)
+		return (false);
+	ft_strlcpy(expand->arg, &(*token)->str[expand->y], ft_strlen((*token)->str)
+			- expand->y + 1);
+	expand->env_value = ft_getenv(env, expand->expanded);
+	return (true);
+}
+
 // Replace le $VAR en la valeur de la variable d'environement
 bool	replace_var(t_tok **token, t_env *env, int *i)
 {
-	char	*expand;
-	char	*env_value;
-	char	*arg;
-	int		y;
+	t_expand  expand;
 
-	y = get_location_vars_name_end(token, *i);
-	expand = malloc(sizeof(char) * y - *i);
-	if (!expand)
+	expand.i = i;
+	init_replace_var(&expand, env, token);
+	if (!expand.expanded || !expand.arg)
+	{
+		if (expand.expanded)
+			free(expand.expanded);
+		else if (expand.arg)
+			free(expand.arg);
 		return (false);
-	ft_strlcpy(expand, &(*token)->str[*i + 1], y - *i);
-	arg = malloc(ft_strlen((*token)->str) - y + 1);
-	if (!arg)
-		return (free(expand), false);
-	ft_strlcpy(arg, &(*token)->str[y], ft_strlen((*token)->str) - y + 1);
-	env_value = ft_getenv(env, expand);
-	(*token)->str = ft_realloc((*token)->str, ft_strlen((*token)->str) - (y
-				- *i) + ft_strlen(env_value) + 1);
+	}
+	(*token)->str = ft_realloc((*token)->str, ft_strlen((*token)->str) -
+							(expand.y - *i) + ft_strlen(expand.env_value) + 1); // Invalid read 1
 	if (!(*token)->str)
-		return (free(arg), free(expand), false);
-	ft_strlcpy(&(*token)->str[*i], env_value, ft_strlen(env_value) + 1);
-	(*token)->str = ft_strfreejoin((*token)->str, arg);
-	free(expand);
-	free(arg);
+		return (free(expand.arg), free(expand.expanded), false);
+	ft_strlcpy(&(*token)->str[*i], expand.env_value, ft_strlen(expand.env_value) + 1);
+	(*token)->str = ft_strfreejoin((*token)->str, expand.arg);
+	free(expand.expanded);
+	free(expand.arg);
 	if (!(*token)->str)
 		return (false);
 	return (true);

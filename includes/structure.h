@@ -44,8 +44,9 @@ typedef struct s_exec
 typedef struct s_expand
 {
 	char	*expanded;
+	char	*arg;
 	char	*env_value;
-	int		i; // A changer pour quelque chose de plus lisible
+	int		*i; // A changer pour quelque chose de plus lisible
 	int		y; // A changer pour quelque chose de plus lisible
 }				t_expand;
 
