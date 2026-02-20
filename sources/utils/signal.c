@@ -17,10 +17,12 @@ volatile sig_atomic_t	g_msh_sig = 0;
 void	handler_sigint(int signum)
 {
 	(void)signum;
+	g_msh_sig = 1;
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+	g_msh_sig = 0;
 	signal(SIGINT, handler_sigint);
 }
 

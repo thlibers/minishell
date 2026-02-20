@@ -28,19 +28,27 @@ typedef struct s_exec
 {
 	pid_t				*pid;
 	t_command			*com_args;
-	// char		***cmd_args;	// delete
-	char **argv; // delete
-	int argc;    // delete
 	char				**env;
 	char				*limiter;
-	int (*pipe_fd)[2];
+	int					(*pipe_fd)[2];
 	int					infile_fd;
 	int					outfile_fd;
 	int					index;
-	int heredoc; // ?
+	char				**argv;// delete
+	int					heredoc;// ?
+	int					argc;// delete
+	// char		***cmd_args;	// delete
 }						t_exec;
 
 // --- PARSING PART ---
+typedef struct s_expand
+{
+	char	*expanded;
+	char	*env_value;
+	int		i; // A changer pour quelque chose de plus lisible
+	int		y; // A changer pour quelque chose de plus lisible
+}				t_expand;
+
 typedef enum e_data_type
 {
 	T_NULL = 0,

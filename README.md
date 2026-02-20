@@ -6,11 +6,12 @@ _This project has been created as part of the 42 curriculum by **nclavel**, **th
 </div>
 
 ## Description:
+ <!--  Tournure de phrase a changer --->
 Minishell is a **shell coded in pure C** with a full preservation history that keeps every command type in memory in a file, multi-piping which allows sending the standard output of a command into the standard input of another command, 7 built-in commands (cd, echo, export, unset, env, exit and pwd), ....
 
 A shell is a ***C***ommand***L***ine user ***I***nterface ***(CLI)*** that bridges between the user and the system by interpreting the command typed by the user in his terminal. A lot of different shells are available, like sh, bash, zsh, fish and many more.
 
-Doing this project has improved the understanding of how a UNIX system works and how a program can effectively treat a string to understand and execute in such a way as to do what the user wants to do.
+Doing this project has improved the understanding of how UNIX system works and how a program can effectively treat a string to understand and execute in such a way as to do what the user wants to do.
 
 ## Instruction:
 1. Build the project using `make` 
@@ -31,7 +32,7 @@ make clean
 ```sh
 make fclean
 ```
-- Remove every compilation object file and remove the compiled file and rebuild the project
+- Remove every compilation object file, remove the compiled file and rebuild the project
 ```sh
 make re
 ```
@@ -46,14 +47,14 @@ make re
 - [ ] Heredoc support
 - [ ] Wildcard expand
 
-## Technical choise
-**TODO**
+## Technical choice
+A lexer (also known as tokenizer) is a program that reads raw text character by character and breaks it down into meaningful chunks called tokens. We have used a lexer when the user have typed a commande line to split it token with the type T_WORD or any possible operator we have handle (see the list of available operator in [Available features section](https://github.com/thlibers/minishell/?tab=readme-ov-file#description)).
 
-{{{DEFINITION + EXPLICATION LEXER}}}
-A lexer (also know as tokenizer) is a function that process a string to convert it into token sort with a type. That like sorting a bunch of word as noms, adjective, verb or any
+<img src=".images/lexer.png" width=720><br>
 
-To facilitate the execution of the different command we have create an AST (Abstract Syntax Tree). An AST is a data structure {{{DEFINITION AST}}}
+To facilitate the execution of the different command we created an AST (Abstract Syntax Tree). An AST is a data structure shaped like a tree who are compose of a root (the original node), one/multiple branch (subnode) and leaf (node where data is stored)
 
+<img src=".images/tree_scheme.png" width=720> <br>
 
 ## Example:
 ![PLACEHOLDER COMPILATION GIF](.images/placeholder.jpg) <br>
