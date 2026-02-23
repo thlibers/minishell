@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:44 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/11 14:51:43 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/23 17:24:39 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # define _XOPEN_SOURCE 700
 # define MSH_HIST "msh_history"
+# define HEREDOC_F "/tmp/heredoc.tmp"
 
 # define IN_RESET 0
 # define IN_SINGLE_QUOTE 1

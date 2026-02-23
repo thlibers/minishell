@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/06 13:25:05 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/23 17:37:12 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,10 @@ void	execute_pipex(t_pipex *pipex)
 			printf("exited, status=%d\n", WEXITSTATUS(status));
 		i++;
 	}
+}
+
+void	execution(t_minishell *minishell)
+{
+	init_exec(minishell->env, minishell->root, minishell->exec);
+	
 }

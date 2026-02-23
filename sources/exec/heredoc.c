@@ -6,39 +6,11 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 09:00:43 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/06 16:33:26 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/23 17:52:58 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-
-char	*modded_join(char *s1, char *s2)
-{
-	int		i;
-	int		j;
-	char	*str;
-
-	i = 0;
-	j = 0;
-	if (!s1 && !s2)
-		return (NULL);
-	str = ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
-	if (!str)
-		return (NULL);
-	while (s1 != NULL && s1[i])
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	while (s2[j])
-	{
-		str[i + j] = s2[j];
-		j++;
-	}
-	if (s1)
-		free(s1);
-	return (str[i + j] = '\0', str);
-}
 
 char	*get_line(void)
 {
@@ -60,7 +32,7 @@ char	*get_line(void)
 				free(buff);
 		}
 		buff[bytes_read] = '\0';
-		line = modded_join(line, buff);
+		line = ft_strfreejoin(line, buff);
 		if (!line)
 			return (free(buff), NULL);
 	}
@@ -70,13 +42,16 @@ char	*get_line(void)
 
 static int	heredoc_init(t_exec *exec)
 {
+	if (exec->infile_fd > 2)
+		close(exec->infile_fd);
 	exec->infile_fd = open(HEREDOC_F, O_WRONLY | O_CREAT | O_TRUNC, 00644);
 	if (exec->infile_fd < 0)
 	{
 		cleanup_pipex(exec);
-		print_error("Failed to open/create/erase tmp file");
+		ft_fprintf(STDERR_FILENO, "Failed to open/create/erase tmp file");
+		return (0);
 	}
-	return (0);
+	return (1);
 }
 
 int	here_doc(t_exec *exec)
@@ -84,7 +59,8 @@ int	here_doc(t_exec *exec)
 	char	*line;
 
 	line = NULL;
-	heredoc_init(exec);
+	if (!heredoc_init(exec))
+		return (1);
 	while (1)
 	{
 		if (line)
@@ -94,7 +70,8 @@ int	here_doc(t_exec *exec)
 		if (!line)
 		{
 			cleanup_pipex(exec);
-			print_error("Heredoc failed");
+			ft_fprintf(STDERR_FILENO, "Heredoc failed");
+			return (1);
 		}
 		if (ft_strnstr(line, exec->limiter, ft_strlen(line)))
 			break ;
@@ -103,7 +80,10 @@ int	here_doc(t_exec *exec)
 	close(exec->infile_fd);
 	exec->infile_fd = open("/tmp/pipex_heredoc.tmp", O_RDONLY);
 	if (exec->infile_fd < 0)
-		print_error("Failed to reopen heredoc file for reading");
+	{
+		ft_fprintf(STDERR_FILENO, "Failed to reopen heredoc file for reading");
+		return (1);
+	}
 	free(line);
 	return (0);
 }

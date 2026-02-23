@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 13:25:31 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/23 14:19:51 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/23 17:41:09 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ void	ft_export(t_minishell *minishell, t_command *command);
 
 /* ----- ft_unset.c ----- */
 void	ft_unset(t_minishell *minishell, t_command *com_arg);
+
+/* ======================= EXEC ======================= */
+/* ----- parse_exe.c ----- */
+int	init_exec(t_env *env, t_ast *ast, t_exec *exec);
+
+/* ----- heredoc.c ----- */
+int	here_doc(t_exec *exec);
 
 /* ======================= MINISHELL ======================= */
 /* ----- history.c ----- */
@@ -127,5 +134,4 @@ void	init_signal(void);
 // DEBUG
 void	print_ast(t_ast *ast);
 
-/* ======================= EXEC ======================= */
 #endif

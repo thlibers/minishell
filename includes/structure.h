@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:28:21 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/23 14:10:28 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/23 17:39:04 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,7 @@ typedef struct s_exec
 	int					infile_fd;
 	int					outfile_fd;
 	int					index;
-	char				**argv;// delete
-	int					heredoc;// ?
-	int					argc;// delete
-	// char		***cmd_args;	// delete
+	int					argc; // delete
 }						t_exec;
 
 // --- PARSING PART ---
@@ -46,8 +43,8 @@ typedef struct s_expand
 	char	*expanded;
 	char	*arg;
 	char	*env_value;
-	int		*first_char; // A changer pour quelque chose de plus lisible
-	int		last_char; // A changer pour quelque chose de plus lisible
+	int		*first_char;
+	int		last_char;
 }				t_expand;
 
 typedef enum e_data_type
@@ -75,7 +72,6 @@ typedef struct s_ast
 {
 	t_data_type			type;
 	char				*data;
-	char				*file;
 	struct s_ast		*top;
 	struct s_ast		*leaf_right;
 	struct s_ast		*leaf_left;
@@ -112,6 +108,7 @@ typedef struct s_minishell
 	t_token				*token;
 	t_tok				*tok;
 	t_ast				*root;
+	t_exec				*exec;
 	int					fd_history;
 	int					exit_code;
 }						t_minishell;
