@@ -6,7 +6,7 @@
 #    By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 11:04:15 by nclavel           #+#    #+#              #
-#    Updated: 2026/02/20 09:22:35 by nclavel          ###   ########.fr        #
+#    Updated: 2026/02/23 14:20:23 by thlibers         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRCS =	$(SRC_DIR)/builtins/ft_cd.c\
 		$(SRC_DIR)/parsing/env/env_vars.c\
 		$(SRC_DIR)/parsing/expand/expand.c\
 		$(SRC_DIR)/parsing/expand/expand_vars.c\
+		$(SRC_DIR)/parsing/expand/remove_quotes.c\
 		$(SRC_DIR)/parsing/prompt.c\
 		$(SRC_DIR)/parsing/utils.c\
 		$(SRC_DIR)/parsing/lexer/tokenizer.c\

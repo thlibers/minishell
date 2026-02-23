@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structure.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:28:21 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/20 11:28:59 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/02/23 14:10:28 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ typedef struct s_expand
 	char	*expanded;
 	char	*arg;
 	char	*env_value;
-	int		*i; // A changer pour quelque chose de plus lisible
-	int		y; // A changer pour quelque chose de plus lisible
+	int		*first_char; // A changer pour quelque chose de plus lisible
+	int		last_char; // A changer pour quelque chose de plus lisible
 }				t_expand;
 
 typedef enum e_data_type
@@ -95,6 +95,15 @@ typedef struct s_env
 	bool				equal;
 	struct s_env		*next;
 }						t_env;
+
+typedef struct s_quotes
+{
+	int					first;
+	int					last;
+	int					quote_type;
+	int					len;
+	int					i;
+}						t_quotes;
 
 // --- COMMON ---
 typedef struct s_minishell

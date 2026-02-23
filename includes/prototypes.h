@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototypes.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 13:25:31 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/03 13:25:38 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/02/23 14:19:51 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,9 @@ void	ft_tilde(t_env *env, t_tok **token, int i);
 void	ft_questionmark(t_minishell *minishell, t_tok **token, int i);
 int		get_location_vars_name_end(t_tok **token, int i);
 bool	replace_var(t_tok **token, t_env *env, int *i);
+
+/* ----- expand/remove_quotes.c ----- */
+void	remove_quotes(char **str);
 
 /* ----- lexer/tokenizer.c ----- */
 t_tok	*tokenizer(char *line);
