@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:28:21 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/23 17:39:04 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/24 13:22:32 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_exec
 	int					infile_fd;
 	int					outfile_fd;
 	int					index;
-	int					argc; // delete
+	int					cmdc;
 }						t_exec;
 
 // --- PARSING PART ---
@@ -108,7 +108,7 @@ typedef struct s_minishell
 	t_token				*token;
 	t_tok				*tok;
 	t_ast				*root;
-	t_exec				*exec;
+	t_exec				exec;
 	int					fd_history;
 	int					exit_code;
 }						t_minishell;

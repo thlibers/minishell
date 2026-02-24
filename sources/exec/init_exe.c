@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_exe.c                                        :+:      :+:    :+:   */
+/*   init_exe.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:18:25 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/23 17:54:47 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/24 13:32:09 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	init_exec(t_env *env, t_ast *ast, t_exec *exec)
 	int 	i;
 	t_ast	*save;
 	
-	exec->argc = cmd_count(ast);
+	exec->cmdc = cmd_count(ast);
 	exec->env = convert_env(env);
 	i = 0;
 	while (ast)

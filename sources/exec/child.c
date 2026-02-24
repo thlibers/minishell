@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 12:30:53 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/06 13:24:54 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/24 12:16:06 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	first_last_command(t_pipex *pipex, int child_number)
 	}
 }
 
-static void	setup_middle_command(t_pipex *pipex, int child_number)
+static void	setup_middle_commands(t_pipex *pipex, int child_number)
 {
 	if (dup2(pipex->pipe_fd[child_number - 1][0], STDIN_FILENO) == -1)
 		print_error("dup2 failed for pipe read");
@@ -67,7 +67,7 @@ static void	init_child(t_pipex *pipex, int child_number)
 	else if (child_number == 0 || child_number == pipex->cmd_count - 1)
 		first_last_command(pipex, child_number);
 	else
-		setup_middle_command(pipex, child_number);
+		setup_middle_commands(pipex, child_number);
 	i = 0;
 	while (i < pipex->cmd_count - 1)
 	{

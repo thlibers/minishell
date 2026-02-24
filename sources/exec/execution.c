@@ -6,84 +6,77 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/23 17:37:12 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/24 13:32:15 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-static void	pipes_creation(t_pipex *pipex)
+static void	pipes_creation(t_exec *exec)
 {
 	int	i;
 
 	i = 0;
-	while (i < pipex->cmd_count - 1)
+	exec->pipe_fd = ft_calloc(exec->cmdc, sizeof(int *));
+	if (!exec->pipe_fd)
+		ft_fprintf(STDERR_FILENO, "Allocation Pipe_fd array failed");
+	while (i < exec->cmdc - 1)
 	{
-		if (pipe(pipex->pipe_fd[i]) == -1)
-			print_error("Pipe creation failed");
+		if (pipe(exec->pipe_fd[i]) == -1)
+			ft_fprintf(STDERR_FILENO, "Pipe creation failed");
 		i++;
 	}
 }
 
-static void	pipes_close(t_pipex *pipex)
+static void	children_creation(t_exec *exec, pid_t *pid)
 {
 	int	i;
 
 	i = 0;
-	while (i < pipex->cmd_count - 1)
-	{
-		close(pipex->pipe_fd[i][0]);
-		close(pipex->pipe_fd[i][1]);
-		pipex->pipe_fd[i][0] = -1;
-		pipex->pipe_fd[i][1] = -1;
-		i++;
-	}
-}
-
-static void	children_creation(t_pipex *pipex, pid_t *pid)
-{
-	int	i;
-
-	i = 0;
-	while (i < pipex->cmd_count)
+	while (i < exec->cmdc)
 	{
 		pid[i] = fork();
 		if (pid[i] == -1)
 			print_error("Fork creation failed");
 		if (pid[i] == 0)
-			child_process(pipex, i);
+			child_process(exec, i);
 		i++;
 	}
 }
 
-void	execute_pipex(t_pipex *pipex)
+static void	pipes_close(t_exec *exec)
 {
-	int	status;
 	int	i;
 
 	i = 0;
-	pipex->pid = NULL;
-	pipex->pid = ft_calloc(pipex->cmd_count, sizeof(int));
-	if (!pipex->pid)
-		print_error("Allocation pid array failed");
-	pipex->pipe_fd = ft_calloc(pipex->cmd_count, sizeof(int *));
-	if (!pipex->pipe_fd)
-		print_error("Allocation Pipe_fd array failed");
-	pipes_creation(pipex);
-	children_creation(pipex, pipex->pid);
-	pipes_close(pipex);
-	while (i < pipex->cmd_count)
+	while (i < exec->cmdc - 1)
 	{
-		waitpid(pipex->pid[i], &status, 0);
-		printf("%d\n", status);
-		if (WIFEXITED(status))
-			printf("exited, status=%d\n", WEXITSTATUS(status));
+		close(exec->pipe_fd[i][0]);
+		close(exec->pipe_fd[i][1]);
+		exec->pipe_fd[i][0] = -1;
+		exec->pipe_fd[i][1] = -1;
 		i++;
 	}
 }
 
 void	execution(t_minishell *minishell)
 {
-	init_exec(minishell->env, minishell->root, minishell->exec);
-	
+	int	i;
+
+	i = 0;
+	minishell->exec.pid = NULL;
+	minishell->exec.pid = ft_calloc(minishell->exec.cmdc, sizeof(int));
+	if (!minishell->exec.pid)
+		ft_fprintf(STDERR_FILENO, "Allocation pid array failed");
+	init_exec(minishell->env, minishell->root, &minishell->exec);
+	pipes_creation(&minishell->exec);
+	children_creation(&minishell->exec, &minishell->exec.pid);
+	pipes_close(&minishell->exec);
+	while (i < minishell->exec.cmdc)
+	{
+		waitpid(minishell->exec.pid[i], &minishell->exit_code, 0);
+		if (WIFEXITED(minishell->exit_code))
+			printf("exited, status=%d\n", WEXITSTATUS(minishell->exit_code));	// gestion d'erreur a changer
+		i++;
+	}
 }
