@@ -44,6 +44,7 @@ SRCS =	$(SRC_DIR)/builtins/ft_cd.c\
 		$(SRC_DIR)/minishell/main.c\
 		$(SRC_DIR)/minishell/minishell.c\
 		$(SRC_DIR)/minishell/selector.c\
+		$(SRC_DIR)/exec/convert.c\
 		$(SRC_DIR)/parsing/env/env_vars.c\
 		$(SRC_DIR)/parsing/expand/expand.c\
 		$(SRC_DIR)/parsing/expand/expand_vars.c\

@@ -29,6 +29,7 @@ typedef struct s_exec
 	pid_t				*pid;
 	// t_command			*com_args;
 	char				**delete_me; // delete
+  char        **cmd;
 	char				**env;
 	char				*limiter;
 	int					(*pipe_fd)[2];

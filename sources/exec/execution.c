@@ -48,11 +48,18 @@ static void	testexe(t_exec *exec, int i) // delete
 
 static void	children_creation(t_minishell *minishell, pid_t *pid)
 {
-	int	i;
+	int	  i;
+  t_ast *tmp;
 
 	i = 0;
 	while (i < minishell->exec.cmdc)
 	{
+    tmp = minishell->root;
+    for (int i = 0; i < cmd_count(minishell->root); i++)
+    {
+      minishell->exec.cmd = ast_to_arr(&tmp);
+      tmp = tmp->leaf_right;
+    }
 		testexe(&minishell->exec, i);
 		pid[i] = fork();
 		if (pid[i] == -1)
@@ -60,6 +67,7 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 		if (pid[i] == 0)
 			child_process(minishell, i);
 		i++;
+    free_ast_arr(&minishell->exec.cmd);
 	}
 }
 

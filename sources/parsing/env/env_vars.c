@@ -28,6 +28,8 @@ char	**env_spliter(char *vars)
 	if (!pos)
 		return (tab[0] = ft_strdup(vars), tab[1] = NULL, tab);
 	tab[0] = ft_calloc(pos - vars + 1, sizeof(char));
+  if (!tab[0])
+    return (free(tab), NULL);
 	while (i < pos - vars)
 	{
 		tab[0][i] = vars[i];
