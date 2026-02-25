@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:28:21 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/24 14:20:13 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/25 11:47:51 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ typedef struct s_exec
 {
 	pid_t				*pid;
 	// t_command			*com_args;
+	char				**delete_me; // delete
 	char				**env;
 	char				*limiter;
 	int					(*pipe_fd)[2];
 	int					infile_fd;
 	int					outfile_fd;
+	// int					child_number;
 	int					index;
 	int					cmdc;
 }						t_exec;

@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:18:25 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/24 13:32:09 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/25 13:56:40 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	open_infile(char *filename)
 		return (0);
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-		print_error(filename);
+		ft_fprintf(STDERR_FILENO, filename);
 	return (fd);
 }
 
@@ -35,7 +35,7 @@ static int	open_outfile(char *filename, int trunc)
 	else
 		fd = open(filename, O_WRONLY | O_CREAT, 0644);
 	if (fd == -1)
-		print_error(filename);
+		ft_fprintf(STDERR_FILENO, filename);
 	return (fd);
 }
 
@@ -86,6 +86,7 @@ int	init_exec(t_env *env, t_ast *ast, t_exec *exec)
 			ast = save;
 		}
 		i++;
+		ast = ast->leaf_right;
 	}
 	return (1);
 }

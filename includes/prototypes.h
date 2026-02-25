@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 13:25:31 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/23 17:41:09 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/25 13:46:34 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,26 @@ void	ft_export(t_minishell *minishell, t_command *command);
 void	ft_unset(t_minishell *minishell, t_command *com_arg);
 
 /* ======================= EXEC ======================= */
-/* ----- parse_exe.c ----- */
-int	init_exec(t_env *env, t_ast *ast, t_exec *exec);
+/* ----- child.c ----- */
+void	child_process(t_minishell *minishell, int child_number);
+
+/* ----- commands.c ----- */
+char	*find_command_path(t_minishell *minishell, char *cmd);
+
+/* ----- convert_env.c ----- */
+char	**convert_env(t_env *env);
+
+/* ----- exec_utils.c ----- */
+void	cleanup_pipe(t_exec *exec);
+
+/* ----- execution.c ----- */
+void	execution(t_minishell *minishell);
 
 /* ----- heredoc.c ----- */
-int	here_doc(t_exec *exec);
+int		here_doc(t_exec *exec);
+
+/* ----- init_exe.c ----- */
+int		init_exec(t_env *env, t_ast *ast, t_exec *exec);
 
 /* ======================= MINISHELL ======================= */
 /* ----- history.c ----- */
@@ -121,11 +136,6 @@ void	clear_token(t_token **head);
 void	env_clean(t_env *env, char **tab);
 void	free_ast(t_ast **ast);
 void	free_tok(t_tok **tok);
-
-/* ----- exec_utils.c ----- */
-void	print_error(char *message);
-void	free_array(char **array);
-// void	cleanup_pipex(t_pipex *pipex);
 
 /* ----- signal.c ----- */
 void	handler_sigint(int signum);

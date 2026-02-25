@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/24 13:32:15 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/25 14:06:41 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,18 @@ static void	pipes_creation(t_exec *exec)
 	}
 }
 
-static void	children_creation(t_exec *exec, pid_t *pid)
+static void	children_creation(t_minishell *minishell, pid_t *pid)
 {
 	int	i;
 
 	i = 0;
-	while (i < exec->cmdc)
+	while (i < minishell->exec.cmdc)
 	{
 		pid[i] = fork();
 		if (pid[i] == -1)
-			print_error("Fork creation failed");
+			ft_fprintf(STDERR_FILENO, "Fork creation failed");
 		if (pid[i] == 0)
-			child_process(exec, i);
+			child_process(minishell, i);
 		i++;
 	}
 }
@@ -70,13 +70,15 @@ void	execution(t_minishell *minishell)
 		ft_fprintf(STDERR_FILENO, "Allocation pid array failed");
 	init_exec(minishell->env, minishell->root, &minishell->exec);
 	pipes_creation(&minishell->exec);
-	children_creation(&minishell->exec, &minishell->exec.pid);
+	children_creation(minishell, minishell->exec.pid);
 	pipes_close(&minishell->exec);
 	while (i < minishell->exec.cmdc)
 	{
 		waitpid(minishell->exec.pid[i], &minishell->exit_code, 0);
-		if (WIFEXITED(minishell->exit_code))
-			printf("exited, status=%d\n", WEXITSTATUS(minishell->exit_code));	// gestion d'erreur a changer
+		// if (WIFEXITED(minishell->exit_code))
+		// 	printf("exited, status=%d\n", WEXITSTATUS(minishell->exit_code));	// gestion d'erreur a changer
 		i++;
 	}
+	// free(minishell->exec.delete_me[0]);
+	// free_tab(minishell->exec.delete_me);
 }

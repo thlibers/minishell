@@ -6,7 +6,7 @@
 #    By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 11:04:15 by nclavel           #+#    #+#              #
-#    Updated: 2026/02/23 14:20:23 by thlibers         ###   ########.fr        #
+#    Updated: 2026/02/25 13:48:49 by thlibers         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,13 @@ SRCS =	$(SRC_DIR)/builtins/ft_cd.c\
 		$(SRC_DIR)/builtins/ft_export.c\
 		$(SRC_DIR)/builtins/ft_pwd.c\
 		$(SRC_DIR)/builtins/ft_unset.c\
+		$(SRC_DIR)/exec/child.c\
+		$(SRC_DIR)/exec/commands.c\
+		$(SRC_DIR)/exec/convert_env.c\
+		$(SRC_DIR)/exec/exec_utils.c\
+		$(SRC_DIR)/exec/execution.c\
+		$(SRC_DIR)/exec/heredoc.c\
+		$(SRC_DIR)/exec/init_exe.c\
 		$(SRC_DIR)/minishell/history.c\
 		$(SRC_DIR)/minishell/main.c\
 		$(SRC_DIR)/minishell/minishell.c\

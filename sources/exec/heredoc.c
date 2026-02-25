@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 09:00:43 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/23 17:52:58 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/25 13:27:50 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	heredoc_init(t_exec *exec)
 	exec->infile_fd = open(HEREDOC_F, O_WRONLY | O_CREAT | O_TRUNC, 00644);
 	if (exec->infile_fd < 0)
 	{
-		cleanup_pipex(exec);
+		// cleanup_pipex(exec);
 		ft_fprintf(STDERR_FILENO, "Failed to open/create/erase tmp file");
 		return (0);
 	}
@@ -69,7 +69,7 @@ int	here_doc(t_exec *exec)
 		line = get_line();
 		if (!line)
 		{
-			cleanup_pipex(exec);
+			// cleanup_pipex(exec);
 			ft_fprintf(STDERR_FILENO, "Heredoc failed");
 			return (1);
 		}

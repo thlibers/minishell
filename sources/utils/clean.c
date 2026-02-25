@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:13:06 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/24 14:32:33 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/25 12:25:02 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_clear(t_minishell *minishell)
 {
 	env_clean(minishell->env, NULL);
 	close(minishell->fd_history);
-	free_ast(minishell->root);
+	// free_ast(&minishell->root);
 }
 
 void	clear_token(t_token **head)

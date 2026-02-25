@@ -6,13 +6,13 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:20:34 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/06 16:28:32 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/25 13:38:45 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-char	**get_path_from_env(t_exec *exec)
+static char	**get_path_from_env(t_exec *exec)
 {
 	int		i;
 	char	*path_line;
@@ -45,11 +45,17 @@ static char	*build_path(char *cmd, char **paths)
 	{
 		tmp = ft_strjoin(paths[i], "/");
 		if (!tmp)
-			return (free_array(paths), NULL);
+		{
+			free_tab(paths);
+			return (NULL);
+		}
 		full_path = ft_strjoin(tmp, cmd);
 		free(tmp);
 		if (!full_path)
-			return (free_array(paths), NULL);
+		{
+			free_tab(paths);
+			return (NULL);
+		}
 		if (access(full_path, X_OK) == 0)
 			return (full_path);
 		free(full_path);
@@ -58,7 +64,7 @@ static char	*build_path(char *cmd, char **paths)
 	return (NULL);
 }
 
-char	*find_command_path(t_exec *exec, char *cmd)
+char	*find_command_path(t_minishell *minishell, char *cmd)
 {
 	char	**path;
 	char	*full_path;
@@ -71,9 +77,10 @@ char	*find_command_path(t_exec *exec, char *cmd)
 			return (ft_strdup(cmd));
 		return (NULL);
 	}
-	path = get_path_from_env(exec->env);
+	path = get_path_from_env(&minishell->exec);
 	if (!path)
 		return (NULL);
 	full_path = build_path(cmd, path);
-	return (free_array(path), full_path);
+	free_tab(path);
+	return (full_path);
 }
