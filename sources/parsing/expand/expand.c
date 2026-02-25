@@ -22,7 +22,8 @@ static void	single_quote_treatement(int *in_quote, t_tok **token, int *i)
 
 static bool	dollar_treatements(t_minishell *minishell, t_tok **token, int *i)
 {
-	if (!(*token)->str[*i + 1] || (*token)->str[*i + 1] == ' ' || (*token)->str[*i + 1] == '$')
+	if (!(*token)->str[*i + 1] || (*token)->str[*i + 1] == ' '
+		|| (*token)->str[*i + 1] == '$')
 	{
 		(*i)++; // Undefinded behavior $$
 		return (false);

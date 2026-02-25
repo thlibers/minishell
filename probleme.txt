@@ -1,0 +1,5 @@
+- Heredoc
+- << EOF | cmd1 (ast_to_arr function)
+- leak
+- open fds
+

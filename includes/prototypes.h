@@ -59,8 +59,8 @@ int		here_doc(t_exec *exec);
 int		init_exec(t_env *env, t_ast *ast, t_exec *exec);
 
 /* ----- convert.c ----- */
-char **ast_to_arr(t_ast **ast);
-void  free_ast_arr(char ***arr);
+char	**ast_to_arr(t_ast **ast);
+void	free_ast_arr(char ***arr);
 
 /* ======================= MINISHELL ======================= */
 /* ----- history.c ----- */

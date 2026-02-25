@@ -24,10 +24,13 @@ int	main(int argc, char **argv, char **envp)
 	{
 		if (!prompt(&minishell))
 			break ;
-		print_ast(minishell.root);
-		execution(&minishell);
-		cleanup_pipe(&minishell.exec);
-		free_ast(&minishell.root);
+		if (minishell.root)
+		{
+			print_ast(minishell.root);
+			execution(&minishell);
+			cleanup_pipe(&minishell.exec);
+			free_ast(&minishell.root);
+		}
 	}
 	ft_clear(&minishell);
 	return (0);

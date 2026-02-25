@@ -36,7 +36,7 @@ static void	testexe(t_exec *exec, int i) // delete
 		exec->delete_me[0] = ft_strdup("ls");
 		exec->delete_me[1] = NULL;
 	}
-	
+
 	if (i == 1)
 	{
 		exec->delete_me = malloc(sizeof(char *) * 3);
@@ -48,18 +48,14 @@ static void	testexe(t_exec *exec, int i) // delete
 
 static void	children_creation(t_minishell *minishell, pid_t *pid)
 {
-	int	  i;
-  t_ast *tmp;
+	int		i;
+	t_ast	*tmp;
 
 	i = 0;
+	tmp = minishell->root;
 	while (i < minishell->exec.cmdc)
 	{
-    tmp = minishell->root;
-    for (int i = 0; i < cmd_count(minishell->root); i++)
-    {
-      minishell->exec.cmd = ast_to_arr(&tmp);
-      tmp = tmp->leaf_right;
-    }
+		minishell->exec.cmd = ast_to_arr(&tmp);
 		testexe(&minishell->exec, i);
 		pid[i] = fork();
 		if (pid[i] == -1)
@@ -67,7 +63,8 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 		if (pid[i] == 0)
 			child_process(minishell, i);
 		i++;
-    free_ast_arr(&minishell->exec.cmd);
+		free_ast_arr(&minishell->exec.cmd);
+		tmp = tmp->leaf_right;
 	}
 }
 
@@ -102,7 +99,8 @@ void	execution(t_minishell *minishell)
 	{
 		waitpid(minishell->exec.pid[i], &minishell->exit_code, 0);
 		// if (WIFEXITED(minishell->exit_code))
-		// 	printf("exited, status=%d\n", WEXITSTATUS(minishell->exit_code));	// gestion d'erreur a changer
+		// 	printf("exited, status=%d\n",
+		//			WEXITSTATUS(minishell->exit_code));	// gestion d'erreur a changer
 		i++;
 	}
 	// free(minishell->exec.delete_me[0]);

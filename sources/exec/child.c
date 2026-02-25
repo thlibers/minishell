@@ -98,11 +98,12 @@ void	child_process(t_minishell *minishell, int child_number)
 
 	// testexe(&minishell->exec);
 	init_child(&minishell->exec, child_number);
-	//selector
+	// selector
 	cmd_path = find_command_path(minishell, minishell->exec.cmd[0]);
 	if (!cmd_path)
 	{
-		ft_fprintf(STDERR_FILENO, "Minishell: %s: command not found\n", minishell->exec.cmd[0]);
+		ft_fprintf(STDERR_FILENO, "Minishell: %s: command not found\n",
+			minishell->exec.cmd[0]);
 		ft_clear(minishell);
 		exit(127);
 	}

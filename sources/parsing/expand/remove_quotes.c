@@ -37,12 +37,13 @@ static void	single_or_double(t_quotes *q, char **str)
 
 void	remove_quotes(char **str)
 {
-	t_quotes q;
+	t_quotes	q;
+
 	init_rm_quotes(&q, str);
 	while (q.i >= 0)
 	{
-		if (((*str)[q.i] == '\'' || (*str)[q.i] == '\"') && q.quote_type ==
-				IN_RESET)
+		if (((*str)[q.i] == '\'' || (*str)[q.i] == '\"')
+				&& q.quote_type == IN_RESET)
 			single_or_double(&q, str);
 		else if (q.quote_type && ((*str)[q.i] == '\'' || (*str)[q.i] == '\"'))
 		{

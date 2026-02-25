@@ -61,21 +61,15 @@ int	here_doc(t_exec *exec)
 	line = NULL;
 	if (!heredoc_init(exec))
 		return (1);
-	while (1)
+	while (strcmp(line, exec->limiter) != 0)
 	{
-		if (line)
-			free(line);
-		write(1, "> ", 2);
-		line = get_line();
-		if (!line)
-		{
-			// cleanup_pipex(exec);
-			ft_fprintf(STDERR_FILENO, "Heredoc failed");
-			return (1);
-		}
-		if (ft_strnstr(line, exec->limiter, ft_strlen(line)))
-			break ;
-		ft_putstr_fd(line, exec->infile_fd);
+		line = readline("> ");
+	}
+	if (!line)
+	{
+		// cleanup_pipex(exec);
+		ft_fprintf(STDERR_FILENO, "Heredoc failed");
+		return (1);
 	}
 	close(exec->infile_fd);
 	exec->infile_fd = open("/tmp/pipex_heredoc.tmp", O_RDONLY);

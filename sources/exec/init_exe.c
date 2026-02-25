@@ -41,9 +41,9 @@ static int	open_outfile(char *filename, int trunc)
 
 int	init_exec(t_env *env, t_ast *ast, t_exec *exec)
 {
-	int 	i;
+	int		i;
 	t_ast	*save;
-	
+
 	exec->cmdc = cmd_count(ast);
 	exec->env = convert_env(env);
 	i = 0;
@@ -90,4 +90,3 @@ int	init_exec(t_env *env, t_ast *ast, t_exec *exec)
 	}
 	return (1);
 }
-
