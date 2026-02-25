@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 12:30:53 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/25 13:30:14 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/25 15:36:58 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,43 @@
 static void	one_command_only(t_exec *exec, int child_number)
 {
 	(void)child_number;
-	if (dup2(exec->infile_fd, STDIN_FILENO) == -1)
-		ft_fprintf(STDERR_FILENO, "dup2 failed for pipe read");
-	if (dup2(exec->outfile_fd, STDOUT_FILENO) == -1)
-		ft_fprintf(STDERR_FILENO, "dup2 failed for outfile");
-	close(exec->infile_fd);
-	close(exec->outfile_fd);
+	if (exec->infile_fd > 2)
+	{
+		if (dup2(exec->infile_fd, STDIN_FILENO) == -1)
+			ft_fprintf(STDERR_FILENO, "dup2 failed for pipe read");
+		close(exec->infile_fd);
+	}
+	if (exec->outfile_fd > 2)
+	{
+		if (dup2(exec->outfile_fd, STDOUT_FILENO) == -1)
+			ft_fprintf(STDERR_FILENO, "dup2 failed for outfile");
+		close(exec->outfile_fd);
+	}
 }
 
 static void	first_last_command(t_exec *exec, int child_number)
 {
 	if (child_number == 0)
 	{
-		if (dup2(exec->infile_fd, STDIN_FILENO) == -1)
-			ft_fprintf(STDERR_FILENO, "dup2 failed for pipe read");
+		if (exec->infile_fd > 2)
+		{
+			if (dup2(exec->infile_fd, STDIN_FILENO) == -1)
+				ft_fprintf(STDERR_FILENO, "dup2 failed for pipe read");
+			close(exec->infile_fd);
+		}
 		if (dup2(exec->pipe_fd[child_number][1], STDOUT_FILENO) == -1)
 			ft_fprintf(STDERR_FILENO, "dup2 failed for outfile");
-		close(exec->infile_fd);
 	}
 	else if (child_number == exec->cmdc - 1)
 	{
 		if (dup2(exec->pipe_fd[child_number - 1][0], STDIN_FILENO) == -1)
 			ft_fprintf(STDERR_FILENO, "dup2 failed for pipe read");
-		if (dup2(exec->outfile_fd, STDOUT_FILENO) == -1)
-			ft_fprintf(STDERR_FILENO, "dup2 failed for outfile");
-		close(exec->outfile_fd);
+		if (exec->outfile_fd > 2)
+		{
+			if (dup2(exec->outfile_fd, STDOUT_FILENO) == -1)
+				ft_fprintf(STDERR_FILENO, "dup2 failed for outfile");
+			close(exec->outfile_fd);
+		}
 		close(exec->pipe_fd[child_number - 1][0]);
 		close(exec->pipe_fd[child_number - 1][1]);
 	}
@@ -80,21 +92,13 @@ static void	init_child(t_exec *exec, int child_number)
 	}
 }
 
-static void	testexe(t_exec *exec) // delete
-{
-	exec->delete_me = malloc(sizeof(char*) * 2);
-	exec->delete_me[0] = malloc(3);
-
-	exec->delete_me[0] = ft_strdup("ls");
-	exec->delete_me[1] = NULL;
-}
-
 void	child_process(t_minishell *minishell, int child_number)
 {
 	char	*cmd_path;
 
-	testexe(&minishell->exec);
+	// testexe(&minishell->exec);
 	init_child(&minishell->exec, child_number);
+	//selector
 	cmd_path = find_command_path(minishell, minishell->exec.delete_me[0]);
 	if (!cmd_path)
 	{

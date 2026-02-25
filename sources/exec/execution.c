@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/25 14:06:41 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/25 15:28:20 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,24 @@ static void	pipes_creation(t_exec *exec)
 	}
 }
 
+static void	testexe(t_exec *exec, int i) // delete
+{
+	if (i == 0)
+	{
+		exec->delete_me = malloc(sizeof(char *) * 2);
+		exec->delete_me[0] = ft_strdup("ls");
+		exec->delete_me[1] = NULL;
+	}
+	
+	if (i == 1)
+	{
+		exec->delete_me = malloc(sizeof(char *) * 3);
+		exec->delete_me[0] = ft_strdup("grep");
+		exec->delete_me[1] = ft_strdup("file");
+		exec->delete_me[2] = NULL;
+	}
+}
+
 static void	children_creation(t_minishell *minishell, pid_t *pid)
 {
 	int	i;
@@ -35,6 +53,7 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 	i = 0;
 	while (i < minishell->exec.cmdc)
 	{
+		testexe(&minishell->exec, i);
 		pid[i] = fork();
 		if (pid[i] == -1)
 			ft_fprintf(STDERR_FILENO, "Fork creation failed");
@@ -64,11 +83,10 @@ void	execution(t_minishell *minishell)
 	int	i;
 
 	i = 0;
-	minishell->exec.pid = NULL;
+	init_exec(minishell->env, minishell->root, &minishell->exec);
 	minishell->exec.pid = ft_calloc(minishell->exec.cmdc, sizeof(int));
 	if (!minishell->exec.pid)
 		ft_fprintf(STDERR_FILENO, "Allocation pid array failed");
-	init_exec(minishell->env, minishell->root, &minishell->exec);
 	pipes_creation(&minishell->exec);
 	children_creation(minishell, minishell->exec.pid);
 	pipes_close(&minishell->exec);
