@@ -52,8 +52,8 @@ t_env	*create_env_var(char *name, char *value, char *equal_loc)
 	var = calloc(1, sizeof(t_env));
 	if (!var)
 		return (NULL);
-	var->name = strdup(name);
-	var->value = strdup(value);
+	var->name = ft_strdup(name);
+	var->value = ft_strdup(value);
 	if (!equal_loc)
 		var->equal = false;
 	else

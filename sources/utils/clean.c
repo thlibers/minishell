@@ -16,7 +16,13 @@ void	ft_clear(t_minishell *minishell)
 {
 	env_clean(minishell->env, NULL);
 	close(minishell->fd_history);
-	// free_ast(&minishell->root);
+}
+
+void	child_clear(t_minishell *minishell)
+{
+	env_clean(minishell->env, NULL);
+	close(minishell->fd_history);
+	free_ast(&minishell->root);
 }
 
 void	clear_token(t_token **head)

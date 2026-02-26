@@ -28,24 +28,6 @@ static void	pipes_creation(t_exec *exec)
 	}
 }
 
-static void	testexe(t_exec *exec, int i) // delete
-{
-	if (i == 0)
-	{
-		exec->delete_me = malloc(sizeof(char *) * 2);
-		exec->delete_me[0] = ft_strdup("ls");
-		exec->delete_me[1] = NULL;
-	}
-
-	if (i == 1)
-	{
-		exec->delete_me = malloc(sizeof(char *) * 3);
-		exec->delete_me[0] = ft_strdup("grep");
-		exec->delete_me[1] = ft_strdup("file");
-		exec->delete_me[2] = NULL;
-	}
-}
-
 static void	children_creation(t_minishell *minishell, pid_t *pid)
 {
 	int		i;
@@ -56,7 +38,6 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 	while (i < minishell->exec.cmdc)
 	{
 		minishell->exec.cmd = ast_to_arr(&tmp);
-		testexe(&minishell->exec, i);
 		pid[i] = fork();
 		if (pid[i] == -1)
 			ft_fprintf(STDERR_FILENO, "Fork creation failed");
@@ -103,6 +84,4 @@ void	execution(t_minishell *minishell)
 		//			WEXITSTATUS(minishell->exit_code));	// gestion d'erreur a changer
 		i++;
 	}
-	// free(minishell->exec.delete_me[0]);
-	// free_tab(minishell->exec.delete_me);
 }

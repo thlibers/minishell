@@ -25,7 +25,7 @@ static t_data_type	next_ope(t_tok *tok)
 }
 
 // Creer la branche de gauche
-static t_ast	*create_left(t_tok *tok)
+static t_ast	*create_left(t_tok *tok, int i)
 {
 	t_ast	*left;
 	t_ast	*back;
@@ -33,7 +33,7 @@ static t_ast	*create_left(t_tok *tok)
 	back = NULL;
 	if (!tok || tok->type != T_WORD)
 		return (NULL);
-	back = create_left(tok->next);
+	back = create_left(tok->next, i + 1);
 	left = calloc(1, sizeof(t_ast));
 	left->type = tok->type;
 	left->data = ft_strdup(tok->str);
@@ -42,7 +42,7 @@ static t_ast	*create_left(t_tok *tok)
 }
 
 // Creer la branche de droite qui va construire notre arbre
-t_ast	*create_tree(t_tok *tok)
+t_ast	*create_tree(t_tok *tok, int i)
 {
 	t_ast	*node;
 	t_ast	*tree;
@@ -56,7 +56,7 @@ t_ast	*create_tree(t_tok *tok)
 		while (tok->next && tok->next->type == T_WORD)
 			tok = tok->next;
 	}
-	tree = create_tree(tok->next);
+	tree = create_tree(tok->next, i+1);
 	node = calloc(1, sizeof(t_ast));
 	if (!node)
 		return (NULL);
@@ -67,7 +67,7 @@ t_ast	*create_tree(t_tok *tok)
 		node->leaf_right->top = node;
 	while (tok->prev && tok->prev->type == T_WORD)
 		tok = tok->prev;
-	node->leaf_left = create_left(tok);
+	node->leaf_left = create_left(tok, 0);
 	return (node);
 }
 

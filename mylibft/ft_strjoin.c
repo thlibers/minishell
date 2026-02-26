@@ -23,12 +23,12 @@ char	*ft_strjoin(char *s1, char const *s2)
 	join = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!join)
 		return (NULL);
-	while (s1[i])
+	while (s1 && s1[i])
 	{
 		join[i] = s1[i];
 		i++;
 	}
-	while (s2[j])
+	while (s2 && s2[j])
 	{
 		join[i + j] = s2[j];
 		j++;
@@ -48,12 +48,12 @@ char	*ft_strfreejoin(char *s1, char const *s2)
 	join = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!join)
 		return (NULL);
-	while (s1[i])
+	while (s1 && s1[i])
 	{
 		join[i] = s1[i];
 		i++;
 	}
-	while (s2[j])
+	while (s2 && s2[j])
 	{
 		join[i + j] = s2[j];
 		j++;

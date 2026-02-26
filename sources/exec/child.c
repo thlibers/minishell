@@ -96,7 +96,6 @@ void	child_process(t_minishell *minishell, int child_number)
 {
 	char	*cmd_path;
 
-	// testexe(&minishell->exec);
 	init_child(&minishell->exec, child_number);
 	// selector
 	cmd_path = find_command_path(minishell, minishell->exec.cmd[0]);
@@ -110,8 +109,6 @@ void	child_process(t_minishell *minishell, int child_number)
 	if (execve(cmd_path, minishell->exec.cmd, minishell->exec.env) == -1)
 	{
 		ft_fprintf(STDERR_FILENO, "execve failed\n");
-		ft_clear(minishell);
-		exit(126);
+    exit(126);
 	}
-	free(cmd_path);
 }

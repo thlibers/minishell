@@ -21,10 +21,11 @@ bool	prompt(t_minishell *minishell)
 		return (false);
 	add_to_history(minishell->fd_history, line);
 	minishell->tok = tokenizer(line);
+  print_tok(minishell->tok);
 	if (!minishell->tok)
 		return (free(line), true);
 	ft_expand(minishell, minishell->env, &minishell->tok);
-	minishell->root = create_tree(minishell->tok);
+	minishell->root = create_tree(minishell->tok, 0);
 	free_tok(&minishell->tok);
 	free(line);
 	return (true);

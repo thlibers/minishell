@@ -95,3 +95,16 @@ t_tok	*tokenizer(char *line)
 		return (free_tok(&tok), NULL);
 	return (tok);
 }
+
+// DEBUG
+void print_tok(t_tok *tok)
+{
+  int i = 0;
+
+  while (tok)
+  {
+    printf("%d; %s; %d\n", i, tok->str, tok->type);
+    i++;
+    tok = tok->next;
+  }
+}

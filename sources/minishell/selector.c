@@ -12,7 +12,7 @@
 
 #include "includes/minishell.h"
 
-void	selector(t_minishell *minishell)
+bool	selector(t_minishell *minishell)
 {
 	if (ft_strcmp(minishell->token->comm_args->command, "cd") == 0)
 		ft_cd(minishell, minishell->token->comm_args);
@@ -28,4 +28,7 @@ void	selector(t_minishell *minishell)
 		ft_pwd(minishell->env);
 	else if (ft_strcmp(minishell->token->comm_args->command, "unset") == 0)
 		ft_unset(minishell, minishell->token->comm_args);
+	else
+		return (false);
+	return (true);
 }

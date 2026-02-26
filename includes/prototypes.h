@@ -71,11 +71,11 @@ int		add_to_history(int fd, char *line);
 bool	init_minishell(t_minishell *minishell, char **envp);
 
 /* ----- selector.c ----- */
-void	selector(t_minishell *minishell);
+bool	selector(t_minishell *minishell);
 
 /* ======================= PARSING ======================= */
 /* ----- AST/AST.c ----- */
-t_ast	*create_tree(t_tok *tok);
+t_ast	*create_tree(t_tok *tok, int i);
 
 /* ----- AST/AST_utils.c ----- */
 int		cmd_count(t_ast *ast);
@@ -140,6 +140,7 @@ void	clear_token(t_token **head);
 void	env_clean(t_env *env, char **tab);
 void	free_ast(t_ast **ast);
 void	free_tok(t_tok **tok);
+void	child_clear(t_minishell *minishell);
 
 /* ----- signal.c ----- */
 void	handler_sigint(int signum);
@@ -147,5 +148,6 @@ void	init_signal(void);
 
 // DEBUG
 void	print_ast(t_ast *ast);
+void print_tok(t_tok *tok);
 
 #endif

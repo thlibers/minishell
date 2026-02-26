@@ -61,9 +61,21 @@ int	here_doc(t_exec *exec)
 	line = NULL;
 	if (!heredoc_init(exec))
 		return (1);
-	while (strcmp(line, exec->limiter) != 0)
+	while (1)
 	{
 		line = readline("> ");
+    if (!line || ft_strcmp(line, exec->limiter) == 0)
+    {
+      if (!line)
+        ft_fprintf(2,"Minishell: Here-document delimited by end-of-file (wanted `%s')\n", exec->limiter);
+      break ;
+    }
+    else if (line && line[0] != '\0')
+    {
+      write(exec->infile_fd, line, ft_strlen(line));
+      write(exec->infile_fd, "\n", 1);
+    }
+    free(line);
 	}
 	if (!line)
 	{
@@ -72,7 +84,7 @@ int	here_doc(t_exec *exec)
 		return (1);
 	}
 	close(exec->infile_fd);
-	exec->infile_fd = open("/tmp/pipex_heredoc.tmp", O_RDONLY);
+	exec->infile_fd = open(HEREDOC_F, O_RDONLY);
 	if (exec->infile_fd < 0)
 	{
 		ft_fprintf(STDERR_FILENO, "Failed to reopen heredoc file for reading");

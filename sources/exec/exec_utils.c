@@ -77,5 +77,4 @@ void	cleanup_pipe(t_exec *exec)
 		free(exec->pipe_fd);
 	if (exec->pid)
 		free(exec->pid);
-	// free_argsnpath(exec);
 }
