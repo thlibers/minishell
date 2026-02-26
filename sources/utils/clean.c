@@ -100,7 +100,7 @@ void	free_ast(t_ast **ast)
 		}
 		free(*ast);
 	}
-  *ast = NULL;
+	*ast = NULL;
 }
 
 void	free_tok(t_tok **tok)
@@ -114,5 +114,5 @@ void	free_tok(t_tok **tok)
 		free(*tok);
 		*tok = save;
 	}
-  *tok = NULL;
+	*tok = NULL;
 }

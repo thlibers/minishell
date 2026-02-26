@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:16:09 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/26 17:18:47 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/26 17:37:01 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,13 @@ void	back_tofirst(t_tok **tok)
 	t_tok	*next_ope;
 	t_tok	*head;
 	t_tok	*save;
-	
+
 	head = *tok;
-	while (*tok && (*tok)->next && ((*tok)->type >= T_HERE_DOC || ((*tok)->type == T_WORD && (*tok)->prev->type >= T_HERE_DOC)))
+	while (*tok && (*tok)->next && ((*tok)->type >= T_HERE_DOC
+			|| ((*tok)->type == T_WORD && (*tok)->prev->type >= T_HERE_DOC)))
 		*tok = (*tok)->next;
-	if ((*tok)->type == T_WORD && (*tok)->next == NULL && (*tok)->prev->type >= T_HERE_DOC)
+	if ((*tok)->type == T_WORD && (*tok)->next == NULL
+		&& (*tok)->prev->type >= T_HERE_DOC)
 	{
 		*tok = head;
 		return ;

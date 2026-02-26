@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 16:46:00 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/23 15:18:40 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/26 17:57:13 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static bool	dollar_treatements(t_minishell *minishell, t_tok **token, int *i)
 	}
 	else if ((*token)->str[*i + 1] == '?')
 		ft_questionmark(minishell, token, *i);
+	else
+		replace_var(token, minishell->env, &*i);			// $? retirer
 	return (true);
 }
 
@@ -51,7 +53,6 @@ static void	expand_treatements(int *in_quote, t_minishell *minishell,
 			{
 				if (!dollar_treatements(minishell, token, &i))
 					continue ;
-				replace_var(token, env, &i);
 			}
 			else
 				i++;

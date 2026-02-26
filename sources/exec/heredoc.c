@@ -64,18 +64,20 @@ int	here_doc(t_exec *exec)
 	while (1)
 	{
 		line = readline("> ");
-    if (!line || ft_strcmp(line, exec->limiter) == 0)
-    {
-      if (!line)
-        ft_fprintf(2,"Minishell: Here-document delimited by end-of-file (wanted `%s')\n", exec->limiter);
-      break ;
-    }
-    else if (line && line[0] != '\0')
-    {
-      write(exec->infile_fd, line, ft_strlen(line));
-      write(exec->infile_fd, "\n", 1);
-    }
-    free(line);
+		if (!line || ft_strcmp(line, exec->limiter) == 0)
+		{
+			if (!line)
+				ft_fprintf(2,
+					"Minishell: Here-document delimited by end-of-file (wanted `%s')\n",
+					exec->limiter);
+			break ;
+		}
+		else if (line && line[0] != '\0')
+		{
+			write(exec->infile_fd, line, ft_strlen(line));
+			write(exec->infile_fd, "\n", 1);
+		}
+		free(line);
 	}
 	if (!line)
 	{

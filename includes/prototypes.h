@@ -149,6 +149,6 @@ void	init_signal(void);
 
 // DEBUG
 void	print_ast(t_ast *ast);
-void print_tok(t_tok *tok);
+void	print_tok(t_tok *tok);
 
 #endif

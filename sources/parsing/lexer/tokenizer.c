@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 15:51:09 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/26 17:19:46 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/26 17:35:07 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ t_tok	*tokenizer(char *line)
 
 	i = 0;
 	tok = NULL;
-	printf("%s\n", line);
 	while (line[i])
 	{
 		while (ft_isspace(line[i]) && line[i])
@@ -94,20 +93,21 @@ t_tok	*tokenizer(char *line)
 	}
 	if (!check_quote(tok) || !check_ope(tok))
 		return (free_tok(&tok), NULL);
-	back_tofirst(&tok);
-	print_tok(tok);
+	if (tok->type >= T_HERE_DOC)
+		back_tofirst(&tok);
 	return (tok);
 }
 
 // DEBUG
-void print_tok(t_tok *tok)
+void	print_tok(t_tok *tok)
 {
-  int i = 0;
+	int	i;
 
-  while (tok)
-  {
-    printf("%d; %s; %d\n", i, tok->str, tok->type);
-    i++;
-    tok = tok->next;
-  }
+	i = 0;
+	while (tok)
+	{
+		printf("%d; %s; %d\n", i, tok->str, tok->type);
+		i++;
+		tok = tok->next;
+	}
 }

@@ -20,7 +20,8 @@ static int	open_infile(char *filename)
 		return (0);
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-		ft_fprintf(STDERR_FILENO, "Minishell: %s: No such file or directory\n", filename);
+		ft_fprintf(STDERR_FILENO, "Minishell: %s: No such file or directory\n",
+			filename);
 	return (fd);
 }
 

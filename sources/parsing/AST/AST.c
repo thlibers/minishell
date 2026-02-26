@@ -56,7 +56,7 @@ t_ast	*create_tree(t_tok *tok, int i)
 		while (tok->next && tok->next->type == T_WORD)
 			tok = tok->next;
 	}
-	tree = create_tree(tok->next, i+1);
+	tree = create_tree(tok->next, i + 1);
 	node = calloc(1, sizeof(t_ast));
 	if (!node)
 		return (NULL);

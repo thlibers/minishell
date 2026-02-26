@@ -109,6 +109,6 @@ void	child_process(t_minishell *minishell, int child_number)
 	if (execve(cmd_path, minishell->exec.cmd, minishell->exec.env) == -1)
 	{
 		ft_fprintf(STDERR_FILENO, "execve failed\n");
-    exit(126);
+		exit(126);
 	}
 }
