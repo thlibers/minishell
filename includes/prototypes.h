@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 13:25:31 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/25 13:46:34 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/26 17:18:58 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ t_tok	*tokenizer(char *line);
 /* ----- lexer/tokenizer_linked_list ----- */
 char	*tok_str_save(char *line, t_data_type data_type);
 t_tok	*tok_create_back(t_tok **tok, t_data_type data_type, char *line);
+void	back_tofirst(t_tok **tok);
 
 /* ----- lexer/check_lexer.c ----- */
 int		is_operator(char *word);

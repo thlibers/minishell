@@ -44,3 +44,30 @@ execve failed
 free(): invalid pointer
 fish: Job 1, './minishell' terminated by signal SIGSEGV (Address boundary error)
 ---- fichier texte probleme.txt tkt c'est pas des erreur de valgrind ----
+
+
+
+
+
+minishell > sleep 100
+sleep 100
+0; sleep; 1
+1; 100; 1
+0; sleep; 1
+1; 100; 1
+Tree have 1 cmd
+--- AST DATA ---
+leaf 1 type T_WORD
+leaf 1 : sleep
+leaf 1 : 100
+----------------
+sleep
+100
+
+^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\^\
+^C
+minishell > minishell > 
+➜  msh git:(main) ✗ bash --posix
+bash-5.1$ sleep 100
+^\Quit (core dumped)
+bash-5.1$ 

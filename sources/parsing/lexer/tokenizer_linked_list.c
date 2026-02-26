@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_linked_list.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:16:09 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/13 10:16:33 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/02/26 17:18:47 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,35 @@ t_tok	*tok_create_back(t_tok **tok, t_data_type data_type, char *line)
 		*tok = head;
 	}
 	return (head);
+}
+
+void	back_tofirst(t_tok **tok)
+{
+	t_tok	*cmd;
+	t_tok	*last_arg;
+	t_tok	*next_ope;
+	t_tok	*head;
+	t_tok	*save;
+	
+	head = *tok;
+	while (*tok && (*tok)->next && ((*tok)->type >= T_HERE_DOC || ((*tok)->type == T_WORD && (*tok)->prev->type >= T_HERE_DOC)))
+		*tok = (*tok)->next;
+	if ((*tok)->type == T_WORD && (*tok)->next == NULL && (*tok)->prev->type >= T_HERE_DOC)
+	{
+		*tok = head;
+		return ;
+	}
+	cmd = *tok;
+	save = cmd->prev;
+	while ((*tok)->next && (*tok)->next->type == T_WORD)
+		*tok = (*tok)->next;
+	last_arg = *tok;
+	next_ope = (*tok)->next;
+	head->prev = last_arg;
+	last_arg->next = head;
+	cmd->prev = NULL;
+	save->next = next_ope;
+	if (next_ope)
+		next_ope->prev = save;
+	*tok = cmd;
 }

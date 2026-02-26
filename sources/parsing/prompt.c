@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:11 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/24 12:16:32 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/26 15:09:49 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ bool	prompt(t_minishell *minishell)
 		return (false);
 	add_to_history(minishell->fd_history, line);
 	minishell->tok = tokenizer(line);
-  print_tok(minishell->tok);
 	if (!minishell->tok)
 		return (free(line), true);
 	ft_expand(minishell, minishell->env, &minishell->tok);
