@@ -56,6 +56,12 @@ bool	check_ope(t_tok *tok)
 				ft_fprintf(2, "\033[31mminishell: syntax error\033[0m\n");
 				return (false);
 			}
+			else if (tok->type == T_OR || tok->type == T_AND)
+			{
+				ft_fprintf(2,
+					"\033[31mminishell: unhandle operator detected\033[0m\n");
+				return (false);
+			}
 		}
 		tok = tok->next;
 	}

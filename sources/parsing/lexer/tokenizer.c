@@ -43,6 +43,8 @@ static void	create_tok_word(int *i, char *line, t_tok **tok)
 
 	quote = 0;
 	states = false;
+	while (ft_isspace(line[*i]) && line[*i])
+		(*i)++;
 	while (((!ft_isspace(line[*i]) && !is_operator(&line[*i])) || quote != 0)
 		&& line[*i])
 	{
@@ -64,6 +66,8 @@ static void	create_tok_ope(int *i, char *line, t_tok **tok)
 
 	ope = 0;
 	states = false;
+	while (ft_isspace(line[*i]) && line[*i])
+		(*i)++;
 	while (is_operator(&line[*i]) != 0 && ope < 2)
 	{
 		ope++;
@@ -86,8 +90,6 @@ t_tok	*tokenizer(char *line)
 	tok = NULL;
 	while (line[i])
 	{
-		while (ft_isspace(line[i]) && line[i])
-			i++;
 		create_tok_word(&i, line, &tok);
 		create_tok_ope(&i, line, &tok);
 	}

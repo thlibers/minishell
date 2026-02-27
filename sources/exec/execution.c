@@ -89,4 +89,5 @@ void	execution(t_minishell *minishell)
 		//			WEXITSTATUS(minishell->exit_code));	// gestion d'erreur a changer
 		i++;
 	}
+  free_tab(minishell->exec.env);
 }

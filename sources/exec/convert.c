@@ -32,7 +32,7 @@ char	**ast_to_arr(t_ast **ast)
 	int		i;
 
 	i = 0;
-	arr = ft_calloc(2, sizeof(char *));
+	arr = ft_calloc(1, sizeof(char *));
 	while (*ast && (*ast)->type == T_HERE_DOC && (*ast)->leaf_left
 		&& !(*ast)->top)
 		*ast = (*ast)->leaf_right;
@@ -45,15 +45,10 @@ char	**ast_to_arr(t_ast **ast)
 		*ast = (*ast)->leaf_left;
 		while (*ast)
 		{
-			// printf("%s\n", (*ast)->data);
+			arr = ft_realloc(arr, sizeof(char *) * (i + 1));
 			arr[i] = ft_strdup((*ast)->data);
 			if (!arr[i])
 				return (arr[i] = NULL, free_tab(arr), NULL);
-			if (i > 0)
-			{
-				arr = ft_realloc(arr, sizeof(char *) * (2 + i + 1));
-				arr[2 + i] = NULL;
-			}
 			i++;
 			*ast = (*ast)->leaf_left;
 		}
