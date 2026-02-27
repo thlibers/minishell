@@ -45,10 +45,12 @@ int	add_to_history(int fd, char *line)
 	add_history(line);
 	size = write(fd, line, ft_strlen(line));
 	if (!size || size < 0)
-	{
 		return (1);
-	}
 	else if (size)
-		write(fd, "\n", 1);
+  {
+		size = write(fd, "\n", 1);
+    if (!size || size < 0)
+		  return (1);
+  }
 	return (0);
 }

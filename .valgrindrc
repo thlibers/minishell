@@ -3,3 +3,6 @@
 --leak-check=full
 --show-leak-kinds=all
 --suppressions=val.supp -s
+--suppressions=below_main.supp -s
+--show-reachable=yes
+--error-limit=no

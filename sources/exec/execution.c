@@ -34,7 +34,7 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 	t_ast	*tmp;
 
 	i = 0;
-	tmp = minishell->root;
+	tmp = minishell->ast;
 	while (i < minishell->exec.cmdc)
 	{
 		// ft_memset(&minishell->exec, 0, sizeof(t_exec));
@@ -74,7 +74,7 @@ void	execution(t_minishell *minishell)
 	int	i;
 
 	i = 0;
-	init_exec(minishell->env, minishell->root, &minishell->exec);
+	init_exec(minishell->env, minishell->ast, &minishell->exec);
 	minishell->pid = ft_calloc(minishell->exec.cmdc, sizeof(int));
 	if (!minishell->pid)
 		ft_fprintf(STDERR_FILENO, "Allocation pid array failed");

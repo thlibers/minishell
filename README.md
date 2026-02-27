@@ -52,7 +52,7 @@ A lexer (also known as tokenizer) is a program that reads raw text character by 
 
 <img src=".images/lexer.png" width=720><br>
 
-To facilitate the execution of the different command we created an AST (Abstract Syntax Tree). An AST is a data structure shaped like a tree who are compose of a root (the original node), one/multiple branch (subnode) and leaf (node where data is stored)
+To facilitate the execution of the different command we created an AST (Abstract Syntax Tree). An AST is a data structure shaped like a tree who are compose of a ast (the original node), one/multiple branch (subnode) and leaf (node where data is stored)
 
 <img src=".images/tree_scheme.png" width=720> <br>
 

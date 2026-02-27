@@ -95,7 +95,7 @@ typedef struct s_minishell
 {
 	t_env				*env;
 	t_tok				*tok;
-	t_ast				*root;
+	t_ast				*ast;
 	t_exec				exec;
 	pid_t				*pid;
 	int					fd_history;

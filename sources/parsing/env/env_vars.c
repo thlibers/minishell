@@ -26,7 +26,7 @@ char	**env_spliter(char *vars)
 		return (NULL);
 	pos = ft_strchr(vars, '=');
 	if (!pos)
-		return (tab[0] = ft_strdup(vars), tab[1] = NULL, tab);
+		return (tab[0] = ft_strdup(vars), tab);
 	tab[0] = ft_calloc(pos - vars + 1, sizeof(char));
 	if (!tab[0])
 		return (free(tab), NULL);
@@ -37,11 +37,11 @@ char	**env_spliter(char *vars)
 	}
 	tab[0][i] = '\0';
 	if (vars[i] == '\0')
-		return (tab[1] = NULL, tab[2] = NULL, tab);
+		return (tab);
 	tab[1] = ft_strdup(pos + 1);
 	if (!tab[1])
 		return (free(tab[0]), free(tab), NULL);
-	return (tab[2] = NULL, tab);
+	return (tab);
 }
 
 t_env	*create_env_var(char *name, char *value, char *equal_loc)

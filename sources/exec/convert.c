@@ -33,9 +33,7 @@ char	**ast_to_arr(t_ast **ast)
 
 	i = 0;
 	arr = ft_calloc(1, sizeof(char *));
-	while (*ast && (*ast)->type == T_HERE_DOC && (*ast)->leaf_left
-		&& !(*ast)->top)
-		*ast = (*ast)->leaf_right;
+
 	while (*ast && (*ast)->top && ((*ast)->top->type >= T_HERE_DOC))
 		(*ast) = (*ast)->leaf_right;
 	if (*ast || !(*ast)->top || (*ast)->type == T_PIPE || (*ast)->type == T_WORD

@@ -24,11 +24,11 @@ int	main(int argc, char **argv, char **envp)
 	{
 		if (!prompt(&minishell))
 			break ;
-		if (minishell.root)
+		if (minishell.ast)
 		{
 			execution(&minishell);
 			cleanup_pipe(&minishell, &minishell.exec);
-			free_ast(&minishell.root);
+			free_ast(&minishell.ast);
 		}
 	}
 	ft_clear(&minishell);

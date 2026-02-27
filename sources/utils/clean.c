@@ -22,7 +22,7 @@ void	child_clear(t_minishell *minishell)
 {
 	env_clean(minishell->env, NULL);
 	close(minishell->fd_history);
-	free_ast(&minishell->root);
+	free_ast(&minishell->ast);
 }
 
 void	env_clean(t_env *env, char **tab)
