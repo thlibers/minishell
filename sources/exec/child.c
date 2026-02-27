@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 12:30:53 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/25 15:36:58 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/27 13:50:22 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,26 +69,33 @@ static void	setup_middle_commands(t_exec *exec, int child_number)
 	close(exec->pipe_fd[child_number][1]);
 }
 
-static void	init_child(t_exec *exec, int child_number)
+void	init_child(t_exec *exec, int child_number, int is_child)
 {
 	int	i;
 
-	i = 0;
+	if (!is_child)
+	{
+		exec->save_std[0] = dup(STDIN_FILENO);
+		exec->save_std[1] = dup(STDOUT_FILENO);
+	}
 	if ((child_number == 0 && child_number == exec->cmdc - 1))
 		one_command_only(exec, child_number);
 	else if (child_number == 0 || child_number == exec->cmdc - 1)
 		first_last_command(exec, child_number);
 	else
 		setup_middle_commands(exec, child_number);
-	i = 0;
-	while (i < exec->cmdc - 1)
+	if (is_child)
 	{
-		if (i != child_number - 1 && i != child_number)
+		i = 0;
+		while (i < exec->cmdc - 1)
 		{
-			close(exec->pipe_fd[i][0]);
-			close(exec->pipe_fd[i][1]);
+			if (i != child_number - 1 && i != child_number)
+			{
+				close(exec->pipe_fd[i][0]);
+				close(exec->pipe_fd[i][1]);
+			}
+			i++;
 		}
-		i++;
 	}
 }
 
@@ -96,8 +103,7 @@ void	child_process(t_minishell *minishell, int child_number)
 {
 	char	*cmd_path;
 
-	init_child(&minishell->exec, child_number);
-	// selector
+	init_child(&minishell->exec, child_number, 1);
 	cmd_path = find_command_path(minishell, minishell->exec.cmd[0]);
 	if (!cmd_path)
 	{

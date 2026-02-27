@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/25 15:28:20 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/27 15:28:11 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,17 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 	tmp = minishell->root;
 	while (i < minishell->exec.cmdc)
 	{
+		// ft_memset(&minishell->exec, 0, sizeof(t_exec));
 		minishell->exec.cmd = ast_to_arr(&tmp);
-		pid[i] = fork();
-		if (pid[i] == -1)
-			ft_fprintf(STDERR_FILENO, "Fork creation failed");
-		if (pid[i] == 0)
-			child_process(minishell, i);
+		arg_count(&minishell->exec);
+		if (!selector(minishell, i))
+		{
+			pid[i] = fork();
+			if (pid[i] == -1)
+				ft_fprintf(STDERR_FILENO, "Fork creation failed");
+			if (pid[i] == 0)
+				child_process(minishell, i);
+		}
 		i++;
 		free_ast_arr(&minishell->exec.cmd);
 		tmp = tmp->leaf_right;
@@ -70,15 +75,15 @@ void	execution(t_minishell *minishell)
 
 	i = 0;
 	init_exec(minishell->env, minishell->root, &minishell->exec);
-	minishell->exec.pid = ft_calloc(minishell->exec.cmdc, sizeof(int));
-	if (!minishell->exec.pid)
+	minishell->pid = ft_calloc(minishell->exec.cmdc, sizeof(int));
+	if (!minishell->pid)
 		ft_fprintf(STDERR_FILENO, "Allocation pid array failed");
 	pipes_creation(&minishell->exec);
-	children_creation(minishell, minishell->exec.pid);
+	children_creation(minishell, minishell->pid);
 	pipes_close(&minishell->exec);
 	while (i < minishell->exec.cmdc)
 	{
-		waitpid(minishell->exec.pid[i], &minishell->exit_code, 0);
+		waitpid(minishell->pid[i], &minishell->exit_code, 0);
 		// if (WIFEXITED(minishell->exit_code))
 		// 	printf("exited, status=%d\n",
 		//			WEXITSTATUS(minishell->exit_code));	// gestion d'erreur a changer

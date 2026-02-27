@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:13:06 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/25 12:25:02 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/27 12:37:59 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,35 +23,6 @@ void	child_clear(t_minishell *minishell)
 	env_clean(minishell->env, NULL);
 	close(minishell->fd_history);
 	free_ast(&minishell->root);
-}
-
-void	clear_token(t_token **head)
-{
-	t_token	*save;
-	int		i;
-
-	while (*head)
-	{
-		i = 0;
-		save = (*head)->next;
-		if (head)
-		{
-			if ((*head)->comm_args)
-			{
-				if ((*head)->comm_args->arguments)
-				{
-					while ((*head)->comm_args->arguments[i])
-						free((*head)->comm_args->arguments[i++]);
-					free((*head)->comm_args->arguments);
-				}
-				if ((*head)->comm_args->command)
-					free((*head)->comm_args->command);
-				free((*head)->comm_args);
-			}
-			free(*head);
-		}
-		*head = save;
-	}
 }
 
 void	env_clean(t_env *env, char **tab)

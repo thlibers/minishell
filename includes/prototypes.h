@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 13:25:31 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/26 17:18:58 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/27 15:38:28 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,29 @@
 
 /* ======================= BULTINS ======================= */
 /* ----- ft_echo.c ----- */
-int		ft_echo(t_command *com_arg);
+int		ft_echo(t_exec *exec, int child_number);
 
 /* ----- ft_pwd.c ----- */
-int		ft_pwd(t_env *env);
+int		ft_pwd(t_minishell *minishell, t_env *env, int child_number);
 
 /* ----- ft_cd.c ----- */
-void	ft_cd(t_minishell *minishell, t_command *com_arg);
+void	ft_cd(t_minishell *minishell, t_exec *exec, int child_number);
 
 /* ----- ft_env.c ----- */
-int		ft_env(t_minishell *minishell);
+int		ft_env(t_minishell *minishell, int child_number);
 
 /* ----- ft_exit.c ----- */
-void	ft_exit(t_minishell *minishell, t_command *command);
+void	ft_exit(t_minishell *minishell, t_exec *exec, int child_number);
 
 /* ----- ft_export.c ----- */
-void	ft_export(t_minishell *minishell, t_command *command);
+void	ft_export(t_minishell *minishell, t_exec *exec, int child_number);
 
 /* ----- ft_unset.c ----- */
-void	ft_unset(t_minishell *minishell, t_command *com_arg);
+void	ft_unset(t_minishell *minishell, t_exec *exec, int child_number);
 
 /* ======================= EXEC ======================= */
 /* ----- child.c ----- */
+void	init_child(t_exec *exec, int child_number, int is_child);
 void	child_process(t_minishell *minishell, int child_number);
 
 /* ----- commands.c ----- */
@@ -47,7 +48,7 @@ char	*find_command_path(t_minishell *minishell, char *cmd);
 char	**convert_env(t_env *env);
 
 /* ----- exec_utils.c ----- */
-void	cleanup_pipe(t_exec *exec);
+void	cleanup_pipe(t_minishell *minishell, t_exec *exec);
 
 /* ----- execution.c ----- */
 void	execution(t_minishell *minishell);
@@ -60,6 +61,7 @@ int		init_exec(t_env *env, t_ast *ast, t_exec *exec);
 
 /* ----- convert.c ----- */
 char	**ast_to_arr(t_ast **ast);
+void	arg_count(t_exec *exec);
 void	free_ast_arr(char ***arr);
 
 /* ======================= MINISHELL ======================= */
@@ -71,7 +73,7 @@ int		add_to_history(int fd, char *line);
 bool	init_minishell(t_minishell *minishell, char **envp);
 
 /* ----- selector.c ----- */
-bool	selector(t_minishell *minishell);
+bool	selector(t_minishell *minishell, int i);
 
 /* ======================= PARSING ======================= */
 /* ----- AST/AST.c ----- */
@@ -137,7 +139,6 @@ char	*path_builder(t_env *env, char *dir);
 
 /* ----- clean.c ----- */
 void	ft_clear(t_minishell *minishell);
-void	clear_token(t_token **head);
 void	env_clean(t_env *env, char **tab);
 void	free_ast(t_ast **ast);
 void	free_tok(t_tok **tok);

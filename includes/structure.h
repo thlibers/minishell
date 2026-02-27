@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:28:21 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/25 11:47:51 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/27 15:17:37 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,10 @@
 # include <sys/types.h>
 
 // --- EXECUTION PART ---
-typedef struct s_command
-{
-	char				*command;
-	char				**arguments;
-	int					arg_count;
-	int					cmd_count;
-}						t_command;
-
 typedef struct s_exec
 {
-	pid_t				*pid;
 	// t_command			*com_args;
-	char **delete_me; // delete
+	char 				**delete_me; // delete
 	char				**cmd;
 	char				**env;
 	char				*limiter;
@@ -38,6 +29,8 @@ typedef struct s_exec
 	// int					child_number;
 	int					index;
 	int					cmdc;
+	int					argc;
+	int					save_std[2];
 }						t_exec;
 
 // --- PARSING PART ---
@@ -80,13 +73,6 @@ typedef struct s_ast
 	struct s_ast		*leaf_left;
 }						t_ast;
 
-typedef struct s_token
-{
-	t_command			*comm_args;
-	enum e_data_type	type;
-	struct s_token		*next;
-}						t_token;
-
 typedef struct s_env
 {
 	char				*name;
@@ -108,10 +94,10 @@ typedef struct s_quotes
 typedef struct s_minishell
 {
 	t_env				*env;
-	t_token				*token;
 	t_tok				*tok;
 	t_ast				*root;
 	t_exec				exec;
+	pid_t				*pid;
 	int					fd_history;
 	int					exit_code;
 }						t_minishell;

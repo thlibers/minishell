@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:25 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/25 14:04:10 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/27 15:06:06 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 // 		free(exec->delete_me);
 // }
 
-void	cleanup_pipe(t_exec *exec)
+void	cleanup_pipe(t_minishell *minishell, t_exec *exec)
 {
 	int	i;
 
@@ -75,6 +75,6 @@ void	cleanup_pipe(t_exec *exec)
 	}
 	if (exec->pipe_fd)
 		free(exec->pipe_fd);
-	if (exec->pid)
-		free(exec->pid);
+	if (minishell->pid)
+		free(minishell->pid);
 }

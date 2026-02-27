@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   convert.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 14:20:35 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/24 14:26:48 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/02/27 12:53:47 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	**ast_to_arr(t_ast **ast)
 		*ast = (*ast)->leaf_left;
 		while (*ast)
 		{
-			printf("%s\n", (*ast)->data);
+			// printf("%s\n", (*ast)->data);
 			arr[i] = ft_strdup((*ast)->data);
 			if (!arr[i])
 				return (arr[i] = NULL, free_tab(arr), NULL);
@@ -57,8 +57,18 @@ char	**ast_to_arr(t_ast **ast)
 			i++;
 			*ast = (*ast)->leaf_left;
 		}
-		printf("\n");
+		// printf("\n");
 		*ast = save;
 	}
 	return (arr);
+}
+
+void	arg_count(t_exec *exec)
+{
+	int i;
+	
+	i = 0;
+	while (exec->cmd[i])
+		i++;
+	exec->argc = i - 1;
 }

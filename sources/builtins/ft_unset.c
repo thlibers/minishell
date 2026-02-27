@@ -6,21 +6,22 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 15:05:33 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/03 16:21:59 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/27 15:38:12 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	ft_unset(t_minishell *minishell, t_command *com_arg)
+void	ft_unset(t_minishell *minishell, t_exec *exec, int child_number)
 {
 	t_env	*tmp;
 	t_env	*head;
 
 	head = minishell->env;
+	init_child(exec, child_number, 0);
 	while (minishell->env->next)
 	{
-		if (!ft_strcmp(com_arg->arguments[0], minishell->env->next->name))
+		if (!ft_strcmp(exec->cmd[1], minishell->env->next->name))
 		{
 			tmp = minishell->env->next->next;
 			free(minishell->env->next->name);

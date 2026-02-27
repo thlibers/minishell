@@ -6,19 +6,20 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 17:02:04 by thlibers          #+#    #+#             */
-/*   Updated: 2026/01/30 10:07:05 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/27 15:28:59 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	ft_env(t_minishell *minishell)
+int	ft_env(t_minishell *minishell, int child_number)
 {
 	t_env	*cp;
 	char	*tmp;
 
 	tmp = NULL;
 	cp = minishell->env;
+	init_child(&minishell->exec, child_number, 0);
 	while (cp)
 	{
 		if (!ft_strcmp(cp->name, "_"))

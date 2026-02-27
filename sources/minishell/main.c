@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:46:29 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/26 11:38:20 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/27 15:08:34 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char **argv, char **envp)
 		if (minishell.root)
 		{
 			execution(&minishell);
-			cleanup_pipe(&minishell.exec);
+			cleanup_pipe(&minishell, &minishell.exec);
 			free_ast(&minishell.root);
 		}
 	}
