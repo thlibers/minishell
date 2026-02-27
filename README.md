@@ -38,13 +38,13 @@ make re
 ```
 
 ## Available features:
-- [ ] Fully fonctional piping system
+- [x] Fully fonctional piping system
 - [x] Fully preservation history
 - [x] Fully fonctional builtin
 - [ ] Condition priority
-- [ ] File redirection
+- [x] File redirection
 - [x] Complete expand token
-- [ ] Heredoc support
+- [x] Heredoc support
 - [ ] Wildcard expand
 
 ## Technical choice

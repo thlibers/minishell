@@ -21,6 +21,7 @@ int	init_history(t_minishell *minishell)
 	minishell->fd_history = open(MSH_HIST, O_RDWR | O_APPEND | O_CREAT, 0644);
 	if (!minishell->fd_history)
 	{
+		ft_fprintf(STDERR_FILENO, "\e[0;31mFailed to open the file history\e[0m");
 		return (0);
 	}
 	line = get_next_line(minishell->fd_history);
@@ -45,12 +46,18 @@ int	add_to_history(int fd, char *line)
 	add_history(line);
 	size = write(fd, line, ft_strlen(line));
 	if (!size || size < 0)
+	{
+		ft_fprintf(STDERR_FILENO, "\e[0;31mFailed write on history file\e[0m");
 		return (1);
+	}
 	else if (size)
-  {
+  	{
 		size = write(fd, "\n", 1);
-    if (!size || size < 0)
-		  return (1);
-  }
+    	if (!size || size < 0)
+		{
+			ft_fprintf(STDERR_FILENO, "\e[0;31mFailed write on history file\e[0m");
+			return (1);
+		}
+  	}
 	return (0);
 }

@@ -15,6 +15,7 @@
 
 # include "includes/color.h"
 # include "includes/prototypes.h"
+# include "includes/error.h"
 # include "includes/structure.h"
 
 # define _XOPEN_SOURCE 700

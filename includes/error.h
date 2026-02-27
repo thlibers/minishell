@@ -13,6 +13,6 @@
 #ifndef ERROR_H
 # define ERROR_H
 
-# define E
+# define ENOTFOUND "Minishell: %s: No such file or directory\n"
 
 #endif // !ERROR_H
