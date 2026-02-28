@@ -32,7 +32,7 @@ char	*tok_str_save(char *line, t_data_type data_type)
 	}
 	str = calloc(len + 1, sizeof(char));
 	if (!str)
-		return (NULL);
+		return (ft_fprintf(STDERR_FILENO, ENOENOMEM), NULL);
 	while (i < len)
 	{
 		str[i] = line[i];
@@ -54,6 +54,8 @@ t_tok	*tok_create_back(t_tok **tok, t_data_type data_type, char *line)
 	node->type = data_type;
 	if (data_type == T_WORD)
 		node->str = tok_str_save(line, data_type);
+	if (data_type == T_WORD && !node->str)
+		return (free(node), NULL);
 	head = *tok;
 	if (*tok == NULL)
 		*tok = node;
@@ -65,7 +67,7 @@ t_tok	*tok_create_back(t_tok **tok, t_data_type data_type, char *line)
 		node->prev = *tok;
 		*tok = head;
 	}
-	return (head);
+	return (node);
 }
 
 void	back_tofirst(t_tok **tok)

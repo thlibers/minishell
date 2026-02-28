@@ -16,7 +16,14 @@ bool	prompt(t_minishell *minishell)
 {
 	char	*line;
 
-	line = readline(F_GREEN "minishell > " RESET);
+	if (minishell->tty)
+		line = readline(F_GREEN "minishell > " RESET);
+	else
+  {
+		line = readline("");
+    rl_replace_line("", 0);
+    rl_redisplay();
+  }
 	if (!line)
 		return (false);
 	if (line && line[0])

@@ -15,11 +15,11 @@
 int	is_operator(char *word)
 {
 	if (word[0] == '|')
-  {
-    if (word[1] == '|')
-      return (7);
+	{
+		if (word[1] == '|')
+			return (7);
 		return (1);
-  }
+	}
 	else if (word[0] == '>')
 	{
 		if (word[1] == '>')
@@ -32,12 +32,7 @@ int	is_operator(char *word)
 			return (4);
 		return (5);
 	}
-  else if (word[0] == '&')
-    return (6);
+	else if (word[0] == '&')
+		return (6);
 	return (0);
 }
-//	else if (ft_strcmp(word, "||") == 0)
-//		return ((*node)->type = T_OR, true);
-//	else if (ft_strcmp(word, "&&") == 0)
-//		return (true);
-//	Pour les || et &&

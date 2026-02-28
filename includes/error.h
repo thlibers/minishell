@@ -12,7 +12,9 @@
 
 #ifndef ERROR_H
 # define ERROR_H
+# include "includes/color.h"
 
-# define ENOTFOUND "Minishell: %s: No such file or directory\n"
-
+# define ENOTFOUND F_RED "Minishell: %s: No such file or directory\n" RESET
+# define ENOENOMEM F_RED "Failed allocate memory\n" RESET
+# define ENOPERM F_RED "Minishell: %s: Permission denied\n" RESET
 #endif // !ERROR_H

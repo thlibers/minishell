@@ -22,13 +22,14 @@ t_env	*env_cpy(t_env *env)
 	{
 		cpy = calloc(1, sizeof(t_env));
 		if (!cpy)
-			return (ft_fprintf(STDERR_FILENO, "\e[0;31mFailed allocate memory\e[0m"), NULL);
+			return (ft_fprintf(STDERR_FILENO, ENOENOMEM), NULL);
 		cpy->name = ft_strdup(env->name);
 		if (!cpy->name)
-			return(free(cpy), ft_fprintf(STDERR_FILENO, "\e[0;31mFailed allocate memory\e[0m"), NULL);
+			return (free(cpy), ft_fprintf(STDERR_FILENO, ENOENOMEM), NULL);
 		cpy->value = ft_strdup(env->value);
 		if (!cpy->value)
-			return(free(cpy->name), free(cpy), ft_fprintf(STDERR_FILENO, "\e[0;31mFailed allocate memory\e[0m"), NULL);
+			return (free(cpy->name), free(cpy), ft_fprintf(STDERR_FILENO,
+					ENOENOMEM), NULL);
 		cpy->next = NULL;
 		if (!head)
 			head = cpy;

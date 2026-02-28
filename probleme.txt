@@ -1,6 +1,5 @@
-- Heredoc
-- << EOF | cmd1 (ast_to_arr function)
 - leak
 - CTRL+C on working command generate two prompt line
 - cat /dev/urandom | head -1
-
+- cd .. hi should not change dir
+- "< aaa < problemesssssssss.txt cat" file doesnt exist print both

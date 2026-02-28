@@ -66,7 +66,7 @@ OBJETS = $(SOURCES:%.c=%.o)
 all : $(NAME)
 
 $(NAME):  $(OBJETS)
-	@echo "\033[34mmylibft compiling ....\033[0m"
+	@echo "\e[34mmylibft compiling ....\e[0m"
 	@ar rc $@ $^
 
 %.o: %.c 

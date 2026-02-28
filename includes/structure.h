@@ -19,29 +19,29 @@
 typedef struct s_exec
 {
 	// t_command			*com_args;
-	char 				**delete_me; // delete
-	char				**cmd;
-	char				**env;
-	char				*limiter;
+	char **delete_me; // delete
+	char			**cmd;
+	char			**env;
+	char			*limiter;
 	int (*pipe_fd)[2];
-	int					infile_fd;
-	int					outfile_fd;
+	int				infile_fd;
+	int				outfile_fd;
 	// int					child_number;
-	int					index;
-	int					cmdc;
-	int					argc;
-	int					save_std[2];
-}						t_exec;
+	int				index;
+	int				cmdc;
+	int				argc;
+	int				save_std[2];
+}					t_exec;
 
 // --- PARSING PART ---
 typedef struct s_expand
 {
-	char				*expanded;
-	char				*arg;
-	char				*env_value;
-	int					*first_char;
-	int					last_char;
-}						t_expand;
+	char			*expanded;
+	char			*arg;
+	char			*env_value;
+	int				*first_char;
+	int				last_char;
+}					t_expand;
 
 typedef enum e_data_type
 {
@@ -54,52 +54,53 @@ typedef enum e_data_type
 	T_RED_OUT_APP,
 	T_AND,
 	T_OR
-}						t_data_type;
+}					t_data_type;
 
 typedef struct s_tok
 {
-	t_data_type			type;
-	char				*str;
-	struct s_tok		*next;
-	struct s_tok		*prev;
-}						t_tok;
+	t_data_type		type;
+	char			*str;
+	struct s_tok	*next;
+	struct s_tok	*prev;
+}					t_tok;
 
 typedef struct s_ast
 {
-	t_data_type			type;
-	char				*data;
-	struct s_ast		*top;
-	struct s_ast		*leaf_right;
-	struct s_ast		*leaf_left;
-}						t_ast;
+	t_data_type		type;
+	char			*data;
+	struct s_ast	*top;
+	struct s_ast	*leaf_right;
+	struct s_ast	*leaf_left;
+}					t_ast;
 
 typedef struct s_env
 {
-	char				*name;
-	char				*value;
-	bool				equal;
-	struct s_env		*next;
-}						t_env;
+	char			*name;
+	char			*value;
+	bool			equal;
+	struct s_env	*next;
+}					t_env;
 
 typedef struct s_quotes
 {
-	int					first;
-	int					last;
-	int					quote_type;
-	int					len;
-	int					i;
-}						t_quotes;
+	int				first;
+	int				last;
+	int				quote_type;
+	int				len;
+	int				i;
+}					t_quotes;
 
 // --- COMMON ---
 typedef struct s_minishell
 {
-	t_env				*env;
-	t_tok				*tok;
-	t_ast				*ast;
-	t_exec				exec;
-	pid_t				*pid;
-	int					fd_history;
-	int					exit_code;
-}						t_minishell;
+	t_env			*env;
+	t_tok			*tok;
+	t_ast			*ast;
+	t_exec			exec;
+	pid_t			*pid;
+	int				tty;
+	int				fd_history;
+	int				exit_code;
+}					t_minishell;
 
 #endif

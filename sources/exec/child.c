@@ -12,7 +12,7 @@
 
 #include "includes/minishell.h"
 
-void	clean_child(t_minishell *minishell, t_exec *exec);
+void		clean_child(t_minishell *minishell, t_exec *exec);
 
 static void	one_command_only(t_exec *exec, int child_number)
 {
@@ -105,6 +105,7 @@ void	child_process(t_minishell *minishell, int child_number)
 {
 	char	*cmd_path;
 
+  child_signal();
 	init_child(&minishell->exec, child_number, 1);
 	cmd_path = find_command_path(minishell, minishell->exec.cmd[0]);
 	if (!cmd_path)
@@ -112,8 +113,8 @@ void	child_process(t_minishell *minishell, int child_number)
 		ft_fprintf(STDERR_FILENO, "Minishell: %s: command not found\n",
 			minishell->exec.cmd[0]);
 		ft_clear(minishell);
-    free_ast(&minishell->ast);
-    clean_child(minishell, &minishell->exec);
+		free_ast(&minishell->ast);
+		clean_child(minishell, &minishell->exec);
 		exit(127);
 	}
 	if (execve(cmd_path, minishell->exec.cmd, minishell->exec.env) == -1)

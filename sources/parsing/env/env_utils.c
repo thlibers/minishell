@@ -18,13 +18,16 @@ t_env	*new_env_node(void *name, void *content)
 
 	node = ft_calloc(1, sizeof(t_env));
 	if (!node)
-		return (ft_fprintf(STDERR_FILENO, "\e[0;31mFailed allocate memory\e[0m"), NULL);
+		return (ft_fprintf(STDERR_FILENO,
+				"\e[0;31mFailed allocate memory\e[0m"), NULL);
 	node->name = ft_strdup(name);
 	if (node->name)
-		return(free(node), ft_fprintf(STDERR_FILENO, "\e[0;31mFailed allocate memory\e[0m"), NULL);
+		return (free(node), ft_fprintf(STDERR_FILENO,
+				"\e[0;31mFailed allocate memory\e[0m"), NULL);
 	node->value = ft_strdup(content);
 	if (node->value)
-		return(free(node->name), free(node), ft_fprintf(STDERR_FILENO, "\e[0;31mFailed allocate memory\e[0m"), NULL);
+		return (free(node->name), free(node), ft_fprintf(STDERR_FILENO,
+				"\e[0;31mFailed allocate memory\e[0m"), NULL);
 	node->next = NULL;
 	return (node);
 }

@@ -109,8 +109,7 @@ void	ft_cd(t_minishell *minishell, t_exec *exec, int child_number)
 		parsing_dir(minishell, ft_getenv(minishell->env, "HOME"));
 	if (exec->argc > 0)
 	{
-		if (exec->argc > 0 && exec->cmd[1][arg_len - 1] == '/'
-			&& arg_len > 1)
+		if (exec->argc > 0 && exec->cmd[1][arg_len - 1] == '/' && arg_len > 1)
 			exec->cmd[1][arg_len - 1] = '\0';
 		if (strcmp(exec->cmd[1], "-") == 0)
 			parsing_dir(minishell, ft_getenv(minishell->env, "OLDPWD"));

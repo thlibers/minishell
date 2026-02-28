@@ -72,8 +72,10 @@ static void	pipes_close(t_exec *exec)
 void	execution(t_minishell *minishell)
 {
 	int	i;
+  int code;
 
 	i = 0;
+  code = 0;
 	init_exec(minishell->env, minishell->ast, &minishell->exec);
 	minishell->pid = ft_calloc(minishell->exec.cmdc, sizeof(int));
 	if (!minishell->pid)
@@ -83,11 +85,11 @@ void	execution(t_minishell *minishell)
 	pipes_close(&minishell->exec);
 	while (i < minishell->exec.cmdc)
 	{
-		waitpid(minishell->pid[i], &minishell->exit_code, 0);
-		// if (WIFEXITED(minishell->exit_code))
-		// 	printf("exited, status=%d\n",
-		//			WEXITSTATUS(minishell->exit_code));	// gestion d'erreur a changer
+    printf("PID %d\n", minishell->pid[i]);
+		waitpid(minishell->pid[i], &code, 0);
+		if (WIFEXITED(code))
+			minishell->exit_code = WEXITSTATUS(code);
 		i++;
 	}
-  free_tab(minishell->exec.env);
+	free_tab(minishell->exec.env);
 }

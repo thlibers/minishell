@@ -15,6 +15,7 @@
 bool	init_minishell(t_minishell *minishell, char **envp)
 {
 	ft_memset(minishell, 0, sizeof(t_minishell));
+	minishell->tty = isatty(ttyslot());
 	if (!init_history(minishell))
 		return (false);
 	if (!init_env(&minishell->env, envp))

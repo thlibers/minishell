@@ -77,10 +77,10 @@ void	print_type(int leaf_number, t_ast *ast)
 {
 	switch (ast->type)
 	{
-	case 0:
+	case T_NULL:
 		printf("leaf %d type T_NULL\n", leaf_number);
 		break ;
-	case 1:
+	case T_WORD:
 		printf("leaf %d type T_WORD\n", leaf_number);
 		break ;
 	case 2:

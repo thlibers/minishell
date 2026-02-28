@@ -36,7 +36,7 @@ static t_data_type	assign_ope(char *c)
 }
 
 // Creer notre token de type T_WORD
-static void	create_tok_word(int *i, char *line, t_tok **tok)
+static bool	create_tok_word(int *i, char *line, t_tok **tok)
 {
 	int		quote;
 	bool	states;
@@ -52,14 +52,16 @@ static void	create_tok_word(int *i, char *line, t_tok **tok)
 		if (!states)
 		{
 			states = true;
-			tok_create_back(tok, T_WORD, &line[*i]);
+			if (!tok_create_back(tok, T_WORD, &line[*i]))
+				return (false);
 		}
 		(*i)++;
 	}
+	return (true);
 }
 
 // Creer notre token d'operateur ; ope++ fix probablement temp |||
-static void	create_tok_ope(int *i, char *line, t_tok **tok)
+static bool	create_tok_ope(int *i, char *line, t_tok **tok)
 {
 	int		ope;
 	bool	states;
@@ -74,10 +76,12 @@ static void	create_tok_ope(int *i, char *line, t_tok **tok)
 		if (!states)
 		{
 			states = true;
-			tok_create_back(tok, assign_ope(&line[*i]), &line[*i]);
+			if (!tok_create_back(tok, assign_ope(&line[*i]), &line[*i]))
+				return (false);
 		}
 		(*i)++;
 	}
+	return (true);
 }
 
 // Coeur de la fonction du tokenizer
@@ -90,8 +94,10 @@ t_tok	*tokenizer(char *line)
 	tok = NULL;
 	while (line[i])
 	{
-		create_tok_word(&i, line, &tok);
-		create_tok_ope(&i, line, &tok);
+		if (!create_tok_word(&i, line, &tok))
+			return (NULL);
+		if (!create_tok_ope(&i, line, &tok))
+			return (NULL);
 	}
 	if (!check_quote(tok) || !check_ope(tok))
 		return (free_tok(&tok), NULL);

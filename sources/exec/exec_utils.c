@@ -75,10 +75,10 @@ void	clean_child(t_minishell *minishell, t_exec *exec)
 		free(exec->pipe_fd);
 	if (minishell->pid)
 		free(minishell->pid);
-  if (minishell->exec.cmd)
-    free_tab(minishell->exec.cmd);
-  if (minishell->exec.env)
-    free_tab(minishell->exec.env);
+	if (minishell->exec.cmd)
+		free_tab(minishell->exec.cmd);
+	if (minishell->exec.env)
+		free_tab(minishell->exec.env);
 }
 
 void	cleanup_pipe(t_minishell *minishell, t_exec *exec)

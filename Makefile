@@ -54,8 +54,8 @@ SRCS =	$(SRC_DIR)/builtins/ft_cd.c\
 		$(SRC_DIR)/parsing/lexer/tokenizer.c\
 		$(SRC_DIR)/parsing/lexer/tokenizer_linked_list.c\
 		$(SRC_DIR)/parsing/lexer/check_synthax.c\
-		$(SRC_DIR)/parsing/AST/AST.c\
-		$(SRC_DIR)/parsing/AST/AST_utils.c\
+		$(SRC_DIR)/parsing/ast/ast.c\
+		$(SRC_DIR)/parsing/ast/ast_utils.c\
 		$(SRC_DIR)/parsing/lexer/check_lexer.c\
 		$(SRC_DIR)/utils/clean.c\
 		$(SRC_DIR)/parsing/env/env_utils.c\
@@ -66,10 +66,10 @@ SRCS =	$(SRC_DIR)/builtins/ft_cd.c\
 # Obj
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-GREEN = \033[0;32m
-RED = \033[0;31m
-BLUE = \033[0;34m
-RESET = \033[0m
+GREEN = \e[0;32m
+RED = \e[0;31m
+BLUE = \e[0;34m
+RESET = \e[0m
 
 all: $(NAME)
 

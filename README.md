@@ -7,11 +7,11 @@ _This project has been created as part of the 42 curriculum by **nclavel**, **th
 
 ## Description:
  <!--  Tournure de phrase a changer --->
-Minishell is a **shell coded in C** with a full preservation history that keeps every command type in memory in a file, multi-piping which allows sending the standard output of a command into the standard input of another command, 7 built-in commands (cd, echo, export, unset, env, exit and pwd), ....
+Minishell is a **shell coded in C**. To do this project we have reused the project called [pipex](https://github.com/thlibers/pipex_avec_bonus) done earlier on the 42 curriculum.
 
 A shell is a **C**ommand**L**ine user **I**nterface ***(CLI)*** that bridges between the user and the system by interpreting the command typed by the user in his terminal. A lot of different shells are available, like sh, bash, zsh, fish and many more.
 
-Doing this project has improved the understanding of how UNIX system works and how a program can effectively treat a string to understand and execute in such a way as to do what the user wants to do.
+This project deepened our understanding of how UNIX systems work and how a program can parse and process a command string to execute what the user wants to do.
 
 ## Instruction:
 1. Build the project using `make` 
@@ -38,27 +38,31 @@ make re
 ```
 
 ## Available features:
+- [x] Use minishell on a non tty mode (partial support)
 - [x] Fully fonctional piping system
-- [x] Fully preservation history
+- [x] Fully functional history
 - [x] Fully fonctional builtin
-- [ ] Condition priority
-- [x] File redirection
 - [x] Complete expand token
+- [x] File redirection
 - [x] Heredoc support
+- [ ] Condition priority
 - [ ] Wildcard expand
 
 ## Technical choice
-A lexer (also known as tokenizer) is a program that reads raw text character by character and breaks it down into meaningful chunks called tokens. We have used a lexer when the user have typed a commande line to split it token with the type T_WORD or any possible operator we have handle (see the list of available operator in [Available features section](https://github.com/thlibers/minishell?tab=readme-ov-file#available-features)).
+A lexer (also called a tokenizer) reads raw text one character at a time and splits it into meaningful pieces called tokens. After the user types a command line, the lexer processes that input and produces tokens labeled with their exact types (see the list of operators in the ["Available features"](https://github.com/thlibers/minishell?tab=readme-ov-file#available-features) section) .
 
 <img src=".images/lexer.png" width=720><br>
 
-To facilitate the execution of the different command we created an AST (Abstract Syntax Tree). An AST is a data structure shaped like a tree who are compose of a ast (the original node), one/multiple branch (subnode) and leaf (node where data is stored)
+An Abstract Syntax Tree (AST) is a tree-shaped data structure used to represent commands for execution. It has a top node called a root, intermediate nodes called branches (subnodes), and leaf nodes where data are stored.
 
-<img src=".images/tree_scheme.png" width=720> <br>
+<img src=".images/ast.png" width=720> <br>
 
 ## Example:
-![PLACEHOLDER COMPILATION GIF](.images/placeholder.jpg) <br>
-![PLACEHOLDER EXECUTION GIF](.images/placeholder.jpg)
+<div align="center">
+    <img width=64 src=".images/placeholder.jpg">
+    <br><br>
+    <img width=64 src=".images/placeholder.jpg">
+</div>
 
 ## Ressources used:
 - [Bash documentation](https://pubs.opengroup.org/onlinepubs/9699919799/functions/contents.html)
@@ -67,8 +71,9 @@ To facilitate the execution of the different command we created an AST (Abstract
 - [Tokenize a string](https://www.geeksforgeeks.org/cpp/string-tokenization-in-c/)
 - [AST wikipedia](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
 - [Lexer analysis wikipedia](https://en.wikipedia.org/wiki/Lexical_analysis)
-- [Our brain](https://github.com/thlibers/minishell)
+- [Piping in UNIX/Linux](https://www.geeksforgeeks.org/linux-unix/piping-in-unix-or-linux/)
 
+<br>
 
 <div align=center>
     <a href="https://github.com/thlibers/minishell/?tab=readme-ov-file#description">

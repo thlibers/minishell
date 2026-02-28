@@ -33,7 +33,6 @@ char	**ast_to_arr(t_ast **ast)
 
 	i = 0;
 	arr = ft_calloc(1, sizeof(char *));
-
 	while (*ast && (*ast)->top && ((*ast)->top->type >= T_HERE_DOC))
 		(*ast) = (*ast)->leaf_right;
 	if (*ast || !(*ast)->top || (*ast)->type == T_PIPE || (*ast)->type == T_WORD
@@ -58,8 +57,8 @@ char	**ast_to_arr(t_ast **ast)
 
 void	arg_count(t_exec *exec)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (exec->cmd[i])
 		i++;

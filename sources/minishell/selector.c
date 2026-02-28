@@ -14,19 +14,23 @@
 
 bool	selector(t_minishell *minishell, int i)
 {
-	if (ft_strcmp(minishell->exec.cmd[0], "cd") == 0)				// quand "cd .. | ls" ne doit pas revenir en arrire
+	if (ft_strcmp(minishell->exec.cmd[0], "cd") == 0)
+		// quand "cd .. | ls" ne doit pas revenir en arrire
 		ft_cd(minishell, &minishell->exec, i);
 	else if (ft_strcmp(minishell->exec.cmd[0], "echo") == 0)
 		ft_echo(&minishell->exec, i);
 	else if (ft_strcmp(minishell->exec.cmd[0], "env") == 0)
 		ft_env(minishell, i);
-	else if (ft_strcmp(minishell->exec.cmd[0], "exit") == 0)		// quand "exit | ls" ne doit pas exit le programme
+	else if (ft_strcmp(minishell->exec.cmd[0], "exit") == 0)
+		// quand "exit | ls" ne doit pas exit le programme
 		ft_exit(minishell, &minishell->exec, i);
-	else if (ft_strcmp(minishell->exec.cmd[0], "export") == 0)		// seg fault quand "export aaa=bbb | ls"
+	else if (ft_strcmp(minishell->exec.cmd[0], "export") == 0)
+		// seg fault quand "export aaa=bbb | ls"
 		ft_export(minishell, &minishell->exec, i);
 	else if (ft_strcmp(minishell->exec.cmd[0], "pwd") == 0)
 		ft_pwd(minishell, minishell->env, i);
-	else if (ft_strcmp(minishell->exec.cmd[0], "unset") == 0)		// quand "unset HOME | ls" ne doit pas unset HOME
+	else if (ft_strcmp(minishell->exec.cmd[0], "unset") == 0)
+		// quand "unset HOME | ls" ne doit pas unset HOME
 		ft_unset(minishell, &minishell->exec, i);
 	else
 		return (false);

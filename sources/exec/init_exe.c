@@ -19,8 +19,14 @@ static int	open_infile(char *filename)
 	if (!filename)
 		return (0);
 	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-		ft_fprintf(STDERR_FILENO, ENOTFOUND, filename);
+	if (errno == ENOENT || errno == EACCES)
+	{
+		if (errno == ENOENT)
+			ft_fprintf(STDERR_FILENO, ENOTFOUND, filename);
+		else
+			ft_fprintf(STDERR_FILENO, ENOPERM, filename);
+		fd = open("/dev/null", O_RDONLY);
+	}
 	return (fd);
 }
 
@@ -63,7 +69,7 @@ int	init_exec(t_env *env, t_ast *ast, t_exec *exec)
 			save = ast;
 			ast = ast->leaf_right;
 			exec->infile_fd = open_infile(ast->leaf_left->data);
-			if (exec->infile_fd == 0)
+			if (exec->infile_fd < 0)
 				return (0);
 			ast = save;
 		}
@@ -72,7 +78,7 @@ int	init_exec(t_env *env, t_ast *ast, t_exec *exec)
 			save = ast;
 			ast = ast->leaf_right;
 			exec->outfile_fd = open_outfile(ast->leaf_left->data, O_TRUNC);
-			if (exec->outfile_fd == 0)
+			if (exec->outfile_fd < 0)
 				return (0);
 			ast = save;
 		}
@@ -81,7 +87,7 @@ int	init_exec(t_env *env, t_ast *ast, t_exec *exec)
 			save = ast;
 			ast = ast->leaf_right;
 			exec->outfile_fd = open_outfile(ast->leaf_left->data, 0);
-			if (exec->outfile_fd == 0)
+			if (exec->outfile_fd < 0)
 				return (0);
 			ast = save;
 		}

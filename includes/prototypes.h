@@ -76,10 +76,10 @@ bool	init_minishell(t_minishell *minishell, char **envp);
 bool	selector(t_minishell *minishell, int i);
 
 /* ======================= PARSING ======================= */
-/* ----- AST/AST.c ----- */
+/* ----- ast/ast.c ----- */
 t_ast	*create_tree(t_tok *tok, int i);
 
-/* ----- AST/AST_utils.c ----- */
+/* ----- ast/AST_utils.c ----- */
 int		cmd_count(t_ast *ast);
 
 /* ----- env/env_vars.c ----- */
@@ -147,6 +147,7 @@ void	child_clear(t_minishell *minishell);
 /* ----- signal.c ----- */
 void	handler_sigint(int signum);
 void	init_signal(void);
+void  child_signal();
 
 // DEBUG
 void	print_ast(t_ast *ast);
