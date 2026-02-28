@@ -47,19 +47,19 @@ bool	check_ope(t_tok *tok)
 		{
 			if (tok->type == T_HERE_DOC && !tok->next)
 			{
-				ft_fprintf(2, "\e[31mminishell: heredoc error\e[0m\n");
+				ft_fprintf(2, "\e[31mMinishell: Syntax error\e[0m\n");
 				return (false);
 			}
 			else if ((!tok->next || tok->next->type != T_WORD) || (!tok->prev
 					&& tok->type == T_PIPE))
 			{
-				ft_fprintf(2, "\e[31mminishell: syntax error\e[0m\n");
+				ft_fprintf(2, "\e[31mMinishell: Syntax error\e[0m\n");
 				return (false);
 			}
 			else if (tok->type == T_OR || tok->type == T_AND)
 			{
 				ft_fprintf(2,
-					"\e[31mminishell: unhandle operator detected\e[0m\n");
+					"\e[31mMinishell: unhandle operator detected\e[0m\n");
 				return (false);
 			}
 		}

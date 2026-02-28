@@ -54,6 +54,8 @@ static void	expand_treatements(int *in_quote, t_minishell *minishell,
 				if (!dollar_treatements(minishell, token, &i))
 					continue ;
 			}
+//      else if ((*token)->str[i] == '*')
+//        if (!)
 			else
 				i++;
 		}

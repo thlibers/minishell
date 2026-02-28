@@ -14,13 +14,13 @@
 
 volatile sig_atomic_t	g_msh_sig = 0;
 
-void  child_handler_sigquit(int signum)
+void	child_handler_sigquit(int signum)
 {
-  (void)signum;
+	(void)signum;
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-  signal(SIGQUIT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
 
 void	handler_sigint(int signum)
@@ -34,10 +34,10 @@ void	handler_sigint(int signum)
 	signal(SIGINT, handler_sigint);
 }
 
-void  child_signal()
+void	child_signal(void)
 {
-  signal(SIGQUIT, &child_handler_sigquit);
-  signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, &child_handler_sigquit);
+	signal(SIGINT, SIG_DFL);
 }
 void	init_signal(void)
 {

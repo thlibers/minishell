@@ -147,7 +147,7 @@ void	child_clear(t_minishell *minishell);
 /* ----- signal.c ----- */
 void	handler_sigint(int signum);
 void	init_signal(void);
-void  child_signal();
+void	child_signal(void);
 
 // DEBUG
 void	print_ast(t_ast *ast);

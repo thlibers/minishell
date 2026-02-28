@@ -30,7 +30,7 @@ static t_data_type	assign_ope(char *c)
 		type = T_RED_OUT_APP;
 	else if (c[0] == '>' && c[1] != '>')
 		type = T_RED_OUT;
-	else if (c[0] == '&' && c[1] == '&')
+	else if (c[0] == '&' || c[1] == '&')
 		type = T_AND;
 	return (type);
 }

@@ -20,13 +20,13 @@ static void	one_command_only(t_exec *exec, int child_number)
 	if (exec->infile_fd > 2)
 	{
 		if (dup2(exec->infile_fd, STDIN_FILENO) == -1)
-			ft_fprintf(STDERR_FILENO, "dup2 failed for pipe read");
+			ft_fprintf(STDERR_FILENO, EDUP2);
 		close(exec->infile_fd);
 	}
 	if (exec->outfile_fd > 2)
 	{
 		if (dup2(exec->outfile_fd, STDOUT_FILENO) == -1)
-			ft_fprintf(STDERR_FILENO, "dup2 failed for outfile");
+			ft_fprintf(STDERR_FILENO, EDUP2);
 		close(exec->outfile_fd);
 	}
 }
@@ -38,20 +38,20 @@ static void	first_last_command(t_exec *exec, int child_number)
 		if (exec->infile_fd > 2)
 		{
 			if (dup2(exec->infile_fd, STDIN_FILENO) == -1)
-				ft_fprintf(STDERR_FILENO, "dup2 failed for pipe read");
+				ft_fprintf(STDERR_FILENO, EDUP2);
 			close(exec->infile_fd);
 		}
 		if (dup2(exec->pipe_fd[child_number][1], STDOUT_FILENO) == -1)
-			ft_fprintf(STDERR_FILENO, "dup2 failed for outfile");
+			ft_fprintf(STDERR_FILENO, EDUP2);
 	}
 	else if (child_number == exec->cmdc - 1)
 	{
 		if (dup2(exec->pipe_fd[child_number - 1][0], STDIN_FILENO) == -1)
-			ft_fprintf(STDERR_FILENO, "dup2 failed for pipe read");
+			ft_fprintf(STDERR_FILENO, EDUP2);
 		if (exec->outfile_fd > 2)
 		{
 			if (dup2(exec->outfile_fd, STDOUT_FILENO) == -1)
-				ft_fprintf(STDERR_FILENO, "dup2 failed for outfile");
+				ft_fprintf(STDERR_FILENO, EDUP2);
 			close(exec->outfile_fd);
 		}
 		close(exec->pipe_fd[child_number - 1][0]);
@@ -62,9 +62,9 @@ static void	first_last_command(t_exec *exec, int child_number)
 static void	setup_middle_commands(t_exec *exec, int child_number)
 {
 	if (dup2(exec->pipe_fd[child_number - 1][0], STDIN_FILENO) == -1)
-		ft_fprintf(STDERR_FILENO, "dup2 failed for pipe read");
+		ft_fprintf(STDERR_FILENO, EDUP2);
 	if (dup2(exec->pipe_fd[child_number][1], STDOUT_FILENO) == -1)
-		ft_fprintf(STDERR_FILENO, "dup2 failed for pipe write");
+		ft_fprintf(STDERR_FILENO, EDUP2);
 	close(exec->pipe_fd[child_number - 1][0]);
 	close(exec->pipe_fd[child_number - 1][1]);
 	close(exec->pipe_fd[child_number][0]);
@@ -105,13 +105,12 @@ void	child_process(t_minishell *minishell, int child_number)
 {
 	char	*cmd_path;
 
-  child_signal();
+	child_signal();
 	init_child(&minishell->exec, child_number, 1);
 	cmd_path = find_command_path(minishell, minishell->exec.cmd[0]);
 	if (!cmd_path)
 	{
-		ft_fprintf(STDERR_FILENO, "Minishell: %s: command not found\n",
-			minishell->exec.cmd[0]);
+		ft_fprintf(STDERR_FILENO, ECMDFOUND, minishell->exec.cmd[0]);
 		ft_clear(minishell);
 		free_ast(&minishell->ast);
 		clean_child(minishell, &minishell->exec);

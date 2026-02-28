@@ -15,6 +15,10 @@
 # include "includes/color.h"
 
 # define ENOTFOUND F_RED "Minishell: %s: No such file or directory\n" RESET
-# define ENOENOMEM F_RED "Failed allocate memory\n" RESET
+# define ECMDFOUND F_RED "Minishell: %s: Command not found\n" RESET
+# define ENOENOMEM F_RED "Minishell: Failed allocate memory\n" RESET
 # define ENOPERM F_RED "Minishell: %s: Permission denied\n" RESET
+# define ECRPIPE F_RED "Minishell: Pipe creation failed" RESET
+# define ECRFORK F_RED "Minishell: Fork creation failed" RESET
+# define EDUP2 F_RED "Minishell: Failed to duplicated fds" RESET
 #endif // !ERROR_H

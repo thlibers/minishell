@@ -19,11 +19,11 @@ static void	pipes_creation(t_exec *exec)
 	i = 0;
 	exec->pipe_fd = ft_calloc(exec->cmdc, sizeof(int *));
 	if (!exec->pipe_fd)
-		ft_fprintf(STDERR_FILENO, "Allocation Pipe_fd array failed");
+		ft_fprintf(STDERR_FILENO, ENOENOMEM);
 	while (i < exec->cmdc - 1)
 	{
 		if (pipe(exec->pipe_fd[i]) == -1)
-			ft_fprintf(STDERR_FILENO, "Pipe creation failed");
+			ft_fprintf(STDERR_FILENO, ECRPIPE);
 		i++;
 	}
 }
@@ -37,14 +37,13 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 	tmp = minishell->ast;
 	while (i < minishell->exec.cmdc)
 	{
-		// ft_memset(&minishell->exec, 0, sizeof(t_exec));
 		minishell->exec.cmd = ast_to_arr(&tmp);
 		arg_count(&minishell->exec);
 		if (!selector(minishell, i))
 		{
 			pid[i] = fork();
 			if (pid[i] == -1)
-				ft_fprintf(STDERR_FILENO, "Fork creation failed");
+				ft_fprintf(STDERR_FILENO, ECRFORK);
 			if (pid[i] == 0)
 				child_process(minishell, i);
 		}
@@ -72,20 +71,19 @@ static void	pipes_close(t_exec *exec)
 void	execution(t_minishell *minishell)
 {
 	int	i;
-  int code;
+	int	code;
 
 	i = 0;
-  code = 0;
+	code = 0;
 	init_exec(minishell->env, minishell->ast, &minishell->exec);
 	minishell->pid = ft_calloc(minishell->exec.cmdc, sizeof(int));
 	if (!minishell->pid)
-		ft_fprintf(STDERR_FILENO, "Allocation pid array failed");
+		ft_fprintf(STDERR_FILENO, ENOENOMEM);
 	pipes_creation(&minishell->exec);
 	children_creation(minishell, minishell->pid);
 	pipes_close(&minishell->exec);
 	while (i < minishell->exec.cmdc)
 	{
-    printf("PID %d\n", minishell->pid[i]);
 		waitpid(minishell->pid[i], &code, 0);
 		if (WIFEXITED(code))
 			minishell->exit_code = WEXITSTATUS(code);
