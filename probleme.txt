@@ -1,5 +1,9 @@
 - leak (casi tous regler)
+
 - CTRL+C on working command generate two prompt line
+
 - cat /dev/urandom | head -1
+
 - "< aaa < problemesssssssss.txt cat" file doesnt exist print both
+
 - cd ~                cd                   unset HOME

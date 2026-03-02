@@ -6,13 +6,13 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 09:33:32 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/27 15:24:46 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/02 15:17:56 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	ft_echo(t_exec *exec, int child_number)
+int	ft_echo(t_minishell *minishell, t_exec *exec, int child_number)
 {
 	bool	new_line;
 	int		i;
@@ -29,15 +29,13 @@ int	ft_echo(t_exec *exec, int child_number)
 		if ((i == 1 && new_line) || i >= 2)
 		{
 			ft_putstr_fd(exec->cmd[i], 1);
-			if ((i + 1) != exec->argc)
+			if (i != exec->argc)
 				ft_putchar_fd(' ', 1);
 		}
 		i++;
 	}
 	if (new_line == true)
 		ft_putchar_fd('\n', 1);
+	minishell->exit_code = 0;
 	return (0);
 }
-
-// "echo $PWD"	donne le pwd (expand)
-// print un espace en fin de mot

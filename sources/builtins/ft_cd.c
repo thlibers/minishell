@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 10:47:36 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/27 15:11:55 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/02 15:07:03 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,5 +130,3 @@ void	ft_cd(t_minishell *minishell, t_exec *exec, int child_number)
 			parsing_dir(minishell, exec->cmd[1]);
 	}
 }
-
-// "cd ~/Exemple" a gerer (expand)

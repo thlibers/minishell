@@ -6,11 +6,21 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 15:05:33 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/02 14:29:26 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/02 15:04:06 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+
+static void free_unset(t_minishell *minishell)
+{
+	if (minishell->env->next->name)
+		free(minishell->env->next->name);
+	if (minishell->env->next->value)
+		free(minishell->env->next->value);
+	if (minishell->env->next)
+		free(minishell->env->next);
+}
 
 void	ft_unset(t_minishell *minishell, t_exec *exec, int child_number)
 {
@@ -23,27 +33,20 @@ void	ft_unset(t_minishell *minishell, t_exec *exec, int child_number)
 	init_child(exec, child_number, 0);
 	while (exec->cmd[i])
 	{
+		minishell->env = head;
 		while (minishell->env->next)
 		{
 			if (!ft_strcmp(exec->cmd[i], minishell->env->next->name))
 			{
 				tmp = minishell->env->next->next;
-				free(minishell->env->next->name);
-				free(minishell->env->next->value);
-				free(minishell->env->next);
+				free_unset(minishell);
 				minishell->env->next = tmp;
-				minishell->exit_code = 0;
+				break ;
 			}
-			else
-				minishell->exit_code = 1;
 			minishell->env = minishell->env->next;
 		}
 		i++;
 	}
+	minishell->exit_code = 0;
 	minishell->env = head;
 }
-
-// Si unset + une variable qui n'existe pas, pas d'erreur,
-// retourne un code de succès.
-
-// uset plusieurs variables en meme temps ?

@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 13:25:31 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/02 13:42:33 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/02 15:18:26 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 /* ======================= BULTINS ======================= */
 /* ----- ft_echo.c ----- */
-int		ft_echo(t_exec *exec, int child_number);
+int		ft_echo(t_minishell *minishell, t_exec *exec, int child_number);
 
 /* ----- ft_pwd.c ----- */
 int		ft_pwd(t_minishell *minishell, t_env *env, int child_number);

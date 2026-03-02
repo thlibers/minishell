@@ -6,17 +6,11 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 15:05:28 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/02 13:57:16 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/02 17:02:11 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-
-// Manque :
-//	- Check caracteres valides
-//	- Gerer les export +=
-//	- Gerer les multiple export en une command
-//  -
 
 static int	check_valarg(char **tab)
 {
@@ -31,7 +25,7 @@ static int	check_valarg(char **tab)
 	}
 	while (tab[0][i])
 	{
-		if (!isalnum(tab[0][i]) && tab[0][i] != '_')
+		if (!ft_isalnum(tab[0][i]) && tab[0][i] != '_')
 		{
 			ft_fprintf(STDERR_FILENO, "export: `%s': not a valid identifier\n",
 				tab[0]);
@@ -42,36 +36,64 @@ static int	check_valarg(char **tab)
 	return (1);
 }
 
+static char **add_to_envvalue(t_minishell *minishell, t_exec *exec, int pos)
+{
+	int i;
+	char *value;
+	char **tab;
+
+	i = 0;
+	tab = ft_calloc(3, sizeof(char *));
+	value = ft_strchr(exec->cmd[pos], '=');
+	while (ft_strncmp(&exec->cmd[pos][i], "+=", 2) != 0)
+	{
+		tab[0][i] = exec->cmd[pos][i];
+		i++;
+	}
+	tab[1] = ft_strjoin(ft_getenv(minishell->env, tab[0]), value + 1);
+	return (tab);
+}
+
+// add_to_envvalue segfault
+
 static int	ft_export_arg(t_minishell *minishell, t_exec *exec, bool pipe)
 {
 	t_env	*head;
 	char	**tab;
 	int		status;
+	int		i;
 
 	if (pipe == true)
 		return (1);
 	head = minishell->env;
-	tab = env_spliter(exec->cmd[1]);
-	if (!tab || !check_valarg(tab))
-		return (minishell->exit_code = 1, 1);
-	status = 0;
-	while (minishell->env && status == 0)
+	i = 1;
+	while (exec->cmd[i])
 	{
-		if (strcmp(minishell->env->name, tab[0]) == 0)
+		if (ft_strnstr(exec->cmd[i], "+=", ft_strlen(exec->cmd[i])))
+			tab = add_to_envvalue(minishell, exec, i);
+		else
+			tab = env_spliter(exec->cmd[i]);
+		if (!tab || !check_valarg(tab))
+			return (minishell->exit_code = 1, 1);
+		status = 0;
+		while (minishell->env && status == 0)
 		{
-			if (minishell->env->value)
-				free(minishell->env->value);
-			minishell->env->value = ft_strdup(tab[1]);
-			status = 1;
+			if (strcmp(minishell->env->name, tab[0]) == 0)
+			{
+				if (minishell->env->value)
+					free(minishell->env->value);
+				minishell->env->value = ft_strdup(tab[1]);
+				status = 1;
+			}
+			minishell->env = minishell->env->next;
 		}
-		minishell->env = minishell->env->next;
+		minishell->env = head;
+		if (status == 0)
+			add_env_back(&minishell->env, create_env_var(tab[0], tab[1],
+					ft_strchr(exec->cmd[i], '=')));
+		i++;
 	}
-	minishell->env = head;
-	if (status == 0)
-		add_env_back(&minishell->env, create_env_var(tab[0], tab[1],
-				ft_strchr(exec->cmd[1], '=')));
-	minishell->exit_code = 0;
-	return (free_tab(tab), 0);
+	return (minishell->exit_code = 0, free_tab(tab), 0);
 }
 
 static void	ft_export_noarg(t_minishell *minishell)
@@ -104,3 +126,7 @@ void	ft_export(t_minishell *minishell, t_exec *exec, int child_number, bool pipe
 	else
 		ft_export_arg(minishell, exec, pipe);
 }
+
+// Manque :
+//	- Gerer les export "+=" (ajoute ce qu'il y a apres le '=' a la variable d'env)
+//			exemple :	"PATH+=abc" ajoute abc a la fin de PATH

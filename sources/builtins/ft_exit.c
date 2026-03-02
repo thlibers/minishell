@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:27 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/27 16:07:15 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/02 15:20:53 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,10 @@ void	ft_exit(t_minishell *minishell, t_exec *exec, int child_number)
 		return ;
 	}
 	if (exec->argc > 0 && !ft_strisdigit(exec->cmd[0]))
-	// A mettre au dessus
 	{
 		ft_fprintf(STDERR_FILENO, "exit: %s: numeric argument required",
 			exec->cmd[1]);
 		ft_clear(minishell);
-		// DOUBLE FREE (suspission du ft_clear "sur a 100%" d'apres nclavel)
 		exit(2);
 	}
 	else if (!exec->cmd[1])
