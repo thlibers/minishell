@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 15:05:28 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/27 15:34:24 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/27 16:51:56 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	ft_export_arg(t_minishell *minishell, t_exec *exec)
 	minishell->env = head;
 	if (status == 0)
 		add_env_back(&minishell->env, create_env_var(tab[0], tab[1],
-				ft_strchr(exec->cmd[1], '=')));
+				ft_strchr(exec->cmd[1], '='))); 			// "export abc" est pas add
 	minishell->exit_code = 0;
 	return (free_tab(tab), 0);
 }

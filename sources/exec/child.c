@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 12:30:53 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/27 13:50:22 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/02 12:13:19 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,23 @@ void	init_child(t_exec *exec, int child_number, int is_child)
 	}
 }
 
+void	redirection(t_exec exec)
+{
+	if (exec.infile_fd > 2)
+		dup2(exec.infile_fd, STDIN_FILENO);
+	if (exec.outfile_fd > 2)
+		dup2(exec.outfile_fd, STDOUT_FILENO);
+}
+
 void	child_process(t_minishell *minishell, int child_number)
 {
 	char	*cmd_path;
 
 	child_signal();
-	init_child(&minishell->exec, child_number, 1);
+	if (minishell->exec.infile_fd > 2 || minishell->exec.outfile_fd > 2)
+		redirection(minishell->exec);
+	else
+		init_child(&minishell->exec, child_number, 1);
 	cmd_path = find_command_path(minishell, minishell->exec.cmd[0]);
 	if (!cmd_path)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:22:21 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/20 11:22:33 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/03/02 12:15:16 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_env	*env_cpy(t_env *env)
 		cpy->name = ft_strdup(env->name);
 		if (!cpy->name)
 			return (free(cpy), ft_fprintf(STDERR_FILENO, ENOENOMEM), NULL);
+		cpy->equal = env->equal;
 		cpy->value = ft_strdup(env->value);
 		if (!cpy->value)
 			return (free(cpy->name), free(cpy), ft_fprintf(STDERR_FILENO,

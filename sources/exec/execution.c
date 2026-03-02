@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/27 15:28:11 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/02 12:14:06 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,23 @@ static void	pipes_creation(t_exec *exec)
 		if (pipe(exec->pipe_fd[i]) == -1)
 			ft_fprintf(STDERR_FILENO, ECRPIPE);
 		i++;
+	}
+}
+
+void	close_file(t_exec *exec, t_ast *curr_branch)
+{
+	if (curr_branch->type >= T_HERE_DOC && curr_branch->leaf_right && curr_branch->leaf_right->type < T_HERE_DOC)
+	{
+		if (exec->infile_fd > 2 && curr_branch->type >= T_RED_IN)
+		{
+			close(exec->infile_fd);
+			exec->infile_fd = 0;	
+		}
+		if (exec->outfile_fd > 2 && (curr_branch->type == T_RED_OUT || curr_branch->type == T_RED_OUT_APP))
+		{
+			close(exec->outfile_fd);
+			exec->outfile_fd = 1;	
+		}	
 	}
 }
 
@@ -49,6 +66,7 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 		}
 		i++;
 		free_ast_arr(&minishell->exec.cmd);
+		close_file(&minishell->exec, tmp);
 		tmp = tmp->leaf_right;
 	}
 }

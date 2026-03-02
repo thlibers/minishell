@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:18:25 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/25 15:32:31 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/27 17:54:22 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	init_exec(t_env *env, t_ast *ast, t_exec *exec)
 				return (0);
 			ast = save;
 		}
-		else if (ast->type == T_RED_OUT)
+		else if (ast->type == T_RED_OUT)				// A MOVE DANS LE CHILDREN_CREATION
 		{
 			save = ast;
 			ast = ast->leaf_right;

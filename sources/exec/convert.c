@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 14:20:35 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/27 12:53:47 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/02/27 16:22:20 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ char	**ast_to_arr(t_ast **ast)
 			i++;
 			*ast = (*ast)->leaf_left;
 		}
-		// printf("\n");
 		*ast = save;
 	}
 	return (arr);
