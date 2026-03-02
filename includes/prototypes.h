@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 13:25:31 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/27 15:38:28 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/02 13:42:33 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		ft_env(t_minishell *minishell, int child_number);
 void	ft_exit(t_minishell *minishell, t_exec *exec, int child_number);
 
 /* ----- ft_export.c ----- */
-void	ft_export(t_minishell *minishell, t_exec *exec, int child_number);
+void	ft_export(t_minishell *minishell, t_exec *exec, int child_number, bool pipe);
 
 /* ----- ft_unset.c ----- */
 void	ft_unset(t_minishell *minishell, t_exec *exec, int child_number);
@@ -79,8 +79,9 @@ bool	selector(t_minishell *minishell, int i);
 /* ----- ast/ast.c ----- */
 t_ast	*create_tree(t_tok *tok, int i);
 
-/* ----- ast/AST_utils.c ----- */
+/* ----- ast/ast_utils.c ----- */
 int		cmd_count(t_ast *ast);
+bool	check_pipe(t_ast *ast);
 
 /* ----- env/env_vars.c ----- */
 char	**env_spliter(char *vars);

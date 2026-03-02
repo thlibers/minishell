@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   AST_word_type.c                                    :+:      :+:    :+:   */
+/*   ast_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:28:30 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/13 10:28:35 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/03/02 12:36:05 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,15 @@ int	cmd_count(t_ast *ast)
 	else if (ast->top && ast->top->type < T_HERE_DOC)
 		count++;
 	return (count);
+}
+
+bool check_pipe(t_ast *ast)
+{
+	while (ast->leaf_right)
+	{
+		if (ast->type == T_PIPE)
+			return (true);
+		ast = ast->leaf_right;
+	}
+	return(false);
 }

@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 12:22:02 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/05 12:38:04 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/02 14:06:53 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ char	*path_builder(t_env *env, char *dir)
 	char	*fullpath;
 	char	*tmp_str;
 
-	if (!dir && !ft_getenv(env, "HOME"))
+	if ((!dir || dir[0] == '\0') && !ft_getenv(env, "HOME"))
 		return (printf("cd: HOME not set\n"), NULL);
-	// (OLPWD et HOME) A dissocier
 	else if (!dir && !ft_getenv(env, "OLDPWD"))
 		return (printf("cd: OLDPWD not set\n"), NULL);
 	else if (!dir)
@@ -56,3 +55,6 @@ char	*path_builder(t_env *env, char *dir)
 	fullpath = ft_strjoin(tmp_str, dir);
 	return (free(tmp_str), fullpath);
 }
+
+// (OLPWD et HOME) A dissocier
+// exemple "unset OLDPWD" et "unset HOME" pour "cd -" donne "HOME not set"

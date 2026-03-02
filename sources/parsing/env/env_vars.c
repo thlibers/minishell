@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 15:28:32 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/27 16:44:06 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/02 13:48:16 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ t_env	*create_env_var(char *name, char *value, char *equal_loc)
 	if (!var->name)
 		return (free(var), ft_fprintf(STDERR_FILENO, ENOENOMEM), NULL);
 	var->value = ft_strdup(value);
-	if (!var->value)
-		return (free(var->name), free(var), ft_fprintf(STDERR_FILENO,
-				ENOENOMEM), NULL);
+	// if (!var->value)
+	// 	return (free(var->name), free(var), ft_fprintf(STDERR_FILENO,
+	// 			ENOENOMEM), NULL);
 	if (!equal_loc)
 		var->equal = false;
 	else
