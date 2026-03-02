@@ -22,9 +22,9 @@ static int	open_infile(char *filename)
 	if (errno == ENOENT || errno == EACCES)
 	{
 		if (errno == ENOENT)
-			ft_fprintf(STDERR_FILENO, ENOTFOUND, filename);
+			return (ft_fprintf(STDERR_FILENO, ENOTFOUND, filename), -1);
 		else
-			ft_fprintf(STDERR_FILENO, ENOPERM, filename);
+			return (ft_fprintf(STDERR_FILENO, ENOPERM, filename), -1);
 		fd = open("/dev/null", O_RDONLY);
 	}
 	return (fd);
@@ -45,14 +45,50 @@ static int	open_outfile(char *filename, int trunc)
 	return (fd);
 }
 
+bool	redirection_choser(t_exec *exec, t_ast *ast)
+{
+	t_ast *save;
+
+	while (ast && ast->type >= T_HERE_DOC)
+	{
+		if (ast->type == T_RED_IN)
+		{
+			save = ast;
+			ast = ast->leaf_right;
+			exec->infile_fd = open_infile(ast->leaf_left->data);
+			if (exec->infile_fd < 0)
+				return (false);
+			ast = save;
+		}
+		else if (ast->type == T_RED_OUT)
+		{
+			save = ast;
+			ast = ast->leaf_right;
+			exec->outfile_fd = open_outfile(ast->leaf_left->data, O_TRUNC);
+			if (exec->outfile_fd < 0)
+				return (false);
+			ast = save;
+		}
+		else if (ast->type == T_RED_OUT_APP)
+		{
+			save = ast;
+			ast = ast->leaf_right;
+			exec->outfile_fd = open_outfile(ast->leaf_left->data, 0);
+			if (exec->outfile_fd < 0)
+				return (false);
+			ast = save;
+		}
+		ast = ast->leaf_right;
+	}
+	return (true);
+}
+
 int	init_exec(t_env *env, t_ast *ast, t_exec *exec)
 {
-	int		i;
 	t_ast	*save;
 
 	exec->cmdc = cmd_count(ast);
 	exec->env = convert_env(env);
-	i = 0;
 	while (ast)
 	{
 		if (ast->type == T_HERE_DOC)
@@ -91,7 +127,6 @@ int	init_exec(t_env *env, t_ast *ast, t_exec *exec)
 				return (0);
 			ast = save;
 		}
-		i++;
 		ast = ast->leaf_right;
 	}
 	return (1);

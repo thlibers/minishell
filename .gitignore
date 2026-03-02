@@ -1,8 +1,10 @@
 objs/
 # docs/
 *.o
-minishell
+./minishell
 mylibft/libft.a
 msh_history
 
 sprintf.c
+.clangd
+.zed

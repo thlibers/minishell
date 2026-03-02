@@ -10,7 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "includes/error.h"
 #include "includes/minishell.h"
+#include "includes/structure.h"
+#include "mylibft/libft.h"
 
 bool	check_quote(t_tok *tok)
 {
@@ -30,7 +33,7 @@ bool	check_quote(t_tok *tok)
 			}
 			if (quote != 0)
 			{
-				printf("BAD QUOTES\n");
+				ft_fprintf(2, EQUOTE);
 				return (false);
 			}
 		}
@@ -45,23 +48,12 @@ bool	check_ope(t_tok *tok)
 	{
 		if (tok->type != T_WORD)
 		{
-			if (tok->type == T_HERE_DOC && !tok->next)
-			{
-				ft_fprintf(2, "\e[31mMinishell: Syntax error\e[0m\n");
-				return (false);
-			}
-			else if ((!tok->next || tok->next->type != T_WORD) || (!tok->prev
-					&& tok->type == T_PIPE))
-			{
-				ft_fprintf(2, "\e[31mMinishell: Syntax error\e[0m\n");
-				return (false);
-			}
-			else if (tok->type == T_OR || tok->type == T_AND)
-			{
-				ft_fprintf(2,
-					"\e[31mMinishell: unhandle operator detected\e[0m\n");
-				return (false);
-			}
+			if (tok->type == T_HERE_DOC && !tok->next)		// HEREDOC SANS EOF
+				return (ft_fprintf(2, ESYNTAX), false);
+			else if (tok->type != T_WORD && !tok->next)		// OPERATEUR SANS RIEN
+				return (ft_fprintf(2, ESYNTAX), false);
+			else if (tok->type == T_OR || tok->type == T_AND) // OPERATEUR && ET || (pas gerer)
+				return (ft_fprintf(2, EUNHANDLE), false);
 		}
 		tok = tok->next;
 	}

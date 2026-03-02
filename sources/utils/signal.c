@@ -44,3 +44,5 @@ void	init_signal(void)
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, handler_sigint);
 }
+
+// CTRL + C fait un exit code de 130

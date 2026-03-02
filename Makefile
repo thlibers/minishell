@@ -16,7 +16,7 @@ NAME = minishell
 # Flags
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3 -I.
-INCLUDES = -I./includes 
+INCLUDES = -I./includes
 
 # Paths
 SRC_DIR = sources
@@ -53,7 +53,7 @@ SRCS =	$(SRC_DIR)/builtins/ft_cd.c\
 		$(SRC_DIR)/parsing/utils.c\
 		$(SRC_DIR)/parsing/lexer/tokenizer.c\
 		$(SRC_DIR)/parsing/lexer/tokenizer_linked_list.c\
-		$(SRC_DIR)/parsing/lexer/check_synthax.c\
+		$(SRC_DIR)/parsing/lexer/check_syntax.c\
 		$(SRC_DIR)/parsing/ast/ast.c\
 		$(SRC_DIR)/parsing/ast/ast_utils.c\
 		$(SRC_DIR)/parsing/lexer/check_lexer.c\

@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "includes/error.h"
 #include "includes/minishell.h"
+#include "mylibft/libft.h"
 
 static char	*parsing_dir(t_minishell *minishell, char *dir)
 {
@@ -104,6 +106,11 @@ void	ft_cd(t_minishell *minishell, t_exec *exec, int child_number)
 	char	*updated_pwd;
 
 	init_child(exec, child_number, 0);
+	if (exec->argc > 1)
+	{
+		ft_fprintf(2, ECDARGC);
+		return ;
+	}
 	arg_len = ft_strlen(exec->cmd[1]);
 	if (exec->argc == 0 || strcmp(exec->cmd[1], "~") == 0)
 		parsing_dir(minishell, ft_getenv(minishell->env, "HOME"));

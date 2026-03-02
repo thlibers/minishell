@@ -24,8 +24,8 @@ char	*tok_str_save(char *line, t_data_type data_type)
 	quote = 0;
 	len = 0;
 	(void)data_type;
-	while ((line[len] && !is_operator(&line[len]) && !ft_isspace(line[len]))
-		|| quote != 0)
+	while (line[len] && ((!is_operator(&line[len]) && !ft_isspace(line[len]))
+		|| quote != 0))
 	{
 		is_inquote(&quote, line[len]);
 		len++;
@@ -38,7 +38,6 @@ char	*tok_str_save(char *line, t_data_type data_type)
 		str[i] = line[i];
 		i++;
 	}
-	str[i] = '\0';
 	return (str);
 }
 
