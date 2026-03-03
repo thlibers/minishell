@@ -6,7 +6,7 @@
 #    By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 11:04:15 by nclavel           #+#    #+#              #
-#    Updated: 2026/02/25 13:48:49 by thlibers         ###   ########.fr        #
+#    Updated: 2026/03/03 14:59:57 by thlibers         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,10 +26,12 @@ LIBFT_DIR = mylibft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 # Srcs
-SRCS =	$(SRC_DIR)/builtins/ft_cd.c\
+SRCS =	$(SRC_DIR)/builtins/ft_cd_utils.c\
+		$(SRC_DIR)/builtins/ft_cd.c\
 		$(SRC_DIR)/builtins/ft_echo.c\
 		$(SRC_DIR)/builtins/ft_env.c\
 		$(SRC_DIR)/builtins/ft_exit.c\
+		$(SRC_DIR)/builtins/ft_export_utils.c\
 		$(SRC_DIR)/builtins/ft_export.c\
 		$(SRC_DIR)/builtins/ft_pwd.c\
 		$(SRC_DIR)/builtins/ft_unset.c\
@@ -60,7 +62,6 @@ SRCS =	$(SRC_DIR)/builtins/ft_cd.c\
 		$(SRC_DIR)/utils/clean.c\
 		$(SRC_DIR)/parsing/env/env_utils.c\
 		$(SRC_DIR)/parsing/env/env_utils2.c\
-		$(SRC_DIR)/utils/cd_utils.c\
 		$(SRC_DIR)/utils/signal.c
 
 # Obj

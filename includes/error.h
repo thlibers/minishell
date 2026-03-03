@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 14:06:53 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/24 14:07:38 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/03/03 15:55:25 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 # define ECRPIPE F_RED "Minishell: Pipe creation failed" RESET
 # define ECRFORK F_RED "Minishell: Fork creation failed" RESET
 # define EDUP2 F_RED "Minishell: Failed to duplicated fds" RESET
-# define ENOENOMEM F_RED "Minishell: Failed allocate memory\n" RESET // PASSE PAS LA NORME LES F_RED, RESET, etc
+# define ENOENOMEM F_RED "Minishell: Failed allocate memory\n" RESET
+	// PASSE PAS LA NORME LES F_RED, RESET, etc
 
 /* --- CHECK --- */
 # define EQUOTE F_RED "Minishell: Unclosed quote\n" RESET

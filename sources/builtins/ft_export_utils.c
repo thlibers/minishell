@@ -1,0 +1,57 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/03 13:51:09 by thlibers          #+#    #+#             */
+/*   Updated: 2026/03/03 13:55:03 by thlibers         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "includes/minishell.h"
+
+int	check_valarg(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (isdigit(tab[0][0]))
+	{
+		ft_fprintf(STDERR_FILENO, "export: `%s': not a valid identifier\n",
+			tab[0]);
+		return (0);
+	}
+	while (tab[0][i])
+	{
+		if (!ft_isalnum(tab[0][i]) && tab[0][i] != '_')
+		{
+			ft_fprintf(STDERR_FILENO, "export: `%s': not a valid identifier\n",
+				tab[0]);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+char	**add_to_envvalue(t_minishell *minishell, t_exec *exec, int pos)
+{
+	int		i;
+	char	*value;
+	char	**tab;
+
+	i = 0;
+	tab = ft_calloc(3, sizeof(char *));
+	value = ft_strchr(exec->cmd[pos], '=');
+	tab[0] = ft_calloc(ft_strlen(exec->cmd[pos]) - ft_strlen(value),
+			sizeof(char));
+	while (ft_strncmp(&exec->cmd[pos][i], "+=", 2) != 0)
+	{
+		tab[0][i] = exec->cmd[pos][i];
+		i++;
+	}
+	tab[1] = ft_strjoin(ft_getenv(minishell->env, tab[0]), value + 1);
+	return (tab);
+}

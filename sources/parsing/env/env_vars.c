@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 15:28:32 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/02 13:48:16 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/03 15:55:18 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,11 @@ char	**env_spliter(char *vars)
 		tab[0][i] = vars[i];
 		i++;
 	}
-	tab[0][i] = '\0';
 	if (vars[i] == '\0')
 		return (tab);
 	tab[1] = ft_strdup(pos + 1);
 	if (!tab[1])
-		return (free(tab[0]), free(tab), ft_fprintf(STDERR_FILENO, ENOENOMEM),
-			NULL);
+		return (free(tab[0]), free(tab), ft_fprintf(2, ENOENOMEM), NULL);
 	return (tab);
 }
 

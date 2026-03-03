@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:11 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/27 12:52:26 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:15:34 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ bool	prompt(t_minishell *minishell)
 	}
 	if (!line)
 		return (false);
+	line = ft_strtrim(line, " ");
 	if (line && line[0])
 	{
 		add_to_history(minishell->fd_history, line);

@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 13:25:31 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/02 15:18:26 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/03 14:57:43 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,15 @@
 # include "includes/structure.h"
 
 /* ======================= BULTINS ======================= */
-/* ----- ft_echo.c ----- */
-int		ft_echo(t_minishell *minishell, t_exec *exec, int child_number);
-
-/* ----- ft_pwd.c ----- */
-int		ft_pwd(t_minishell *minishell, t_env *env, int child_number);
+/* ----- ft_cd_utils.c ----- */
+int		dotcount(char *str);
+char	*path_builder(t_env *env, char *dir);
 
 /* ----- ft_cd.c ----- */
-void	ft_cd(t_minishell *minishell, t_exec *exec, int child_number);
+int		ft_cd(t_minishell *minishell, t_exec *exec, int child_number);
+
+/* ----- ft_echo.c ----- */
+int		ft_echo(t_minishell *minishell, t_exec *exec, int child_number);
 
 /* ----- ft_env.c ----- */
 int		ft_env(t_minishell *minishell, int child_number);
@@ -30,9 +31,16 @@ int		ft_env(t_minishell *minishell, int child_number);
 /* ----- ft_exit.c ----- */
 void	ft_exit(t_minishell *minishell, t_exec *exec, int child_number);
 
+/* ----- ft_export_utils.c ----- */
+int		check_valarg(char **tab);
+char	**add_to_envvalue(t_minishell *minishell, t_exec *exec, int pos);
+
 /* ----- ft_export.c ----- */
 void	ft_export(t_minishell *minishell, t_exec *exec, int child_number,
 			bool pipe);
+
+/* ----- ft_pwd.c ----- */
+int		ft_pwd(t_minishell *minishell, t_env *env, int child_number);
 
 /* ----- ft_unset.c ----- */
 void	ft_unset(t_minishell *minishell, t_exec *exec, int child_number);
@@ -137,10 +145,6 @@ int		is_inquote(int *quote, char c);
 void	free_tab(char **s);
 
 /* ======================= UTILS ======================= */
-/* ----- cd_utils.c ----- */
-int		dotcount(char *str);
-char	*path_builder(t_env *env, char *dir);
-
 /* ----- clean.c ----- */
 void	ft_clear(t_minishell *minishell);
 void	env_clean(t_env *env, char **tab);

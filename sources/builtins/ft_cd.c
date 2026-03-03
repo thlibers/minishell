@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 10:47:36 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/02 15:07:03 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/03 14:14:39 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,17 +100,14 @@ static char	*ft_dotdot(t_minishell *minishell, t_exec *exec)
 	return (new_pwd);
 }
 
-void	ft_cd(t_minishell *minishell, t_exec *exec, int child_number)
+int	ft_cd(t_minishell *minishell, t_exec *exec, int child_number)
 {
 	int		arg_len;
 	char	*updated_pwd;
 
 	init_child(exec, child_number, 0);
 	if (exec->argc > 1)
-	{
-		ft_fprintf(2, ECDARGC);
-		return ;
-	}
+		return (ft_fprintf(2, ECDARGC));
 	arg_len = ft_strlen(exec->cmd[1]);
 	if (exec->argc == 0 || strcmp(exec->cmd[1], "~") == 0)
 		parsing_dir(minishell, ft_getenv(minishell->env, "HOME"));
@@ -129,4 +126,5 @@ void	ft_cd(t_minishell *minishell, t_exec *exec, int child_number)
 		else
 			parsing_dir(minishell, exec->cmd[1]);
 	}
+	return (0);
 }
