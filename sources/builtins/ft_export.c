@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 15:05:28 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/02 17:02:11 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/03 13:40:06 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static char **add_to_envvalue(t_minishell *minishell, t_exec *exec, int pos)
 	i = 0;
 	tab = ft_calloc(3, sizeof(char *));
 	value = ft_strchr(exec->cmd[pos], '=');
+	tab[0] = ft_calloc(ft_strlen(exec->cmd[pos]) - ft_strlen(value), sizeof(char));
 	while (ft_strncmp(&exec->cmd[pos][i], "+=", 2) != 0)
 	{
 		tab[0][i] = exec->cmd[pos][i];
@@ -53,8 +54,6 @@ static char **add_to_envvalue(t_minishell *minishell, t_exec *exec, int pos)
 	tab[1] = ft_strjoin(ft_getenv(minishell->env, tab[0]), value + 1);
 	return (tab);
 }
-
-// add_to_envvalue segfault
 
 static int	ft_export_arg(t_minishell *minishell, t_exec *exec, bool pipe)
 {
