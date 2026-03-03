@@ -20,7 +20,7 @@ static void	single_quote_treatement(int *in_quote, t_tok **token, int *i)
 	(*i)++;
 }
 
-static bool	dollar_treatements(t_minishell *minishell, t_tok **token, int *i)
+bool	dollar_treatements(t_minishell *minishell, t_tok **token, int *i)
 {
 	if (!(*token)->str[*i + 1] || (*token)->str[*i + 1] == ' '
 		|| (*token)->str[*i + 1] == '$')
@@ -54,8 +54,8 @@ static void	expand_treatements(int *in_quote, t_minishell *minishell,
 				if (!dollar_treatements(minishell, token, &i))
 					continue ;
 			}
-//      else if ((*token)->str[i] == '*')
-//        if (!)
+			//      else if ((*token)->str[i] == '*')
+			//        if (!)
 			else
 				i++;
 		}

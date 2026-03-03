@@ -117,7 +117,8 @@ static void	ft_export_noarg(t_minishell *minishell)
 	minishell->exit_code = 0;
 }
 
-void	ft_export(t_minishell *minishell, t_exec *exec, int child_number, bool pipe)
+void	ft_export(t_minishell *minishell, t_exec *exec, int child_number,
+		bool pipe)
 {
 	init_child(exec, child_number, 0);
 	if (exec->argc == 0)

@@ -12,34 +12,6 @@
 
 #include "includes/minishell.h"
 
-char	*get_line(void)
-{
-	char	*buff;
-	char	*line;
-	int		bytes_read;
-
-	bytes_read = 1;
-	line = NULL;
-	buff = ft_calloc(10 + 1, sizeof(char));
-	if (!buff)
-		return (NULL);
-	while (!ft_strchr(buff, '\n') && bytes_read > 0)
-	{
-		bytes_read = read(0, buff, 10);
-		if (bytes_read < 0)
-		{
-			if (buff)
-				free(buff);
-		}
-		buff[bytes_read] = '\0';
-		line = ft_strfreejoin(line, buff);
-		if (!line)
-			return (free(buff), NULL);
-	}
-	free(buff);
-	return (line);
-}
-
 static int	heredoc_init(t_exec *exec)
 {
 	if (exec->infile_fd > 2)
@@ -47,14 +19,55 @@ static int	heredoc_init(t_exec *exec)
 	exec->infile_fd = open(HEREDOC_F, O_WRONLY | O_CREAT | O_TRUNC, 00644);
 	if (exec->infile_fd < 0)
 	{
-		// cleanup_pipex(exec);
 		ft_fprintf(STDERR_FILENO, "Failed to open/create/erase tmp file");
 		return (0);
 	}
 	return (1);
 }
 
-int	here_doc(t_exec *exec)
+static t_tok	*line_to_tok(char *line, t_minishell *minishell)
+{
+	t_tok	*tok;
+	int		i;
+
+	i = 0;
+	tok = ft_calloc(1, sizeof(t_tok));
+	if (!tok)
+		return (ft_fprintf(2, ENOENOMEM), NULL);
+	tok->prev = NULL;
+	tok->next = NULL;
+	tok->str = ft_strdup(line);
+	if (!tok->str)
+		return (ft_fprintf(2, ENOENOMEM), free(tok), NULL);
+	while (tok->str[i])
+	{
+		if (tok->str[i] == '$')
+		{
+			if (!dollar_treatements(minishell, &tok, &i))
+				continue ;
+		}
+		i++;
+	}
+	write(minishell->exec.infile_fd, tok->str, ft_strlen(tok->str));
+	write(minishell->exec.infile_fd, "\n", 1);
+	free_tok(&tok);
+	return (NULL);
+}
+
+static int	terminate_heredoc(char **line, t_exec *exec)
+{
+	close(exec->infile_fd);
+	exec->infile_fd = open(HEREDOC_F, O_RDONLY);
+	if (exec->infile_fd < 0)
+	{
+		ft_fprintf(STDERR_FILENO, "Failed to reopen heredoc file for reading");
+		return (0);
+	}
+	free(*line);
+	return (1);
+}
+
+int	here_doc(t_exec *exec, t_minishell *minishell)
 {
 	char	*line;
 
@@ -68,30 +81,15 @@ int	here_doc(t_exec *exec)
 		{
 			if (!line)
 				ft_fprintf(2,
-					"Minishell: Here-document delimited by end-of-file (wanted `%s')\n",
+					"Minishell: Here-document delimited by EOF (wanted `%s')\n",
 					exec->limiter);
 			break ;
 		}
 		else if (line && line[0] != '\0')
-		{
-			write(exec->infile_fd, line, ft_strlen(line));
-			write(exec->infile_fd, "\n", 1);
-		}
+			line_to_tok(line, minishell);
 		free(line);
 	}
-	if (!line)
-	{
-		// cleanup_pipex(exec);
-		ft_fprintf(STDERR_FILENO, "Heredoc failed");
+	if (terminate_heredoc(&line, exec))
 		return (1);
-	}
-	close(exec->infile_fd);
-	exec->infile_fd = open(HEREDOC_F, O_RDONLY);
-	if (exec->infile_fd < 0)
-	{
-		ft_fprintf(STDERR_FILENO, "Failed to reopen heredoc file for reading");
-		return (1);
-	}
-	free(line);
 	return (0);
 }

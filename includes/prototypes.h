@@ -31,7 +31,8 @@ int		ft_env(t_minishell *minishell, int child_number);
 void	ft_exit(t_minishell *minishell, t_exec *exec, int child_number);
 
 /* ----- ft_export.c ----- */
-void	ft_export(t_minishell *minishell, t_exec *exec, int child_number, bool pipe);
+void	ft_export(t_minishell *minishell, t_exec *exec, int child_number,
+			bool pipe);
 
 /* ----- ft_unset.c ----- */
 void	ft_unset(t_minishell *minishell, t_exec *exec, int child_number);
@@ -54,13 +55,14 @@ void	cleanup_pipe(t_minishell *minishell, t_exec *exec);
 void	execution(t_minishell *minishell);
 
 /* ----- heredoc.c ----- */
-int		here_doc(t_exec *exec);
+int		here_doc(t_exec *exec, t_minishell *minishell);
 
 /* ----- init_exe.c ----- */
-int		init_exec(t_env *env, t_ast *ast, t_exec *exec);
+int		init_exec(t_env *env, t_ast *ast, t_exec *exec, t_minishell *minishell);
+bool	redirection_choser(t_exec *exec, t_ast **ast);
 
 /* ----- convert.c ----- */
-char	**ast_to_arr(t_ast **ast);
+char	**ast_to_arr(t_exec *exec, t_ast **ast);
 void	arg_count(t_exec *exec);
 void	free_ast_arr(char ***arr);
 
@@ -101,6 +103,7 @@ t_env	*env_cpy(t_env *env);
 
 /* ----- expand/expand.c ----- */
 void	ft_expand(t_minishell *minishell, t_env *env, t_tok **token);
+bool	dollar_treatements(t_minishell *minishell, t_tok **token, int *i);
 
 /* ----- expand/expand_vars.c ----- */
 void	ft_tilde(t_env *env, t_tok **token, int i);

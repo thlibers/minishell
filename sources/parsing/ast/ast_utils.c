@@ -28,7 +28,7 @@ int	cmd_count(t_ast *ast)
 	return (count);
 }
 
-bool check_pipe(t_ast *ast)
+bool	check_pipe(t_ast *ast)
 {
 	while (ast->leaf_right)
 	{
@@ -36,5 +36,5 @@ bool check_pipe(t_ast *ast)
 			return (true);
 		ast = ast->leaf_right;
 	}
-	return(false);
+	return (false);
 }

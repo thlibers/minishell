@@ -30,18 +30,20 @@ static void	pipes_creation(t_exec *exec)
 
 void	close_file(t_exec *exec, t_ast *curr_branch)
 {
-	if (curr_branch->type >= T_HERE_DOC && curr_branch->leaf_right && curr_branch->leaf_right->type < T_HERE_DOC)
+	if (curr_branch->type >= T_HERE_DOC && curr_branch->leaf_right
+		&& curr_branch->leaf_right->type < T_HERE_DOC)
 	{
 		if (exec->infile_fd > 2 && curr_branch->type >= T_RED_IN)
 		{
 			close(exec->infile_fd);
-			exec->infile_fd = 0;	
+			exec->infile_fd = 0;
 		}
-		if (exec->outfile_fd > 2 && (curr_branch->type == T_RED_OUT || curr_branch->type == T_RED_OUT_APP))
+		if (exec->outfile_fd > 2 && (curr_branch->type == T_RED_OUT
+				|| curr_branch->type == T_RED_OUT_APP))
 		{
 			close(exec->outfile_fd);
-			exec->outfile_fd = 1;	
-		}	
+			exec->outfile_fd = 1;
+		}
 	}
 }
 
@@ -54,7 +56,7 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 	tmp = minishell->ast;
 	while (i < minishell->exec.cmdc)
 	{
-		minishell->exec.cmd = ast_to_arr(&tmp);
+		minishell->exec.cmd = ast_to_arr(&minishell->exec, &minishell->ast);
 		arg_count(&minishell->exec);
 		if (!selector(minishell, i))
 		{
@@ -66,9 +68,10 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 		}
 		i++;
 		free_ast_arr(&minishell->exec.cmd);
-		close_file(&minishell->exec, tmp);
-		tmp = tmp->leaf_right;
+		close_file(&minishell->exec, minishell->ast);
+		minishell->ast = minishell->ast->leaf_right;
 	}
+	minishell->ast = tmp;
 }
 
 static void	pipes_close(t_exec *exec)
@@ -93,7 +96,7 @@ void	execution(t_minishell *minishell)
 
 	i = 0;
 	code = 0;
-	init_exec(minishell->env, minishell->ast, &minishell->exec);
+	init_exec(minishell->env, minishell->ast, &minishell->exec, minishell);
 	minishell->pid = ft_calloc(minishell->exec.cmdc, sizeof(int));
 	if (!minishell->pid)
 		ft_fprintf(STDERR_FILENO, ENOENOMEM);
@@ -103,8 +106,12 @@ void	execution(t_minishell *minishell)
 	while (i < minishell->exec.cmdc)
 	{
 		waitpid(minishell->pid[i], &code, 0);
-		if (WIFEXITED(code))
+		if (WIFSIGNALED(code))
+			minishell->exit_code = 128 + WTERMSIG(code);
+		else if (WIFEXITED(code))
 			minishell->exit_code = WEXITSTATUS(code);
+		else if (WIFSTOPPED(code))
+			minishell->exit_code = WSTOPSIG(code);
 		i++;
 	}
 	free_tab(minishell->exec.env);

@@ -48,11 +48,11 @@ bool	check_ope(t_tok *tok)
 	{
 		if (tok->type != T_WORD)
 		{
-			if (tok->type == T_HERE_DOC && !tok->next)		// HEREDOC SANS EOF
+			if (tok->type == T_HERE_DOC && !tok->next)
 				return (ft_fprintf(2, ESYNTAX), false);
-			else if (tok->type != T_WORD && !tok->next)		// OPERATEUR SANS RIEN
+			else if (tok->type != T_WORD && !tok->next)
 				return (ft_fprintf(2, ESYNTAX), false);
-			else if (tok->type == T_OR || tok->type == T_AND) // OPERATEUR && ET || (pas gerer)
+			else if (tok->type == T_OR || tok->type == T_AND)
 				return (ft_fprintf(2, EUNHANDLE), false);
 		}
 		tok = tok->next;

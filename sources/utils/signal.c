@@ -18,9 +18,8 @@ void	child_handler_sigquit(int signum)
 {
 	(void)signum;
 	rl_on_new_line();
-	rl_replace_line("", 0);
+	rl_replace_line("abc", 0);
 	rl_redisplay();
-	signal(SIGQUIT, SIG_DFL);
 }
 
 void	handler_sigint(int signum)
@@ -36,9 +35,9 @@ void	handler_sigint(int signum)
 
 void	child_signal(void)
 {
-	signal(SIGQUIT, &child_handler_sigquit);
-	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
+
 void	init_signal(void)
 {
 	signal(SIGQUIT, SIG_IGN);

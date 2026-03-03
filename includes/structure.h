@@ -18,15 +18,12 @@
 // --- EXECUTION PART ---
 typedef struct s_exec
 {
-	// t_command			*com_args;
-	char **delete_me; // delete
 	char			**cmd;
 	char			**env;
 	char			*limiter;
-	int (*pipe_fd)[2];
+	int				(*pipe_fd)[2];
 	int				infile_fd;
 	int				outfile_fd;
-	// int					child_number;
 	int				index;
 	int				cmdc;
 	int				argc;

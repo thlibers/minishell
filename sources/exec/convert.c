@@ -25,7 +25,7 @@ void	free_ast_arr(char ***arr)
 	free(*arr);
 }
 
-char	**ast_to_arr(t_ast **ast)
+char	**ast_to_arr(t_exec *exec, t_ast **ast)
 {
 	char	**arr;
 	t_ast	*save;
@@ -33,6 +33,7 @@ char	**ast_to_arr(t_ast **ast)
 
 	i = 0;
 	arr = ft_calloc(1, sizeof(char *));
+	redirection_choser(exec, ast);
 	while (*ast && (*ast)->top && ((*ast)->top->type >= T_HERE_DOC))
 		(*ast) = (*ast)->leaf_right;
 	if (*ast || !(*ast)->top || (*ast)->type == T_PIPE || (*ast)->type == T_WORD

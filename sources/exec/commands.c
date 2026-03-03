@@ -45,17 +45,11 @@ static char	*build_path(char *cmd, char **paths)
 	{
 		tmp = ft_strjoin(paths[i], "/");
 		if (!tmp)
-		{
-			free_tab(paths);
-			return (NULL);
-		}
+			return (free_tab(paths), NULL);
 		full_path = ft_strjoin(tmp, cmd);
 		free(tmp);
 		if (!full_path)
-		{
-			free_tab(paths);
-			return (NULL);
-		}
+			return (free_tab(paths), NULL);
 		if (access(full_path, X_OK) == 0)
 			return (full_path);
 		free(full_path);

@@ -18,7 +18,7 @@
 # define ECRPIPE F_RED "Minishell: Pipe creation failed" RESET
 # define ECRFORK F_RED "Minishell: Fork creation failed" RESET
 # define EDUP2 F_RED "Minishell: Failed to duplicated fds" RESET
-# define ENOENOMEM F_RED "Minishell: Failed allocate memory\n" RESET
+# define ENOENOMEM F_RED "Minishell: Failed allocate memory\n" RESET // PASSE PAS LA NORME LES F_RED, RESET, etc
 
 /* --- CHECK --- */
 # define EQUOTE F_RED "Minishell: Unclosed quote\n" RESET

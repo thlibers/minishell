@@ -3,7 +3,6 @@
 - CTRL+C on working command generate two prompt line
 
 - cat /dev/urandom | head -1
-
-- "< aaa < problemesssssssss.txt cat" file doesnt exist print both
-
+- "< aaa < problemesssssssss.txt cat" file doesnt exist print both time + stuck in the cat
 - cd ~                cd                   unset HOME
+- echo -n "$INPUT"
