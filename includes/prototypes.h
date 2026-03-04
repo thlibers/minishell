@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 13:25:31 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/04 12:53:58 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/04 14:34:48 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ void	child_clear(t_minishell *minishell);
 
 /* ----- signal.c ----- */
 void	handler_sigint(int signum);
+void	handler_sigint_exec(int signum);
 void	init_signal(void);
 void	child_signal(void);
 

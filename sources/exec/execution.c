@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/02 12:14:06 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/04 14:34:04 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ void	execution(t_minishell *minishell)
 	pipes_close(&minishell->exec);
 	while (i < minishell->exec.cmdc)
 	{
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, handler_sigint_exec);
 		waitpid(minishell->pid[i], &code, 0);
 		if (WIFSIGNALED(code))
 			minishell->exit_code = 128 + WTERMSIG(code);
@@ -113,6 +115,7 @@ void	execution(t_minishell *minishell)
 		else if (WIFSTOPPED(code))
 			minishell->exit_code = WSTOPSIG(code);
 		i++;
+		init_signal();
 	}
 	free_tab(minishell->exec.env);
 }
