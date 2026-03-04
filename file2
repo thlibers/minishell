@@ -1,0 +1,21 @@
+total 220
+drwxr-xr-x 9 thlibers 2025_le-havre   4096 Mar  4 16:45 .
+drwxr-xr-x 5 thlibers 2025_le-havre    165 Feb 27 16:56 ..
+drwxr-xr-x 2 thlibers 2025_le-havre    145 Feb 10 12:50 docs
+-rw-r--r-- 1 thlibers 2025_le-havre      0 Mar  4 16:45 file1
+-rw-r--r-- 1 thlibers 2025_le-havre   1285 Mar  4 16:45 file2
+drwxr-xr-x 8 thlibers 2025_le-havre   4096 Mar  4 16:40 .git
+-rw-r--r-- 1 thlibers 2025_le-havre     82 Mar  2 12:11 .gitignore
+drwxr-xr-x 2 thlibers 2025_le-havre    110 Mar  2 12:11 .images
+drwxr-xr-x 2 thlibers 2025_le-havre     94 Mar  4 16:38 includes
+-rw-r--r-- 1 thlibers 2025_le-havre   3639 Mar  4 16:38 Makefile
+-rwxr-xr-x 1 thlibers 2025_le-havre 147600 Mar  4 16:45 minishell
+-rw-r--r-- 1 thlibers 2025_le-havre  23781 Mar  4 16:45 msh_history
+drwxr-xr-x 2 thlibers 2025_le-havre   4096 Mar  4 16:40 mylibft
+drwxr-xr-x 7 thlibers 2025_le-havre     79 Mar  4 16:40 obj
+-rw-r--r-- 1 thlibers 2025_le-havre    147 Mar  4 16:40 probleme.txt
+-rw-r--r-- 1 thlibers 2025_le-havre   3381 Mar  2 12:11 README.md
+drwxr-xr-x 7 thlibers 2025_le-havre     79 Feb  5 15:15 sources
+-rw-r--r-- 1 thlibers 2025_le-havre   3639 Mar  4 16:45 test
+-rw-r--r-- 1 thlibers 2025_le-havre    142 Mar  2 12:11 .valgrindrc
+-rw-r--r-- 1 thlibers 2025_le-havre   1704 Jan 26 12:17 val.supp
