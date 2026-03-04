@@ -36,7 +36,7 @@ bool	prompt(t_minishell *minishell)
 		ft_expand(minishell, minishell->env, &minishell->tok);
 		minishell->ast = create_tree(minishell->tok, 0);
 		free_tok(&minishell->tok);
-		free(line);
 	}
+	free(line);
 	return (true);
 }

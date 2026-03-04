@@ -38,7 +38,10 @@ static int	open_outfile(char *filename, int trunc, t_exec *exec)
 	else
 		exec->outfile_fd = open(filename, O_WRONLY | O_CREAT, 0644);
 	if (exec->outfile_fd == -1)
+	{
 		ft_fprintf(STDERR_FILENO, filename);
+		return (-1);
+	}
 	return (exec->outfile_fd);
 }
 

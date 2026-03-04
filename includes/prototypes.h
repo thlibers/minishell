@@ -151,6 +151,7 @@ void	env_clean(t_env *env, char **tab);
 void	free_ast(t_ast **ast);
 void	free_tok(t_tok **tok);
 void	child_clear(t_minishell *minishell);
+void	full_clean(t_minishell *minishell);
 
 /* ----- signal.c ----- */
 void	handler_sigint(int signum);
