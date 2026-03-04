@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:18:25 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/27 17:54:22 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/04 17:03:15 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	open_outfile(char *filename, int trunc, t_exec *exec)
 	if (trunc)
 		exec->outfile_fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
-		exec->outfile_fd = open(filename, O_WRONLY | O_CREAT, 0644);
+		exec->outfile_fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (exec->outfile_fd == -1)
 	{
 		ft_fprintf(STDERR_FILENO, filename);
