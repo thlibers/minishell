@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_utils.c                                         :+:      :+:    :+:   */
+/*   ft_cd_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 12:22:02 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/02 14:06:53 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/04 13:58:33 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char	*path_builder(t_env *env, char *dir)
 {
 	char	*fullpath;
 	char	*tmp_str;
+	char	pwd_buffer[4096];
 
 	if ((!dir || dir[0] == '\0') && !ft_getenv(env, "HOME"))
 		return (printf("cd: HOME not set\n"), NULL);
@@ -44,12 +45,12 @@ char	*path_builder(t_env *env, char *dir)
 		fullpath = ft_strdup(dir);
 		return (fullpath);
 	}
-	if (ft_strlen(ft_getenv(env, "PWD")) == 1)
+	if (ft_strlen(getcwd(pwd_buffer, sizeof(pwd_buffer))) == 1)
 	{
 		fullpath = ft_strjoin("/", dir);
 		return (fullpath);
 	}
-	tmp_str = ft_strjoin(ft_getenv(env, "PWD"), "/");
+	tmp_str = ft_strjoin(getcwd(pwd_buffer, sizeof(pwd_buffer)), "/");
 	if (!tmp_str)
 		return (NULL);
 	fullpath = ft_strjoin(tmp_str, dir);

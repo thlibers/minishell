@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 10:47:36 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/03 14:14:39 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/04 14:00:33 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,19 @@ static char	*parsing_dir(t_minishell *minishell, char *dir)
 	return (minishell->exit_code = 0, NULL);
 }
 
-static char	*init_newpwd(t_minishell *minishell, t_exec *exec)
+static char	*init_newpwd(t_exec *exec)
 {
 	char	*pwd;
 	char	*new_pwd;
+	char	pwd_buffer[4096];
 
 	if (exec->cmd[1][0] == '/')
 		new_pwd = ft_strdup(exec->cmd[1]);
 	else
 	{
-		pwd = malloc(sizeof(char) * ft_strlen(ft_getenv(minishell->env,
-						"PWD")));
-		pwd = ft_strjoin(ft_getenv(minishell->env, "PWD"), "/");
+		pwd = malloc(sizeof(char) * ft_strlen(getcwd(pwd_buffer, 
+				sizeof(pwd_buffer))));
+		pwd = ft_strjoin(getcwd(pwd_buffer, sizeof(pwd_buffer)), "/");
 		new_pwd = ft_strjoin(pwd, exec->cmd[1]);
 		free(pwd);
 	}
@@ -73,14 +74,14 @@ static int	dot_skip(char *new_pwd, int i)
 	return (i);
 }
 
-static char	*ft_dotdot(t_minishell *minishell, t_exec *exec)
+static char	*ft_dotdot(t_exec *exec)
 {
 	int		i;
 	int		oldf_pos;
 	int		count;
 	char	*new_pwd;
 
-	new_pwd = init_newpwd(minishell, exec);
+	new_pwd = init_newpwd(exec);
 	count = dotcount(new_pwd);
 	while (count > 0)
 	{
@@ -119,7 +120,7 @@ int	ft_cd(t_minishell *minishell, t_exec *exec, int child_number)
 			parsing_dir(minishell, ft_getenv(minishell->env, "OLDPWD"));
 		else if (ft_strnstr(exec->cmd[1], "..", arg_len))
 		{
-			updated_pwd = ft_dotdot(minishell, exec);
+			updated_pwd = ft_dotdot(exec);
 			parsing_dir(minishell, updated_pwd);
 			free(updated_pwd);
 		}
