@@ -67,7 +67,7 @@ int		here_doc(t_exec *exec, t_minishell *minishell);
 
 /* ----- init_exe.c ----- */
 int		init_exec(t_env *env, t_ast *ast, t_exec *exec, t_minishell *minishell);
-bool	redirection_choser(t_exec *exec, t_ast **ast);
+bool	redirection_choser(t_exec *exec, t_ast *ast);
 
 /* ----- convert.c ----- */
 char	**ast_to_arr(t_exec *exec, t_ast **ast);
