@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:11 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/03 16:15:34 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/04 15:29:05 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	prompt(t_minishell *minishell)
 		rl_redisplay();
 	}
 	if (!line)
-		return (false);
+		return (printf ("exit\n"), false);
 	line = ft_strtrim(line, " ");
 	if (line && line[0])
 	{

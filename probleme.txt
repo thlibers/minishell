@@ -1,6 +1,5 @@
-- leak (casi tous regler)
-
-- CTRL+C on working command generate two prompt line
+- leak (casi tous regle)
 
 - cat /dev/urandom | head -1
 - "< aaa < problemesssssssss.txt cat" file doesnt exist print both time + stuck in the cat
+
