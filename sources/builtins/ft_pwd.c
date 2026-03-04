@@ -6,22 +6,23 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 09:23:52 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/27 14:54:32 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/04 12:57:13 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	ft_pwd(t_minishell *minishell, t_env *env, int child_number)
+int	ft_pwd(t_minishell *minishell, int child_number)
 {
-	char	*pwd;
+	char	pwd_buffer[2048];
 
 	init_child(&minishell->exec, child_number, 0);
-	pwd = ft_getenv(env, "PWD");
-	if (pwd)
+	if (getcwd(pwd_buffer, sizeof(pwd_buffer)))
 	{
-		printf("%s\n", pwd);
+		printf("%s\n", pwd_buffer);
 		return (0);
 	}
+	else
+		ft_fprintf(STDERR_FILENO, "pwd error");
 	return (1);
 }

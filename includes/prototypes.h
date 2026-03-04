@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 13:25:31 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/03 14:57:43 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/04 12:53:58 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_export(t_minishell *minishell, t_exec *exec, int child_number,
 			bool pipe);
 
 /* ----- ft_pwd.c ----- */
-int		ft_pwd(t_minishell *minishell, t_env *env, int child_number);
+int		ft_pwd(t_minishell *minishell, int child_number);
 
 /* ----- ft_unset.c ----- */
 void	ft_unset(t_minishell *minishell, t_exec *exec, int child_number);

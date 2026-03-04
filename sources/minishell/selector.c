@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 17:02:55 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/03 16:28:28 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/04 12:54:23 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ bool	selector(t_minishell *minishell, int i)
 	else if (ft_strcmp(minishell->exec.cmd[0], "export") == 0)
 		ft_export_selector(minishell, i);
 	else if (ft_strcmp(minishell->exec.cmd[0], "pwd") == 0)
-		ft_pwd(minishell, minishell->env, i);
+		ft_pwd(minishell, i);
 	else if (ft_strcmp(minishell->exec.cmd[0], "unset") == 0)
 		ft_unset_selector(minishell, i);
 	else
