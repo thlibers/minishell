@@ -6,13 +6,13 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 12:22:02 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/04 13:58:33 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/05 19:20:24 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	dotcount(char *str)
+int	dot_count(char *str)
 {
 	int	i;
 	int	count;
@@ -28,7 +28,18 @@ int	dotcount(char *str)
 	return (count);
 }
 
-char	*path_builder(t_env *env, char *dir)
+int	dot_skip(char *new_pwd, int i)
+{
+	while (new_pwd[i] && ft_strncmp(&new_pwd[i], "..", 2) != 0)
+		i++;
+	while (new_pwd[i] && new_pwd[i] == '.' && new_pwd[i] != '/')
+		i++;
+	if (new_pwd[i] == '/')
+		i++;
+	return (i);
+}
+
+static char	*path_builder(t_env *env, char *dir)
 {
 	char	*fullpath;
 	char	*tmp_str;
@@ -57,5 +68,31 @@ char	*path_builder(t_env *env, char *dir)
 	return (free(tmp_str), fullpath);
 }
 
-// (OLPWD et HOME) A dissocier
-// exemple "unset OLDPWD" et "unset HOME" pour "cd -" donne "HOME not set"
+char	*parsing_dir(t_minishell *minishell, char *dir)
+{
+	char	*new_path;
+
+	new_path = path_builder(minishell->env, dir);
+	if (!new_path)
+		return (NULL);
+	chdir(new_path);
+	if (errno == ENAMETOOLONG)
+		ft_fprintf(2, "cd: Path is too long");
+	else if (errno == ENOENT)
+		ft_fprintf(2, "cd: %s: No such file or directory\n", new_path);
+	else if (errno == ENOTDIR)
+		ft_fprintf(2, "cd: '%s' is not a directory\n", dir);
+	else if (errno == EACCES)
+		ft_fprintf(2, "cd: Permission denied: '%s'\n", dir);
+	else if (errno == ENOENT)
+		ft_fprintf(2, "cd: The directory '%s' does not exist\n", dir);
+	else if (errno == ELOOP)
+		ft_fprintf(2, "cd: Too many lenvels of symbolic links\n");
+	else
+		edit_env(&minishell->env, "PWD", new_path);
+	if (new_path)
+		free(new_path);
+	if (errno > 0)
+		return (minishell->exit_code = 1, NULL);
+	return (minishell->exit_code = 0, NULL);
+}

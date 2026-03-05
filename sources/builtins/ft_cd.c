@@ -6,42 +6,13 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 10:47:36 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/04 14:00:33 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/05 20:11:05 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/error.h"
 #include "includes/minishell.h"
 #include "mylibft/libft.h"
-
-static char	*parsing_dir(t_minishell *minishell, char *dir)
-{
-	char	*new_path;
-
-	new_path = path_builder(minishell->env, dir);
-	if (!new_path)
-		return (NULL);
-	chdir(new_path);
-	if (errno == ENAMETOOLONG)
-		ft_fprintf(2, "cd: Path is too long");
-	else if (errno == ENOENT)
-		ft_fprintf(2, "cd: %s: No such file or directory\n", new_path);
-	else if (errno == ENOTDIR)
-		ft_fprintf(2, "cd: '%s' is not a directory\n", dir);
-	else if (errno == EACCES)
-		ft_fprintf(2, "cd: Permission denied: '%s'\n", dir);
-	else if (errno == ENOENT)
-		ft_fprintf(2, "cd: The directory '%s' does not exist\n", dir);
-	else if (errno == ELOOP)
-		ft_fprintf(2, "cd: Too many lenvels of symbolic links\n");
-	else
-		edit_env(&minishell->env, "PWD", new_path);
-	if (new_path)
-		free(new_path);
-	if (errno > 0)
-		return (minishell->exit_code = 1, NULL);
-	return (minishell->exit_code = 0, NULL);
-}
 
 static char	*init_newpwd(t_exec *exec)
 {
@@ -63,17 +34,6 @@ static char	*init_newpwd(t_exec *exec)
 	return (new_pwd);
 }
 
-static int	dot_skip(char *new_pwd, int i)
-{
-	while (new_pwd[i] && ft_strncmp(&new_pwd[i], "..", 2) != 0)
-		i++;
-	while (new_pwd[i] && new_pwd[i] == '.' && new_pwd[i] != '/')
-		i++;
-	if (new_pwd[i] == '/')
-		i++;
-	return (i);
-}
-
 static char	*ft_dotdot(t_exec *exec)
 {
 	int		i;
@@ -82,7 +42,7 @@ static char	*ft_dotdot(t_exec *exec)
 	char	*new_pwd;
 
 	new_pwd = init_newpwd(exec);
-	count = dotcount(new_pwd);
+	count = dot_count(new_pwd);
 	while (count > 0)
 	{
 		i = 0;
@@ -101,31 +61,37 @@ static char	*ft_dotdot(t_exec *exec)
 	return (new_pwd);
 }
 
-int	ft_cd(t_minishell *minishell, t_exec *exec, int child_number)
+static void	ft_cd_arg(t_minishell *minishell, t_exec *exec)
 {
 	int		arg_len;
 	char	*updated_pwd;
 
+	arg_len = ft_strlen(exec->cmd[1]);
+	if (exec->argc > 0 && exec->cmd[1][arg_len - 1] == '/' && arg_len > 1)
+		exec->cmd[1][arg_len - 1] = '\0';
+	if (strcmp(exec->cmd[1], "-") == 0)
+	{
+		printf("%s\n", ft_getenv(minishell->env, "OLDPWD"));
+		parsing_dir(minishell, ft_getenv(minishell->env, "OLDPWD"));
+	}
+	else if (ft_strnstr(exec->cmd[1], "..", arg_len))
+	{
+		updated_pwd = ft_dotdot(exec);
+		parsing_dir(minishell, updated_pwd);
+		free(updated_pwd);
+	}
+	else
+		parsing_dir(minishell, exec->cmd[1]);
+}
+
+int	ft_cd(t_minishell *minishell, t_exec *exec, int child_number)
+{
 	init_child(exec, child_number, 0);
 	if (exec->argc > 1)
 		return (ft_fprintf(2, ECDARGC));
-	arg_len = ft_strlen(exec->cmd[1]);
 	if (exec->argc == 0 || strcmp(exec->cmd[1], "~") == 0)
 		parsing_dir(minishell, ft_getenv(minishell->env, "HOME"));
 	if (exec->argc > 0)
-	{
-		if (exec->argc > 0 && exec->cmd[1][arg_len - 1] == '/' && arg_len > 1)
-			exec->cmd[1][arg_len - 1] = '\0';
-		if (strcmp(exec->cmd[1], "-") == 0)
-			parsing_dir(minishell, ft_getenv(minishell->env, "OLDPWD"));
-		else if (ft_strnstr(exec->cmd[1], "..", arg_len))
-		{
-			updated_pwd = ft_dotdot(exec);
-			parsing_dir(minishell, updated_pwd);
-			free(updated_pwd);
-		}
-		else
-			parsing_dir(minishell, exec->cmd[1]);
-	}
+		ft_cd_arg(minishell, exec);
 	return (0);
 }

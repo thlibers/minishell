@@ -1,17 +1,14 @@
 - leak (casi tous regle)
 
 - cat /dev/urandom | head -1
-- "< aaa < problemesssssssss.txt cat" file doesnt exist print both time + stuck in the cat
 
 - leak dans l'exec car on avance dans l'AST
-
-- export a si a=b existe ne rien faire (nous ecrasons b par null)
 
 - echo -n doit fonctionner de la meme maniere que echo -n -n -n ou que echo -nnnnnnnn -n -ne
 
 - fix les leaks
 
-- ctlr C dans le heredoc
+- ctlr^C dans le heredoc
 
 - 2 fichiers pas close dans le heredoc
 
@@ -22,3 +19,7 @@
 	des fd restent open
 
 - cd - doit print OLDPWD
+
+- exit check overflow (long)
+
+- check perm redir

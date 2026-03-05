@@ -6,13 +6,13 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 13:51:09 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/03 13:55:03 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/05 19:04:16 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	check_valarg(char **tab)
+static int	check_valarg(char **tab)
 {
 	int	i;
 
@@ -34,6 +34,18 @@ int	check_valarg(char **tab)
 		i++;
 	}
 	return (1);
+}
+
+bool	check_env_name(t_minishell *minishell, char **tab, int *i)
+{
+	if (!tab || !check_valarg(tab))
+	{
+		free_tab(tab);
+		minishell->exit_code = 1;
+		(*i)++;
+		return (false);
+	}
+	return (true);
 }
 
 char	**add_to_envvalue(t_minishell *minishell, t_exec *exec, int pos)

@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 15:05:28 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/03 15:16:10 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/05 19:10:24 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,17 @@ static char	**ft_select_tab(t_minishell *minishell, t_exec *exec, char **tab,
 
 static void	ft_value_treatement(t_minishell *minishell, char **tab, int *status)
 {
-	while (minishell->env && *status == 0)
+	while (minishell->env && *status == 0 )
 	{
 		if (strcmp(minishell->env->name, tab[0]) == 0)
 		{
-			if (minishell->env->value)
+			if (minishell->env->value && tab[1] && tab[1][0] != '\0')
 				free(minishell->env->value);
-			minishell->env->value = ft_strdup(tab[1]);
+			if (tab[1] && tab[1][0] != '\0')
+			{
+				minishell->env->value = ft_strdup(tab[1]);
+				minishell->env->equal = 1;
+			}
 			*status = 1;
 		}
 		minishell->env = minishell->env->next;
@@ -51,8 +55,8 @@ static int	ft_export_arg(t_minishell *minishell, t_exec *exec, bool pipe)
 	while (exec->cmd[i])
 	{
 		tab = ft_select_tab(minishell, exec, tab, i);
-		if (!tab || !check_valarg(tab))
-			return (minishell->exit_code = 1, 1);
+		if(!check_env_name(minishell, tab, &i))
+			continue ;
 		status = 0;
 		ft_value_treatement(minishell, tab, &status);
 		minishell->env = head;

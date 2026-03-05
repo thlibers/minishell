@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 13:25:31 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/04 14:34:48 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/05 19:20:41 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 
 /* ======================= BULTINS ======================= */
 /* ----- ft_cd_utils.c ----- */
-int		dotcount(char *str);
-char	*path_builder(t_env *env, char *dir);
+int		dot_count(char *str);
+int		dot_skip(char *new_pwd, int i);
+char	*parsing_dir(t_minishell *minishell, char *dir);
 
 /* ----- ft_cd.c ----- */
 int		ft_cd(t_minishell *minishell, t_exec *exec, int child_number);
@@ -32,7 +33,7 @@ int		ft_env(t_minishell *minishell, int child_number);
 void	ft_exit(t_minishell *minishell, t_exec *exec, int child_number);
 
 /* ----- ft_export_utils.c ----- */
-int		check_valarg(char **tab);
+bool	check_env_name(t_minishell *minishell, char **tab, int *i);
 char	**add_to_envvalue(t_minishell *minishell, t_exec *exec, int pos);
 
 /* ----- ft_export.c ----- */
