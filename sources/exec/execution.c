@@ -56,7 +56,7 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 	tmp = minishell->ast;
 	while (i < minishell->exec.cmdc)
 	{
-		minishell->exec.cmd = ast_to_arr(&minishell->exec, &minishell->ast);
+		minishell->exec.cmd = ast_to_arr(&minishell->exec, &tmp);
 		arg_count(&minishell->exec);
 		if (!selector(minishell, i))
 		{
@@ -68,13 +68,13 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 		}
 		i++;
 		free_ast_arr(&minishell->exec.cmd);
-		close_file(&minishell->exec, minishell->ast);
-		minishell->ast = minishell->ast->leaf_right;
+		close_file(&minishell->exec, tmp);
+		tmp = tmp->leaf_right;
 	}
 	minishell->ast = tmp;
 }
 
-static void	pipes_close(t_exec *exec)
+void	pipes_close(t_exec *exec)
 {
 	int	i;
 

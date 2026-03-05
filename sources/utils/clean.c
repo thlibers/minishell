@@ -19,26 +19,6 @@ void	ft_clear(t_minishell *minishell)
 	close(minishell->fd_history);
 }
 
-void	full_clean(t_minishell *minishell)
-{
-	if (minishell->exec.cmd)
-		free_tab(minishell->exec.cmd);
-	if (minishell->exec.env)
-		free_tab(minishell->exec.env);
-	if (minishell->exec.infile_fd > 2)
-		close(minishell->exec.infile_fd);
-	if (minishell->exec.outfile_fd > 2)
-		close(minishell->exec.outfile_fd);
-	if (minishell->fd_history > 2)
-		close(minishell->fd_history);
-	if (minishell->ast)
-		free_ast(&minishell->ast);
-	if (minishell->pid)
-		free(minishell->pid);
-	if (minishell->env)
-		env_clean(minishell->env, NULL);
-}
-
 void	child_clear(t_minishell *minishell)
 {
 	env_clean(minishell->env, NULL);

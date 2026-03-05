@@ -93,6 +93,8 @@ void	init_child(t_exec *exec, int child_number, int is_child)
 			{
 				close(exec->pipe_fd[i][0]);
 				close(exec->pipe_fd[i][1]);
+				exec->pipe_fd[i][0] = -1;
+				exec->pipe_fd[i][1] = -1;
 			}
 			i++;
 		}
@@ -120,8 +122,7 @@ void	child_process(t_minishell *minishell, int child_number)
 	if (!cmd_path)
 	{
 		ft_fprintf(STDERR_FILENO, ECMDFOUND, minishell->exec.cmd[0]);
-		ft_clear(minishell);
-		free_ast(&minishell->ast);
+		full_clean(minishell);
 		exit(127);
 	}
 	if (execve(cmd_path, minishell->exec.cmd, minishell->exec.env) == -1)

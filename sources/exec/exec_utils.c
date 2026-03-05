@@ -12,45 +12,45 @@
 
 #include "includes/minishell.h"
 
-// void	print_error(char *message)
-// {
-// 	ft_putstr_fd("Error : ", 2);
-// 	ft_putendl_fd(message, 2);
-// 	exit(1);
-// }
+void    full_clean(t_minishell *minishell)
+{
+        if (minishell->exec.pipe_fd)
+                pipes_close(&minishell->exec);
+        if (minishell->exec.cmd)
+                free_tab(minishell->exec.cmd);
+        if (minishell->exec.env)
+                free_tab(minishell->exec.env);
+        if (minishell->exec.infile_fd > 2)
+                close(minishell->exec.infile_fd);
+        if (minishell->exec.outfile_fd > 2)
+                close(minishell->exec.outfile_fd);
+        if (minishell->fd_history > 2)
+                close(minishell->fd_history);
+        if (minishell->ast)
+                free_ast(&minishell->ast);
+        if (minishell->pid)
+                free(minishell->pid);
+        if (minishell->env)
+                env_clean(minishell->env, NULL);
+}
 
-// void	free_array(char **array)
-// {
-// 	int	i;
-
-// 	if (!array)
-// 		return ;
-// 	i = 0;
-// 	while (array[i])
-// 	{
-// 		free(array[i]);
-// 		i++;
-// 	}
-// 	free(array);
-// }
-
-// static void	free_argsnpath(t_exec *exec)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < exec->cmdc)
-// 	{
-// 		if (exec->delete_me[i])
-// 		{
-// 			free_tab(&exec->delete_me[i]);
-// 			exec->delete_me[i] = NULL;
-// 		}
-// 		i++;
-// 	}
-// 	if (exec->delete_me)
-// 		free(exec->delete_me);
-// }
+void    half_clean(t_minishell *minishell)
+{
+        if (minishell->exec.pipe_fd)
+                pipes_close(&minishell->exec);
+        if (minishell->exec.infile_fd > 2)
+                close(minishell->exec.infile_fd);
+        if (minishell->exec.outfile_fd > 2)
+                close(minishell->exec.outfile_fd);
+        if (minishell->fd_history > 2)
+                close(minishell->fd_history);
+        if (minishell->ast)
+                free_ast(&minishell->ast);
+        if (minishell->pid)
+                free(minishell->pid);
+        if (minishell->env)
+                env_clean(minishell->env, NULL);
+}
 
 void	clean_child(t_minishell *minishell, t_exec *exec)
 {

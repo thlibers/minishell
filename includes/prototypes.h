@@ -49,6 +49,7 @@ void	ft_unset(t_minishell *minishell, t_exec *exec, int child_number);
 /* ----- child.c ----- */
 void	init_child(t_exec *exec, int child_number, int is_child);
 void	child_process(t_minishell *minishell, int child_number);
+void	pipes_close(t_exec *exec);
 
 /* ----- commands.c ----- */
 char	*find_command_path(t_minishell *minishell, char *cmd);
