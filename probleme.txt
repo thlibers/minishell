@@ -4,8 +4,6 @@
 
 - leak dans l'exec car on avance dans l'AST
 
-- echo -n doit fonctionner de la meme maniere que echo -n -n -n ou que echo -nnnnnnnn -n -ne
-
 - fix les leaks
 
 - ctlr^C dans le heredoc
@@ -18,8 +16,8 @@
 	puis	minishell > 'builtout'
 	des fd restent open
 
-- cd - doit print OLDPWD
-
 - exit check overflow (long)
 
 - check perm redir
+
+- premier expand (echo $EXEMPLE) invalid read

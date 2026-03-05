@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 16:46:00 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/27 11:50:32 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/05 20:55:51 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ static void	expand_treatements(int *in_quote, t_minishell *minishell,
 				if (!dollar_treatements(minishell, token, &i))
 					continue ;
 			}
-			//      else if ((*token)->str[i] == '*')
-			//        if (!)
 			else
 				i++;
 		}
@@ -81,21 +79,3 @@ void	ft_expand(t_minishell *minishell, t_env *env, t_tok **token)
 	(*token) = head;
 }
 
-// Fonction a reorganiser
-// $"$USER"$'$USER' expand deux fois au lieu d'une
-//   - J'ai dig et ducoup c'est parce que on essaye de faire l'expand de $'
-//   (qui n'est pas une variable d'env) donc la quote prend la place du $ ET
-//   on incremente i. Donc on passe de ' a notre $ du deuxieme $USER, donc
-//   pour le program il n'est pas dans des quote et il expand
-
-//		Exemple :
-
-// echo $PWD		-->		/home/.....
-// echo '$PWD'		-->		$PWD
-// echo "$PWD"		-->		/home/.....
-// echo ~			-->		/home/.....
-// echo "'$PWD'"	-->		'/home/...'
-// echo '"$PWD"'	-->		"$PWD"
-
-// echo $PWD+ss		-->		/home/.....+ss
-// echo $"$PWD"$'$PWD' --> /home/....$PWD

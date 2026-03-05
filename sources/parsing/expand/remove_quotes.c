@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 14:08:45 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/23 14:51:06 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/05 20:50:38 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	remove_quotes(char **str)
 		if (((*str)[q.i] == '\'' || (*str)[q.i] == '\"')
 				&& q.quote_type == IN_RESET)
 			single_or_double(&q, str);
-		else if (q.quote_type && ((*str)[q.i] == '\'' || (*str)[q.i] == '\"'))
+		else if ((q.quote_type == IN_SINGLE_QUOTE && (*str)[q.i] == '\'')
+				|| (q.quote_type == IN_DOUBLE_QUOTE && (*str)[q.i] == '\"'))
 		{
 			q.first = q.i;
 			ft_strlcpy(&(*str)[q.last], &(*str)[q.last + 1], q.len - 1);
