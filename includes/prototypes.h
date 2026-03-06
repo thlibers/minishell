@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 13:25:31 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/05 19:20:41 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 05:48:20 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,11 @@ int		ft_pwd(t_minishell *minishell, int child_number);
 void	ft_unset(t_minishell *minishell, t_exec *exec, int child_number);
 
 /* ======================= EXEC ======================= */
+/* ----- child_process.c ----- */
+void	child_process(t_minishell *minishell, int child_number);
+
 /* ----- child.c ----- */
 void	init_child(t_exec *exec, int child_number, int is_child);
-void	child_process(t_minishell *minishell, int child_number);
 void	pipes_close(t_exec *exec);
 
 /* ----- commands.c ----- */

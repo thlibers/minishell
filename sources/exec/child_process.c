@@ -6,13 +6,13 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 16:23:21 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/04 16:30:48 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 05:49:04 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	redirection(t_exec exec)
+static void	redirection(t_exec exec)
 {
 	if (exec.infile_fd > 2)
 		dup2(exec.infile_fd, STDIN_FILENO);
@@ -33,10 +33,10 @@ void	child_process(t_minishell *minishell, int child_number)
 	if (!cmd_path)
 	{
 		ft_fprintf(STDERR_FILENO, ECMDFOUND, minishell->exec.cmd[0]);
-		ft_clear(minishell);
-		free_ast(&minishell->ast);
+		full_clean(minishell);
 		exit(127);
 	}
+	half_clean(minishell);
 	if (execve(cmd_path, minishell->exec.cmd, minishell->exec.env) == -1)
 	{
 		ft_fprintf(STDERR_FILENO, "execve failed\n");

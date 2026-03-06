@@ -6,7 +6,7 @@
 #    By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 11:04:15 by nclavel           #+#    #+#              #
-#    Updated: 2026/03/03 14:59:57 by thlibers         ###   ########.fr        #
+#    Updated: 2026/03/06 05:50:06 by thlibers         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRCS =	$(SRC_DIR)/builtins/ft_cd_utils.c\
 		$(SRC_DIR)/builtins/ft_export.c\
 		$(SRC_DIR)/builtins/ft_pwd.c\
 		$(SRC_DIR)/builtins/ft_unset.c\
+		$(SRC_DIR)/exec/child_process.c\
 		$(SRC_DIR)/exec/child.c\
 		$(SRC_DIR)/exec/commands.c\
 		$(SRC_DIR)/exec/convert_env.c\
