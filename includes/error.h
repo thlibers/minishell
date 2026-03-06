@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 14:06:53 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/03 15:55:25 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 06:59:28 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,21 @@
 # include "includes/color.h"
 
 /* --- CASUAL ---  */
-# define ECRPIPE F_RED "Minishell: Pipe creation failed" RESET
-# define ECRFORK F_RED "Minishell: Fork creation failed" RESET
-# define EDUP2 F_RED "Minishell: Failed to duplicated fds" RESET
-# define ENOENOMEM F_RED "Minishell: Failed allocate memory\n" RESET
-// PASSE PAS LA NORME LES F_RED, RESET, etc
+# define ECRPIPE "\001\e[0;31m\002Minishell: Pipe creation failed\n\001\e[0m\002"
+# define ECRFORK "\001\e[0;31m\002Minishell: Fork creation failed\n\001\e[0m\002"
+# define EDUP2 "\001\e[0;31m\002Minishell: Failed to duplicated fds\n\001\e[0m\002"
+# define ENOENOMEM "\001\e[0;31m\002Minishell: Failed allocate memory\n\001\e[0m\002"
 
 /* --- CHECK --- */
-# define EQUOTE F_RED "Minishell: Unclosed quote\n" RESET
-# define ESYNTAX F_RED "Minishell: Syntax error\n" RESET
-# define EUNHANDLE F_RED "Minishell: unhandle operator detected\n" RESET
+# define EQUOTE "\001\e[0;31m\002Minishell: Unclosed quote\n\001\e[0m\002"
+# define ESYNTAX "\001\e[0;31m\002Minishell: Syntax error\n\001\e[0m\002"
+# define EUNHANDLE "\001\e[0;31m\002Minishell: unhandle operator detected\n\001\e[0m\002"
 
 /* --- PARSING ---  */
-# define ENOTFOUND F_RED "Minishell: %s: No such file or directory\n" RESET
-# define ECMDFOUND F_RED "Minishell: %s: Command not found\n" RESET
-# define ENOPERM F_RED "Minishell: %s: Permission denied\n" RESET
+# define ENOTFOUND "\001\e[0;31m\002Minishell: %s: No such file or directory\n\001\e[0m\002"
+# define ECMDFOUND "\001\e[0;31m\002Minishell: %s: Command not found\n\001\e[0m\002"
+# define ENOPERM "\001\e[0;31m\002Minishell: %s: Permission denied\n\001\e[0m\002"
 
-# define ECDARGC F_RED "Minishell: cd: too many arguments\n" RESET
+# define ECDARGC "Minishell: cd: too many arguments\n\001\e[0m\002"
 
 #endif // !ERROR_H

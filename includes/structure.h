@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:28:21 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/27 15:17:37 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 06:53:56 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_exec
 	int				index;
 	int				cmdc;
 	int				argc;
-	int				save_std[2];
+	int				save[2];
 }					t_exec;
 
 // --- PARSING PART ---

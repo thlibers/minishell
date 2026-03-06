@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/06 06:41:06 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 06:56:23 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ void	pipes_close(t_exec *exec)
 
 static void	execution_step(t_minishell *minishell)
 {
-	int i;
-	int code;
-	
+	int	i;
+	int	code;
+
 	i = 0;
 	code = 0;
 	while (i < minishell->exec.cmdc)
@@ -109,7 +109,7 @@ void	execution(t_minishell *minishell)
 	if (minishell->pid)
 	{
 		free(minishell->pid);
-		minishell->pid=NULL;
+		minishell->pid = NULL;
 	}
 	ptr_free_tab(&minishell->exec.env);
 }
