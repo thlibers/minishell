@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 14:22:32 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/11 16:54:01 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 06:05:10 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ void	*ft_realloc(void *ptr, size_t size)
 	return (new_ptr);
 }
 
-// void	*ft_realloc(void *old, size_t old_size, size_t new_size)
-//{
-//	size_t			smallest;
-//	unsigned char	*new;
+void	*ft_hoelalloc(void *old, size_t old_size, size_t new_size)
+{
+	size_t			smallest;
+	unsigned char	*new;
 
-//	smallest = old_size;
-//	if (new_size < old_size)
-//		smallest = new_size;
-//	new = malloc(sizeof(char) * (new_size + 1));
-//	if (!new)
-//		return (free(old), NULL);
-//	return (ft_memcpy(new, old, smallest), free(old), new);
-//}
+	smallest = old_size;
+	if (new_size < old_size)
+		smallest = new_size;
+	new = malloc(sizeof(char) * (new_size + 1));
+	if (!new)
+		return (free(old), NULL);
+	return (ft_memcpy(new, old, smallest), free(old), new);
+}

@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 12:25:39 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/03 16:14:25 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 06:05:24 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 int					ft_strisdigit(char *str);
 char				*ft_strtok(char *str, const char *delim);
-// void				*ft_realloc(void *old, size_t old_size, size_t new_size);
+void				*ft_hoelalloc(void *old, size_t old_size, size_t new_size);
 void				*ft_realloc(void *ptr, size_t size);
 char				*ft_strcat(char *dest, char *src);
 
