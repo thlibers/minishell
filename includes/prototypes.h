@@ -60,6 +60,8 @@ char	**convert_env(t_env *env);
 
 /* ----- exec_utils.c ----- */
 void	cleanup_pipe(t_minishell *minishell, t_exec *exec);
+void	full_clean(t_minishell *minishell);
+void	half_clean(t_minishell *minishell);
 
 /* ----- execution.c ----- */
 void	execution(t_minishell *minishell);
@@ -74,7 +76,7 @@ bool	redirection_choser(t_exec *exec, t_ast *ast);
 /* ----- convert.c ----- */
 char	**ast_to_arr(t_exec *exec, t_ast **ast);
 void	arg_count(t_exec *exec);
-void	free_ast_arr(char ***arr);
+void	ptr_free_tab(char ***arr);
 
 /* ======================= MINISHELL ======================= */
 /* ----- history.c ----- */

@@ -12,17 +12,15 @@
 
 #include "includes/minishell.h"
 
-void	free_ast_arr(char ***arr)
+bool	init_ast_to_arr(t_ast **ast, char ***arr, t_exec *exec)
 {
-	int	i;
-
-	i = 0;
-	while ((*arr)[i])
-	{
-		free((*arr)[i]);
-		i++;
-	}
-	free(*arr);
+	*arr = ft_calloc(1, sizeof(char *));
+	if (!*arr)
+		return (ft_fprintf(2, ENOENOMEM), false);
+	while (*ast && (*ast)->top && ((*ast)->top->type >= T_HERE_DOC))
+		(*ast) = (*ast)->leaf_right;
+	redirection_choser(exec, *ast);
+	return (true);
 }
 
 char	**ast_to_arr(t_exec *exec, t_ast **ast)
@@ -32,10 +30,8 @@ char	**ast_to_arr(t_exec *exec, t_ast **ast)
 	int		i;
 
 	i = 0;
-	arr = ft_calloc(1, sizeof(char *));
-	while (*ast && (*ast)->top && ((*ast)->top->type >= T_HERE_DOC))
-		(*ast) = (*ast)->leaf_right;
-	redirection_choser(exec, *ast);
+	if (!init_ast_to_arr(ast, &arr, exec))
+		return (NULL);
 	if (*ast || !(*ast)->top || (*ast)->type == T_PIPE || (*ast)->type == T_WORD
 		|| (*ast)->top->type != T_HERE_DOC)
 	{

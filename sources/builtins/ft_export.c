@@ -24,7 +24,7 @@ static char	**ft_select_tab(t_minishell *minishell, t_exec *exec, char **tab,
 
 static void	ft_value_treatement(t_minishell *minishell, char **tab, int *status)
 {
-	while (minishell->env && *status == 0 )
+	while (minishell->env && *status == 0)
 	{
 		if (strcmp(minishell->env->name, tab[0]) == 0)
 		{
@@ -55,7 +55,7 @@ static int	ft_export_arg(t_minishell *minishell, t_exec *exec, bool pipe)
 	while (exec->cmd[i])
 	{
 		tab = ft_select_tab(minishell, exec, tab, i);
-		if(!check_env_name(minishell, tab, &i))
+		if (!check_env_name(minishell, tab, &i))
 			continue ;
 		status = 0;
 		ft_value_treatement(minishell, tab, &status);

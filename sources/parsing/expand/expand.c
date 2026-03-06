@@ -78,4 +78,3 @@ void	ft_expand(t_minishell *minishell, t_env *env, t_tok **token)
 	}
 	(*token) = head;
 }
-

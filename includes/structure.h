@@ -21,7 +21,7 @@ typedef struct s_exec
 	char			**cmd;
 	char			**env;
 	char			*limiter;
-	int				(*pipe_fd)[2];
+	int (*pipe_fd)[2];
 	int				infile_fd;
 	int				outfile_fd;
 	int				index;

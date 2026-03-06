@@ -59,9 +59,11 @@ SRCS =	$(SRC_DIR)/builtins/ft_cd_utils.c\
 		$(SRC_DIR)/parsing/ast/ast.c\
 		$(SRC_DIR)/parsing/ast/ast_utils.c\
 		$(SRC_DIR)/parsing/lexer/check_lexer.c\
-		$(SRC_DIR)/utils/clean.c\
 		$(SRC_DIR)/parsing/env/env_utils.c\
 		$(SRC_DIR)/parsing/env/env_utils2.c\
+		$(SRC_DIR)/utils/clean/clean_structure.c\
+		$(SRC_DIR)/utils/clean/clean_child.c\
+		$(SRC_DIR)/utils/clean/clean.c\
 		$(SRC_DIR)/utils/signal.c
 
 # Obj

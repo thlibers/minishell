@@ -43,5 +43,5 @@ void	free_tab(char **s)
 	while (s[i])
 		free(s[i++]);
 	free(s);
-  s = NULL;
+	s = NULL;
 }

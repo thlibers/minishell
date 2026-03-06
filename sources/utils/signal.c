@@ -27,9 +27,9 @@ void	handler_sigint(int signum)
 
 void	handler_sigint_exec(int signum)
 {
-    (void)signum;
-    g_msh_sig = SIGINT;
-    write(1, "\n", 1);
+	(void)signum;
+	g_msh_sig = SIGINT;
+	write(1, "\n", 1);
 }
 
 void	child_signal(void)

@@ -12,7 +12,7 @@
 
 #include "includes/minishell.h"
 
-static void free_unset(t_minishell *minishell)
+static void	free_unset(t_minishell *minishell)
 {
 	if (minishell->env->next->name)
 		free(minishell->env->next->name);

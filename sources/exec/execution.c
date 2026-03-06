@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+#include "includes/prototypes.h"
 
 static void	pipes_creation(t_exec *exec)
 {
@@ -67,11 +68,10 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 				child_process(minishell, i);
 		}
 		i++;
-		free_ast_arr(&minishell->exec.cmd);
+		ptr_free_tab(&minishell->exec.cmd);
 		close_file(&minishell->exec, tmp);
 		tmp = tmp->leaf_right;
 	}
-	minishell->ast = tmp;
 }
 
 void	pipes_close(t_exec *exec)
@@ -81,12 +81,15 @@ void	pipes_close(t_exec *exec)
 	i = 0;
 	while (i < exec->cmdc - 1)
 	{
-		close(exec->pipe_fd[i][0]);
-		close(exec->pipe_fd[i][1]);
-		exec->pipe_fd[i][0] = -1;
-		exec->pipe_fd[i][1] = -1;
+		if (exec->pipe_fd[i][0] > 2)
+			(close(exec->pipe_fd[i][0]), exec->pipe_fd[i][0] = -1);
+		if (exec->pipe_fd[i][1] > 2)
+			(close(exec->pipe_fd[i][1]), exec->pipe_fd[i][1] = -1);
 		i++;
 	}
+	if (exec->pipe_fd)
+		free(exec->pipe_fd);
+	exec->pipe_fd = NULL;
 }
 
 void	execution(t_minishell *minishell)
@@ -117,5 +120,5 @@ void	execution(t_minishell *minishell)
 		i++;
 		init_signal();
 	}
-	free_tab(minishell->exec.env);
+	ptr_free_tab(&minishell->exec.env);
 }

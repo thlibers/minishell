@@ -56,10 +56,16 @@ bool	selector(t_minishell *minishell, int i)
 		ft_unset_selector(minishell, i);
 	else
 		return (false);
-	if (minishell->exec.save_std[0] > 0 || minishell->exec.save_std[1] > 0)
+	if (minishell->exec.save_std[0] > 2 || minishell->exec.save_std[1] > 2)
 	{
 		dup2(minishell->exec.save_std[0], STDIN_FILENO);
+		if (minishell->exec.save_std[0] > 2)
+			(close(minishell->exec.save_std[0]), minishell->exec.save_std[0] =
+				-1);
 		dup2(minishell->exec.save_std[1], STDOUT_FILENO);
+		if (minishell->exec.save_std[1] > 2)
+			(close(minishell->exec.save_std[1]), minishell->exec.save_std[1] =
+				-1);
 	}
 	return (true);
 }

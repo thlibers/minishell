@@ -27,7 +27,7 @@ char	*ft_strtrim(char *s1, char const *set)
 	while (end > start && ft_strchr(set, s1[end - 1]))
 		end--;
 	trim = ft_substr(s1, start, end - start);
-	free (s1);
+	free(s1);
 	return (trim);
 }
 

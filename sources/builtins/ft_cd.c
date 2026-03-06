@@ -24,8 +24,8 @@ static char	*init_newpwd(t_exec *exec)
 		new_pwd = ft_strdup(exec->cmd[1]);
 	else
 	{
-		pwd = malloc(sizeof(char) * ft_strlen(getcwd(pwd_buffer, 
-				sizeof(pwd_buffer))));
+		pwd = malloc(sizeof(char) * ft_strlen(getcwd(pwd_buffer,
+						sizeof(pwd_buffer))));
 		pwd = ft_strjoin(getcwd(pwd_buffer, sizeof(pwd_buffer)), "/");
 		new_pwd = ft_strjoin(pwd, exec->cmd[1]);
 		free(pwd);

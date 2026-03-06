@@ -25,7 +25,7 @@ bool	prompt(t_minishell *minishell)
 		rl_redisplay();
 	}
 	if (!line)
-		return (printf ("exit\n"), false);
+		return (printf("exit\n"), false);
 	line = ft_strtrim(line, " ");
 	if (line && line[0])
 	{

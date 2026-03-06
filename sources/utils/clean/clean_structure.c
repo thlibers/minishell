@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean.c                                            :+:      :+:    :+:   */
+/*   clean_structure.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:13:06 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/27 12:37:59 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/05 19:27:14 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,14 @@ void	env_clean(t_env *env, char **tab)
 			free(env);
 			env = checkpoint;
 		}
+		env = NULL;
 	}
 	if (tab)
 	{
 		free(tab[0]);
 		free(tab[1]);
 		free(tab);
+		tab = NULL;
 	}
 }
 
@@ -64,7 +66,7 @@ void	free_ast(t_ast **ast)
 			while (leaf)
 			{
 				save = leaf->leaf_left;
-				if (leaf)
+				if (leaf->data)
 					free(leaf->data);
 				free(leaf);
 				leaf = save;

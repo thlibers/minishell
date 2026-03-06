@@ -45,7 +45,8 @@ static int	open_outfile(char *filename, int trunc, t_exec *exec)
 	return (exec->outfile_fd);
 }
 
-bool	file_opener(t_exec *exec, t_ast *ast, int flag, int (*ptr)(char *, int, t_exec *))
+bool	file_opener(t_exec *exec, t_ast *ast, int flag, int (*ptr)(char *, int,
+			t_exec *))
 {
 	t_ast	*save;
 
@@ -80,7 +81,7 @@ bool	redirection_choser(t_exec *exec, t_ast *ast)
 				return (false);
 		}
 		if ((ast)->leaf_right->type == T_WORD)
-			break;
+			break ;
 		ast = (ast)->leaf_right;
 	}
 	return (true);
@@ -105,7 +106,7 @@ int	init_exec(t_env *env, t_ast *ast, t_exec *exec, t_minishell *minishell)
 		}
 		ast = ast->leaf_right;
 	}
-	return(1);
+	return (1);
 }
 
 /*
