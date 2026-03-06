@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:25 by thlibers          #+#    #+#             */
-/*   Updated: 2026/02/27 15:06:06 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 06:35:54 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,23 @@ void	clean_child(t_minishell *minishell, t_exec *exec)
 		free_tab(minishell->exec.cmd);
 	if (minishell->exec.env)
 		free_tab(minishell->exec.env);
+}
+
+void	close_file(t_exec *exec, t_ast *curr_branch)
+{
+	if (curr_branch->type >= T_HERE_DOC && curr_branch->leaf_right
+		&& curr_branch->leaf_right->type < T_HERE_DOC)
+	{
+		if (exec->infile_fd > 2 && curr_branch->type >= T_RED_IN)
+		{
+			close(exec->infile_fd);
+			exec->infile_fd = 0;
+		}
+		if (exec->outfile_fd > 2 && (curr_branch->type == T_RED_OUT
+				|| curr_branch->type == T_RED_OUT_APP))
+		{
+			close(exec->outfile_fd);
+			exec->outfile_fd = 1;
+		}
+	}
 }

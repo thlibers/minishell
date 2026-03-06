@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 13:25:31 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/06 05:48:20 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 06:36:48 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ char	**convert_env(t_env *env);
 
 /* ----- exec_utils.c ----- */
 void	cleanup_pipe(t_minishell *minishell, t_exec *exec);
-void	full_clean(t_minishell *minishell);
-void	half_clean(t_minishell *minishell);
+void	close_file(t_exec *exec, t_ast *curr_branch);
 
 /* ----- execution.c ----- */
 void	execution(t_minishell *minishell);
@@ -158,6 +157,7 @@ void	free_ast(t_ast **ast);
 void	free_tok(t_tok **tok);
 void	child_clear(t_minishell *minishell);
 void	full_clean(t_minishell *minishell);
+void	half_clean(t_minishell *minishell);
 
 /* ----- signal.c ----- */
 void	handler_sigint(int signum);

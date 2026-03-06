@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/04 14:34:04 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 06:41:06 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,6 @@ static void	pipes_creation(t_exec *exec)
 		if (pipe(exec->pipe_fd[i]) == -1)
 			ft_fprintf(STDERR_FILENO, ECRPIPE);
 		i++;
-	}
-}
-
-void	close_file(t_exec *exec, t_ast *curr_branch)
-{
-	if (curr_branch->type >= T_HERE_DOC && curr_branch->leaf_right
-		&& curr_branch->leaf_right->type < T_HERE_DOC)
-	{
-		if (exec->infile_fd > 2 && curr_branch->type >= T_RED_IN)
-		{
-			close(exec->infile_fd);
-			exec->infile_fd = 0;
-		}
-		if (exec->outfile_fd > 2 && (curr_branch->type == T_RED_OUT
-				|| curr_branch->type == T_RED_OUT_APP))
-		{
-			close(exec->outfile_fd);
-			exec->outfile_fd = 1;
-		}
 	}
 }
 
@@ -92,20 +73,13 @@ void	pipes_close(t_exec *exec)
 	exec->pipe_fd = NULL;
 }
 
-void	execution(t_minishell *minishell)
+static void	execution_step(t_minishell *minishell)
 {
-	int	i;
-	int	code;
-
+	int i;
+	int code;
+	
 	i = 0;
 	code = 0;
-	init_exec(minishell->env, minishell->ast, &minishell->exec, minishell);
-	minishell->pid = ft_calloc(minishell->exec.cmdc, sizeof(int));
-	if (!minishell->pid)
-		ft_fprintf(STDERR_FILENO, ENOENOMEM);
-	pipes_creation(&minishell->exec);
-	children_creation(minishell, minishell->pid);
-	pipes_close(&minishell->exec);
 	while (i < minishell->exec.cmdc)
 	{
 		signal(SIGQUIT, SIG_IGN);
@@ -119,6 +93,23 @@ void	execution(t_minishell *minishell)
 			minishell->exit_code = WSTOPSIG(code);
 		i++;
 		init_signal();
+	}
+}
+
+void	execution(t_minishell *minishell)
+{
+	init_exec(minishell->env, minishell->ast, &minishell->exec, minishell);
+	minishell->pid = ft_calloc(minishell->exec.cmdc, sizeof(int));
+	if (!minishell->pid)
+		ft_fprintf(STDERR_FILENO, ENOENOMEM);
+	pipes_creation(&minishell->exec);
+	children_creation(minishell, minishell->pid);
+	pipes_close(&minishell->exec);
+	execution_step(minishell);
+	if (minishell->pid)
+	{
+		free(minishell->pid);
+		minishell->pid=NULL;
 	}
 	ptr_free_tab(&minishell->exec.env);
 }
