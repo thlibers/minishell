@@ -3,16 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 16:53:42 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/04 14:39:01 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 09:38:32 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
 volatile sig_atomic_t	g_msh_sig = 0;
+
+// void	handler_heredoc(int signum)
+// {
+// 	(void)signum;
+	
+// }
 
 void	handler_sigint(int signum)
 {
@@ -21,7 +27,7 @@ void	handler_sigint(int signum)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	g_msh_sig = 0;
+	g_msh_sig = SIGINT;
 	signal(SIGINT, handler_sigint);
 }
 

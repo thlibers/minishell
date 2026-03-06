@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 09:00:43 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/25 13:27:50 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 09:38:35 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	heredoc_init(t_exec *exec)
 {
+	// signal(SIGINT, );
 	if (exec->infile_fd > 2)
 		close(exec->infile_fd);
 	exec->infile_fd = open(HEREDOC_F, O_WRONLY | O_CREAT | O_TRUNC, 00644);
@@ -89,7 +90,7 @@ int	here_doc(t_exec *exec, t_minishell *minishell)
 			line_to_tok(line, minishell);
 		free(line);
 	}
-	if (terminate_heredoc(&line, exec))
+	if (!terminate_heredoc(&line, exec))
 		return (1);
 	return (0);
 }
