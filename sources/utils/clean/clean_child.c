@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_child.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 19:27:05 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/06 06:12:43 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/03/06 07:01:21 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	full_clean(t_minishell *minishell)
 {
-	if (minishell->exec.save_std[0] > 2)
-		(close(minishell->exec.save_std[0]), minishell->exec.save_std[0] = -1);
-	if (minishell->exec.save_std[1] > 2)
-		(close(minishell->exec.save_std[1]), minishell->exec.save_std[1] = -1);
+	if (minishell->exec.save[0] > 2)
+		(close(minishell->exec.save[0]), minishell->exec.save[0] = -1);
+	if (minishell->exec.save[1] > 2)
+		(close(minishell->exec.save[1]), minishell->exec.save[1] = -1);
 	if (minishell->exec.pipe_fd)
 		pipes_close(&minishell->exec);
 	if (minishell->exec.cmd)
@@ -43,10 +43,10 @@ void	full_clean(t_minishell *minishell)
 
 void	half_clean(t_minishell *minishell)
 {
-	if (minishell->exec.save_std[0] > 2)
-		(close(minishell->exec.save_std[0]), minishell->exec.save_std[0] = -1);
-	if (minishell->exec.save_std[1] > 2)
-		(close(minishell->exec.save_std[1]), minishell->exec.save_std[1] = -1);
+	if (minishell->exec.save[0] > 2)
+		(close(minishell->exec.save[0]), minishell->exec.save[0] = -1);
+	if (minishell->exec.save[1] > 2)
+		(close(minishell->exec.save[1]), minishell->exec.save[1] = -1);
 	if (minishell->exec.infile_fd > 2)
 		(close(minishell->exec.infile_fd), minishell->exec.infile_fd = -1);
 	if (minishell->exec.outfile_fd > 2)

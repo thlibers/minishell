@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 12:30:53 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/06 05:51:50 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 07:00:51 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ void	init_child(t_exec *exec, int child_number, int is_child)
 
 	if (!is_child)
 	{
-		exec->save_std[0] = dup(STDIN_FILENO);
-		exec->save_std[1] = dup(STDOUT_FILENO);
+		exec->save[0] = dup(STDIN_FILENO);
+		exec->save[1] = dup(STDOUT_FILENO);
 	}
 	if ((child_number == 0 && child_number == exec->cmdc - 1))
 		one_command_only(exec, child_number);
