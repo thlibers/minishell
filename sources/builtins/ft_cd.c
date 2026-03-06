@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 10:47:36 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/05 20:11:05 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 09:57:16 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ static void	ft_cd_arg(t_minishell *minishell, t_exec *exec)
 		exec->cmd[1][arg_len - 1] = '\0';
 	if (strcmp(exec->cmd[1], "-") == 0)
 	{
-		printf("%s\n", ft_getenv(minishell->env, "OLDPWD"));
+		if (ft_getenv(minishell->env, "OLDPWD"))
+			printf("%s\n", ft_getenv(minishell->env, "OLDPWD"));
 		parsing_dir(minishell, ft_getenv(minishell->env, "OLDPWD"));
 	}
 	else if (ft_strnstr(exec->cmd[1], "..", arg_len))
