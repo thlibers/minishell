@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 17:02:55 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/06 06:55:59 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 10:33:45 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,6 @@ bool	selector(t_minishell *minishell, int i)
 		ft_unset_selector(minishell, i);
 	else
 		return (false);
-	if (minishell->exec.save[0] > 2 || minishell->exec.save[1] > 2)
-	{
-		if (dup2(minishell->exec.save[0], 0) && minishell->exec.save[0] > 2)
-			(close(minishell->exec.save[0]), minishell->exec.save[0] = -1);
-		if (dup2(minishell->exec.save[1], 1) && minishell->exec.save[1] > 2)
-			(close(minishell->exec.save[1]), minishell->exec.save[1] = -1);
-	}
+	reset_save(minishell);
 	return (true);
 }

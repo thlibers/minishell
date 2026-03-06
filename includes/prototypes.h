@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 13:25:31 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/06 06:36:48 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 10:26:30 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,9 @@ int		add_to_history(int fd, char *line);
 
 /* ----- minishell.c ----- */
 bool	init_minishell(t_minishell *minishell, char **envp);
+
+/* ----- selector_utils.c ----- */
+void	reset_save(t_minishell *minishell);
 
 /* ----- selector.c ----- */
 bool	selector(t_minishell *minishell, int i);

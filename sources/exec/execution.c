@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/06 06:56:23 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 10:32:05 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,6 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 	while (i < minishell->exec.cmdc)
 	{
 		minishell->exec.cmd = ast_to_arr(&minishell->exec, &tmp);
-		if (!minishell->exec.cmd)
-		{
-			minishell->exit_code = 1;
-			i++;
-			close_file(&minishell->exec, tmp);
-			tmp = tmp->leaf_right;
-			continue ;
-		}
 		arg_count(&minishell->exec);
 		if (!selector(minishell, i))
 		{
