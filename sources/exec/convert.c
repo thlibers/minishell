@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 14:20:35 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/27 16:22:20 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 10:06:10 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ bool	init_ast_to_arr(t_ast **ast, char ***arr, t_exec *exec)
 		return (ft_fprintf(2, ENOENOMEM), false);
 	while (*ast && (*ast)->top && ((*ast)->top->type >= T_HERE_DOC))
 		(*ast) = (*ast)->leaf_right;
-	redirection_choser(exec, *ast);
+	if (!redirection_choser(exec, *ast))
+		return (ptr_free_tab(arr), *arr = NULL, false);
 	return (true);
 }
 

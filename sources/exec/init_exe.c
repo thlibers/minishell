@@ -39,7 +39,10 @@ static int	open_outfile(char *filename, int trunc, t_exec *exec)
 		exec->outfile_fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (exec->outfile_fd == -1)
 	{
-		ft_fprintf(STDERR_FILENO, filename);
+		if (errno == ENOENT)
+			ft_fprintf(STDERR_FILENO, ENOTFOUND, filename);
+		else
+			ft_fprintf(STDERR_FILENO, ENOPERM, filename);
 		return (-1);
 	}
 	return (exec->outfile_fd);
@@ -54,7 +57,7 @@ bool	file_opener(t_exec *exec, t_ast *ast, int flag, int (*ptr)(char *, int,
 	ast = ast->leaf_right;
 	ptr(ast->leaf_left->data, flag, exec);
 	ast = save;
-	if (exec->infile_fd < 0)
+	if (exec->infile_fd < 0 || exec->outfile_fd < 0)
 		return (false);
 	return (true);
 }
