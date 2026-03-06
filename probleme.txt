@@ -1,6 +1,5 @@
 - leak (casi tous regle)
 
-
 - leak dans l'exec car on avance dans l'AST
 
 - fix les leaks
@@ -9,69 +8,8 @@
 
 - 2 fichiers pas close dans le heredoc
 
-- echo '""' renvoie "" (le notre supprime toutes les quotes)
-
 - quand 	minishell > 'builtin'
 	puis	minishell > 'builtout'
 	des fd restent open
 
-- exit check overflow (long)
-
-- check perm redir
-
-- premier expand (echo $EXEMPLE) invalid read
-
-==590131== FILE DESCRIPTORS: 4 open (3 std) at exit.
-==590131== Open file descriptor 4: /dev/pts/0
-==590131==    at 0x49DB05B: dup (syscall-template.S:120)
-==590131==    by 0x402B32: init_child (child.c:97)
-==590131==    by 0x402327: ft_export (ft_export.c:97)
-==590131==    by 0x404AE9: ft_export_selector (selector.c:30)
-==590131==    by 0x4048E5: selector (selector.c:52)
-==590131==    by 0x403A97: children_creation (execution.c:43)
-==590131==    by 0x40390B: execution (execution.c:106)
-==590131==    by 0x404705: main (main.c:29)
-==590131== 
-==590131== 
-==590131== HEAP SUMMARY:
-==590131==     in use at exit: 210,521 bytes in 371 blocks
-==590131==   total heap usage: 1,796 allocs, 1,425 frees, 257,238 bytes allocated
-==590131== 
-==590131== 2 bytes in 1 blocks are indirectly lost in loss record 2 of 74
-==590131==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==590131==    by 0x408175: ft_calloc (ft_calloc.c:21)
-==590131==    by 0x404EA9: env_spliter (env_vars.c:28)
-==590131==    by 0x40263A: ft_select_tab (ft_export.c:21)
-==590131==    by 0x4024CF: ft_export_arg (ft_export.c:57)
-==590131==    by 0x402358: ft_export (ft_export.c:101)
-==590131==    by 0x404AE9: ft_export_selector (selector.c:30)
-==590131==    by 0x4048E5: selector (selector.c:52)
-==590131==    by 0x403A97: children_creation (execution.c:43)
-==590131==    by 0x40390B: execution (execution.c:106)
-==590131==    by 0x404705: main (main.c:29)
-==590131== 
-==590131== 4 bytes in 1 blocks are indirectly lost in loss record 3 of 74
-==590131==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==590131==    by 0x408D9F: ft_strdup (ft_strdup.c:23)
-==590131==    by 0x404F60: env_spliter (env_vars.c:38)
-==590131==    by 0x40263A: ft_select_tab (ft_export.c:21)
-==590131==    by 0x4024CF: ft_export_arg (ft_export.c:57)
-==590131==    by 0x402358: ft_export (ft_export.c:101)
-==590131==    by 0x404AE9: ft_export_selector (selector.c:30)
-==590131==    by 0x4048E5: selector (selector.c:52)
-==590131==    by 0x403A97: children_creation (execution.c:43)
-==590131==    by 0x40390B: execution (execution.c:106)
-==590131==    by 0x404705: main (main.c:29)
-==590131== 
-==590131== 30 (24 direct, 6 indirect) bytes in 1 blocks are definitely lost in loss record 19 of 74
-==590131==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==590131==    by 0x408175: ft_calloc (ft_calloc.c:21)
-==590131==    by 0x404E21: env_spliter (env_vars.c:22)
-==590131==    by 0x40263A: ft_select_tab (ft_export.c:21)
-==590131==    by 0x4024CF: ft_export_arg (ft_export.c:57)
-==590131==    by 0x402358: ft_export (ft_export.c:101)
-==590131==    by 0x404AE9: ft_export_selector (selector.c:30)
-==590131==    by 0x4048E5: selector (selector.c:52)
-==590131==    by 0x403A97: children_creation (execution.c:43)
-==590131==    by 0x40390B: execution (execution.c:106)
-==590131==    by 0x404705: main (main.c:29)
+- check perm redir (segfault)

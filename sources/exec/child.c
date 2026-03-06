@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 12:30:53 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/06 07:00:51 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 11:09:02 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	first_command(t_exec *exec, int child_number)
 		ft_fprintf(STDERR_FILENO, EDUP2);
 }
 
-static void	first_last_command(t_exec *exec, int child_number)
+static void	first_last_command(t_exec *exec, int child_number, int is_child)
 {
 	if (child_number == 0)
 		first_command(exec, child_number);
@@ -59,31 +59,32 @@ static void	first_last_command(t_exec *exec, int child_number)
 			if (exec->outfile_fd > 2)
 				(close(exec->outfile_fd), exec->outfile_fd = -1);
 		}
-		if (exec->pipe_fd[child_number - 1][0] > 2)
+		if (is_child && exec->pipe_fd[child_number - 1][0] > 2)
 			(close(exec->pipe_fd[child_number - 1][0]),
 				exec->pipe_fd[child_number - 1][0] = -1);
-		if (exec->pipe_fd[child_number - 1][1] > 2)
+		if (is_child && exec->pipe_fd[child_number - 1][1] > 2)
 			(close(exec->pipe_fd[child_number - 1][1]),
 				exec->pipe_fd[child_number - 1][1] = -1);
 	}
 }
 
-static void	setup_middle_commands(t_exec *exec, int child_number)
+static void	setup_middle_commands(t_exec *exec, int child_number,
+		int is_child)
 {
 	if (dup2(exec->pipe_fd[child_number - 1][0], STDIN_FILENO) == -1)
 		ft_fprintf(STDERR_FILENO, EDUP2);
 	if (dup2(exec->pipe_fd[child_number][1], STDOUT_FILENO) == -1)
 		ft_fprintf(STDERR_FILENO, EDUP2);
-	if (exec->pipe_fd[child_number - 1][0] > 2)
+	if (is_child && exec->pipe_fd[child_number - 1][0] > 2)
 		(close(exec->pipe_fd[child_number - 1][0]), exec->pipe_fd[child_number
 			- 1][0] = -1);
-	if (exec->pipe_fd[child_number - 1][1] > 2)
+	if (is_child && exec->pipe_fd[child_number - 1][1] > 2)
 		(close(exec->pipe_fd[child_number - 1][1]), exec->pipe_fd[child_number
 			- 1][1] = -1);
-	if (exec->pipe_fd[child_number][0] > 2)
+	if (is_child && exec->pipe_fd[child_number][0] > 2)
 		(close(exec->pipe_fd[child_number][0]), exec->pipe_fd[child_number][0] =
 			-1);
-	if (exec->pipe_fd[child_number][1] > 2)
+	if (is_child && exec->pipe_fd[child_number][1] > 2)
 		(close(exec->pipe_fd[child_number][1]), exec->pipe_fd[child_number][1] =
 			-1);
 }
@@ -100,9 +101,9 @@ void	init_child(t_exec *exec, int child_number, int is_child)
 	if ((child_number == 0 && child_number == exec->cmdc - 1))
 		one_command_only(exec, child_number);
 	else if (child_number == 0 || child_number == exec->cmdc - 1)
-		first_last_command(exec, child_number);
+		first_last_command(exec, child_number, is_child);
 	else
-		setup_middle_commands(exec, child_number);
+		setup_middle_commands(exec, child_number, is_child);
 	if (is_child)
 	{
 		i = 0;
