@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 15:05:28 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/05 19:10:24 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 07:50:14 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ static int	ft_export_arg(t_minishell *minishell, t_exec *exec, bool pipe)
 	{
 		tab = ft_select_tab(minishell, exec, tab, i);
 		if (!check_env_name(minishell, tab, &i))
+		{
+			ptr_free_tab(&tab);
 			continue ;
+		}
 		status = 0;
 		ft_value_treatement(minishell, tab, &status);
 		minishell->env = head;
@@ -64,8 +67,10 @@ static int	ft_export_arg(t_minishell *minishell, t_exec *exec, bool pipe)
 			add_env_back(&minishell->env, create_env_var(tab[0], tab[1],
 					ft_strchr(exec->cmd[i], '=')));
 		i++;
+		ptr_free_tab(&tab);
 	}
-	return (minishell->exit_code = 0, free_tab(tab), 0);
+	// ptr_free_tab(&tab);
+	return (minishell->exit_code = 0, 0);
 }
 
 static void	ft_export_noarg(t_minishell *minishell)
