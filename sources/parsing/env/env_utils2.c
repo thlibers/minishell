@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:22:21 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/02 13:52:18 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 06:43:28 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@ t_env	*env_cpy(t_env *env)
 			return (free(cpy), ft_fprintf(STDERR_FILENO, ENOENOMEM), NULL);
 		cpy->equal = env->equal;
 		cpy->value = ft_strdup(env->value);
-		// if (!cpy->value)
-		// 	return (free(cpy->name), free(cpy), ft_fprintf(STDERR_FILENO,
-		// 			ENOENOMEM), NULL);
 		cpy->next = NULL;
 		if (!head)
 			head = cpy;

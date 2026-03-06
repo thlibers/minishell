@@ -6,13 +6,12 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:16:09 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/26 17:37:01 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 06:45:04 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-// Sauvegarder la string pour les token en T_WORD
 char	*tok_str_save(char *line, t_data_type data_type)
 {
 	char	*str;
@@ -41,7 +40,6 @@ char	*tok_str_save(char *line, t_data_type data_type)
 	return (str);
 }
 
-// Creer le token et l'ajouter a la suite de notre liste
 t_tok	*tok_create_back(t_tok **tok, t_data_type data_type, char *line)
 {
 	t_tok	*node;

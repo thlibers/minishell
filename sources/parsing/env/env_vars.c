@@ -6,14 +6,12 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 15:28:32 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/03 15:55:18 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 06:44:41 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-// FAIRE UNE MEILLEURE GESTION D'ERREUR
-// Permet de parser la variable d'environement recup en char *
 char	**env_spliter(char *vars)
 {
 	int		i;
@@ -55,9 +53,6 @@ t_env	*create_env_var(char *name, char *value, char *equal_loc)
 	if (!var->name)
 		return (free(var), ft_fprintf(STDERR_FILENO, ENOENOMEM), NULL);
 	var->value = ft_strdup(value);
-	// if (!var->value)
-	// 	return (free(var->name), free(var), ft_fprintf(STDERR_FILENO,
-	// 			ENOENOMEM), NULL);
 	if (!equal_loc)
 		var->equal = false;
 	else

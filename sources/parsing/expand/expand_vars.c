@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 11:03:43 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/06 06:04:48 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/06 06:43:54 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ bool	replace_var(t_tok **token, t_env *env, int *i)
 	(*token)->str = ft_hoelalloc((*token)->str, ft_strlen((*token)->str),
 			ft_strlen((*token)->str) - (expand.last_char - *i)
 			+ ft_strlen(expand.env_value) + 1);
-	// Invalid read 1
 	if (!(*token)->str)
 		return (free(expand.arg), free(expand.expanded), false);
 	ft_strlcpy(&(*token)->str[*i], expand.env_value, ft_strlen(expand.env_value)
