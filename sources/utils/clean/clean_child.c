@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_child.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 19:27:05 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/05 19:27:06 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/03/06 06:12:43 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ void	full_clean(t_minishell *minishell)
 	if (minishell->ast)
 		free_ast(&minishell->ast);
 	if (minishell->pid)
-		(free(minishell->pid), minishell->pid = NULL);
+	{
+		free(minishell->pid);
+		minishell->pid = NULL;
+	}
 	if (minishell->env)
 		env_clean(minishell->env, NULL);
 }

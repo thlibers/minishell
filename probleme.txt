@@ -1,6 +1,5 @@
 - leak (casi tous regle)
 
-- cat /dev/urandom | head -1
 
 - leak dans l'exec car on avance dans l'AST
 
