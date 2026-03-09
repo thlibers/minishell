@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 14:20:35 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/06 10:06:10 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/09 10:46:45 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	arg_count(t_exec *exec)
 	int	i;
 
 	i = 0;
-	while (exec->cmd[i])
+	while (exec->cmd && exec->cmd[i])
 		i++;
 	exec->argc = i - 1;
 }

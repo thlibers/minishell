@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:18:25 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/04 17:03:15 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/09 11:03:13 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static int	open_outfile(char *filename, int trunc, t_exec *exec)
 			ft_fprintf(STDERR_FILENO, ENOTFOUND, filename);
 		else
 			ft_fprintf(STDERR_FILENO, ENOPERM, filename);
+		// *(exec->ptr_exit_code) = 1;
 		return (-1);
 	}
 	return (exec->outfile_fd);
@@ -96,6 +97,7 @@ int	init_exec(t_env *env, t_ast *ast, t_exec *exec, t_minishell *minishell)
 
 	exec->cmdc = cmd_count(ast);
 	exec->env = convert_env(env);
+	exec->ptr_exit_code = &minishell->exit_code;
 	while (ast)
 	{
 		if (ast->type == T_HERE_DOC)

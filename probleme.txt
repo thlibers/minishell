@@ -6,10 +6,54 @@
 
 - ctlr^C dans le heredoc
 
-- 2 fichiers pas close dans le heredoc
+- bash ne fonctionne pas apres un heredoc
 
-- quand 	minishell > 'builtin'
-	puis	minishell > 'builtout'
-	des fd restent open
+minishell > >> oef >> oef
+minishell > << oef << oef
+> oef
+> oef
+minishell > << oef << salut
+> salut
+> salut
+> oef
+> oef
+> oef
+> salut
+minishell >  
+minishell >  
+minishell >  ^C
+minishell > ^C
+minishell > ^C
+minishell > ^C
+minishell > ^C
+minishell > ^C
+minishell > ^C
+minishell > ^C
+minishell > ^C
+minishell > ^C
+minishell > ^C
+minishell > ^C
+minishell > ^C
+minishell > bash
+bash: line 1: oef: command not found
+bash: line 2: oef: command not found
+minishell > bash
+minishell > bash
 
-- check perm redir (segfault)
+- ls | cat Makefile > test | echo abc 		fd d'open
+
+==1856894== FILE DESCRIPTORS: 5 open (1 std) at exit.
+==1856894== Open file descriptor 7:
+==1856894==    <inherited from parent>
+==1856894== 
+==1856894== Open file descriptor 6:
+==1856894==    <inherited from parent>
+==1856894== 
+==1856894== Open file descriptor 5:
+==1856894==    <inherited from parent>
+==1856894== 
+==1856894== Open file descriptor 4:
+==1856894==    <inherited from parent>
+
+
+- ne doit pas expand dans le heredoc (expand dans notre cas)

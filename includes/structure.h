@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:28:21 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/06 06:53:56 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/09 10:56:26 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ typedef struct s_exec
 	char			**cmd;
 	char			**env;
 	char			*limiter;
-	int (*pipe_fd)[2];
+	int				*ptr_exit_code;
+	int 			(*pipe_fd)[2];
 	int				infile_fd;
 	int				outfile_fd;
 	int				index;

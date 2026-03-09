@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/06 10:32:05 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/09 10:54:21 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,21 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 	while (i < minishell->exec.cmdc)
 	{
 		minishell->exec.cmd = ast_to_arr(&minishell->exec, &tmp);
-		arg_count(&minishell->exec);
-		if (!selector(minishell, i))
+		if (minishell->exec.cmd)
 		{
-			pid[i] = fork();
-			if (pid[i] == -1)
-				ft_fprintf(STDERR_FILENO, ECRFORK);
-			if (pid[i] == 0)
-				child_process(minishell, i);
+			arg_count(&minishell->exec);
+			if (!selector(minishell, i))
+			{
+				pid[i] = fork();
+				if (pid[i] == -1)
+					ft_fprintf(STDERR_FILENO, ECRFORK);
+				if (pid[i] == 0)
+					child_process(minishell, i);
+			}
+			ptr_free_tab(&minishell->exec.cmd);
+			close_file(&minishell->exec, tmp);
 		}
 		i++;
-		ptr_free_tab(&minishell->exec.cmd);
-		close_file(&minishell->exec, tmp);
 		tmp = tmp->leaf_right;
 	}
 }

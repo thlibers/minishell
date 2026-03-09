@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 16:46:00 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/05 20:55:51 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/09 13:26:09 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,9 @@ void	ft_expand(t_minishell *minishell, t_env *env, t_tok **token)
 		if ((*token)->type == T_WORD)
 		{
 			in_quote = IN_RESET;
-			expand_treatements(&in_quote, minishell, env, token);
+			if (((*token)->prev && (*token)->prev->type != T_HERE_DOC)
+				|| !(*token)->prev)
+				expand_treatements(&in_quote, minishell, env, token);
 			remove_quotes(&(*token)->str);
 		}
 		*token = (*token)->next;

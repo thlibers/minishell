@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:27 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/06 06:09:59 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/03/09 13:17:19 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ void	ft_exit(t_minishell *minishell, t_exec *exec, int child_number)
 	else
 		exit_code = ft_atoi(exec->cmd[1]) % 256;
 	full_clean(minishell);
+	printf ("exit\n");
 	exit(exit_code);
 }
