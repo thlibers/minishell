@@ -47,6 +47,11 @@ int		ft_pwd(t_minishell *minishell, int child_number);
 void	ft_unset(t_minishell *minishell, t_exec *exec, int child_number);
 
 /* ======================= EXEC ======================= */
+/* ----- redirection/open_redirection.c */
+int	open_infile(char *filename, int trunc, t_exec *exec);
+int	open_outfile(char *filename, int trunc, t_exec *exec);
+bool	file_opener(t_exec *exec, t_ast *ast, int flag, int (*ptr)(char *, int, t_exec *));
+
 /* ----- child_process.c ----- */
 void	child_process(t_minishell *minishell, int child_number);
 
@@ -78,6 +83,10 @@ bool	redirection_choser(t_exec *exec, t_ast *ast);
 char	**ast_to_arr(t_exec *exec, t_ast **ast);
 void	arg_count(t_exec *exec);
 void	ptr_free_tab(char ***arr);
+
+/* ----- heredoc.c ----- */
+int	terminate_heredoc(t_exec *exec);
+int	heredoc_init(t_exec *exec);
 
 /* ======================= MINISHELL ======================= */
 /* ----- history.c ----- */
@@ -161,8 +170,10 @@ void	free_tok(t_tok **tok);
 void	child_clear(t_minishell *minishell);
 void	full_clean(t_minishell *minishell);
 void	half_clean(t_minishell *minishell);
+void	clean_heredoc(t_minishell *minishell);
 
 /* ----- signal.c ----- */
+void	handler_heredoc(void);
 void	handler_sigint(int signum);
 void	handler_sigint_exec(int signum);
 void	init_signal(void);

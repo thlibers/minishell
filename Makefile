@@ -37,6 +37,7 @@ SRCS =	$(SRC_DIR)/builtins/ft_cd_utils.c\
 		$(SRC_DIR)/builtins/ft_unset.c\
 		$(SRC_DIR)/exec/child_process.c\
 		$(SRC_DIR)/exec/child.c\
+		$(SRC_DIR)/exec/redirection/open_redirection.c\
 		$(SRC_DIR)/exec/commands.c\
 		$(SRC_DIR)/exec/convert_env.c\
 		$(SRC_DIR)/exec/exec_utils.c\

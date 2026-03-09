@@ -11,10 +11,10 @@
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+#include "includes/prototypes.h"
 
-static int	heredoc_init(t_exec *exec)
+int	heredoc_init(t_exec *exec)
 {
-	// signal(SIGINT, );
 	if (exec->infile_fd > 2)
 		close(exec->infile_fd);
 	exec->infile_fd = open(HEREDOC_F, O_WRONLY | O_CREAT | O_TRUNC, 00644);
@@ -55,7 +55,7 @@ static t_tok	*line_to_tok(char *line, t_minishell *minishell)
 	return (NULL);
 }
 
-static int	terminate_heredoc(char **line, t_exec *exec)
+int	terminate_heredoc(t_exec *exec)
 {
 	close(exec->infile_fd);
 	exec->infile_fd = open(HEREDOC_F, O_RDONLY);
@@ -64,7 +64,6 @@ static int	terminate_heredoc(char **line, t_exec *exec)
 		ft_fprintf(STDERR_FILENO, "Failed to reopen heredoc file for reading");
 		return (0);
 	}
-	free(*line);
 	return (1);
 }
 
@@ -73,8 +72,8 @@ int	here_doc(t_exec *exec, t_minishell *minishell)
 	char	*line;
 
 	line = NULL;
-	if (!heredoc_init(exec))
-		return (1);
+	clean_heredoc(minishell);
+	handler_heredoc();
 	while (1)
 	{
 		line = readline("> ");
@@ -90,7 +89,6 @@ int	here_doc(t_exec *exec, t_minishell *minishell)
 			line_to_tok(line, minishell);
 		free(line);
 	}
-	if (!terminate_heredoc(&line, exec))
-		return (1);
+	full_clean(minishell);
 	return (0);
 }

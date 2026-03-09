@@ -14,11 +14,11 @@
 
 volatile sig_atomic_t	g_msh_sig = 0;
 
-// void	handler_heredoc(int signum)
-// {
-// 	(void)signum;
-	
-// }
+void	handler_heredoc(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_IGN);
+}
 
 void	handler_sigint(int signum)
 {

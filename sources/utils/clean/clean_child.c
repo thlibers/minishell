@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+#include "includes/prototypes.h"
 
 void	full_clean(t_minishell *minishell)
 {
@@ -63,7 +64,41 @@ void	half_clean(t_minishell *minishell)
 		env_clean(minishell->env, NULL);
 }
 
+<<<<<<< HEAD
 void	cleanup_pipe(t_exec *exec)
+=======
+void	clean_heredoc(t_minishell *minishell)
+{
+	// if (minishell->exec.infile_fd > 2)
+	// 	close(minishell->exec.infile_fd);
+	if (minishell->exec.env)
+		ptr_free_tab(&minishell->exec.env);
+	if (minishell->env)
+		env_clean(minishell->env, NULL);
+	if (minishell->ast)
+		free_ast(&minishell->ast);
+}
+
+void	pipes_close(t_exec *exec)
+{
+	int	i;
+
+	i = 0;
+	while (i < exec->cmdc - 1)
+	{
+		if (exec->pipe_fd[i][0] > 2)
+			(close(exec->pipe_fd[i][0]), exec->pipe_fd[i][0] = -1);
+		if (exec->pipe_fd[i][1] > 2)
+			(close(exec->pipe_fd[i][1]), exec->pipe_fd[i][1] = -1);
+		i++;
+	}
+	if (exec->pipe_fd)
+		free(exec->pipe_fd);
+	exec->pipe_fd = NULL;
+}
+
+void	cleanup_pipe(t_minishell *minishell, t_exec *exec)
+>>>>>>> 2eb87f8 (Heredoc update)
 {
 	int	i;
 

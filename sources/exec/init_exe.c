@@ -12,6 +12,7 @@
 
 #include "includes/minishell.h"
 
+<<<<<<< HEAD
 static int	open_infile(char *filename, int trunc, t_exec *exec)
 {
 	(void)trunc;
@@ -63,6 +64,8 @@ bool	file_opener(t_exec *exec, t_ast *ast, int flag, int (*ptr)(char *, int,
 	return (true);
 }
 
+=======
+>>>>>>> 2eb87f8 (Heredoc update)
 bool	redirection_choser(t_exec *exec, t_ast *ast)
 {
 	if (ast && ast->type == T_PIPE && ast->top && ast->top->type >= T_HERE_DOC)
@@ -91,75 +94,56 @@ bool	redirection_choser(t_exec *exec, t_ast *ast)
 	return (true);
 }
 
+bool	child_heredoc(t_exec *exec, t_minishell *minishell)
+{
+	int pid;
+	int code;
+
+	pid = fork();
+	if (pid == 0)
+		here_doc(exec, minishell);
+	else
+	{
+		waitpid(pid, &code, 0);
+		if (WIFSIGNALED(code))
+		{
+			minishell->exit_code = 128 + WTERMSIG(code);
+			return (false);
+		}
+		else if (WIFEXITED(code))
+			minishell->exit_code = WEXITSTATUS(code);
+	}
+	return (true);
+}
+
 int	init_exec(t_env *env, t_ast *ast, t_exec *exec, t_minishell *minishell)
 {
 	t_ast	*save;
 
 	exec->cmdc = cmd_count(ast);
 	exec->env = convert_env(env);
+<<<<<<< HEAD
 	exec->ptr_exit_code = &minishell->exit_code;
 	while (ast)
+=======
+	save = minishell->ast;
+	while (save)
+>>>>>>> 2eb87f8 (Heredoc update)
 	{
-		if (ast->type == T_HERE_DOC)
+		if (save->type == T_HERE_DOC)
 		{
-			save = ast;
-			ast = ast->leaf_right;
-			exec->limiter = ast->leaf_left->data;
-			if (here_doc(exec, minishell))
-				return (0);
-			ast = save;
+			signal(SIGINT, handler_sigint_exec);
+			save = save->leaf_right;
+			exec->limiter = save->leaf_left->data;
+			if (!heredoc_init(exec))
+				return (1);
+			if (child_heredoc(exec, minishell))
+				return (ptr_free_tab(&minishell->exec.env), 0);
+			if (!terminate_heredoc(exec))
+				return (1);
+			signal(SIGINT, handler_sigint);
 		}
-		ast = ast->leaf_right;
+		save = save->leaf_right;
 	}
 	return (1);
 }
-
-/*
-int	init_exec(t_env *env, t_ast *ast, t_exec *exec, t_minishell *minishell)
-{
-	t_ast	*save;
-
-	exec->cmdc = cmd_count(ast);
-	exec->env = convert_env(env);
-	while (ast)
-	{
-		if (ast->type == T_HERE_DOC)
-		{
-			save = ast;
-			ast = ast->leaf_right;
-			exec->limiter = ast->leaf_left->data;
-			if (here_doc(exec, minishell))
-				return (0);
-			ast = save;
-		}
-		else if (ast->type == T_RED_IN)
-		{
-			save = ast;
-			ast = ast->leaf_right;
-			exec->infile_fd = open_infile(ast->leaf_left->data);
-			if (exec->infile_fd < 0)
-				return (0);
-			ast = save;
-		}
-		else if (ast->type == T_RED_OUT)
-		{
-			save = ast;
-			ast = ast->leaf_right;
-			exec->outfile_fd = open_outfile(ast->leaf_left->data, O_TRUNC);
-			if (exec->outfile_fd < 0)
-				return (0);
-			ast = save;
-		}
-		else if (ast->type == T_RED_OUT_APP)
-		{
-			save = ast;
-			ast = ast->leaf_right;
-			if (!file_opener(exec, *ast, 0, &open_outfile))
-				return (false);
-			ast = save;
-		}
-		ast = ast->leaf_right;
-	}
-	return (1);
-}
- */

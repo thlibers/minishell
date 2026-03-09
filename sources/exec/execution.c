@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-#include "includes/prototypes.h"
 
 static void	pipes_creation(t_exec *exec)
 {
@@ -20,7 +19,10 @@ static void	pipes_creation(t_exec *exec)
 	i = 0;
 	exec->pipe_fd = ft_calloc(exec->cmdc, sizeof(int *));
 	if (!exec->pipe_fd)
+	{
 		ft_fprintf(STDERR_FILENO, ENOENOMEM);
+		return ;
+	}
 	while (i < exec->cmdc - 1)
 	{
 		if (pipe(exec->pipe_fd[i]) == -1)
@@ -58,24 +60,6 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 	}
 }
 
-void	pipes_close(t_exec *exec)
-{
-	int	i;
-
-	i = 0;
-	while (i < exec->cmdc - 1)
-	{
-		if (exec->pipe_fd[i][0] > 2)
-			(close(exec->pipe_fd[i][0]), exec->pipe_fd[i][0] = -1);
-		if (exec->pipe_fd[i][1] > 2)
-			(close(exec->pipe_fd[i][1]), exec->pipe_fd[i][1] = -1);
-		i++;
-	}
-	if (exec->pipe_fd)
-		free(exec->pipe_fd);
-	exec->pipe_fd = NULL;
-}
-
 static void	execution_step(t_minishell *minishell)
 {
 	int	i;
@@ -101,10 +85,14 @@ static void	execution_step(t_minishell *minishell)
 
 void	execution(t_minishell *minishell)
 {
-	init_exec(minishell->env, minishell->ast, &minishell->exec, minishell);
+	if (!init_exec(minishell->env, minishell->ast, &minishell->exec, minishell))
+		return ;
 	minishell->pid = ft_calloc(minishell->exec.cmdc, sizeof(int));
 	if (!minishell->pid)
+	{
 		ft_fprintf(STDERR_FILENO, ENOENOMEM);
+		return ;
+	}
 	pipes_creation(&minishell->exec);
 	children_creation(minishell, minishell->pid);
 	pipes_close(&minishell->exec);
