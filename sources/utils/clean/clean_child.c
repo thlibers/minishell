@@ -64,9 +64,6 @@ void	half_clean(t_minishell *minishell)
 		env_clean(minishell->env, NULL);
 }
 
-<<<<<<< HEAD
-void	cleanup_pipe(t_exec *exec)
-=======
 void	clean_heredoc(t_minishell *minishell)
 {
 	// if (minishell->exec.infile_fd > 2)
@@ -97,8 +94,7 @@ void	pipes_close(t_exec *exec)
 	exec->pipe_fd = NULL;
 }
 
-void	cleanup_pipe(t_minishell *minishell, t_exec *exec)
->>>>>>> 2eb87f8 (Heredoc update)
+void	cleanup_pipe(t_exec *exec)
 {
 	int	i;
 

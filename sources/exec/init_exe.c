@@ -12,60 +12,6 @@
 
 #include "includes/minishell.h"
 
-<<<<<<< HEAD
-static int	open_infile(char *filename, int trunc, t_exec *exec)
-{
-	(void)trunc;
-	if (!filename)
-		return (0);
-	exec->infile_fd = open(filename, O_RDONLY);
-	if (exec->infile_fd < 0)
-	{
-		if (errno == ENOENT)
-			ft_fprintf(STDERR_FILENO, ENOTFOUND, filename);
-		else
-			ft_fprintf(STDERR_FILENO, ENOPERM, filename);
-		exec->infile_fd = open("/dev/null", O_RDONLY);
-	}
-	return (exec->infile_fd);
-}
-
-static int	open_outfile(char *filename, int trunc, t_exec *exec)
-{
-	if (!filename)
-		return (0);
-	if (trunc)
-		exec->outfile_fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else
-		exec->outfile_fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (exec->outfile_fd == -1)
-	{
-		if (errno == ENOENT)
-			ft_fprintf(STDERR_FILENO, ENOTFOUND, filename);
-		else
-			ft_fprintf(STDERR_FILENO, ENOPERM, filename);
-		// *(exec->ptr_exit_code) = 1;
-		return (-1);
-	}
-	return (exec->outfile_fd);
-}
-
-bool	file_opener(t_exec *exec, t_ast *ast, int flag, int (*ptr)(char *, int,
-			t_exec *))
-{
-	t_ast	*save;
-
-	save = ast;
-	ast = ast->leaf_right;
-	ptr(ast->leaf_left->data, flag, exec);
-	ast = save;
-	if (exec->infile_fd < 0 || exec->outfile_fd < 0)
-		return (false);
-	return (true);
-}
-
-=======
->>>>>>> 2eb87f8 (Heredoc update)
 bool	redirection_choser(t_exec *exec, t_ast *ast)
 {
 	if (ast && ast->type == T_PIPE && ast->top && ast->top->type >= T_HERE_DOC)
@@ -122,13 +68,8 @@ int	init_exec(t_env *env, t_ast *ast, t_exec *exec, t_minishell *minishell)
 
 	exec->cmdc = cmd_count(ast);
 	exec->env = convert_env(env);
-<<<<<<< HEAD
-	exec->ptr_exit_code = &minishell->exit_code;
-	while (ast)
-=======
 	save = minishell->ast;
 	while (save)
->>>>>>> 2eb87f8 (Heredoc update)
 	{
 		if (save->type == T_HERE_DOC)
 		{

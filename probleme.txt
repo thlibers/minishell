@@ -19,8 +19,8 @@ minishell > << oef << salut
 > oef
 > oef
 > salut
-minishell >  
-minishell >  
+minishell >
+minishell >
 minishell >  ^C
 minishell > ^C
 minishell > ^C
@@ -40,22 +40,20 @@ bash: line 2: oef: command not found
 minishell > bash
 minishell > bash
 
-<<<<<<< HEAD
 - ls | cat Makefile > test | echo abc 		fd d'open
 
 ==1856894== FILE DESCRIPTORS: 5 open (1 std) at exit.
 ==1856894== Open file descriptor 7:
 ==1856894==    <inherited from parent>
-==1856894== 
+==1856894==
 ==1856894== Open file descriptor 6:
 ==1856894==    <inherited from parent>
-==1856894== 
+==1856894==
 ==1856894== Open file descriptor 5:
 ==1856894==    <inherited from parent>
-==1856894== 
+==1856894==
 ==1856894== Open file descriptor 4:
 ==1856894==    <inherited from parent>
-=======
 - check perm redir (segfault)
 
 - Broken pipe
@@ -85,4 +83,3 @@ ls | pwd | cat
 ==3363==    by 0x4010597: close_stdout (closeout.c:118)
 ==3363==    by 0x48F9A60: __run_exit_handlers (exit.c:118)
 ==3363==    by 0x48F9B3D: exit (exit.c:148)
->>>>>>> 2eb87f8 (Heredoc update)
