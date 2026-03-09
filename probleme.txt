@@ -54,6 +54,3 @@ minishell > bash
 ==1856894== 
 ==1856894== Open file descriptor 4:
 ==1856894==    <inherited from parent>
-
-
-- ne doit pas expand dans le heredoc (expand dans notre cas)

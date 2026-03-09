@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 13:25:31 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/06 10:26:30 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/09 14:20:42 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*find_command_path(t_minishell *minishell, char *cmd);
 char	**convert_env(t_env *env);
 
 /* ----- exec_utils.c ----- */
-void	cleanup_pipe(t_minishell *minishell, t_exec *exec);
+void	cleanup_pipe(t_exec *exec);
 void	close_file(t_exec *exec, t_ast *curr_branch);
 
 /* ----- execution.c ----- */

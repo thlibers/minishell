@@ -4,4 +4,4 @@
 --show-leak-kinds=all
 --suppressions=val.supp -s
 --show-reachable=yes
---error-limit=no
+--error-limit=no	

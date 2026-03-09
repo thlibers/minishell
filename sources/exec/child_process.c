@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 16:23:21 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/06 05:49:04 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/09 14:16:07 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,15 @@
 static void	redirection(t_exec exec)
 {
 	if (exec.infile_fd > 2)
+	{
 		dup2(exec.infile_fd, STDIN_FILENO);
+		(close(exec.infile_fd), exec.infile_fd = -1);
+	}
 	if (exec.outfile_fd > 2)
+	{
 		dup2(exec.outfile_fd, STDOUT_FILENO);
+		(close(exec.outfile_fd), exec.outfile_fd = -1);
+	}
 }
 
 void	child_process(t_minishell *minishell, int child_number)

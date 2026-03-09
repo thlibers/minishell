@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 19:27:05 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/06 07:01:21 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/09 14:20:07 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	half_clean(t_minishell *minishell)
 		(close(minishell->exec.outfile_fd), minishell->exec.outfile_fd = -1);
 	if (minishell->fd_history > 2)
 		(close(minishell->fd_history), minishell->fd_history = -1);
+	if (minishell->exec.pipe_fd)
+		cleanup_pipe(&minishell->exec);
 	if (minishell->ast)
 		free_ast(&minishell->ast);
 	if (minishell->pid)
@@ -61,13 +63,11 @@ void	half_clean(t_minishell *minishell)
 		env_clean(minishell->env, NULL);
 }
 
-void	cleanup_pipe(t_minishell *minishell, t_exec *exec)
+void	cleanup_pipe(t_exec *exec)
 {
 	int	i;
 
 	i = 0;
-	if (minishell->pid)
-		free(minishell->pid);
 	if (!exec)
 		return ;
 	if (exec->infile_fd > 2)
