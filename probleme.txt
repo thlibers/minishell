@@ -66,6 +66,3 @@ ls | pwd | cat
 ==3363==    by 0x4010597: close_stdout (closeout.c:118)
 ==3363==    by 0x48F9A60: __run_exit_handlers (exit.c:118)
 ==3363==    by 0x48F9B3D: exit (exit.c:148)
-
-
-- problem quand on fait deux heredoc

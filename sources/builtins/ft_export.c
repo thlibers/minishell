@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 15:05:28 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/06 07:50:14 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/03/10 13:28:54 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ static int	ft_export_arg(t_minishell *minishell, t_exec *exec, bool pipe)
 		i++;
 		ptr_free_tab(&tab);
 	}
-	// ptr_free_tab(&tab);
 	return (minishell->exit_code = 0, 0);
 }
 
