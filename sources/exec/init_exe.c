@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+#include "includes/structure.h"
 
 bool	redirection_choser(t_exec *exec, t_ast *ast)
 {
@@ -65,6 +66,7 @@ bool	child_heredoc(t_exec *exec, t_minishell *minishell)
 int	init_exec(t_env *env, t_ast *ast, t_exec *exec, t_minishell *minishell)
 {
 	t_ast	*save;
+	t_ast	*checkpoint;
 
 	if (exec->infile_fd > 2)
 		(close(exec->infile_fd), exec->infile_fd = -1);
@@ -78,10 +80,10 @@ int	init_exec(t_env *env, t_ast *ast, t_exec *exec, t_minishell *minishell)
 		if (save->type == T_HERE_DOC)
 		{
 			signal(SIGINT, handler_sigint_exec);
-			save = save->leaf_right;
+			checkpoint = save->leaf_right;
 			if (exec->limiter)
 				free(exec->limiter);
-			exec->limiter = ft_strdup(save->leaf_left->data);
+			exec->limiter = ft_strdup(checkpoint->leaf_left->data);
 			if (!heredoc_init(exec))
 				return (1);
 			if (!child_heredoc(exec, minishell))
