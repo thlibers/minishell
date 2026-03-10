@@ -48,9 +48,10 @@ void	ft_unset(t_minishell *minishell, t_exec *exec, int child_number);
 
 /* ======================= EXEC ======================= */
 /* ----- redirection/open_redirection.c */
-int	open_infile(char *filename, int trunc, t_exec *exec);
-int	open_outfile(char *filename, int trunc, t_exec *exec);
-bool	file_opener(t_exec *exec, t_ast *ast, int flag, int (*ptr)(char *, int, t_exec *));
+int		open_infile(char *filename, int trunc, t_exec *exec);
+int		open_outfile(char *filename, int trunc, t_exec *exec);
+bool	file_opener(t_exec *exec, t_ast *ast, int flag, int (*ptr)(char *, int,
+				t_exec *));
 
 /* ----- child_process.c ----- */
 void	child_process(t_minishell *minishell, int child_number);
@@ -85,8 +86,8 @@ void	arg_count(t_exec *exec);
 void	ptr_free_tab(char ***arr);
 
 /* ----- heredoc.c ----- */
-int	terminate_heredoc(t_exec *exec);
-int	heredoc_init(t_exec *exec);
+int		terminate_heredoc(t_exec *exec);
+int		heredoc_init(t_exec *exec);
 
 /* ======================= MINISHELL ======================= */
 /* ----- history.c ----- */

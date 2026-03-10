@@ -22,7 +22,7 @@ typedef struct s_exec
 	char			**env;
 	char			*limiter;
 	int				*ptr_exit_code;
-	int 			(*pipe_fd)[2];
+	int (*pipe_fd)[2];
 	int				infile_fd;
 	int				outfile_fd;
 	int				index;

@@ -12,6 +12,7 @@
 
 #ifndef ERROR_H
 # define ERROR_H
+
 # include "includes/color.h"
 
 /* --- CASUAL ---  */

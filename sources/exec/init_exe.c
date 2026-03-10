@@ -42,8 +42,8 @@ bool	redirection_choser(t_exec *exec, t_ast *ast)
 
 bool	child_heredoc(t_exec *exec, t_minishell *minishell)
 {
-	int pid;
-	int code;
+	int	pid;
+	int	code;
 
 	pid = fork();
 	if (pid == 0)
@@ -66,6 +66,10 @@ int	init_exec(t_env *env, t_ast *ast, t_exec *exec, t_minishell *minishell)
 {
 	t_ast	*save;
 
+	if (exec->infile_fd > 2)
+		(close(exec->infile_fd), exec->infile_fd = -1);
+	if (exec->outfile_fd > 2)
+		(close(exec->outfile_fd), exec->outfile_fd = -1);
 	exec->cmdc = cmd_count(ast);
 	exec->env = convert_env(env);
 	save = minishell->ast;

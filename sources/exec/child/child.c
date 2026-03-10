@@ -15,6 +15,7 @@
 static void	one_command_only(t_exec *exec, int child_number)
 {
 	(void)child_number;
+	printf("infile fd = %d\n", exec->infile_fd);
 	if (exec->infile_fd > 2)
 	{
 		if (dup2(exec->infile_fd, STDIN_FILENO) == -1)
@@ -68,8 +69,7 @@ static void	first_last_command(t_exec *exec, int child_number, int is_child)
 	}
 }
 
-static void	setup_middle_commands(t_exec *exec, int child_number,
-		int is_child)
+static void	setup_middle_commands(t_exec *exec, int child_number, int is_child)
 {
 	if (dup2(exec->pipe_fd[child_number - 1][0], STDIN_FILENO) == -1)
 		ft_fprintf(STDERR_FILENO, EDUP2);

@@ -35,6 +35,6 @@ void	ft_exit(t_minishell *minishell, t_exec *exec, int child_number)
 	else
 		exit_code = ft_atoi(exec->cmd[1]) % 256;
 	full_clean(minishell);
-	printf ("exit\n");
+	printf("exit\n");
 	exit(exit_code);
 }
