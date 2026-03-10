@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 15:51:09 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/26 17:35:07 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/10 16:44:35 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ t_tok	*tokenizer(char *line)
 {
 	int		i;
 	t_tok	*tok;
+	t_tok	*tok_cpy;
 
 	i = 0;
 	tok = NULL;
@@ -101,8 +102,12 @@ t_tok	*tokenizer(char *line)
 	}
 	if (!check_quote(tok) || !check_ope(tok))
 		return (free_tok(&tok), NULL);
-	if (tok->type >= T_HERE_DOC)
+	tok_cpy = tok;
+	print_tok(tok);
+	printf("\n");
+	if ((!tok->prev || tok->prev->type == T_PIPE) && tok->type >= T_HERE_DOC)
 		back_tofirst(&tok);
+	print_tok(tok);
 	return (tok);
 }
 

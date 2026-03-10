@@ -68,3 +68,9 @@ ls | pwd | cat
 ==3363==    by 0x48F9B3D: exit (exit.c:148)
 
 - pwd | << EOF cat > test | ls (casse tout)
+
+- << EOF | cat | wc -l < README.md > test | cat
+
+- fix de con pour close les fd ne fonctionne pas
+
+- command not found invalid read (expand)
