@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   AST.c                                              :+:      :+:    :+:   */
+/*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 10:05:34 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/12 11:26:57 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/03/10 15:15:57 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-// Trouver le type du prochain operateur
 static t_data_type	next_ope(t_tok *tok)
 {
 	while (tok)
@@ -24,7 +23,6 @@ static t_data_type	next_ope(t_tok *tok)
 	return (T_WORD);
 }
 
-// Creer la branche de gauche
 static t_ast	*create_left(t_tok *tok, int i)
 {
 	t_ast	*left;
@@ -41,7 +39,6 @@ static t_ast	*create_left(t_tok *tok, int i)
 	return (left);
 }
 
-// Creer la branche de droite qui va construire notre arbre
 t_ast	*create_tree(t_tok *tok, int i)
 {
 	t_ast	*node;
@@ -73,8 +70,8 @@ t_ast	*create_tree(t_tok *tok, int i)
 
 // Proteger les fonction en recursive contre la recursive max
 /* --- DEBUG --- */
-/*
-void	print_type(int leaf_number, t_ast *ast)
+
+/*void	print_type(int leaf_number, t_ast *ast)
 {
 	switch (ast->type)
 	{
@@ -134,5 +131,5 @@ void	print_ast(t_ast *ast)
 		ast = ast->leaf_right;
 	}
 	printf("----------------\n");
-}
-*/
+}*/
+

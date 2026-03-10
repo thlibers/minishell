@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/10 12:57:15 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/10 14:47:51 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 	tmp = minishell->ast;
 	while (i < minishell->exec.cmdc)
 	{
+		if (minishell->exec.infile_fd > 2 && i != 0)
+			(close(minishell->exec.infile_fd), minishell->exec.infile_fd = -1);
+		if (minishell->exec.outfile_fd > 2 && i != 0)
+			(close(minishell->exec.outfile_fd), minishell->exec.outfile_fd = -1);
 		minishell->exec.cmd = ast_to_arr(&minishell->exec, &tmp);
 		if (minishell->exec.cmd)
 		{
