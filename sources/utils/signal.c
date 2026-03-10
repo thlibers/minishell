@@ -17,6 +17,7 @@ volatile sig_atomic_t	g_msh_sig = 0;
 void	handler_heredoc(void)
 {
 	signal(SIGINT, SIG_DFL);
+	signal(SIGPIPE, SIG_DFL);
 	signal(SIGQUIT, SIG_IGN);
 }
 

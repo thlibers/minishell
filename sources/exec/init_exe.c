@@ -75,6 +75,8 @@ int	init_exec(t_env *env, t_ast *ast, t_exec *exec, t_minishell *minishell)
 		{
 			signal(SIGINT, handler_sigint_exec);
 			save = save->leaf_right;
+			if (exec->limiter)
+				free(exec->limiter);
 			exec->limiter = ft_strdup(save->leaf_left->data);
 			if (!heredoc_init(exec))
 				return (1);

@@ -68,6 +68,8 @@ void	half_clean(t_minishell *minishell)
 
 void	clean_heredoc(t_minishell *minishell)
 {
+	if (minishell->fd_history > 2)
+		(close(minishell->fd_history), minishell->fd_history = -1);
 	if (minishell->exec.env)
 		(ptr_free_tab(&minishell->exec.env), minishell->exec.env = NULL);
 	if (minishell->env)

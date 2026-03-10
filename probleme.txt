@@ -8,6 +8,8 @@
 
 - bash ne fonctionne pas apres un heredoc
 
+- previously close heredoc
+
 minishell > >> oef >> oef
 minishell > << oef << oef
 > oef

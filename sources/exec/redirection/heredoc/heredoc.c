@@ -45,7 +45,7 @@ int	here_doc(t_exec *exec, t_minishell *minishell)
 
 	line = NULL;
 	clean_heredoc(minishell);
-	// handler_heredoc();
+	handler_heredoc();
 	while (1)
 	{
 		line = readline("> ");

@@ -15,7 +15,7 @@
 int	heredoc_init(t_exec *exec)
 {
 	if (exec->infile_fd > 2)
-		close(exec->infile_fd);
+		(close(exec->infile_fd), exec->infile_fd = -1);
 	exec->infile_fd = open(HEREDOC_F, O_WRONLY | O_CREAT | O_TRUNC, 00644);
 	if (exec->infile_fd < 0)
 	{
@@ -27,7 +27,7 @@ int	heredoc_init(t_exec *exec)
 
 int	terminate_heredoc(t_exec *exec)
 {
-	close(exec->infile_fd);
+	(close(exec->infile_fd), exec->infile_fd = -1);
 	exec->infile_fd = open(HEREDOC_F, O_RDONLY);
 	if (exec->infile_fd < 0)
 	{
