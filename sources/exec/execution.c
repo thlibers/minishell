@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/09 10:54:21 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/10 12:57:15 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 			arg_count(&minishell->exec);
 			if (!selector(minishell, i))
 			{
-				printf("%d\n", minishell->exec.infile_fd);
 				pid[i] = fork();
 				if (pid[i] == -1)
 					ft_fprintf(STDERR_FILENO, ECRFORK);

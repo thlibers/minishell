@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 12:30:53 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/09 17:20:11 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/03/10 12:54:11 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void	one_command_only(t_exec *exec, int child_number)
 {
 	(void)child_number;
-	printf("infile fd = %d\n", exec->infile_fd);
 	if (exec->infile_fd > 2)
 	{
 		if (dup2(exec->infile_fd, STDIN_FILENO) == -1)

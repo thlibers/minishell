@@ -1,10 +1,6 @@
-- leak (casi tous regle)
+- leak
 
-- leak dans l'exec car on avance dans l'AST
-
-- fix les leaks
-
-- ctlr^C dans le heredoc
+- ctlr^C dans le heredoc (tolerance limitter leak)
 
 - bash ne fonctionne pas apres un heredoc
 
@@ -42,23 +38,8 @@ bash: line 2: oef: command not found
 minishell > bash
 minishell > bash
 
-- ls | cat Makefile > test | echo abc 		fd d'open
-
-==1856894== FILE DESCRIPTORS: 5 open (1 std) at exit.
-==1856894== Open file descriptor 7:
-==1856894==    <inherited from parent>
-==1856894==
-==1856894== Open file descriptor 6:
-==1856894==    <inherited from parent>
-==1856894==
-==1856894== Open file descriptor 5:
-==1856894==    <inherited from parent>
-==1856894==
-==1856894== Open file descriptor 4:
-==1856894==    <inherited from parent>
-- check perm redir (segfault)
-
 - Broken pipe
+
 ls | pwd | cat
 ==3363== Memcheck, a memory error detector
 ==3363== Copyright (C) 2002-2024, and GNU GPL'd, by Julian Seward et al.
@@ -85,3 +66,6 @@ ls | pwd | cat
 ==3363==    by 0x4010597: close_stdout (closeout.c:118)
 ==3363==    by 0x48F9A60: __run_exit_handlers (exit.c:118)
 ==3363==    by 0x48F9B3D: exit (exit.c:148)
+
+
+- problem quand on fait deux heredoc
