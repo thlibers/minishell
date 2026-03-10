@@ -80,7 +80,7 @@ int	init_exec(t_env *env, t_ast *ast, t_exec *exec, t_minishell *minishell)
 			exec->limiter = ft_strdup(save->leaf_left->data);
 			if (!heredoc_init(exec))
 				return (1);
-			if (child_heredoc(exec, minishell))
+			if (!child_heredoc(exec, minishell))
 				return (ptr_free_tab(&minishell->exec.env), 0);
 			if (!terminate_heredoc(exec))
 				return (1);

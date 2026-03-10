@@ -12,17 +12,19 @@
 
 #include "includes/minishell.h"
 
-static void	redirection(t_exec exec)
+static void	redirection(t_exec *exec)
 {
-	if (exec.infile_fd > 2)
+	if (exec->infile_fd > 2)
 	{
-		dup2(exec.infile_fd, STDIN_FILENO);
-		(close(exec.infile_fd), exec.infile_fd = -1);
+		dup2(exec->infile_fd, STDIN_FILENO);
+		if (exec->infile_fd > 2)
+			(close(exec->infile_fd), exec->infile_fd = -1);
 	}
-	if (exec.outfile_fd > 2)
+	if (exec->outfile_fd > 2)
 	{
-		dup2(exec.outfile_fd, STDOUT_FILENO);
-		(close(exec.outfile_fd), exec.outfile_fd = -1);
+		dup2(exec->outfile_fd, STDOUT_FILENO);
+		if (exec->outfile_fd > 2)
+			(close(exec->outfile_fd), exec->outfile_fd = -1);
 	}
 }
 
@@ -32,7 +34,7 @@ void	child_process(t_minishell *minishell, int child_number)
 
 	child_signal();
 	if (minishell->exec.infile_fd > 2 || minishell->exec.outfile_fd > 2)
-		redirection(minishell->exec);
+		redirection(&minishell->exec);
 	else
 		init_child(&minishell->exec, child_number, 1);
 	cmd_path = find_command_path(minishell, minishell->exec.cmd[0]);

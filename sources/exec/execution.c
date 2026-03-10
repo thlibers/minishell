@@ -46,6 +46,7 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 			arg_count(&minishell->exec);
 			if (!selector(minishell, i))
 			{
+				printf("%d\n", minishell->exec.infile_fd);
 				pid[i] = fork();
 				if (pid[i] == -1)
 					ft_fprintf(STDERR_FILENO, ECRFORK);
