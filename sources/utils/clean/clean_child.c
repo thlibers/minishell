@@ -19,6 +19,8 @@ void	full_clean(t_minishell *minishell)
 		(close(minishell->exec.save[0]), minishell->exec.save[0] = -1);
 	if (minishell->exec.save[1] > 2)
 		(close(minishell->exec.save[1]), minishell->exec.save[1] = -1);
+	if (minishell->exec.limiter)
+		(free(minishell->exec.limiter), minishell->exec.limiter = NULL);
 	if (minishell->exec.pipe_fd)
 		pipes_close(&minishell->exec);
 	if (minishell->exec.cmd)
@@ -66,14 +68,12 @@ void	half_clean(t_minishell *minishell)
 
 void	clean_heredoc(t_minishell *minishell)
 {
-	// if (minishell->exec.infile_fd > 2)
-	// 	close(minishell->exec.infile_fd);
 	if (minishell->exec.env)
-		ptr_free_tab(&minishell->exec.env);
+		(ptr_free_tab(&minishell->exec.env), minishell->exec.env = NULL);
 	if (minishell->env)
-		env_clean(minishell->env, NULL);
+		(env_clean(minishell->env, NULL), minishell->env = NULL);
 	if (minishell->ast)
-		free_ast(&minishell->ast);
+		(free_ast(&minishell->ast), minishell->ast = NULL);
 }
 
 void	pipes_close(t_exec *exec)

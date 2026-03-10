@@ -35,21 +35,22 @@ SRCS =	$(SRC_DIR)/builtins/ft_cd_utils.c\
 		$(SRC_DIR)/builtins/ft_export.c\
 		$(SRC_DIR)/builtins/ft_pwd.c\
 		$(SRC_DIR)/builtins/ft_unset.c\
-		$(SRC_DIR)/exec/child_process.c\
-		$(SRC_DIR)/exec/child.c\
 		$(SRC_DIR)/exec/redirection/open_redirection.c\
-		$(SRC_DIR)/exec/commands.c\
-		$(SRC_DIR)/exec/convert_env.c\
+		$(SRC_DIR)/exec/redirection/heredoc/heredoc.c\
+		$(SRC_DIR)/exec/redirection/heredoc/heredoc_utils.c\
 		$(SRC_DIR)/exec/exec_utils.c\
 		$(SRC_DIR)/exec/execution.c\
-		$(SRC_DIR)/exec/heredoc.c\
+		$(SRC_DIR)/exec/find_path.c\
+		$(SRC_DIR)/exec/convert/ast_to_arr.c\
+		$(SRC_DIR)/exec/convert/env_tab.c\
+		$(SRC_DIR)/exec/child/child.c\
+		$(SRC_DIR)/exec/child/child_process.c\
 		$(SRC_DIR)/exec/init_exe.c\
 		$(SRC_DIR)/minishell/history.c\
 		$(SRC_DIR)/minishell/main.c\
 		$(SRC_DIR)/minishell/minishell.c\
 		$(SRC_DIR)/minishell/selector_utils.c\
 		$(SRC_DIR)/minishell/selector.c\
-		$(SRC_DIR)/exec/convert.c\
 		$(SRC_DIR)/parsing/env/env_vars.c\
 		$(SRC_DIR)/parsing/expand/expand.c\
 		$(SRC_DIR)/parsing/expand/expand_vars.c\
