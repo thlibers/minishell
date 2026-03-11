@@ -146,7 +146,7 @@ t_tok	*tokenizer(char *line);
 /* ----- lexer/tokenizer_linked_list ----- */
 char	*tok_str_save(char *line, t_data_type data_type);
 t_tok	*tok_create_back(t_tok **tok, t_data_type data_type, char *line);
-void	back_tofirst(t_tok **tok);
+t_tok	*back_tofirst(t_tok **tok);
 
 /* ----- lexer/check_lexer.c ----- */
 int		is_operator(char *word);

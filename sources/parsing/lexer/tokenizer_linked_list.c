@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+#include "includes/prototypes.h"
+#include <stdio.h>
 
 char	*tok_str_save(char *line, t_data_type data_type)
 {
@@ -67,15 +69,17 @@ t_tok	*tok_create_back(t_tok **tok, t_data_type data_type, char *line)
 	return (node);
 }
 
-void	back_tofirst(t_tok **tok)
+t_tok	*back_tofirst(t_tok **tok)
 {
 	t_tok	*cmd;
 	t_tok	*last_arg;
+	t_tok	*previous;
 	t_tok	*next_ope;
 	t_tok	*head;
 	t_tok	*save;
 
 	head = *tok;
+	previous = (*tok)->prev;
 	while (*tok && (*tok)->next && ((*tok)->type >= T_HERE_DOC
 			|| ((*tok)->type == T_WORD && (*tok)->prev->type >= T_HERE_DOC)))
 		*tok = (*tok)->next;
@@ -83,7 +87,7 @@ void	back_tofirst(t_tok **tok)
 		&& (*tok)->prev->type >= T_HERE_DOC)
 	{
 		*tok = head;
-		return ;
+		return (head);
 	}
 	cmd = *tok;
 	save = cmd->prev;
@@ -93,9 +97,14 @@ void	back_tofirst(t_tok **tok)
 	next_ope = (*tok)->next;
 	head->prev = last_arg;
 	last_arg->next = head;
-	cmd->prev = NULL;
+	cmd->prev = previous;
+	if (previous)
+		previous->next = cmd;
 	save->next = next_ope;
 	if (next_ope)
 		next_ope->prev = save;
 	*tok = cmd;
+	while (head->prev)
+		head = head->prev;
+	return (head);
 }

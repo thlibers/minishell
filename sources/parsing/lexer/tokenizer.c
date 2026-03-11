@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+#include "includes/structure.h"
 
 // Trouver de quelle operateur notre token est
 static t_data_type	assign_ope(char *c)
@@ -103,24 +104,35 @@ t_tok	*tokenizer(char *line)
 	if (!check_quote(tok) || !check_ope(tok))
 		return (free_tok(&tok), NULL);
 	tok_cpy = tok;
-	print_tok(tok);
-	printf("\n");
-	if ((!tok->prev || tok->prev->type == T_PIPE) && tok->type >= T_HERE_DOC)
-		back_tofirst(&tok);
-	print_tok(tok);
+	(void)tok_cpy;
+	// print_tok(tok);
+	// printf("\n");
+	while (tok->next)
+	{
+		while (tok && tok->prev && tok->type == T_WORD )
+			tok = tok->next;
+		if (tok && tok->type >= T_HERE_DOC && (!tok->prev || tok->prev->type == T_PIPE))
+			tok_cpy = back_tofirst(&tok);
+		if (tok && tok->next)
+			tok = tok->next;
+	}
+	tok = tok_cpy;
+	// print_tok(tok);
 	return (tok);
 }
 
 // DEBUG
-void	print_tok(t_tok *tok)
-{
-	int	i;
+// void	print_tok(t_tok *tok)
+// {
+// 	int	i;
 
-	i = 0;
-	while (tok)
-	{
-		printf("%d; %s; %d\n", i, tok->str, tok->type);
-		i++;
-		tok = tok->next;
-	}
-}
+// 	i = 0;
+// 	while (tok->prev)
+// 		tok = tok->prev;
+// 	while (tok)
+// 	{
+// 		printf("%d; %s; %d\n", i, tok->str, tok->type);
+// 		i++;
+// 		tok = tok->next;
+// 	}
+// }
