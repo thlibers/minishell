@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/11 16:14:54 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/11 17:18:30 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 		if (minishell->exec.infile_fd > 2)
 			(close(minishell->exec.infile_fd), minishell->exec.infile_fd = -1);
 		if (minishell->exec.outfile_fd > 2)
-			(close(minishell->exec.outfile_fd), minishell->exec.outfile_fd = -1);
+			(close(minishell->exec.outfile_fd),
+				minishell->exec.outfile_fd = -1);
 		i++;
 		tmp = tmp->leaf_right;
 	}
