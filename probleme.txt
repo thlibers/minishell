@@ -78,3 +78,7 @@ ls | pwd | cat
 - probleme dans les redir
 	- pwd > test | ls met le pwd dans test et ls dans la sortie standard (le notre fais juste ls)
 	- << EOF cat > test | ls meme principe (le notre met le heredoc et le ls dans test)
+
+- echo salut > test | echo salut (segfault)
+
+- ctrl \ ne fait pas de retour a la ligne

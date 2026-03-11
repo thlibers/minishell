@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 15:51:09 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/11 12:46:10 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/11 15:03:00 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,9 @@ t_tok	*tokenizer(char *line)
 	if (!check_quote(tok) || !check_ope(tok))
 		return (free_tok(&tok), NULL);
 	tok_cpy = tok;
-	(void)tok_cpy;
-	while (tok->next)
+	while (tok && tok->next)
 	{
-		while (tok && tok->prev && tok->type == T_WORD )
+		while (tok && tok->next && tok->prev && tok->type == T_WORD)
 			tok = tok->next;
 		if (tok && tok->type >= T_HERE_DOC && (!tok->prev || tok->prev->type == T_PIPE))
 			tok_cpy = back_tofirst(&tok);

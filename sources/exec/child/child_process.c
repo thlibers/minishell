@@ -6,37 +6,38 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 16:23:21 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/09 17:20:17 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/03/11 16:24:21 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-static void	redirection(t_exec *exec)
-{
-	if (exec->infile_fd > 2)
-	{
-		dup2(exec->infile_fd, STDIN_FILENO);
-		if (exec->infile_fd > 2)
-			(close(exec->infile_fd), exec->infile_fd = -1);
-	}
-	if (exec->outfile_fd > 2)
-	{
-		dup2(exec->outfile_fd, STDOUT_FILENO);
-		if (exec->outfile_fd > 2)
-			(close(exec->outfile_fd), exec->outfile_fd = -1);
-	}
-}
+// static void	redirection(t_exec *exec)
+// {
+// 	if (exec->infile_fd > 2)
+// 	{
+// 		dup2(exec->infile_fd, STDIN_FILENO);
+// 		if (exec->infile_fd > 2)
+// 			(close(exec->infile_fd), exec->infile_fd = -1);
+// 	}
+// 	if (exec->outfile_fd > 2)
+// 	{
+// 		dup2(exec->outfile_fd, STDOUT_FILENO);
+// 		if (exec->outfile_fd > 2)
+// 			(close(exec->outfile_fd), exec->outfile_fd = -1);
+// 	}
+// }
 
 void	child_process(t_minishell *minishell, int child_number)
 {
 	char	*cmd_path;
 
 	child_signal();
-	if (minishell->exec.infile_fd > 2 || minishell->exec.outfile_fd > 2)
-		redirection(&minishell->exec);
-	else
-		init_child(&minishell->exec, child_number, 1);
+	// if (minishell->exec.infile_fd > 2 || minishell->exec.outfile_fd > 2)
+	// 	redirection(&minishell->exec);
+	// else
+	// 	init_child(&minishell->exec, child_number, 1);
+	init_child(&minishell->exec, child_number, 1);
 	cmd_path = find_command_path(minishell, minishell->exec.cmd[0]);
 	if (!cmd_path)
 	{

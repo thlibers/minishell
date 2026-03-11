@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/10 14:47:51 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/11 16:14:54 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,6 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 	tmp = minishell->ast;
 	while (i < minishell->exec.cmdc)
 	{
-		// if (minishell->exec.infile_fd > 2 && i != 0)
-		// 	(close(minishell->exec.infile_fd), minishell->exec.infile_fd = -1);
-		// if (minishell->exec.outfile_fd > 2 && i != 0)
-		// 	(close(minishell->exec.outfile_fd), minishell->exec.outfile_fd = -1);
 		minishell->exec.cmd = ast_to_arr(&minishell->exec, &tmp);
 		if (minishell->exec.cmd)
 		{
@@ -59,6 +55,10 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 			ptr_free_tab(&minishell->exec.cmd);
 			close_file(&minishell->exec, tmp);
 		}
+		if (minishell->exec.infile_fd > 2)
+			(close(minishell->exec.infile_fd), minishell->exec.infile_fd = -1);
+		if (minishell->exec.outfile_fd > 2)
+			(close(minishell->exec.outfile_fd), minishell->exec.outfile_fd = -1);
 		i++;
 		tmp = tmp->leaf_right;
 	}

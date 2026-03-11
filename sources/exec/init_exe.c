@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:18:25 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/10 14:40:00 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/11 16:20:46 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,11 @@ int	init_exec(t_env *env, t_ast *ast, t_exec *exec, t_minishell *minishell)
 	t_ast	*checkpoint;
 
 	if (exec->infile_fd > 2)
-		(close(exec->infile_fd), exec->infile_fd = -1);
+		close(exec->infile_fd);
+	exec->infile_fd = 0;
 	if (exec->outfile_fd > 2)
-		(close(exec->outfile_fd), exec->outfile_fd = -1);
+		close(exec->outfile_fd);
+	exec->outfile_fd = 0;
 	exec->cmdc = cmd_count(ast);
 	exec->env = convert_env(env);
 	save = minishell->ast;
