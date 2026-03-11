@@ -82,3 +82,7 @@ ls | pwd | cat
 - echo salut > test | echo salut (segfault)
 
 - ctrl \ ne fait pas de retour a la ligne
+
+- export avec un name en maj met un egal
+
+- echo hello | << EDF cat 	print hello (ne doit pas print)

@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 11:03:43 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/06 06:43:54 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/11 16:32:16 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ void	ft_questionmark(t_minishell *minishell, t_tok **token, int i)
 	y = i + 1;
 	arg = malloc(ft_strlen((*token)->str) - y + 1);
 	ft_strlcpy(arg, &(*token)->str[y + 1], ft_strlen((*token)->str) - y + 1);
-	(*token)->str = ft_realloc((*token)->str, ft_strlen((*token)->str) - (y - i)
+	(*token)->str = ft_hoelalloc((*token)->str, ft_strlen((*token)->str),
+			ft_strlen((*token)->str) - (y - i)
 			+ ft_strlen(ft_itoa(minishell->exit_code)) + 1);
 	ft_strlcpy(&(*token)->str[i], ft_itoa(minishell->exit_code),
 		ft_strlen(ft_itoa(minishell->exit_code)) + 1);
