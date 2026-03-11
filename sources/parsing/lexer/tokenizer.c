@@ -6,14 +6,13 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 15:51:09 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/10 16:44:35 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/11 12:46:10 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 #include "includes/structure.h"
 
-// Trouver de quelle operateur notre token est
 static t_data_type	assign_ope(char *c)
 {
 	t_data_type	type;
@@ -36,7 +35,6 @@ static t_data_type	assign_ope(char *c)
 	return (type);
 }
 
-// Creer notre token de type T_WORD
 static bool	create_tok_word(int *i, char *line, t_tok **tok)
 {
 	int		quote;
@@ -61,7 +59,6 @@ static bool	create_tok_word(int *i, char *line, t_tok **tok)
 	return (true);
 }
 
-// Creer notre token d'operateur ; ope++ fix probablement temp |||
 static bool	create_tok_ope(int *i, char *line, t_tok **tok)
 {
 	int		ope;
@@ -85,7 +82,6 @@ static bool	create_tok_ope(int *i, char *line, t_tok **tok)
 	return (true);
 }
 
-// Coeur de la fonction du tokenizer
 t_tok	*tokenizer(char *line)
 {
 	int		i;
@@ -105,8 +101,6 @@ t_tok	*tokenizer(char *line)
 		return (free_tok(&tok), NULL);
 	tok_cpy = tok;
 	(void)tok_cpy;
-	// print_tok(tok);
-	// printf("\n");
 	while (tok->next)
 	{
 		while (tok && tok->prev && tok->type == T_WORD )
@@ -117,7 +111,6 @@ t_tok	*tokenizer(char *line)
 			tok = tok->next;
 	}
 	tok = tok_cpy;
-	// print_tok(tok);
 	return (tok);
 }
 
