@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 12:30:53 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/12 15:24:28 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 17:30:05 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,8 @@ static void	one_command_only(t_exec *exec, int child_number)
 	}
 }
 
-static void	first_command(t_exec *exec, int child_number, int is_child)
+static void	first_command(t_exec *exec, int child_number)
 {
-	(void)is_child;
 	if (exec->child.infile_fd > 2)
 	{
 		if (dup2(exec->child.infile_fd, STDIN_FILENO) == -1)
@@ -58,7 +57,7 @@ static void	first_command(t_exec *exec, int child_number, int is_child)
 static void	first_last_command(t_exec *exec, int child_number, int is_child)
 {
 	if (child_number == 0)
-		first_command(exec, child_number, is_child);
+		first_command(exec, child_number);
 	else if (child_number == exec->cmdc - 1)
 	{
 		if (exec->child.infile_fd > 2)
@@ -80,12 +79,7 @@ static void	first_last_command(t_exec *exec, int child_number, int is_child)
 			if (exec->child.outfile_fd > 2)
 				(close(exec->child.outfile_fd), exec->child.outfile_fd = -1);
 		}
-		if (is_child && exec->pipe_fd[child_number - 1][0] > 2)
-			(close(exec->pipe_fd[child_number - 1][0]),
-				exec->pipe_fd[child_number - 1][0] = -1);
-		if (is_child && exec->pipe_fd[child_number - 1][1] > 2)
-			(close(exec->pipe_fd[child_number - 1][1]),
-				exec->pipe_fd[child_number - 1][1] = -1);
+		clean_pipe_fd(exec, child_number, is_child);
 	}
 }
 
