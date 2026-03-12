@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:16:09 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/12 12:47:47 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 17:58:14 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,37 @@ t_tok	*tok_create_back(t_tok **tok, t_data_type data_type, char *line)
 	return (node);
 }
 
-t_tok	*back_tofirst(t_tok **tok)
+t_tok	*setup(t_tok **tok, t_tok *head, t_tok *prev)
 {
 	t_tok	*cmd;
-	t_tok	*last_arg;
-	t_tok	*previous;
-	t_tok	*next_ope;
-	t_tok	*head;
 	t_tok	*save;
+	t_tok	*last_arg;
+	t_tok	*next_ope;
+
+	cmd = *tok;
+	save = cmd->prev;
+	while ((*tok)->next && (*tok)->next->type == T_WORD)
+		*tok = (*tok)->next;
+	last_arg = *tok;
+	next_ope = (*tok)->next;
+	head->prev = last_arg;
+	last_arg->next = head;
+	cmd->prev = prev;
+	if (prev)
+		prev->next = cmd;
+	save->next = next_ope;
+	if (next_ope)
+		next_ope->prev = save;
+	*tok = cmd;
+	while (head->prev)
+		head = head->prev;
+	return (head);
+}
+
+t_tok	*back_tofirst(t_tok **tok)
+{
+	t_tok	*head;
+	t_tok	*previous;
 
 	head = *tok;
 	previous = (*tok)->prev;
@@ -89,22 +112,6 @@ t_tok	*back_tofirst(t_tok **tok)
 		*tok = head;
 		return (head);
 	}
-	cmd = *tok;
-	save = cmd->prev;
-	while ((*tok)->next && (*tok)->next->type == T_WORD)
-		*tok = (*tok)->next;
-	last_arg = *tok;
-	next_ope = (*tok)->next;
-	head->prev = last_arg;
-	last_arg->next = head;
-	cmd->prev = previous;
-	if (previous)
-		previous->next = cmd;
-	save->next = next_ope;
-	if (next_ope)
-		next_ope->prev = save;
-	*tok = cmd;
-	while (head->prev)
-		head = head->prev;
+	head = setup(tok, head, previous);
 	return (head);
 }
