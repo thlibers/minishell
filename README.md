@@ -49,17 +49,20 @@ make re
 - [ ] Wildcard expand
 
 ## Technical choice
-A lexer (also called a tokenizer) reads raw text one character at a time and splits it into meaningful pieces called tokens. After the user types a command line, the lexer processes that input and produces tokens labeled with their exact types (see the list of operators in the ["Available features"](https://github.com/thlibers/minishell?tab=readme-ov-file#available-features) section) .
+A lexer (also called a tokenizer) reads raw text one character at a time and splits it into meaningful pieces called tokens. After the user types a command line, the lexer processes that input and produces tokens labeled with their exact types (see the list of operators in the ["Available features"](https://github.com/thlibers/minishell?tab=readme-ov-file#available-features) section).
 
-<img src=".images/lexer.png" width=720><br>
-
+<div>
+	<img src=".images/lexer.png" width=720><br>
+</div>
 An Abstract Syntax Tree (AST) is a tree-shaped data structure used to represent commands for execution. It has a top node called a root, intermediate nodes called branches (subnodes), and leaf nodes where data are stored.
 
-<img src=".images/ast.png" width=720> <br>
+<div>
+	<img src=".images/ast.png" width=720> <br>
+</div>
 
-## Example:
+## Examples:
 <div align="center">
-    <img width=64 src=".images/placeholder.jpg">
+    <img width=720 src=".images/minishell.gif">
     <br><br>
     <img width=64 src=".images/placeholder.jpg">
 </div>
@@ -67,9 +70,9 @@ An Abstract Syntax Tree (AST) is a tree-shaped data structure used to represent 
 ## Ressources used:
 - [Bash documentation](https://pubs.opengroup.org/onlinepubs/9699919799/functions/contents.html)
 - [Readline documentation](https://web.mit.edu/gnu/doc/html/rlman_2.html#IDX113)
-- [Function manual provided by linux](https://www.man7.org/linux/man-pages/index.html)
 - [Tokenize a string](https://www.geeksforgeeks.org/cpp/string-tokenization-in-c/)
 - [AST wikipedia](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
+- [Inode wikipedia](https://en.wikipedia.org/wiki/Inode)
 - [Lexer analysis wikipedia](https://en.wikipedia.org/wiki/Lexical_analysis)
 - [Piping in UNIX/Linux](https://www.geeksforgeeks.org/linux-unix/piping-in-unix-or-linux/)
 
