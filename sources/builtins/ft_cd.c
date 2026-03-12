@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 10:47:36 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/12 15:35:34 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 15:58:49 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ static void	ft_cd_arg(t_minishell *minishell, t_exec *exec)
 	char	*updated_pwd;
 
 	arg_len = ft_strlen(exec->child.cmd[1]);
-	if (exec->child.argc > 0 && exec->child.cmd[1][arg_len - 1] == '/' && arg_len > 1)
+	if (exec->child.argc > 0 && exec->child.cmd[1][arg_len - 1] == '/'
+		&& arg_len > 1)
 		exec->child.cmd[1][arg_len - 1] = '\0';
 	if (strcmp(exec->child.cmd[1], "-") == 0)
 	{

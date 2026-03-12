@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:28:21 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/12 15:51:52 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 16:06:33 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ typedef struct s_child
 
 typedef struct s_heredoc
 {
-	int				heredoc_fd[1024];
-	int				heredoc_fd_size;
-	int				heredoc_done;
+	int				hd_fd[1024];
+	int				hd_fd_size;
+	int				hd_done;
 }					t_heredoc;
 
 typedef struct s_exec

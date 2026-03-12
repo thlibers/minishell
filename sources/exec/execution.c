@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/12 14:50:02 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 16:05:08 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,4 @@ void	execution(t_minishell *minishell)
 	}
 	ptr_free_tab(&minishell->exec.env);
 	i = 0;
-	// while (i < minishell->exec.heredoc_done)
-	// {
-	// 	if (minishell->exec.heredoc_fd[minishell->exec.heredoc_fd_size] > 2)
-	// 		(close(minishell->exec.heredoc_fd[minishell->exec.heredoc_fd_size]),
-	// 			minishell->exec.heredoc_fd[minishell->exec.heredoc_fd_size] = 0);
-	// 	i++;
-	// }
 }

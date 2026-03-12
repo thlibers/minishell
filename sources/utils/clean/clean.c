@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 19:27:19 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/12 15:53:52 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 16:08:30 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ void	clean_heredoc_fd(t_exec *exec)
 	int	i;
 
 	i = 0;
-	while (i < exec->heredoc.heredoc_fd_size)
+	while (i < exec->heredoc.hd_fd_size)
 	{
-		if (exec->heredoc.heredoc_fd[i] > 2)
+		if (exec->heredoc.hd_fd[i] > 2)
 		{
-			close(exec->heredoc.heredoc_fd[i]);
-			exec->heredoc.heredoc_fd[i] = -1;
+			close(exec->heredoc.hd_fd[i]);
+			exec->heredoc.hd_fd[i] = -1;
 		}
 		i++;
 	}

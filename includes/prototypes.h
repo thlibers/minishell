@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 13:25:31 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/09 14:20:42 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 16:18:51 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ void	ft_unset(t_minishell *minishell, t_exec *exec, int child_number);
 
 /* ======================= EXEC ======================= */
 /* ----- redirection/open_redirection.c */
-int		open_infile(char *filename, int trunc, t_exec *exec);
-int		open_outfile(char *filename, int trunc, t_exec *exec);
-bool	file_opener(t_exec *exec, t_ast *ast, int flag, int (*ptr)(char *, int,
-				t_exec *));
+int		open_infile(char *filename, int trunc, t_child *child);
+int		open_outfile(char *filename, int trunc, t_child *child);
+bool	file_opener(t_child *child, t_ast *ast, int flag, int (*ptr)(char *,
+				int, t_child *));
 
 /* ----- child_process.c ----- */
 void	child_process(t_minishell *minishell, int child_number);
