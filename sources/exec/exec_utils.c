@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:25 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/06 06:35:54 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 15:29:51 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	clean_child(t_minishell *minishell, t_exec *exec)
 	i = 0;
 	if (!exec || !minishell)
 		return ;
-	if (exec->infile_fd > 2)
-		(close(exec->infile_fd), exec->infile_fd = -1);
-	if (exec->outfile_fd > 2)
-		(close(exec->outfile_fd), exec->outfile_fd = -1);
+	if (exec->child.infile_fd > 2)
+		(close(exec->child.infile_fd), exec->child.infile_fd = -1);
+	if (exec->child.outfile_fd > 2)
+		(close(exec->child.outfile_fd), exec->child.outfile_fd = -1);
 	while (i < exec->cmdc)
 	{
 		if (exec->pipe_fd[i][0] > 2)
@@ -35,8 +35,8 @@ void	clean_child(t_minishell *minishell, t_exec *exec)
 		free(exec->pipe_fd);
 	if (minishell->pid)
 		free(minishell->pid);
-	if (minishell->exec.cmd)
-		free_tab(minishell->exec.cmd);
+	if (minishell->exec.child.cmd)
+		free_tab(minishell->exec.child.cmd);
 	if (minishell->exec.env)
 		free_tab(minishell->exec.env);
 }
@@ -46,16 +46,16 @@ void	close_file(t_exec *exec, t_ast *curr_branch)
 	if (curr_branch->type >= T_HERE_DOC && curr_branch->leaf_right
 		&& curr_branch->leaf_right->type < T_HERE_DOC)
 	{
-		if (exec->infile_fd > 2 && curr_branch->type >= T_RED_IN)
+		if (exec->child.infile_fd > 2 && curr_branch->type >= T_RED_IN)
 		{
-			close(exec->infile_fd);
-			exec->infile_fd = 0;
+			close(exec->child.infile_fd);
+			exec->child.infile_fd = 0;
 		}
-		if (exec->outfile_fd > 2 && (curr_branch->type == T_RED_OUT
+		if (exec->child.outfile_fd > 2 && (curr_branch->type == T_RED_OUT
 				|| curr_branch->type == T_RED_OUT_APP))
 		{
-			close(exec->outfile_fd);
-			exec->outfile_fd = 1;
+			close(exec->child.outfile_fd);
+			exec->child.outfile_fd = 1;
 		}
 	}
 }

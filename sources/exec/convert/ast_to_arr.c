@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 14:20:35 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/12 13:11:57 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 15:30:53 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ char	**ast_to_arr(t_exec *exec, t_ast **ast)
 	i = 0;
 	if (!init_ast_to_arr(ast, &arr, exec))
 		return (NULL);
-	
-	if ((*ast || !(*ast)->top || (*ast)->type == T_PIPE || (*ast)->type == T_WORD
-		|| (*ast)->top->type != T_HERE_DOC))
+	if ((*ast || !(*ast)->top || (*ast)->type == T_PIPE
+			|| (*ast)->type == T_WORD || (*ast)->top->type != T_HERE_DOC))
 	{
 		save = *ast;
 		*ast = (*ast)->leaf_left;
@@ -58,9 +57,9 @@ void	arg_count(t_exec *exec)
 	int	i;
 
 	i = 0;
-	while (exec->cmd && exec->cmd[i])
+	while (exec->child.cmd && exec->child.cmd[i])
 		i++;
-	exec->argc = i - 1;
+	exec->child.argc = i - 1;
 }
 
 void	print_tab(char **tab)

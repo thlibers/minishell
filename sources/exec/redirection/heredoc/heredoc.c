@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 09:00:43 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/12 14:14:22 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 14:40:32 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static t_tok	*line_to_tok(char *line, t_minishell *minishell, t_exec *exec)
 		}
 		i++;
 	}
-	write(exec->heredoc_fd[exec->heredoc_fd_size], tok->str, ft_strlen(tok->str));
+	write(exec->heredoc_fd[exec->heredoc_fd_size], tok->str,
+		ft_strlen(tok->str));
 	write(exec->heredoc_fd[exec->heredoc_fd_size], "\n", 1);
 	free_tok(&tok);
 	return (NULL);

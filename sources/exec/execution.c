@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/12 14:35:04 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 14:50:02 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 	tmp = minishell->ast;
 	while (i < minishell->exec.cmdc)
 	{
-		// memset t_child
-		minishell->exec.cmd = ast_to_arr(&minishell->exec, &tmp);
-		if (minishell->exec.cmd && minishell->exec.cmd[0])
+		ft_memset(&minishell->exec.child, 0, sizeof(t_child));
+		minishell->exec.child.cmd = ast_to_arr(&minishell->exec, &tmp);
+		if (minishell->exec.child.cmd && minishell->exec.child.cmd[0])
 		{
 			arg_count(&minishell->exec);
 			if (!selector(minishell, i))
@@ -53,14 +53,13 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 				if (pid[i] == 0)
 					child_process(minishell, i);
 			}
-			ptr_free_tab(&minishell->exec.cmd);
+			ptr_free_tab(&minishell->exec.child.cmd);
 			close_file(&minishell->exec, tmp);
 		}
-		if (minishell->exec.infile_fd > 2)
-			(close(minishell->exec.infile_fd), minishell->exec.infile_fd = -1);
-		if (minishell->exec.outfile_fd > 2)
-			(close(minishell->exec.outfile_fd), minishell->exec.outfile_fd =
-				-1);
+		if (minishell->exec.child.infile_fd > 2)
+			close(minishell->exec.child.infile_fd);
+		if (minishell->exec.child.outfile_fd > 2)
+			close(minishell->exec.child.outfile_fd);
 		i++;
 		tmp = tmp->leaf_right;
 	}
@@ -91,7 +90,7 @@ static void	execution_step(t_minishell *minishell)
 
 void	execution(t_minishell *minishell)
 {
-	int i;
+	int	i;
 
 	if (!init_exec(minishell->env, minishell->ast, &minishell->exec, minishell))
 		return ;

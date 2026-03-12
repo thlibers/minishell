@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:18:25 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/12 14:15:15 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 15:30:20 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ bool	redirection_choser(t_exec *exec, t_ast *ast)
 		}
 		else if ((ast)->type == T_HERE_DOC)
 		{
-			exec->infile_fd = exec->heredoc_fd[exec->heredoc_done];
+			exec->child.infile_fd = exec->heredoc_fd[exec->heredoc_done];
 			exec->heredoc_done++;
 		}
 		if ((ast)->leaf_right->type == T_WORD)
@@ -87,10 +87,10 @@ int	init_exec(t_env *env, t_ast *ast, t_exec *exec, t_minishell *minishell)
 {
 	t_ast	*save;
 
-	if (exec->infile_fd > 2)
-		close(exec->infile_fd);
-	if (exec->outfile_fd > 2)
-		close(exec->outfile_fd);
+	if (exec->child.infile_fd > 2)
+		close(exec->child.infile_fd);
+	if (exec->child.outfile_fd > 2)
+		close(exec->child.outfile_fd);
 	memset(&minishell->exec, 0, sizeof(t_exec));
 	exec->cmdc = cmd_count(ast);
 	exec->env = convert_env(env);

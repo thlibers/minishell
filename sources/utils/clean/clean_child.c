@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 19:27:05 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/12 14:32:13 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 15:40:12 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,18 @@ void	full_clean(t_minishell *minishell)
 {
 	if (minishell->exec.limiter)
 		(free(minishell->exec.limiter), minishell->exec.limiter = NULL);
-	if (minishell->exec.save[0] > 2)
-		(close(minishell->exec.save[0]), minishell->exec.save[0] = -1);
-	if (minishell->exec.save[1] > 2)
-		(close(minishell->exec.save[1]), minishell->exec.save[1] = -1);
-	if (minishell->exec.cmd)
-		free_tab(minishell->exec.cmd);
+	if (minishell->exec.child.save[0] > 2)
+		(close(minishell->exec.child.save[0]), minishell->exec.child.save[0] = -1);
+	if (minishell->exec.child.save[1] > 2)
+		(close(minishell->exec.child.save[1]), minishell->exec.child.save[1] = -1);
+	if (minishell->exec.child.cmd)
+		free_tab(minishell->exec.child.cmd);
 	if (minishell->exec.env)
 		free_tab(minishell->exec.env);
-	if (minishell->exec.infile_fd > 2)
-		(close(minishell->exec.infile_fd), minishell->exec.infile_fd = -1);
-	if (minishell->exec.outfile_fd > 2)
-		(close(minishell->exec.outfile_fd), minishell->exec.outfile_fd = -1);
+	if (minishell->exec.child.infile_fd > 2)
+		(close(minishell->exec.child.infile_fd), minishell->exec.child.infile_fd = -1);
+	if (minishell->exec.child.outfile_fd > 2)
+		(close(minishell->exec.child.outfile_fd), minishell->exec.child.outfile_fd = -1);
 	if (minishell->fd_history > 2)
 		(close(minishell->fd_history), minishell->fd_history = -1);
 	if (minishell->ast)
@@ -61,14 +61,14 @@ void	full_clean(t_minishell *minishell)
 void	half_clean(t_minishell *minishell)
 {
 	clean_heredoc_fd(&minishell->exec);
-	if (minishell->exec.save[0] > 2)
-		(close(minishell->exec.save[0]), minishell->exec.save[0] = -1);
-	if (minishell->exec.save[1] > 2)
-		(close(minishell->exec.save[1]), minishell->exec.save[1] = -1);
-	if (minishell->exec.infile_fd > 2)
-		(close(minishell->exec.infile_fd), minishell->exec.infile_fd = -1);
-	if (minishell->exec.outfile_fd > 2)
-		(close(minishell->exec.outfile_fd), minishell->exec.outfile_fd = -1);
+	if (minishell->exec.child.save[0] > 2)
+		(close(minishell->exec.child.save[0]), minishell->exec.child.save[0] = -1);
+	if (minishell->exec.child.save[1] > 2)
+		(close(minishell->exec.child.save[1]), minishell->exec.child.save[1] = -1);
+	if (minishell->exec.child.infile_fd > 2)
+		(close(minishell->exec.child.infile_fd), minishell->exec.child.infile_fd = -1);
+	if (minishell->exec.child.outfile_fd > 2)
+		(close(minishell->exec.child.outfile_fd), minishell->exec.child.outfile_fd = -1);
 	if (minishell->fd_history > 2)
 		(close(minishell->fd_history), minishell->fd_history = -1);
 	if (minishell->exec.pipe_fd)
@@ -118,10 +118,10 @@ void	cleanup_pipe(t_exec *exec)
 	i = 0;
 	if (!exec)
 		return ;
-	if (exec->infile_fd > 2)
-		(close(exec->infile_fd), exec->infile_fd = -1);
-	if (exec->outfile_fd > 2)
-		(close(exec->outfile_fd), exec->outfile_fd = -1);
+	if (exec->child.infile_fd > 2)
+		(close(exec->child.infile_fd), exec->child.infile_fd = -1);
+	if (exec->child.outfile_fd > 2)
+		(close(exec->child.outfile_fd), exec->child.outfile_fd = -1);
 	while (i < exec->cmdc)
 	{
 		if (exec->pipe_fd[i][0] > 2)

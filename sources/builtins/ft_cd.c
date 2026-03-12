@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 10:47:36 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/06 09:57:16 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 15:35:34 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ static char	*init_newpwd(t_exec *exec)
 	char	*new_pwd;
 	char	pwd_buffer[4096];
 
-	if (exec->cmd[1][0] == '/')
-		new_pwd = ft_strdup(exec->cmd[1]);
+	if (exec->child.cmd[1][0] == '/')
+		new_pwd = ft_strdup(exec->child.cmd[1]);
 	else
 	{
 		pwd = malloc(sizeof(char) * ft_strlen(getcwd(pwd_buffer,
 						sizeof(pwd_buffer))));
 		pwd = ft_strjoin(getcwd(pwd_buffer, sizeof(pwd_buffer)), "/");
-		new_pwd = ft_strjoin(pwd, exec->cmd[1]);
+		new_pwd = ft_strjoin(pwd, exec->child.cmd[1]);
 		free(pwd);
 	}
 	new_pwd[ft_strlen(new_pwd)] = '\0';
@@ -66,33 +66,33 @@ static void	ft_cd_arg(t_minishell *minishell, t_exec *exec)
 	int		arg_len;
 	char	*updated_pwd;
 
-	arg_len = ft_strlen(exec->cmd[1]);
-	if (exec->argc > 0 && exec->cmd[1][arg_len - 1] == '/' && arg_len > 1)
-		exec->cmd[1][arg_len - 1] = '\0';
-	if (strcmp(exec->cmd[1], "-") == 0)
+	arg_len = ft_strlen(exec->child.cmd[1]);
+	if (exec->child.argc > 0 && exec->child.cmd[1][arg_len - 1] == '/' && arg_len > 1)
+		exec->child.cmd[1][arg_len - 1] = '\0';
+	if (strcmp(exec->child.cmd[1], "-") == 0)
 	{
 		if (ft_getenv(minishell->env, "OLDPWD"))
 			printf("%s\n", ft_getenv(minishell->env, "OLDPWD"));
 		parsing_dir(minishell, ft_getenv(minishell->env, "OLDPWD"));
 	}
-	else if (ft_strnstr(exec->cmd[1], "..", arg_len))
+	else if (ft_strnstr(exec->child.cmd[1], "..", arg_len))
 	{
 		updated_pwd = ft_dotdot(exec);
 		parsing_dir(minishell, updated_pwd);
 		free(updated_pwd);
 	}
 	else
-		parsing_dir(minishell, exec->cmd[1]);
+		parsing_dir(minishell, exec->child.cmd[1]);
 }
 
 int	ft_cd(t_minishell *minishell, t_exec *exec, int child_number)
 {
 	init_child(exec, child_number, 0);
-	if (exec->argc > 1)
+	if (exec->child.argc > 1)
 		return (ft_fprintf(2, ECDARGC));
-	if (exec->argc == 0 || strcmp(exec->cmd[1], "~") == 0)
+	if (exec->child.argc == 0 || strcmp(exec->child.cmd[1], "~") == 0)
 		parsing_dir(minishell, ft_getenv(minishell->env, "HOME"));
-	if (exec->argc > 0)
+	if (exec->child.argc > 0)
 		ft_cd_arg(minishell, exec);
 	return (0);
 }

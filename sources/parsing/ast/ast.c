@@ -6,13 +6,12 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 10:05:34 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/10 15:53:49 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 14:42:27 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-// Trouver le type du prochain operateur
 static t_data_type	next_ope(t_tok *tok)
 {
 	while (tok)
@@ -24,7 +23,6 @@ static t_data_type	next_ope(t_tok *tok)
 	return (T_WORD);
 }
 
-// Creer la branche de gauche
 static t_ast	*create_left(t_tok *tok, int i)
 {
 	t_ast	*left;
@@ -41,7 +39,6 @@ static t_ast	*create_left(t_tok *tok, int i)
 	return (left);
 }
 
-// Creer la branche de droite qui va construire notre arbre
 t_ast	*create_tree(t_tok *tok, int i)
 {
 	t_ast	*node;
@@ -74,64 +71,64 @@ t_ast	*create_tree(t_tok *tok, int i)
 // Proteger les fonction en recursive contre la recursive max
 /* --- DEBUG --- */
 
-void	print_type(int leaf_number, t_ast *ast)
-{
-	switch (ast->type)
-	{
-	case T_NULL:
-		printf("leaf %d type T_NULL\n", leaf_number);
-		break ;
-	case T_WORD:
-		printf("leaf %d type T_WORD\n", leaf_number);
-		break ;
-	case 2:
-		printf("leaf %d type T_PIPE\n", leaf_number);
-		break ;
-	case 3:
-		printf("leaf %d type T_HERE_DOC\n", leaf_number);
-		break ;
-	case 4:
-		printf("leaf %d type T_RED_IN\n", leaf_number);
-		break ;
-	case 5:
-		printf("leaf %d type T_RED_OUT\n", leaf_number);
-		break ;
-	case 6:
-		printf("leaf %d type T_RED_OUT_APP\n", leaf_number);
-		break ;
-	case 7:
-		printf("leaf %d type T_AND\n", leaf_number);
-		break ;
-	case 8:
-		printf("leaf %d type T_OR\n", leaf_number);
-		break ;
-	default:
-		break ;
-	}
-}
+// void	print_type(int leaf_number, t_ast *ast)
+// {
+// 	switch (ast->type)
+// 	{
+// 	case T_NULL:
+// 		printf("leaf %d type T_NULL\n", leaf_number);
+// 		break ;
+// 	case T_WORD:
+// 		printf("leaf %d type T_WORD\n", leaf_number);
+// 		break ;
+// 	case 2:
+// 		printf("leaf %d type T_PIPE\n", leaf_number);
+// 		break ;
+// 	case 3:
+// 		printf("leaf %d type T_HERE_DOC\n", leaf_number);
+// 		break ;
+// 	case 4:
+// 		printf("leaf %d type T_RED_IN\n", leaf_number);
+// 		break ;
+// 	case 5:
+// 		printf("leaf %d type T_RED_OUT\n", leaf_number);
+// 		break ;
+// 	case 6:
+// 		printf("leaf %d type T_RED_OUT_APP\n", leaf_number);
+// 		break ;
+// 	case 7:
+// 		printf("leaf %d type T_AND\n", leaf_number);
+// 		break ;
+// 	case 8:
+// 		printf("leaf %d type T_OR\n", leaf_number);
+// 		break ;
+// 	default:
+// 		break ;
+// 	}
+// }
 
-void	print_ast(t_ast *ast)
-{
-	t_ast	*leaf;
-	int		leaf_number;
+// void	print_ast(t_ast *ast)
+// {
+// 	t_ast	*leaf;
+// 	int		leaf_number;
 
-	leaf_number = 0;
-	printf("Tree have %d cmd\n", cmd_count(ast));
-	printf("--- AST DATA ---\n");
-	while (ast)
-	{
-		leaf_number++;
-		print_type(leaf_number, ast);
-		if (ast->leaf_left)
-		{
-			leaf = ast->leaf_left;
-			while (leaf)
-			{
-				printf("leaf %d : %s\n", leaf_number, leaf->data);
-				leaf = leaf->leaf_left;
-			}
-		}
-		ast = ast->leaf_right;
-	}
-	printf("----------------\n");
-}
+// 	leaf_number = 0;
+// 	printf("Tree have %d cmd\n", cmd_count(ast));
+// 	printf("--- AST DATA ---\n");
+// 	while (ast)
+// 	{
+// 		leaf_number++;
+// 		print_type(leaf_number, ast);
+// 		if (ast->leaf_left)
+// 		{
+// 			leaf = ast->leaf_left;
+// 			while (leaf)
+// 			{
+// 				printf("leaf %d : %s\n", leaf_number, leaf->data);
+// 				leaf = leaf->leaf_left;
+// 			}
+// 		}
+// 		ast = ast->leaf_right;
+// 	}
+// 	printf("----------------\n");
+// }

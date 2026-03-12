@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:29:09 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/09 17:20:37 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/03/12 15:31:04 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,3 @@ char	**convert_env(t_env *env)
 	converted_tab[i] = NULL;
 	return (converted_tab);
 }
-
-// le free quand appel

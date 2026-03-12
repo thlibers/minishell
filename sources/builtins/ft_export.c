@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 15:05:28 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/10 13:28:54 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 15:36:59 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 static char	**ft_select_tab(t_minishell *minishell, t_exec *exec, char **tab,
 		int i)
 {
-	if (ft_strnstr(exec->cmd[i], "+=", ft_strlen(exec->cmd[i])))
+	if (ft_strnstr(exec->child.cmd[i], "+=", ft_strlen(exec->child.cmd[i])))
 		tab = add_to_envvalue(minishell, exec, i);
 	else
-		tab = env_spliter(exec->cmd[i]);
+		tab = env_spliter(exec->child.cmd[i]);
 	return (tab);
 }
 
@@ -52,7 +52,7 @@ static int	ft_export_arg(t_minishell *minishell, t_exec *exec, bool pipe)
 		return (1);
 	head = minishell->env;
 	i = 1;
-	while (exec->cmd[i])
+	while (exec->child.cmd[i])
 	{
 		tab = ft_select_tab(minishell, exec, tab, i);
 		if (!check_env_name(minishell, tab, &i))
@@ -65,7 +65,7 @@ static int	ft_export_arg(t_minishell *minishell, t_exec *exec, bool pipe)
 		minishell->env = head;
 		if (status == 0)
 			add_env_back(&minishell->env, create_env_var(tab[0], tab[1],
-					ft_strchr(exec->cmd[i], '=')));
+					ft_strchr(exec->child.cmd[i], '=')));
 		i++;
 		ptr_free_tab(&tab);
 	}
@@ -98,7 +98,7 @@ void	ft_export(t_minishell *minishell, t_exec *exec, int child_number,
 		bool pipe)
 {
 	init_child(exec, child_number, 0);
-	if (exec->argc == 0)
+	if (exec->child.argc == 0)
 		ft_export_noarg(minishell);
 	else
 		ft_export_arg(minishell, exec, pipe);

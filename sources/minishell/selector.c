@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 17:02:55 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/06 10:33:45 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 15:39:06 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,19 @@ static void	ft_unset_selector(t_minishell *minishell, int i)
 
 bool	selector(t_minishell *minishell, int i)
 {
-	if (ft_strcmp(minishell->exec.cmd[0], "cd") == 0)
+	if (ft_strcmp(minishell->exec.child.cmd[0], "cd") == 0)
 		ft_cd_selector(minishell, i);
-	else if (ft_strcmp(minishell->exec.cmd[0], "echo") == 0)
+	else if (ft_strcmp(minishell->exec.child.cmd[0], "echo") == 0)
 		ft_echo(minishell, &minishell->exec, i);
-	else if (ft_strcmp(minishell->exec.cmd[0], "env") == 0)
+	else if (ft_strcmp(minishell->exec.child.cmd[0], "env") == 0)
 		ft_env(minishell, i);
-	else if (ft_strcmp(minishell->exec.cmd[0], "exit") == 0)
+	else if (ft_strcmp(minishell->exec.child.cmd[0], "exit") == 0)
 		ft_exit_selector(minishell, i);
-	else if (ft_strcmp(minishell->exec.cmd[0], "export") == 0)
+	else if (ft_strcmp(minishell->exec.child.cmd[0], "export") == 0)
 		ft_export_selector(minishell, i);
-	else if (ft_strcmp(minishell->exec.cmd[0], "pwd") == 0)
+	else if (ft_strcmp(minishell->exec.child.cmd[0], "pwd") == 0)
 		ft_pwd(minishell, i);
-	else if (ft_strcmp(minishell->exec.cmd[0], "unset") == 0)
+	else if (ft_strcmp(minishell->exec.child.cmd[0], "unset") == 0)
 		ft_unset_selector(minishell, i);
 	else
 		return (false);

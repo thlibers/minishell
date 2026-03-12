@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 17:21:19 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/09 17:21:24 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/03/12 14:41:26 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 int	heredoc_init(t_exec *exec)
 {
-	exec->heredoc_fd[exec->heredoc_fd_size] = open(HEREDOC_F, O_WRONLY | O_CREAT | O_TRUNC, 00644);
+	exec->heredoc_fd[exec->heredoc_fd_size] = open(HEREDOC_F,
+			O_WRONLY | O_CREAT | O_TRUNC, 00644);
 	if (exec->heredoc_fd[exec->heredoc_fd_size] < 0)
 	{
 		ft_fprintf(STDERR_FILENO, "Failed to open/create/erase tmp file");

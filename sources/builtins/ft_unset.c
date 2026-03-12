@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 15:05:33 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/02 15:04:06 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 15:37:11 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ void	ft_unset(t_minishell *minishell, t_exec *exec, int child_number)
 	i = 1;
 	head = minishell->env;
 	init_child(exec, child_number, 0);
-	while (exec->cmd[i])
+	while (exec->child.cmd[i])
 	{
 		minishell->env = head;
 		while (minishell->env->next)
 		{
-			if (!ft_strcmp(exec->cmd[i], minishell->env->next->name))
+			if (!ft_strcmp(exec->child.cmd[i], minishell->env->next->name))
 			{
 				tmp = minishell->env->next->next;
 				free_unset(minishell);
