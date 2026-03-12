@@ -16,14 +16,29 @@
 # include <sys/types.h>
 
 // --- EXECUTION PART ---
+
+typedef struct s_child
+{
+	char			**cmd;
+
+	int				infile_fd;
+	int				outfile_fd;
+	int				cmdc;
+	int				argc;
+}	t_child;
+
 typedef struct s_exec
 {
+	t_child			child;
 	char			**cmd;
 	char			**env;
 	char			*limiter;
 	int				*ptr_exit_code;
 	int				(*pipe_fd)[2];
 	int				infile_fd;
+	int				heredoc_fd[1024];
+	int				heredoc_fd_size;
+	int				heredoc_done;
 	int				outfile_fd;
 	int				index;
 	int				cmdc;

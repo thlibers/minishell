@@ -11,13 +11,12 @@
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+#include <unistd.h>
 
 int	heredoc_init(t_exec *exec)
 {
-	if (exec->infile_fd > 2)
-		(close(exec->infile_fd), exec->infile_fd = -1);
-	exec->infile_fd = open(HEREDOC_F, O_WRONLY | O_CREAT | O_TRUNC, 00644);
-	if (exec->infile_fd < 0)
+	exec->heredoc_fd[exec->heredoc_fd_size] = open(HEREDOC_F, O_WRONLY | O_CREAT | O_TRUNC, 00644);
+	if (exec->heredoc_fd[exec->heredoc_fd_size] < 0)
 	{
 		ft_fprintf(STDERR_FILENO, "Failed to open/create/erase tmp file");
 		return (0);
@@ -27,12 +26,14 @@ int	heredoc_init(t_exec *exec)
 
 int	terminate_heredoc(t_exec *exec)
 {
-	(close(exec->infile_fd), exec->infile_fd = -1);
-	exec->infile_fd = open(HEREDOC_F, O_RDONLY);
-	if (exec->infile_fd < 0)
+	close(exec->heredoc_fd[exec->heredoc_fd_size]);
+	exec->heredoc_fd[exec->heredoc_fd_size] = open(HEREDOC_F, O_RDONLY);
+	if (exec->heredoc_fd[exec->heredoc_fd_size] < 0)
 	{
 		ft_fprintf(STDERR_FILENO, "Failed to reopen heredoc file for reading");
 		return (0);
 	}
+	exec->heredoc_fd_size++;
+	unlink(HEREDOC_F);
 	return (1);
 }

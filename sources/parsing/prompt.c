@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+#include "includes/prototypes.h"
 
 bool	prompt(t_minishell *minishell)
 {
@@ -36,6 +37,7 @@ bool	prompt(t_minishell *minishell)
 		ft_expand(minishell, minishell->env, &minishell->tok);
 		minishell->ast = create_tree(minishell->tok, 0);
 		free_tok(&minishell->tok);
+		print_ast(minishell->ast);
 	}
 	free(line);
 	return (true);

@@ -73,7 +73,7 @@ t_ast	*create_tree(t_tok *tok, int i)
 
 // Proteger les fonction en recursive contre la recursive max
 /* --- DEBUG --- */
-/*
+
 void	print_type(int leaf_number, t_ast *ast)
 {
 	switch (ast->type)
@@ -135,4 +135,3 @@ void	print_ast(t_ast *ast)
 	}
 	printf("----------------\n");
 }
-*/

@@ -61,8 +61,19 @@ static void	first_last_command(t_exec *exec, int child_number, int is_child)
 		first_command(exec, child_number, is_child);
 	else if (child_number == exec->cmdc - 1)
 	{
-		if (dup2(exec->pipe_fd[child_number - 1][0], STDIN_FILENO) == -1)
-			ft_fprintf(STDERR_FILENO, EDUP2);
+		if (exec->infile_fd > 2)
+		{
+			if (dup2(exec->infile_fd, STDIN_FILENO) == -1)
+				ft_fprintf(STDERR_FILENO, EDUP2);
+			close(exec->infile_fd);
+			exec->infile_fd = -1;
+
+		}
+		else
+		{
+			if (dup2(exec->pipe_fd[child_number - 1][0], STDIN_FILENO) == -1)
+				ft_fprintf(STDERR_FILENO, EDUP2);
+		}
 		if (exec->outfile_fd > 2)
 		{
 			if (dup2(exec->outfile_fd, STDOUT_FILENO) == -1)
@@ -81,22 +92,31 @@ static void	first_last_command(t_exec *exec, int child_number, int is_child)
 
 static void	setup_middle_commands(t_exec *exec, int child_number, int is_child)
 {
-	if (dup2(exec->pipe_fd[child_number - 1][0], STDIN_FILENO) == -1)
-		ft_fprintf(STDERR_FILENO, EDUP2);
-	if (dup2(exec->pipe_fd[child_number][1], STDOUT_FILENO) == -1)
-		ft_fprintf(STDERR_FILENO, EDUP2);
-	if (is_child && exec->pipe_fd[child_number - 1][0] > 2)
-		(close(exec->pipe_fd[child_number - 1][0]), exec->pipe_fd[child_number
-			- 1][0] = -1);
-	if (is_child && exec->pipe_fd[child_number - 1][1] > 2)
-		(close(exec->pipe_fd[child_number - 1][1]), exec->pipe_fd[child_number
-			- 1][1] = -1);
-	if (is_child && exec->pipe_fd[child_number][0] > 2)
-		(close(exec->pipe_fd[child_number][0]), exec->pipe_fd[child_number][0] =
-			-1);
-	if (is_child && exec->pipe_fd[child_number][1] > 2)
-		(close(exec->pipe_fd[child_number][1]), exec->pipe_fd[child_number][1] =
-			-1);
+	(void)is_child;
+	if (exec->infile_fd > 2)
+	{
+		if (dup2(exec->infile_fd, STDIN_FILENO) == -1)
+			ft_fprintf(STDERR_FILENO, EDUP2);
+		close(exec->infile_fd);
+		exec->infile_fd = -1;
+	}
+	else
+	{
+		if (dup2(exec->pipe_fd[child_number - 1][0], STDIN_FILENO) == -1)
+			ft_fprintf(STDERR_FILENO, EDUP2);
+	}
+	if (exec->outfile_fd > 2)
+	{
+		if (dup2(exec->outfile_fd, STDIN_FILENO) == -1)
+			ft_fprintf(STDERR_FILENO, EDUP2);
+		close(exec->outfile_fd);
+		exec->outfile_fd = -1;
+	}
+	else
+	{
+		if (dup2(exec->pipe_fd[child_number][1], STDOUT_FILENO) == -1)
+				ft_fprintf(STDERR_FILENO, EDUP2);
+	}
 }
 
 void	init_child(t_exec *exec, int child_number, int is_child)

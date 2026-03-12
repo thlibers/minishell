@@ -11,7 +11,23 @@
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-#include "includes/prototypes.h"
+
+void	clean_useless_child(t_minishell *minishell)
+{
+	clean_heredoc_fd(&minishell->exec);
+	if (minishell->exec.limiter)
+		(free(minishell->exec.limiter), minishell->exec.limiter = NULL);
+	if (minishell->exec.pipe_fd)
+		pipes_close(&minishell->exec);
+	if (minishell->fd_history > 2)
+		(close(minishell->fd_history), minishell->fd_history = -1);
+	if (minishell->ast)
+		free_ast(&minishell->ast);
+	if (minishell->pid)
+		(free(minishell->pid), minishell->pid = NULL);
+	if (minishell->env)
+		env_clean(minishell->env, NULL);
+}
 
 void	full_clean(t_minishell *minishell)
 {
@@ -19,10 +35,6 @@ void	full_clean(t_minishell *minishell)
 		(close(minishell->exec.save[0]), minishell->exec.save[0] = -1);
 	if (minishell->exec.save[1] > 2)
 		(close(minishell->exec.save[1]), minishell->exec.save[1] = -1);
-	if (minishell->exec.limiter)
-		(free(minishell->exec.limiter), minishell->exec.limiter = NULL);
-	if (minishell->exec.pipe_fd)
-		pipes_close(&minishell->exec);
 	if (minishell->exec.cmd)
 		free_tab(minishell->exec.cmd);
 	if (minishell->exec.env)
@@ -46,6 +58,7 @@ void	full_clean(t_minishell *minishell)
 
 void	half_clean(t_minishell *minishell)
 {
+	clean_heredoc_fd(&minishell->exec);
 	if (minishell->exec.save[0] > 2)
 		(close(minishell->exec.save[0]), minishell->exec.save[0] = -1);
 	if (minishell->exec.save[1] > 2)

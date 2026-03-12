@@ -12,7 +12,7 @@
 
 #include "includes/minishell.h"
 
-static t_tok	*line_to_tok(char *line, t_minishell *minishell)
+static t_tok	*line_to_tok(char *line, t_minishell *minishell, t_exec *exec)
 {
 	t_tok	*tok;
 	int		i;
@@ -33,8 +33,8 @@ static t_tok	*line_to_tok(char *line, t_minishell *minishell)
 		}
 		i++;
 	}
-	write(minishell->exec.infile_fd, tok->str, ft_strlen(tok->str));
-	write(minishell->exec.infile_fd, "\n", 1);
+	write(exec->heredoc_fd[exec->heredoc_fd_size], tok->str, ft_strlen(tok->str));
+	write(exec->heredoc_fd[exec->heredoc_fd_size], "\n", 1);
 	free_tok(&tok);
 	return (NULL);
 }
@@ -58,9 +58,10 @@ int	here_doc(t_exec *exec, t_minishell *minishell)
 			break ;
 		}
 		else if (line && line[0] != '\0')
-			line_to_tok(line, minishell);
+			line_to_tok(line, minishell, &minishell->exec);
 		free(line);
 	}
+	close(exec->heredoc_fd[exec->heredoc_fd_size]);
 	full_clean(minishell);
 	exit(0);
 }

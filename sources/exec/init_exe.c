@@ -34,6 +34,11 @@ bool	redirection_choser(t_exec *exec, t_ast *ast)
 			if (!file_opener(exec, ast, 0, &open_outfile))
 				return (false);
 		}
+		else if ((ast)->type == T_HERE_DOC)
+		{
+			exec->infile_fd = exec->heredoc_fd[exec->heredoc_done];
+			exec->heredoc_done++;
+		}
 		if ((ast)->leaf_right->type == T_WORD)
 			break ;
 		ast = (ast)->leaf_right;
@@ -63,17 +68,32 @@ bool	child_heredoc(t_exec *exec, t_minishell *minishell)
 	return (true);
 }
 
+int	heredoc_fd_init(t_minishell *minishell, t_ast *save)
+{
+	signal(SIGINT, handler_sigint_exec);
+	if (minishell->exec.limiter)
+		free(minishell->exec.limiter);
+	save = save->leaf_right;
+	minishell->exec.limiter = ft_strdup(save->leaf_left->data);
+	if (!heredoc_init(&minishell->exec))
+		return (0);
+	if (!child_heredoc(&minishell->exec, minishell))
+		return (ptr_free_tab(&minishell->exec.env), 0);
+	if (!terminate_heredoc(&minishell->exec))
+		return (0);
+	signal(SIGINT, handler_sigint);
+	return (1);
+}
+
 int	init_exec(t_env *env, t_ast *ast, t_exec *exec, t_minishell *minishell)
 {
 	t_ast	*save;
-	t_ast	*checkpoint;
 
 	if (exec->infile_fd > 2)
 		close(exec->infile_fd);
-	exec->infile_fd = 0;
 	if (exec->outfile_fd > 2)
 		close(exec->outfile_fd);
-	exec->outfile_fd = 0;
+	memset(&minishell->exec, 0, sizeof(t_exec));
 	exec->cmdc = cmd_count(ast);
 	exec->env = convert_env(env);
 	save = minishell->ast;
@@ -81,18 +101,8 @@ int	init_exec(t_env *env, t_ast *ast, t_exec *exec, t_minishell *minishell)
 	{
 		if (save->type == T_HERE_DOC)
 		{
-			signal(SIGINT, handler_sigint_exec);
-			checkpoint = save->leaf_right;
-			if (exec->limiter)
-				free(exec->limiter);
-			exec->limiter = ft_strdup(checkpoint->leaf_left->data);
-			if (!heredoc_init(exec))
-				return (1);
-			if (!child_heredoc(exec, minishell))
-				return (ptr_free_tab(&minishell->exec.env), 0);
-			if (!terminate_heredoc(exec))
-				return (1);
-			signal(SIGINT, handler_sigint);
+			if (!heredoc_fd_init(minishell, save))
+				return (0);
 		}
 		save = save->leaf_right;
 	}
