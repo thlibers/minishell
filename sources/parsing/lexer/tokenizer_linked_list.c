@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:16:09 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/06 06:51:22 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 12:47:47 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*tok_str_save(char *line, t_data_type data_type)
 		is_inquote(&quote, line[len]);
 		len++;
 	}
-	str = calloc(len + 1, sizeof(char));
+	str = ft_calloc(len + 1, sizeof(char));
 	if (!str)
 		return (ft_fprintf(STDERR_FILENO, ENOENOMEM), NULL);
 	while (i < len)
@@ -47,7 +47,7 @@ t_tok	*tok_create_back(t_tok **tok, t_data_type data_type, char *line)
 	t_tok	*node;
 	t_tok	*head;
 
-	node = calloc(1, sizeof(t_tok));
+	node = ft_calloc(1, sizeof(t_tok));
 	if (!node)
 		return (NULL);
 	node->type = data_type;

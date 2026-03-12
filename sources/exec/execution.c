@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/11 17:18:30 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 14:35:04 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 	tmp = minishell->ast;
 	while (i < minishell->exec.cmdc)
 	{
+		// memset t_child
 		minishell->exec.cmd = ast_to_arr(&minishell->exec, &tmp);
-		if (minishell->exec.cmd)
+		if (minishell->exec.cmd && minishell->exec.cmd[0])
 		{
 			arg_count(&minishell->exec);
 			if (!selector(minishell, i))
@@ -58,8 +59,8 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 		if (minishell->exec.infile_fd > 2)
 			(close(minishell->exec.infile_fd), minishell->exec.infile_fd = -1);
 		if (minishell->exec.outfile_fd > 2)
-			(close(minishell->exec.outfile_fd),
-				minishell->exec.outfile_fd = -1);
+			(close(minishell->exec.outfile_fd), minishell->exec.outfile_fd =
+				-1);
 		i++;
 		tmp = tmp->leaf_right;
 	}
@@ -90,6 +91,8 @@ static void	execution_step(t_minishell *minishell)
 
 void	execution(t_minishell *minishell)
 {
+	int i;
+
 	if (!init_exec(minishell->env, minishell->ast, &minishell->exec, minishell))
 		return ;
 	minishell->pid = ft_calloc(minishell->exec.cmdc, sizeof(int));
@@ -108,4 +111,12 @@ void	execution(t_minishell *minishell)
 		minishell->pid = NULL;
 	}
 	ptr_free_tab(&minishell->exec.env);
+	i = 0;
+	// while (i < minishell->exec.heredoc_done)
+	// {
+	// 	if (minishell->exec.heredoc_fd[minishell->exec.heredoc_fd_size] > 2)
+	// 		(close(minishell->exec.heredoc_fd[minishell->exec.heredoc_fd_size]),
+	// 			minishell->exec.heredoc_fd[minishell->exec.heredoc_fd_size] = 0);
+	// 	i++;
+	// }
 }

@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 12:30:53 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/11 16:23:50 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 12:37:46 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ static void	setup_middle_commands(t_exec *exec, int child_number, int is_child)
 	}
 	if (exec->outfile_fd > 2)
 	{
-		if (dup2(exec->outfile_fd, STDIN_FILENO) == -1)
+		if (dup2(exec->outfile_fd, STDOUT_FILENO) == -1)
 			ft_fprintf(STDERR_FILENO, EDUP2);
 		close(exec->outfile_fd);
 		exec->outfile_fd = -1;

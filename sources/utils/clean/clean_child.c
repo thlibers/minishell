@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 19:27:05 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/09 14:20:07 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 14:32:13 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	clean_useless_child(t_minishell *minishell)
 
 void	full_clean(t_minishell *minishell)
 {
+	if (minishell->exec.limiter)
+		(free(minishell->exec.limiter), minishell->exec.limiter = NULL);
 	if (minishell->exec.save[0] > 2)
 		(close(minishell->exec.save[0]), minishell->exec.save[0] = -1);
 	if (minishell->exec.save[1] > 2)

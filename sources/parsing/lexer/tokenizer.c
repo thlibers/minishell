@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 15:51:09 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/11 17:16:43 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 12:57:31 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,17 +115,17 @@ t_tok	*tokenizer(char *line)
 }
 
 // DEBUG
-// void	print_tok(t_tok *tok)
-// {
-// 	int	i;
+void	print_tok(t_tok *tok)
+{
+	int	i;
 
-// 	i = 0;
-// 	while (tok->prev)
-// 		tok = tok->prev;
-// 	while (tok)
-// 	{
-// 		printf("%d; %s; %d\n", i, tok->str, tok->type);
-// 		i++;
-// 		tok = tok->next;
-// 	}
-// }
+	i = 0;
+	while (tok->prev)
+		tok = tok->prev;
+	while (tok)
+	{
+		printf("%d; %s; %d\n", i, tok->str, tok->type);
+		i++;
+		tok = tok->next;
+	}
+}

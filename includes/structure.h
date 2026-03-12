@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:28:21 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/10 13:31:50 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 14:32:10 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@
 typedef struct s_child
 {
 	char			**cmd;
-
+	int				save[2];
 	int				infile_fd;
 	int				outfile_fd;
-	int				cmdc;
 	int				argc;
 }	t_child;
 
@@ -44,6 +43,7 @@ typedef struct s_exec
 	int				cmdc;
 	int				argc;
 	int				save[2];
+
 }					t_exec;
 
 // --- PARSING PART ---

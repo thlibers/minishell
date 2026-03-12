@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:18:25 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/11 16:20:46 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 14:15:15 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ bool	child_heredoc(t_exec *exec, t_minishell *minishell)
 int	heredoc_fd_init(t_minishell *minishell, t_ast *save)
 {
 	signal(SIGINT, handler_sigint_exec);
-	if (minishell->exec.limiter)
-		free(minishell->exec.limiter);
 	save = save->leaf_right;
 	minishell->exec.limiter = ft_strdup(save->leaf_left->data);
 	if (!heredoc_init(&minishell->exec))
