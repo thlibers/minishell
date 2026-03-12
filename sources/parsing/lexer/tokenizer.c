@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 15:51:09 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/12 12:57:31 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 17:42:43 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,28 @@ static bool	create_tok_ope(int *i, char *line, t_tok **tok)
 	return (true);
 }
 
+void	check_tok_order(t_tok **tok)
+{
+	t_tok	*tok_cpy;
+
+	tok_cpy = *tok;
+	while (tok && (*tok)->next)
+	{
+		while (*tok && (*tok)->next && (*tok)->prev && (*tok)->type == T_WORD)
+			*tok = (*tok)->next;
+		if (*tok && (*tok)->type >= T_HERE_DOC && (!(*tok)->prev
+				|| (*tok)->prev->type == T_PIPE))
+			tok_cpy = back_tofirst(tok);
+		if (tok && (*tok)->next)
+			*tok = (*tok)->next;
+	}
+	*tok = tok_cpy;
+}
+
 t_tok	*tokenizer(char *line)
 {
 	int		i;
 	t_tok	*tok;
-	t_tok	*tok_cpy;
 
 	i = 0;
 	tok = NULL;
@@ -99,23 +116,12 @@ t_tok	*tokenizer(char *line)
 	}
 	if (!check_quote(tok) || !check_ope(tok))
 		return (free_tok(&tok), NULL);
-	tok_cpy = tok;
-	while (tok && tok->next)
-	{
-		while (tok && tok->next && tok->prev && tok->type == T_WORD)
-			tok = tok->next;
-		if (tok && tok->type >= T_HERE_DOC && (!tok->prev
-				|| tok->prev->type == T_PIPE))
-			tok_cpy = back_tofirst(&tok);
-		if (tok && tok->next)
-			tok = tok->next;
-	}
-	tok = tok_cpy;
+	check_tok_order(&tok);
 	return (tok);
 }
 
 // DEBUG
-void	print_tok(t_tok *tok)
+/*void	print_tok(t_tok *tok)
 {
 	int	i;
 
@@ -128,4 +134,4 @@ void	print_tok(t_tok *tok)
 		i++;
 		tok = tok->next;
 	}
-}
+}*/
