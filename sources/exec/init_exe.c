@@ -6,12 +6,32 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:18:25 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/12 16:17:08 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 17:19:37 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 #include "includes/structure.h"
+
+static bool	chose_redin_redout(t_exec *exec, t_ast *ast)
+{
+	if ((ast)->type == T_RED_IN)
+	{
+		if (!file_opener(&exec->child, ast, 0, &open_infile))
+			return (false);
+	}
+	else if ((ast)->type == T_RED_OUT)
+	{
+		if (!file_opener(&exec->child, ast, 1, &open_outfile))
+			return (false);
+	}
+	else if ((ast)->type == T_RED_OUT_APP)
+	{
+		if (!file_opener(&exec->child, ast, 0, &open_outfile))
+			return (false);
+	}
+	return (true);
+}
 
 bool	redirection_choser(t_exec *exec, t_ast *ast)
 {
@@ -19,21 +39,8 @@ bool	redirection_choser(t_exec *exec, t_ast *ast)
 		ast = ast->leaf_right;
 	while (ast && (ast)->leaf_right && (ast)->type >= T_HERE_DOC)
 	{
-		if ((ast)->type == T_RED_IN)
-		{
-			if (!file_opener(&exec->child, ast, 0, &open_infile))
-				return (false);
-		}
-		else if ((ast)->type == T_RED_OUT)
-		{
-			if (!file_opener(&exec->child, ast, 1, &open_outfile))
-				return (false);
-		}
-		else if ((ast)->type == T_RED_OUT_APP)
-		{
-			if (!file_opener(&exec->child, ast, 0, &open_outfile))
-				return (false);
-		}
+		if (!chose_redin_redout(exec, ast))
+			return (false);
 		else if ((ast)->type == T_HERE_DOC)
 		{
 			exec->child.infile_fd = exec->heredoc.hd_fd[exec->heredoc.hd_done];

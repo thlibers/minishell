@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/12 16:05:08 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 16:45:47 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,19 @@ static void	pipes_creation(t_exec *exec)
 	}
 }
 
+static void	clean_child_creation(t_minishell *minishell, t_ast *tmp)
+{
+	if (minishell->exec.child.cmd && minishell->exec.child.cmd[0])
+	{
+		ptr_free_tab(&minishell->exec.child.cmd);
+		close_file(&minishell->exec, tmp);
+	}
+	if (minishell->exec.child.infile_fd > 2)
+		close(minishell->exec.child.infile_fd);
+	if (minishell->exec.child.outfile_fd > 2)
+		close(minishell->exec.child.outfile_fd);
+}
+
 static void	children_creation(t_minishell *minishell, pid_t *pid)
 {
 	int		i;
@@ -53,13 +66,8 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 				if (pid[i] == 0)
 					child_process(minishell, i);
 			}
-			ptr_free_tab(&minishell->exec.child.cmd);
-			close_file(&minishell->exec, tmp);
 		}
-		if (minishell->exec.child.infile_fd > 2)
-			close(minishell->exec.child.infile_fd);
-		if (minishell->exec.child.outfile_fd > 2)
-			close(minishell->exec.child.outfile_fd);
+		clean_child_creation(minishell, tmp);
 		i++;
 		tmp = tmp->leaf_right;
 	}

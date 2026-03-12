@@ -6,6 +6,8 @@
 
 - ctrl \ ne fait pas de retour a la ligne
 
-- export avec un name en maj met un egal
+- export avec un name en maj met un egal + suppr la value de _
 
 - echo hello | << EDF cat 	print hello (ne doit pas print)
+
+/home/thlibers/42_minishell_tester/tester.sh: line 217: 2013947 Done                    echo -n "$INPUT"
