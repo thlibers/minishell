@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:46:29 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/12 14:22:12 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 15:54:56 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,5 @@ int	main(int argc, char **argv, char **envp)
 		}
 	}
 	full_clean(&minishell);
-	printf("%d\n", getpid());
-	sleep(20);
 	return (0);
 }

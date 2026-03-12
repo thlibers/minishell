@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:18:25 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/12 15:30:20 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 15:53:20 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ bool	redirection_choser(t_exec *exec, t_ast *ast)
 		}
 		else if ((ast)->type == T_HERE_DOC)
 		{
-			exec->child.infile_fd = exec->heredoc_fd[exec->heredoc_done];
-			exec->heredoc_done++;
+			exec->child.infile_fd = exec->heredoc.heredoc_fd[exec->heredoc.heredoc_done];
+			exec->heredoc.heredoc_done++;
 		}
 		if ((ast)->leaf_right->type == T_WORD)
 			break ;

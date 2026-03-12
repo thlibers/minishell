@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:28:21 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/12 14:48:25 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/12 15:51:52 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,28 @@ typedef struct s_child
 	int				infile_fd;
 	int				outfile_fd;
 	int				argc;
-}	t_child;
+}					t_child;
+
+typedef struct s_heredoc
+{
+	int				heredoc_fd[1024];
+	int				heredoc_fd_size;
+	int				heredoc_done;
+}					t_heredoc;
 
 typedef struct s_exec
 {
 	t_child			child;
-	// char			**cmd;
+	t_heredoc		heredoc;
 	char			**env;
 	char			*limiter;
 	int				*ptr_exit_code;
 	int				(*pipe_fd)[2];
-	// int				infile_fd;
-	int				heredoc_fd[1024];
-	int				heredoc_fd_size;
-	int				heredoc_done;
-	// int				outfile_fd;
+	// int				heredoc_fd[1024];
+	// int				heredoc_fd_size;
+	// int				heredoc_done;
 	int				index;
 	int				cmdc;
-	// int				argc;
-	// int				save[2];
-
 }					t_exec;
 
 // --- PARSING PART ---
