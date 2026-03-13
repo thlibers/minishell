@@ -12,6 +12,7 @@
 
 #include "includes/minishell.h"
 #include "includes/structure.h"
+#include "mylibft/libft.h"
 
 static bool	chose_redin_redout(t_exec *exec, t_ast *ast)
 {
@@ -43,8 +44,8 @@ bool	redirection_choser(t_exec *exec, t_ast *ast)
 			return (false);
 		else if ((ast)->type == T_HERE_DOC)
 		{
-			exec->child.infile_fd = exec->heredoc.hd_fd[exec->heredoc.hd_done];
-			exec->heredoc.hd_done++;
+			exec->child.infile_fd = exec->files.hd_fd[exec->files.hd_fd_done];
+			exec->files.hd_fd_done++;
 		}
 		if ((ast)->leaf_right->type == T_WORD)
 			break ;
@@ -63,6 +64,8 @@ bool	child_heredoc(t_exec *exec, t_minishell *minishell)
 		here_doc(exec, minishell);
 	else
 	{
+		if (minishell->exec.limiter)
+			(free(minishell->exec.limiter), minishell->exec.limiter = NULL);
 		waitpid(pid, &code, 0);
 		if (WIFSIGNALED(code))
 		{
@@ -80,12 +83,23 @@ int	heredoc_fd_init(t_minishell *minishell, t_ast *save)
 	signal(SIGINT, handler_sigint_exec);
 	save = save->leaf_right;
 	minishell->exec.limiter = ft_strdup(save->leaf_left->data);
+	if (!minishell->exec.limiter)
+	{
+		signal(SIGINT, handler_sigint);
+		return (0);
+	}
 	if (!heredoc_init(&minishell->exec))
+	{
+		signal(SIGINT, handler_sigint);
 		return (0);
+	}
 	if (!child_heredoc(&minishell->exec, minishell))
+	{
+		signal(SIGINT, handler_sigint);
 		return (ptr_free_tab(&minishell->exec.env), 0);
+	}
 	if (!terminate_heredoc(&minishell->exec))
-		return (0);
+		return (signal(SIGINT, handler_sigint), 0);
 	signal(SIGINT, handler_sigint);
 	return (1);
 }
@@ -98,7 +112,8 @@ int	init_exec(t_env *env, t_ast *ast, t_exec *exec, t_minishell *minishell)
 		close(exec->child.infile_fd);
 	if (exec->child.outfile_fd > 2)
 		close(exec->child.outfile_fd);
-	memset(&minishell->exec, 0, sizeof(t_exec));
+	ft_memset(&minishell->exec, 0, sizeof(t_exec));
+	ft_memset(&minishell->exec.files, 0, sizeof(t_files));
 	exec->cmdc = cmd_count(ast);
 	exec->env = convert_env(env);
 	save = minishell->ast;

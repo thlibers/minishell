@@ -14,7 +14,18 @@
 
 void	clean_useless_child(t_minishell *minishell)
 {
-	clean_heredoc_fd(&minishell->exec);
+	int	i;
+
+	i = 0;
+	while (i < minishell->exec.files.hd_fd_size)
+	{
+		if (minishell->exec.files.hd_fd[i] > 2)
+		{
+			close(minishell->exec.files.hd_fd[i]);
+			minishell->exec.files.hd_fd[i] = -1;
+		}
+		i++;
+	}
 	if (minishell->exec.limiter)
 		(free(minishell->exec.limiter), minishell->exec.limiter = NULL);
 	if (minishell->exec.pipe_fd)
@@ -91,6 +102,18 @@ void	half_clean(t_minishell *minishell)
 
 void	clean_heredoc(t_minishell *minishell)
 {
+	int	i;
+
+	i = 0;
+	while (i < minishell->exec.files.hd_fd_size)
+	{
+		if (minishell->exec.files.hd_fd[i] > 2)
+		{
+			close(minishell->exec.files.hd_fd[i]);
+			minishell->exec.files.hd_fd[i] = -1;
+		}
+		i++;
+	}
 	if (minishell->fd_history > 2)
 		(close(minishell->fd_history), minishell->fd_history = -1);
 	if (minishell->exec.env)

@@ -34,12 +34,12 @@ void	clean_heredoc_fd(t_exec *exec)
 	int	i;
 
 	i = 0;
-	while (i < exec->heredoc.hd_fd_size)
+	while (i < exec->files.hd_fd_size)
 	{
-		if (exec->heredoc.hd_fd[i] > 2)
+		if (exec->files.hd_fd[i] > 2)
 		{
-			close(exec->heredoc.hd_fd[i]);
-			exec->heredoc.hd_fd[i] = -1;
+			close(exec->files.hd_fd[i]);
+			exec->files.hd_fd[i] = -1;
 		}
 		i++;
 	}

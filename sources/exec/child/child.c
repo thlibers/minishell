@@ -37,15 +37,13 @@ static void	first_command(t_exec *exec, int child_number)
 	{
 		if (dup2(exec->child.infile_fd, STDIN_FILENO) == -1)
 			ft_fprintf(STDERR_FILENO, EDUP2);
-		if (exec->child.infile_fd > 2)
-			(close(exec->child.infile_fd), exec->child.infile_fd = -1);
+		(close(exec->child.infile_fd), exec->child.infile_fd = -1);
 	}
 	if (exec->child.outfile_fd > 2)
 	{
 		if (dup2(exec->child.outfile_fd, STDOUT_FILENO) == -1)
 			ft_fprintf(STDERR_FILENO, EDUP2);
-		if (exec->child.outfile_fd > 2)
-			(close(exec->child.outfile_fd), exec->child.outfile_fd = -1);
+		(close(exec->child.outfile_fd), exec->child.outfile_fd = -1);
 	}
 	else
 	{
@@ -138,5 +136,6 @@ void	init_child(t_exec *exec, int child_number, int is_child)
 				(close(exec->pipe_fd[i][1]), exec->pipe_fd[i][1] = -1);
 			i++;
 		}
+		clean_heredoc_fd(exec);
 	}
 }

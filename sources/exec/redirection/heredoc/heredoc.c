@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+#include <unistd.h>
 
 static t_tok	*line_to_tok(char *line, t_minishell *minishell, t_exec *exec)
 {
@@ -33,9 +34,9 @@ static t_tok	*line_to_tok(char *line, t_minishell *minishell, t_exec *exec)
 		}
 		i++;
 	}
-	write(exec->heredoc.hd_fd[exec->heredoc.hd_fd_size], tok->str,
+	write(exec->files.hd_fd[exec->files.hd_fd_size], tok->str,
 		ft_strlen(tok->str));
-	write(exec->heredoc.hd_fd[exec->heredoc.hd_fd_size], "\n", 1);
+	write(exec->files.hd_fd[exec->files.hd_fd_size], "\n", 1);
 	free_tok(&tok);
 	return (NULL);
 }
@@ -45,6 +46,7 @@ int	here_doc(t_exec *exec, t_minishell *minishell)
 	char	*line;
 
 	line = NULL;
+	ft_printf("%d\n", getpid());
 	clean_heredoc(minishell);
 	handler_heredoc();
 	while (1)
@@ -62,7 +64,8 @@ int	here_doc(t_exec *exec, t_minishell *minishell)
 			line_to_tok(line, minishell, &minishell->exec);
 		free(line);
 	}
-	close(exec->heredoc.hd_fd[exec->heredoc.hd_fd_size]);
+	close(exec->files.hd_fd[exec->files.hd_fd_size]);
+	exec->files.hd_fd[exec->files.hd_fd_size] = -1;
 	full_clean(minishell);
 	exit(0);
 }

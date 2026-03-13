@@ -16,13 +16,17 @@ void	reset_save(t_minishell *minishell)
 {
 	if (minishell->exec.child.save[0] > 2 || minishell->exec.child.save[1] > 2)
 	{
-		dup2(minishell->exec.child.save[0], STDIN_FILENO);
 		if (minishell->exec.child.save[0] > 2)
-			(close(minishell->exec.child.save[0]),
-				minishell->exec.child.save[0] = -1);
-		dup2(minishell->exec.child.save[1], STDOUT_FILENO);
+		{
+			dup2(minishell->exec.child.save[0], STDIN_FILENO);
+			close(minishell->exec.child.save[0]);
+			minishell->exec.child.save[0] = -1;
+		}
 		if (minishell->exec.child.save[1] > 2)
-			(close(minishell->exec.child.save[1]),
-				minishell->exec.child.save[1] = -1);
+		{
+			dup2(minishell->exec.child.save[1], STDOUT_FILENO);
+			close(minishell->exec.child.save[1]);
+			minishell->exec.child.save[1] = -1;
+		}
 	}
 }

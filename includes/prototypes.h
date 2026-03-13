@@ -176,6 +176,7 @@ void	full_clean(t_minishell *minishell);
 void	half_clean(t_minishell *minishell);
 void	clean_heredoc(t_minishell *minishell);
 void	clean_heredoc_fd(t_exec *exec);
+void	clean_useless_child(t_minishell *minishell);
 
 /* ----- signal.c ----- */
 void	handler_heredoc(void);

@@ -39,9 +39,15 @@ static void	clean_child_creation(t_minishell *minishell, t_ast *tmp)
 		close_file(&minishell->exec, tmp);
 	}
 	if (minishell->exec.child.infile_fd > 2)
+	{
 		close(minishell->exec.child.infile_fd);
+		minishell->exec.child.infile_fd = -1;
+	}
 	if (minishell->exec.child.outfile_fd > 2)
+	{
 		close(minishell->exec.child.outfile_fd);
+	 	minishell->exec.child.outfile_fd = -1;
+	}
 }
 
 static void	children_creation(t_minishell *minishell, pid_t *pid)
@@ -98,8 +104,6 @@ static void	execution_step(t_minishell *minishell)
 
 void	execution(t_minishell *minishell)
 {
-	int	i;
-
 	if (!init_exec(minishell->env, minishell->ast, &minishell->exec, minishell))
 		return ;
 	minishell->pid = ft_calloc(minishell->exec.cmdc, sizeof(int));
@@ -118,5 +122,5 @@ void	execution(t_minishell *minishell)
 		minishell->pid = NULL;
 	}
 	ptr_free_tab(&minishell->exec.env);
-	i = 0;
+	clean_heredoc_fd(&minishell->exec);
 }

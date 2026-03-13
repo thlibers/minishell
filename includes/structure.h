@@ -26,24 +26,25 @@ typedef struct s_child
 	int				argc;
 }					t_child;
 
-typedef struct s_heredoc
+typedef struct s_files
 {
+	char			*limiter;
+	int				*fd_arr;
+	int				fd_size;
+	int				fd_done;
 	int				hd_fd[1024];
 	int				hd_fd_size;
-	int				hd_done;
-}					t_heredoc;
+	int				hd_fd_done;
+}					t_files;
 
 typedef struct s_exec
 {
 	t_child			child;
-	t_heredoc		heredoc;
+	t_files			files;
 	char			**env;
 	char			*limiter;
 	int				*ptr_exit_code;
 	int				(*pipe_fd)[2];
-	// int				heredoc_fd[1024];
-	// int				heredoc_fd_size;
-	// int				heredoc_done;
 	int				index;
 	int				cmdc;
 }					t_exec;
