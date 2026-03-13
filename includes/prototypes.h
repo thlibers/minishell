@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 13:25:31 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/13 13:06:23 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/13 16:12:01 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,54 +46,53 @@ int		ft_pwd(t_minishell *minishell, int child_number);
 /* ----- ft_unset.c ----- */
 void	ft_unset(t_minishell *minishell, t_exec *exec, int child_number);
 
-/* ======================= EXEC ======================= */
+/* ======================= EXECUTION ======================= */
+/* ----- child/child_process.c ----- */
+void	child_process(t_minishell *minishell, int child_number);
+
+/* ----- child/child_save.c ----- */
+void	child_save(t_exec *exec, int is_child);
+
+/* ----- child/child_utils.c ----- */
+void	clean_pipe_fd(t_exec *exec, int child_number, int is_child);
+
+/* ----- child/child.c ----- */
+void	init_child(t_exec *exec, int child_number, int is_child);
+void	pipes_close(t_exec *exec);
+
+/* ----- convert/convert_ast.c ----- */
+char	**ast_to_arr(t_exec *exec, t_ast **ast);
+
+/* ----- convert/convert_env.c ----- */
+char	**convert_env(t_env *env);
+
+/* ----- redirection/heredoc/heredoc_utils.c */
+int		heredoc_init(t_exec *exec);
+int		terminate_heredoc(t_exec *exec);
+
+/* ----- redirection/heredoc/heredoc.c */
+int		here_doc(t_exec *exec, t_minishell *minishell);
+
+/* ----- redirection/chose_redirection.c */
+bool	redirection_choser(t_exec *exec, t_ast *ast);
+
 /* ----- redirection/open_redirection.c */
 int		open_infile(char *filename, int trunc, t_child *child);
 int		open_outfile(char *filename, int trunc, t_child *child);
 bool	file_opener(t_child *child, t_ast *ast, int flag, int (*ptr)(char *,
 				int, t_child *));
 
-/* ----- child_process.c ----- */
-void	child_process(t_minishell *minishell, int child_number);
-
-/* ----- child_save.c ----- */
-void	child_save(t_exec *exec, int is_child);
-
-/* ----- child_utils.c ----- */
-void	clean_pipe_fd(t_exec *exec, int child_number, int is_child);
-
-/* ----- child.c ----- */
-void	init_child(t_exec *exec, int child_number, int is_child);
-void	pipes_close(t_exec *exec);
-
-/* ----- commands.c ----- */
-char	*find_command_path(t_minishell *minishell, char *cmd);
-
-/* ----- convert_env.c ----- */
-char	**convert_env(t_env *env);
-
 /* ----- exec_utils.c ----- */
-void	cleanup_pipe(t_exec *exec);
 void	close_file(t_exec *exec, t_ast *curr_branch);
 
 /* ----- execution.c ----- */
 void	execution(t_minishell *minishell);
 
-/* ----- heredoc.c ----- */
-int		here_doc(t_exec *exec, t_minishell *minishell);
+/* ----- find_path.c ----- */
+char	*find_command_path(t_minishell *minishell, char *cmd);
 
-/* ----- init_exe.c ----- */
+/* ----- init_exec.c ----- */
 int		init_exec(t_env *env, t_ast *ast, t_exec *exec, t_minishell *minishell);
-bool	redirection_choser(t_exec *exec, t_ast *ast);
-
-/* ----- convert.c ----- */
-char	**ast_to_arr(t_exec *exec, t_ast **ast);
-void	arg_count(t_exec *exec);
-void	ptr_free_tab(char ***arr);
-
-/* ----- heredoc.c ----- */
-int		terminate_heredoc(t_exec *exec);
-int		heredoc_init(t_exec *exec);
 
 /* ======================= MINISHELL ======================= */
 /* ----- history.c ----- */
@@ -110,17 +109,12 @@ void	reset_save(t_minishell *minishell);
 bool	selector(t_minishell *minishell, int i);
 
 /* ======================= PARSING ======================= */
-/* ----- ast/ast.c ----- */
-t_ast	*create_tree(t_tok *tok, int i);
-
 /* ----- ast/ast_utils.c ----- */
 int		cmd_count(t_ast *ast);
 bool	check_pipe(t_ast *ast);
 
-/* ----- env/env_vars.c ----- */
-char	**env_spliter(char *vars);
-bool	init_env(t_env **env, char **envp);
-t_env	*create_env_var(char *name, char *value, char *equal_loc);
+/* ----- ast/ast.c ----- */
+t_ast	*create_tree(t_tok *tok, int i);
 
 /* ----- env/env_utils.c ----- */
 t_env	*new_env_node(void *name, void *content);
@@ -130,29 +124,25 @@ void	swap_env_value(t_env **env);
 void	*sort_env(t_env **env);
 
 /* ----- env/env_utils2.c ----- */
-char	*ft_getenv(t_env *env, char *to_find);
 t_env	*env_cpy(t_env *env);
+char	*ft_getenv(t_env *env, char *to_find);
 
-/* ----- expand/expand.c ----- */
-void	ft_expand(t_minishell *minishell, t_env *env, t_tok **token);
-bool	dollar_treatements(t_minishell *minishell, t_tok **token, int *i);
+/* ----- env/init_env.c ----- */
+char	**env_spliter(char *vars);
+t_env	*create_env_var(char *name, char *value, char *equal_loc);
+bool	init_env(t_env **env, char **envp);
 
 /* ----- expand/expand_vars.c ----- */
+bool	replace_var(t_tok **token, t_env *env, int *i);
 void	ft_tilde(t_env *env, t_tok **token, int i);
 void	ft_questionmark(t_minishell *minishell, t_tok **token, int i);
-int		get_location_vars_name_end(t_tok **token, int i);
-bool	replace_var(t_tok **token, t_env *env, int *i);
+
+/* ----- expand/expand.c ----- */
+bool	dollar_treatements(t_minishell *minishell, t_tok **token, int *i);
+void	ft_expand(t_minishell *minishell, t_env *env, t_tok **token);
 
 /* ----- expand/remove_quotes.c ----- */
 void	remove_quotes(char **str);
-
-/* ----- lexer/tokenizer.c ----- */
-t_tok	*tokenizer(char *line);
-
-/* ----- lexer/tokenizer_linked_list ----- */
-char	*tok_str_save(char *line, t_data_type data_type);
-t_tok	*tok_create_back(t_tok **tok, t_data_type data_type, char *line);
-t_tok	*back_tofirst(t_tok **tok);
 
 /* ----- lexer/check_lexer.c ----- */
 int		is_operator(char *word);
@@ -161,12 +151,21 @@ int		is_operator(char *word);
 bool	check_quote(t_tok *tok);
 bool	check_ope(t_tok *tok);
 
+/* ----- lexer/tokenizer_linkedlst ----- */
+char	*tok_str_save(char *line, t_data_type data_type);
+t_tok	*tok_create_back(t_tok **tok, t_data_type data_type, char *line);
+
+/* ----- lexer/tokenizer_edgecase ----- */
+t_tok	*back_tofirst(t_tok **tok);
+
+/* ----- lexer/tokenizer.c ----- */
+t_tok	*tokenizer(char *line);
+
 /* ----- prompt.c ----- */
 bool	prompt(t_minishell *minishell);
 
 /* ----- utils.c ----- */
 int		is_inquote(int *quote, char c);
-void	free_tab(char **s);
 
 /* ======================= UTILS ======================= */
 /* ----- clean.c ----- */
@@ -180,6 +179,7 @@ void	half_clean(t_minishell *minishell);
 void	clean_heredoc(t_minishell *minishell);
 void	clean_heredoc_fd(t_exec *exec);
 void	clean_useless_child(t_minishell *minishell);
+void	free_tab(char **s);
 
 /* ----- signal.c ----- */
 void	handler_heredoc(void);
@@ -191,5 +191,10 @@ void	child_signal(void);
 // DEBUG
 void	print_ast(t_ast *ast);
 void	print_tok(t_tok *tok);
+
+// OTHER
+void	arg_count(t_exec *exec);
+void	ptr_free_tab(char ***arr);
+void	cleanup_pipe(t_exec *exec);
 
 #endif

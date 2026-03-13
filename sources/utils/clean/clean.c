@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 19:27:19 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/12 16:08:30 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/13 15:40:43 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,17 @@ void	clean_heredoc_fd(t_exec *exec)
 		}
 		i++;
 	}
+}
+
+void	free_tab(char **s)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i])
+		free(s[i++]);
+	free(s);
+	s = NULL;
 }

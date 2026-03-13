@@ -6,13 +6,13 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 14:20:35 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/12 15:30:53 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/13 15:32:55 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-bool	init_ast_to_arr(t_ast **ast, char ***arr, t_exec *exec)
+static bool	init_ast_to_arr(t_ast **ast, char ***arr, t_exec *exec)
 {
 	*arr = ft_calloc(1, sizeof(char *));
 	if (!*arr)

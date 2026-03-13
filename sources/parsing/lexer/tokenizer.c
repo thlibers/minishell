@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 15:51:09 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/12 17:42:43 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/13 16:13:53 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static bool	create_tok_ope(int *i, char *line, t_tok **tok)
 	return (true);
 }
 
-void	check_tok_order(t_tok **tok)
+static void	check_tok_order(t_tok **tok)
 {
 	t_tok	*tok_cpy;
 

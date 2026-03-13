@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 14:08:45 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/12 15:33:13 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/13 16:04:37 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,22 +61,4 @@ void	remove_quotes(char **str)
 		}
 		q.i--;
 	}
-}
-
-bool	is_in_quote(char *str, int card_loc)
-{
-	bool	quote;
-	int		i;
-
-	quote = 0;
-	i = 0;
-	while (str[i] && i < card_loc)
-	{
-		if (str[i] == '"' && quote == false)
-			quote = true;
-		else if (str[i] == '"' && quote == true)
-			quote = false;
-		i++;
-	}
-	return (quote);
 }

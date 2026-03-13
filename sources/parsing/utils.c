@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:23:41 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/20 11:24:36 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/03/13 16:04:49 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,20 @@ int	is_inquote(int *quote, char c)
 	return (*quote);
 }
 
-void	free_tab(char **s)
-{
-	int	i;
+// bool	is_in_quote(char *str, int card_loc)
+// {
+// 	bool	quote;
+// 	int		i;
 
-	i = 0;
-	if (!s)
-		return ;
-	while (s[i])
-		free(s[i++]);
-	free(s);
-	s = NULL;
-}
+// 	quote = 0;
+// 	i = 0;
+// 	while (str[i] && i < card_loc)
+// 	{
+// 		if (str[i] == '"' && quote == false)
+// 			quote = true;
+// 		else if (str[i] == '"' && quote == true)
+// 			quote = false;
+// 		i++;
+// 	}
+// 	return (quote);
+// }

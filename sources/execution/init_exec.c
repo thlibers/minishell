@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:18:25 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/12 17:19:37 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/13 15:50:26 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,7 @@
 #include "includes/structure.h"
 #include "mylibft/libft.h"
 
-static bool	chose_redin_redout(t_exec *exec, t_ast *ast)
-{
-	if ((ast)->type == T_RED_IN)
-	{
-		if (!file_opener(&exec->child, ast, 0, &open_infile))
-			return (false);
-	}
-	else if ((ast)->type == T_RED_OUT)
-	{
-		if (!file_opener(&exec->child, ast, 1, &open_outfile))
-			return (false);
-	}
-	else if ((ast)->type == T_RED_OUT_APP)
-	{
-		if (!file_opener(&exec->child, ast, 0, &open_outfile))
-			return (false);
-	}
-	return (true);
-}
-
-bool	redirection_choser(t_exec *exec, t_ast *ast)
-{
-	if (ast && ast->type == T_PIPE && ast->top && ast->top->type >= T_HERE_DOC)
-		ast = ast->leaf_right;
-	while (ast && (ast)->leaf_right && (ast)->type >= T_HERE_DOC)
-	{
-		if (!chose_redin_redout(exec, ast))
-			return (false);
-		else if ((ast)->type == T_HERE_DOC)
-		{
-			exec->child.infile_fd = exec->files.hd_fd[exec->files.hd_fd_done];
-			exec->files.hd_fd_done++;
-		}
-		if ((ast)->leaf_right->type == T_WORD)
-			break ;
-		ast = (ast)->leaf_right;
-	}
-	return (true);
-}
-
-bool	child_heredoc(t_exec *exec, t_minishell *minishell)
+static bool	child_heredoc(t_exec *exec, t_minishell *minishell)
 {
 	int	pid;
 	int	code;
@@ -78,7 +38,7 @@ bool	child_heredoc(t_exec *exec, t_minishell *minishell)
 	return (true);
 }
 
-int	heredoc_fd_init(t_minishell *minishell, t_ast *save)
+static int	heredoc_fd_init(t_minishell *minishell, t_ast *save)
 {
 	signal(SIGINT, handler_sigint_exec);
 	save = save->leaf_right;

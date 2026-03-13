@@ -6,13 +6,12 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:28:30 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/02 12:36:05 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/13 15:58:20 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-// Compter le nombre de commande dans notre ast
 int	cmd_count(t_ast *ast)
 {
 	int	count;

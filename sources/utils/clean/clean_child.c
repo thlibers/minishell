@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 19:27:05 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/12 16:23:16 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/13 15:40:58 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,3 +164,32 @@ void	cleanup_pipe(t_exec *exec)
 	if (exec->pipe_fd)
 		free(exec->pipe_fd);
 }
+
+// void	clean_child(t_minishell *minishell, t_exec *exec)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	if (!exec || !minishell)
+// 		return ;
+// 	if (exec->child.infile_fd > 2)
+// 		(close(exec->child.infile_fd), exec->child.infile_fd = -1);
+// 	if (exec->child.outfile_fd > 2)
+// 		(close(exec->child.outfile_fd), exec->child.outfile_fd = -1);
+// 	while (i < exec->cmdc)
+// 	{
+// 		if (exec->pipe_fd[i][0] > 2)
+// 			(close(exec->pipe_fd[i][0]), exec->pipe_fd[i][0] = -1);
+// 		if (exec->pipe_fd[i][1] > 2)
+// 			(close(exec->pipe_fd[i][1]), exec->pipe_fd[i][1] = -1);
+// 		i++;
+// 	}
+// 	if (exec->pipe_fd)
+// 		free(exec->pipe_fd);
+// 	if (minishell->pid)
+// 		free(minishell->pid);
+// 	if (minishell->exec.child.cmd)
+// 		free_tab(minishell->exec.child.cmd);
+// 	if (minishell->exec.env)
+// 		free_tab(minishell->exec.env);
+// }

@@ -6,13 +6,13 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 11:03:43 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/11 16:32:16 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/13 16:00:59 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	get_location_vars_name_end(t_tok **token, int i)
+static int	get_location_vars_name_end(t_tok **token, int i)
 {
 	int	y;
 

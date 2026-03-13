@@ -1,19 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_synthax.c                                    :+:      :+:    :+:   */
+/*   check_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 12:24:35 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/10 15:58:58 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/03/13 16:06:16 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/error.h"
 #include "includes/minishell.h"
-#include "includes/structure.h"
-#include "mylibft/libft.h"
 
 bool	check_quote(t_tok *tok)
 {
@@ -59,12 +56,3 @@ bool	check_ope(t_tok *tok)
 	}
 	return (true);
 }
-
-// CAS MESSAGE ERREUR
-// QUOTE PAS FERMER
-// OPERATEUR SEUL : "echo 'hello' |"
-// TROP OPERATEUR : "echo 'hello' | | cat -e" (redirection compte aussi)
-// CAS SPECIAUX :
-// REDIRECTION (<, >, >>, <<),
-//	on peux lui donner uniquement le fichier
-//	et il va O_CREATE + O_TRUNC le fichier (<, >)
