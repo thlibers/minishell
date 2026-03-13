@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structure.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:28:21 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/12 16:06:33 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/13 17:34:59 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_child
 typedef struct s_files
 {
 	char			*limiter;
-	int				*fd_arr;
+	int				fd_arr[2];
 	int				fd_size;
 	int				fd_done;
 	int				hd_fd[1024];

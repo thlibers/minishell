@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_redirection.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 13:29:42 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/12 16:19:38 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/13 17:42:51 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	open_infile(char *filename, int trunc, t_child *child, t_files *files)
 	if (!files->fd_arr)
 		files->fd_arr = ft_calloc(1, sizeof(t_files));
 	else
-		ft_hoelalloc(files->fd_arr, files->fd_size, files->fd_size + 1);
+		files->fd_arr = ft_realloc(files->fd_arr, files->hd_fd_size + 1);
 	files->fd_arr[files->fd_size] = open(filename, O_RDONLY);
 	if (errno == ENOENT || errno == EACCES)
 	{
@@ -34,7 +34,7 @@ int	open_infile(char *filename, int trunc, t_child *child, t_files *files)
 	child->infile_fd = &files->fd_arr[files->fd_size];
 	files->fd_size++;
 	return (*child->infile_fd);
-}
+}	
 
 int	open_outfile(char *filename, int trunc, t_child *child, t_files *files)
 {
@@ -43,7 +43,7 @@ int	open_outfile(char *filename, int trunc, t_child *child, t_files *files)
 	if (!files->fd_arr)
 		files->fd_arr = ft_calloc(1, sizeof(t_files));
 	else
-		ft_hoelalloc(files->fd_arr, files->fd_size, files->fd_size + 1);
+		files->fd_arr = ft_realloc(files->fd_arr, files->hd_fd_size + 1);
 	if (trunc)
 		files->fd_arr[files->fd_size] = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
@@ -64,11 +64,7 @@ int	open_outfile(char *filename, int trunc, t_child *child, t_files *files)
 bool	file_opener(t_exec *exec, t_ast *ast, int flag, int (*ptr)(char *,
 			int, t_child *, t_files *))
 {
-	t_ast	*save;
-
-	save = ast;
 	ast = ast->leaf_right;
-	ast = save;
 	if (!ptr(ast->leaf_left->data, flag, &exec->child, &exec->files))
 		return (false);
 	return (true);
