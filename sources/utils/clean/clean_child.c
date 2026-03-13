@@ -82,10 +82,10 @@ void	half_clean(t_minishell *minishell)
 	if (minishell->exec.child.save[1] > 2)
 		(close(minishell->exec.child.save[1]), minishell->exec.child.save[1]
 			= -1);
-	if (*minishell->exec.child.infile_fd > 2)
+	if (minishell->exec.child.infile_fd && *minishell->exec.child.infile_fd > 2)
 		(close(*minishell->exec.child.infile_fd),
 			*minishell->exec.child.infile_fd = -1);
-	if (*minishell->exec.child.outfile_fd > 2)
+	if (minishell->exec.child.outfile_fd && *minishell->exec.child.outfile_fd > 2)
 		(close(*minishell->exec.child.outfile_fd),
 			*minishell->exec.child.outfile_fd = -1);
 	if (minishell->fd_history > 2)

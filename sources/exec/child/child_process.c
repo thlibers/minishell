@@ -24,8 +24,8 @@ void	child_process(t_minishell *minishell, int child_number)
 		ft_fprintf(STDERR_FILENO, ECMDFOUND, minishell->exec.child.cmd[0]);
 		full_clean(minishell);
 		exit(127);
-	}
-	half_clean(minishell);
+	};
+	// half_clean(minishell);
 	if (execve(cmd_path, minishell->exec.child.cmd, minishell->exec.env) == -1)
 	{
 		ft_fprintf(STDERR_FILENO, "execve failed\n");
