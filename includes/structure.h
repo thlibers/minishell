@@ -21,8 +21,8 @@ typedef struct s_child
 {
 	char			**cmd;
 	int				save[2];
-	int				infile_fd;
-	int				outfile_fd;
+	int				*infile_fd;
+	int				*outfile_fd;
 	int				argc;
 }					t_child;
 

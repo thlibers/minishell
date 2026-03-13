@@ -11,24 +11,22 @@
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-#include "includes/structure.h"
-#include "mylibft/libft.h"
 
 static bool	chose_redin_redout(t_exec *exec, t_ast *ast)
 {
 	if ((ast)->type == T_RED_IN)
 	{
-		if (!file_opener(&exec->child, ast, 0, &open_infile))
+		if (!file_opener(exec, ast, 0, &open_infile))
 			return (false);
 	}
 	else if ((ast)->type == T_RED_OUT)
 	{
-		if (!file_opener(&exec->child, ast, 1, &open_outfile))
+		if (!file_opener(exec, ast, 1, &open_outfile))
 			return (false);
 	}
 	else if ((ast)->type == T_RED_OUT_APP)
 	{
-		if (!file_opener(&exec->child, ast, 0, &open_outfile))
+		if (!file_opener(exec, ast, 0, &open_outfile))
 			return (false);
 	}
 	return (true);
@@ -44,7 +42,7 @@ bool	redirection_choser(t_exec *exec, t_ast *ast)
 			return (false);
 		else if ((ast)->type == T_HERE_DOC)
 		{
-			exec->child.infile_fd = exec->files.hd_fd[exec->files.hd_fd_done];
+			exec->child.infile_fd = &exec->files.hd_fd[exec->files.hd_fd_done];
 			exec->files.hd_fd_done++;
 		}
 		if ((ast)->leaf_right->type == T_WORD)
@@ -108,10 +106,6 @@ int	init_exec(t_env *env, t_ast *ast, t_exec *exec, t_minishell *minishell)
 {
 	t_ast	*save;
 
-	if (exec->child.infile_fd > 2)
-		close(exec->child.infile_fd);
-	if (exec->child.outfile_fd > 2)
-		close(exec->child.outfile_fd);
 	ft_memset(&minishell->exec, 0, sizeof(t_exec));
 	ft_memset(&minishell->exec.files, 0, sizeof(t_files));
 	exec->cmdc = cmd_count(ast);

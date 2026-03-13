@@ -11,37 +11,44 @@
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+#include "includes/structure.h"
 
-int	open_infile(char *filename, int trunc, t_child *child)
+int	open_infile(char *filename, int trunc, t_child *child, t_files *files)
 {
 	(void)trunc;
-	if (!filename)
+	if (!filename || !files)
 		return (0);
-	if (child->infile_fd > 2)
-		(close(child->infile_fd), child->infile_fd = -1);
-	child->infile_fd = open(filename, O_RDONLY);
-	if (child->infile_fd < 0)
+	if (!files->fd_arr)
+		files->fd_arr = ft_calloc(1, sizeof(t_files));
+	else
+		ft_hoelalloc(files->fd_arr, files->fd_size, files->fd_size + 1);
+	files->fd_arr[files->fd_size] = open(filename, O_RDONLY);
+	if (errno == ENOENT || errno == EACCES)
 	{
 		if (errno == ENOENT)
 			ft_fprintf(STDERR_FILENO, ENOTFOUND, filename);
 		else
 			ft_fprintf(STDERR_FILENO, ENOPERM, filename);
-		child->infile_fd = open("/dev/null", O_RDONLY);
+		files->fd_arr[files->fd_size] = open("/dev/null", O_RDONLY);
 	}
-	return (child->infile_fd);
+	child->infile_fd = &files->fd_arr[files->fd_size];
+	files->fd_size++;
+	return (*child->infile_fd);
 }
 
-int	open_outfile(char *filename, int trunc, t_child *child)
+int	open_outfile(char *filename, int trunc, t_child *child, t_files *files)
 {
-	if (!filename)
+	if (!filename || !files)
 		return (0);
-	if (child->outfile_fd > 2)
-		(close(child->outfile_fd), child->outfile_fd = -1);
-	if (trunc)
-		child->outfile_fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (!files->fd_arr)
+		files->fd_arr = ft_calloc(1, sizeof(t_files));
 	else
-		child->outfile_fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (child->outfile_fd == -1)
+		ft_hoelalloc(files->fd_arr, files->fd_size, files->fd_size + 1);
+	if (trunc)
+		files->fd_arr[files->fd_size] = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else
+		files->fd_arr[files->fd_size] = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (files->fd_arr[files->fd_size] < 0)
 	{
 		if (errno == ENOENT)
 			ft_fprintf(STDERR_FILENO, ENOTFOUND, filename);
@@ -49,19 +56,20 @@ int	open_outfile(char *filename, int trunc, t_child *child)
 			ft_fprintf(STDERR_FILENO, ENOPERM, filename);
 		return (-1);
 	}
-	return (child->outfile_fd);
+	child->outfile_fd = &files->fd_arr[files->fd_size];
+	files->fd_size++;
+	return (*child->outfile_fd);
 }
 
-bool	file_opener(t_child *child, t_ast *ast, int flag, int (*ptr)(char *,
-			int, t_child *))
+bool	file_opener(t_exec *exec, t_ast *ast, int flag, int (*ptr)(char *,
+			int, t_child *, t_files *))
 {
 	t_ast	*save;
 
 	save = ast;
 	ast = ast->leaf_right;
-	ptr(ast->leaf_left->data, flag, child);
 	ast = save;
-	if (child->infile_fd < 0 || child->outfile_fd < 0)
+	if (!ptr(ast->leaf_left->data, flag, &exec->child, &exec->files))
 		return (false);
 	return (true);
 }

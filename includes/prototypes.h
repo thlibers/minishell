@@ -48,10 +48,10 @@ void	ft_unset(t_minishell *minishell, t_exec *exec, int child_number);
 
 /* ======================= EXEC ======================= */
 /* ----- redirection/open_redirection.c */
-int		open_infile(char *filename, int trunc, t_child *child);
-int		open_outfile(char *filename, int trunc, t_child *child);
-bool	file_opener(t_child *child, t_ast *ast, int flag, int (*ptr)(char *,
-				int, t_child *));
+int		open_infile(char *filename, int trunc, t_child *child, t_files *files);
+int		open_outfile(char *filename, int trunc, t_child *child, t_files *files);
+bool	file_opener(t_exec *exec, t_ast *ast, int flag, int (*ptr)(char *,
+				int, t_child *, t_files *));
 
 /* ----- child_process.c ----- */
 void	child_process(t_minishell *minishell, int child_number);

@@ -54,12 +54,12 @@ void	full_clean(t_minishell *minishell)
 		free_tab(minishell->exec.child.cmd);
 	if (minishell->exec.env)
 		free_tab(minishell->exec.env);
-	if (minishell->exec.child.infile_fd > 2)
-		(close(minishell->exec.child.infile_fd),
-			minishell->exec.child.infile_fd = -1);
-	if (minishell->exec.child.outfile_fd > 2)
-		(close(minishell->exec.child.outfile_fd),
-			minishell->exec.child.outfile_fd = -1);
+	if (*minishell->exec.child.infile_fd > 2)
+		(close(*minishell->exec.child.infile_fd),
+			*minishell->exec.child.infile_fd = -1);
+	if (*minishell->exec.child.outfile_fd > 2)
+		(close(*minishell->exec.child.outfile_fd),
+			*minishell->exec.child.outfile_fd = -1);
 	if (minishell->fd_history > 2)
 		(close(minishell->fd_history), minishell->fd_history = -1);
 	if (minishell->ast)
@@ -82,12 +82,12 @@ void	half_clean(t_minishell *minishell)
 	if (minishell->exec.child.save[1] > 2)
 		(close(minishell->exec.child.save[1]), minishell->exec.child.save[1]
 			= -1);
-	if (minishell->exec.child.infile_fd > 2)
-		(close(minishell->exec.child.infile_fd),
-			minishell->exec.child.infile_fd = -1);
-	if (minishell->exec.child.outfile_fd > 2)
-		(close(minishell->exec.child.outfile_fd),
-			minishell->exec.child.outfile_fd = -1);
+	if (*minishell->exec.child.infile_fd > 2)
+		(close(*minishell->exec.child.infile_fd),
+			*minishell->exec.child.infile_fd = -1);
+	if (*minishell->exec.child.outfile_fd > 2)
+		(close(*minishell->exec.child.outfile_fd),
+			*minishell->exec.child.outfile_fd = -1);
 	if (minishell->fd_history > 2)
 		(close(minishell->fd_history), minishell->fd_history = -1);
 	if (minishell->exec.pipe_fd)
@@ -140,27 +140,4 @@ void	pipes_close(t_exec *exec)
 	if (exec->pipe_fd)
 		free(exec->pipe_fd);
 	exec->pipe_fd = NULL;
-}
-
-void	cleanup_pipe(t_exec *exec)
-{
-	int	i;
-
-	i = 0;
-	if (!exec)
-		return ;
-	if (exec->child.infile_fd > 2)
-		(close(exec->child.infile_fd), exec->child.infile_fd = -1);
-	if (exec->child.outfile_fd > 2)
-		(close(exec->child.outfile_fd), exec->child.outfile_fd = -1);
-	while (i < exec->cmdc)
-	{
-		if (exec->pipe_fd[i][0] > 2)
-			(close(exec->pipe_fd[i][0]), exec->pipe_fd[i][0] = -1);
-		if (exec->pipe_fd[i][1] > 2)
-			(close(exec->pipe_fd[i][1]), exec->pipe_fd[i][1] = -1);
-		i++;
-	}
-	if (exec->pipe_fd)
-		free(exec->pipe_fd);
 }

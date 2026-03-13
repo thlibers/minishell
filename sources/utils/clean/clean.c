@@ -44,3 +44,42 @@ void	clean_heredoc_fd(t_exec *exec)
 		i++;
 	}
 }
+
+void	clean_files_fd(t_exec *exec)
+{
+	int	i;
+
+	i = 0;
+	if (exec->files.fd_arr)
+	{
+		while (i < exec->files.fd_size)
+		{
+			close(exec->files.fd_arr[i]);
+			exec->files.fd_arr[i] = -1;
+		}
+		free(exec->files.fd_arr);
+	}
+}
+
+void	cleanup_pipe(t_exec *exec)
+{
+	int	i;
+
+	i = 0;
+	if (!exec)
+		return ;
+	if (*exec->child.infile_fd > 2)
+		(close(*exec->child.infile_fd), *exec->child.infile_fd = -1);
+	if (*exec->child.outfile_fd > 2)
+		(close(*exec->child.outfile_fd), *exec->child.outfile_fd = -1);
+	while (i < exec->cmdc)
+	{
+		if (exec->pipe_fd[i][0] > 2)
+			(close(exec->pipe_fd[i][0]), exec->pipe_fd[i][0] = -1);
+		if (exec->pipe_fd[i][1] > 2)
+			(close(exec->pipe_fd[i][1]), exec->pipe_fd[i][1] = -1);
+		i++;
+	}
+	if (exec->pipe_fd)
+		free(exec->pipe_fd);
+}

@@ -19,10 +19,10 @@ void	clean_child(t_minishell *minishell, t_exec *exec)
 	i = 0;
 	if (!exec || !minishell)
 		return ;
-	if (exec->child.infile_fd > 2)
-		(close(exec->child.infile_fd), exec->child.infile_fd = -1);
-	if (exec->child.outfile_fd > 2)
-		(close(exec->child.outfile_fd), exec->child.outfile_fd = -1);
+	if (*exec->child.infile_fd > 2)
+		(close(*exec->child.infile_fd), *exec->child.infile_fd = -1);
+	if (*exec->child.outfile_fd > 2)
+		(close(*exec->child.outfile_fd), *exec->child.outfile_fd = -1);
 	while (i < exec->cmdc)
 	{
 		if (exec->pipe_fd[i][0] > 2)
@@ -46,16 +46,16 @@ void	close_file(t_exec *exec, t_ast *curr_branch)
 	if (curr_branch->type >= T_HERE_DOC && curr_branch->leaf_right
 		&& curr_branch->leaf_right->type < T_HERE_DOC)
 	{
-		if (exec->child.infile_fd > 2 && curr_branch->type >= T_RED_IN)
+		if (*exec->child.infile_fd > 2 && curr_branch->type >= T_RED_IN)
 		{
-			close(exec->child.infile_fd);
+			close(*exec->child.infile_fd);
 			exec->child.infile_fd = 0;
 		}
-		if (exec->child.outfile_fd > 2 && (curr_branch->type == T_RED_OUT
+		if (*exec->child.outfile_fd > 2 && (curr_branch->type == T_RED_OUT
 				|| curr_branch->type == T_RED_OUT_APP))
 		{
-			close(exec->child.outfile_fd);
-			exec->child.outfile_fd = 1;
+			close(*exec->child.outfile_fd);
+			*exec->child.outfile_fd = 1;
 		}
 	}
 }

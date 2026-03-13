@@ -38,15 +38,15 @@ static void	clean_child_creation(t_minishell *minishell, t_ast *tmp)
 		ptr_free_tab(&minishell->exec.child.cmd);
 		close_file(&minishell->exec, tmp);
 	}
-	if (minishell->exec.child.infile_fd > 2)
+	if (*minishell->exec.child.infile_fd > 2)
 	{
-		close(minishell->exec.child.infile_fd);
-		minishell->exec.child.infile_fd = -1;
+		close(*minishell->exec.child.infile_fd);
+		*minishell->exec.child.infile_fd = -1;
 	}
-	if (minishell->exec.child.outfile_fd > 2)
+	if (*minishell->exec.child.outfile_fd > 2)
 	{
-		close(minishell->exec.child.outfile_fd);
-		minishell->exec.child.outfile_fd = -1;
+		close(*minishell->exec.child.outfile_fd);
+	 	*minishell->exec.child.outfile_fd = -1;
 	}
 }
 

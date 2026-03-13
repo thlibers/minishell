@@ -15,35 +15,35 @@
 static void	one_command_only(t_exec *exec, int child_number)
 {
 	(void)child_number;
-	if (exec->child.infile_fd > 2)
+	if (exec->files.fd_arr && *exec->child.infile_fd > 2)
 	{
-		if (dup2(exec->child.infile_fd, STDIN_FILENO) == -1)
+		if (dup2(*exec->child.infile_fd, STDIN_FILENO) == -1)
 			ft_fprintf(STDERR_FILENO, EDUP2);
-		if (exec->child.infile_fd > 2)
-			(close(exec->child.infile_fd), exec->child.infile_fd = -1);
+		if (*exec->child.infile_fd > 2)
+			(close(*exec->child.infile_fd), *exec->child.infile_fd = -1);
 	}
-	if (exec->child.outfile_fd > 2)
+	if (exec->files.fd_arr && *exec->child.outfile_fd > 2)
 	{
-		if (dup2(exec->child.outfile_fd, STDOUT_FILENO) == -1)
+		if (dup2(*exec->child.outfile_fd, STDOUT_FILENO) == -1)
 			ft_fprintf(STDERR_FILENO, EDUP2);
-		if (exec->child.outfile_fd > 2)
-			(close(exec->child.outfile_fd), exec->child.outfile_fd = -1);
+		if (*exec->child.outfile_fd > 2)
+			(close(*exec->child.outfile_fd), *exec->child.outfile_fd = -1);
 	}
 }
 
 static void	first_command(t_exec *exec, int child_number)
 {
-	if (exec->child.infile_fd > 2)
+	if (exec->files.fd_arr && *exec->child.infile_fd > 2)
 	{
-		if (dup2(exec->child.infile_fd, STDIN_FILENO) == -1)
+		if (dup2(*exec->child.infile_fd, STDIN_FILENO) == -1)
 			ft_fprintf(STDERR_FILENO, EDUP2);
-		(close(exec->child.infile_fd), exec->child.infile_fd = -1);
+		(close(*exec->child.infile_fd), *exec->child.infile_fd = -1);
 	}
-	if (exec->child.outfile_fd > 2)
+	if (exec->files.fd_arr && *exec->child.outfile_fd > 2)
 	{
-		if (dup2(exec->child.outfile_fd, STDOUT_FILENO) == -1)
+		if (dup2(*exec->child.outfile_fd, STDOUT_FILENO) == -1)
 			ft_fprintf(STDERR_FILENO, EDUP2);
-		(close(exec->child.outfile_fd), exec->child.outfile_fd = -1);
+		(close(*exec->child.outfile_fd), *exec->child.outfile_fd = -1);
 	}
 	else
 	{
@@ -58,24 +58,24 @@ static void	first_last_command(t_exec *exec, int child_number, int is_child)
 		first_command(exec, child_number);
 	else if (child_number == exec->cmdc - 1)
 	{
-		if (exec->child.infile_fd > 2)
+		if (exec->files.fd_arr && *exec->child.infile_fd > 2)
 		{
-			if (dup2(exec->child.infile_fd, STDIN_FILENO) == -1)
+			if (dup2(*exec->child.infile_fd, STDIN_FILENO) == -1)
 				ft_fprintf(STDERR_FILENO, EDUP2);
-			close(exec->child.infile_fd);
-			exec->child.infile_fd = -1;
+			close(*exec->child.infile_fd);
+			*exec->child.infile_fd = -1;
 		}
 		else
 		{
 			if (dup2(exec->pipe_fd[child_number - 1][0], STDIN_FILENO) == -1)
 				ft_fprintf(STDERR_FILENO, EDUP2);
 		}
-		if (exec->child.outfile_fd > 2)
+		if (exec->files.fd_arr && *exec->child.outfile_fd > 2)
 		{
-			if (dup2(exec->child.outfile_fd, STDOUT_FILENO) == -1)
+			if (dup2(*exec->child.outfile_fd, STDOUT_FILENO) == -1)
 				ft_fprintf(STDERR_FILENO, EDUP2);
-			if (exec->child.outfile_fd > 2)
-				(close(exec->child.outfile_fd), exec->child.outfile_fd = -1);
+			if (*exec->child.outfile_fd > 2)
+				(close(*exec->child.outfile_fd), *exec->child.outfile_fd = -1);
 		}
 		clean_pipe_fd(exec, child_number, is_child);
 	}
@@ -84,24 +84,24 @@ static void	first_last_command(t_exec *exec, int child_number, int is_child)
 static void	setup_middle_commands(t_exec *exec, int child_number, int is_child)
 {
 	(void)is_child;
-	if (exec->child.infile_fd > 2)
+	if (exec->files.fd_arr && *exec->child.infile_fd > 2)
 	{
-		if (dup2(exec->child.infile_fd, STDIN_FILENO) == -1)
+		if (dup2(*exec->child.infile_fd, STDIN_FILENO) == -1)
 			ft_fprintf(STDERR_FILENO, EDUP2);
-		close(exec->child.infile_fd);
-		exec->child.infile_fd = -1;
+		close(*exec->child.infile_fd);
+		*exec->child.infile_fd = -1;
 	}
 	else
 	{
 		if (dup2(exec->pipe_fd[child_number - 1][0], STDIN_FILENO) == -1)
 			ft_fprintf(STDERR_FILENO, EDUP2);
 	}
-	if (exec->child.outfile_fd > 2)
+	if (exec->files.fd_arr && *exec->child.outfile_fd > 2)
 	{
-		if (dup2(exec->child.outfile_fd, STDOUT_FILENO) == -1)
+		if (dup2(*exec->child.outfile_fd, STDOUT_FILENO) == -1)
 			ft_fprintf(STDERR_FILENO, EDUP2);
-		close(exec->child.outfile_fd);
-		exec->child.outfile_fd = -1;
+		close(*exec->child.outfile_fd);
+		*exec->child.outfile_fd = -1;
 	}
 	else
 	{
