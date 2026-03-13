@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 13:25:31 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/12 17:25:27 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/13 13:06:23 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ bool	file_opener(t_child *child, t_ast *ast, int flag, int (*ptr)(char *,
 
 /* ----- child_process.c ----- */
 void	child_process(t_minishell *minishell, int child_number);
+
+/* ----- child_save.c ----- */
+void	child_save(t_exec *exec, int is_child);
 
 /* ----- child_utils.c ----- */
 void	clean_pipe_fd(t_exec *exec, int child_number, int is_child);

@@ -6,7 +6,7 @@
 #    By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 11:04:15 by nclavel           #+#    #+#              #
-#    Updated: 2026/03/12 17:27:22 by thlibers         ###   ########.fr        #
+#    Updated: 2026/03/13 13:08:10 by thlibers         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRCS =	$(SRC_DIR)/builtins/ft_cd_utils.c\
 		$(SRC_DIR)/exec/convert/ast_to_arr.c\
 		$(SRC_DIR)/exec/convert/env_tab.c\
 		$(SRC_DIR)/exec/child/child_process.c\
+		$(SRC_DIR)/exec/child/child_save.c\
 		$(SRC_DIR)/exec/child/child_utils.c\
 		$(SRC_DIR)/exec/child/child.c\
 		$(SRC_DIR)/exec/init_exe.c\
