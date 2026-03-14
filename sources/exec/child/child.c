@@ -132,6 +132,6 @@ void	init_child(t_exec *exec, int child_number, int is_child)
 				(close(exec->pipe_fd[i][1]), exec->pipe_fd[i][1] = -1);
 			i++;
 		}
-		clean_heredoc_fd(exec);
+		close_heredoc_fd(exec);
 	}
 }

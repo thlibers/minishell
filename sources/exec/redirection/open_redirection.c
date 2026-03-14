@@ -11,44 +11,38 @@
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-#include "includes/structure.h"
 
 int	open_infile(char *filename, int trunc, t_child *child, t_files *files)
 {
 	(void)trunc;
 	if (!filename || !files)
 		return (0);
-	if (!files->fd_arr)
-		files->fd_arr = ft_calloc(1, sizeof(t_files));
-	else
-		files->fd_arr = ft_realloc(files->fd_arr, files->hd_fd_size + 1);
-	files->fd_arr[files->fd_size] = open(filename, O_RDONLY);
+	if (files->fd_arr[0] > 2)
+		close(files->fd_arr[0]);
+	files->fd_arr[0] = open(filename, O_RDONLY);
 	if (errno == ENOENT || errno == EACCES)
 	{
 		if (errno == ENOENT)
 			ft_fprintf(STDERR_FILENO, ENOTFOUND, filename);
 		else
 			ft_fprintf(STDERR_FILENO, ENOPERM, filename);
-		files->fd_arr[files->fd_size] = open("/dev/null", O_RDONLY);
+		files->fd_arr[0] = open("/dev/null", O_RDONLY);
 	}
-	child->infile_fd = &files->fd_arr[files->fd_size];
-	files->fd_size++;
+	child->infile_fd = &files->fd_arr[0];
 	return (*child->infile_fd);
-}	
+}
 
 int	open_outfile(char *filename, int trunc, t_child *child, t_files *files)
 {
 	if (!filename || !files)
 		return (0);
-	if (!files->fd_arr)
-		files->fd_arr = ft_calloc(1, sizeof(t_files));
-	else
-		files->fd_arr = ft_realloc(files->fd_arr, files->hd_fd_size + 1);
+	if (files->fd_arr[1] > 2)
+		close(files->fd_arr[1]);
 	if (trunc)
-		files->fd_arr[files->fd_size] = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		files->fd_arr[1] = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
-		files->fd_arr[files->fd_size] = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (files->fd_arr[files->fd_size] < 0)
+		files->fd_arr[1] = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (files->fd_arr[1] < 0)
 	{
 		if (errno == ENOENT)
 			ft_fprintf(STDERR_FILENO, ENOTFOUND, filename);
@@ -56,8 +50,7 @@ int	open_outfile(char *filename, int trunc, t_child *child, t_files *files)
 			ft_fprintf(STDERR_FILENO, ENOPERM, filename);
 		return (-1);
 	}
-	child->outfile_fd = &files->fd_arr[files->fd_size];
-	files->fd_size++;
+	child->outfile_fd = &files->fd_arr[1];
 	return (*child->outfile_fd);
 }
 

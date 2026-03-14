@@ -54,10 +54,10 @@ void	full_clean(t_minishell *minishell)
 		free_tab(minishell->exec.child.cmd);
 	if (minishell->exec.env)
 		free_tab(minishell->exec.env);
-	if (*minishell->exec.child.infile_fd > 2)
+	if (minishell->exec.child.infile_fd && *minishell->exec.child.infile_fd > 2)
 		(close(*minishell->exec.child.infile_fd),
 			*minishell->exec.child.infile_fd = -1);
-	if (*minishell->exec.child.outfile_fd > 2)
+	if (minishell->exec.child.outfile_fd && *minishell->exec.child.outfile_fd > 2)
 		(close(*minishell->exec.child.outfile_fd),
 			*minishell->exec.child.outfile_fd = -1);
 	if (minishell->fd_history > 2)
@@ -75,7 +75,7 @@ void	full_clean(t_minishell *minishell)
 
 void	half_clean(t_minishell *minishell)
 {
-	clean_heredoc_fd(&minishell->exec);
+	close_heredoc_fd(&minishell->exec);
 	if (minishell->exec.child.save[0] > 2)
 		(close(minishell->exec.child.save[0]), minishell->exec.child.save[0]
 			= -1);

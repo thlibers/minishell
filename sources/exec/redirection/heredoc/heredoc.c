@@ -46,7 +46,6 @@ int	here_doc(t_exec *exec, t_minishell *minishell)
 	char	*line;
 
 	line = NULL;
-	ft_printf("%d\n", getpid());
 	clean_heredoc(minishell);
 	handler_heredoc();
 	while (1)

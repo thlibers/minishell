@@ -29,7 +29,21 @@ void	ptr_free_tab(char ***arr)
 	*arr = NULL;
 }
 
-void	clean_heredoc_fd(t_exec *exec)
+void	close_files_fd(t_exec *exec)
+{
+	if (exec->files.fd_arr[0] > 2)
+	{
+		close(exec->files.fd_arr[0]);
+		exec->files.fd_arr[0] = -1;
+	}
+	if (exec->files.fd_arr[1] > 2)
+	{
+		close(exec->files.fd_arr[1]);
+		exec->files.fd_arr[1] = -1;
+	}
+}
+
+void	close_heredoc_fd(t_exec *exec)
 {
 	int	i;
 
@@ -45,22 +59,6 @@ void	clean_heredoc_fd(t_exec *exec)
 	}
 }
 
-void	clean_files_fd(t_exec *exec)
-{
-	int	i;
-
-	i = 0;
-	if (exec->files.fd_arr)
-	{
-		while (i < exec->files.fd_size)
-		{
-			close(exec->files.fd_arr[i]);
-			exec->files.fd_arr[i] = -1;
-		}
-		free(exec->files.fd_arr);
-	}
-}
-
 void	cleanup_pipe(t_exec *exec)
 {
 	int	i;
@@ -68,9 +66,9 @@ void	cleanup_pipe(t_exec *exec)
 	i = 0;
 	if (!exec)
 		return ;
-	if (*exec->child.infile_fd > 2)
+	if (exec->child.infile_fd && *exec->child.infile_fd > 2)
 		(close(*exec->child.infile_fd), *exec->child.infile_fd = -1);
-	if (*exec->child.outfile_fd > 2)
+	if (exec->child.outfile_fd && *exec->child.outfile_fd > 2)
 		(close(*exec->child.outfile_fd), *exec->child.outfile_fd = -1);
 	while (i < exec->cmdc)
 	{

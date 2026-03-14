@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+#include "includes/structure.h"
 
 static void	pipes_creation(t_exec *exec)
 {
@@ -33,12 +34,13 @@ static void	pipes_creation(t_exec *exec)
 
 static void	clean_child_creation(t_minishell *minishell, t_ast *tmp)
 {
+	(void)tmp;
 	if (minishell->exec.child.cmd && minishell->exec.child.cmd[0])
 	{
 		ptr_free_tab(&minishell->exec.child.cmd);
-		close_file(&minishell->exec, tmp);
+		// close_file(&minishell->exec, tmp);
 	}
-	if (minishell->exec.child.infile_fd && *minishell->exec.child.infile_fd > 2)
+	if (minishell->exec.child.infile_fd &&  *minishell->exec.child.infile_fd > 2)
 	{
 		close(*minishell->exec.child.infile_fd);
 		*minishell->exec.child.infile_fd = -1;
@@ -122,5 +124,5 @@ void	execution(t_minishell *minishell)
 		minishell->pid = NULL;
 	}
 	ptr_free_tab(&minishell->exec.env);
-	clean_heredoc_fd(&minishell->exec);
+	close_heredoc_fd(&minishell->exec);
 }
