@@ -6,7 +6,7 @@
 /*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:46:29 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/13 15:59:25 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/03/16 08:35:26 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ int	main(int argc, char **argv, char **envp)
 			free_ast(&minishell.ast);
 		}
 	}
-	full_clean(&minishell);
+	clean_all(&minishell);
 	return (0);
 }

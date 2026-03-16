@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 09:00:43 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/12 16:07:41 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 08:16:38 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ int	here_doc(t_exec *exec, t_minishell *minishell)
 	}
 	close(exec->files.hd_fd[exec->files.hd_fd_size]);
 	exec->files.hd_fd[exec->files.hd_fd_size] = -1;
-	full_clean(minishell);
+	clean_all(minishell);
 	exit(0);
 }

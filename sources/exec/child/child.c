@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 12:30:53 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/13 13:09:43 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 09:32:46 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static void	first_last_command(t_exec *exec, int child_number, int is_child)
 		{
 			if (dup2(exec->pipe_fd[child_number - 1][0], STDIN_FILENO) == -1)
 				ft_fprintf(STDERR_FILENO, EDUP2);
+			(close(exec->pipe_fd[child_number - 1][0]), exec->pipe_fd[child_number - 1][0] = -1);
 		}
 		if (exec->child.outfile_fd && *exec->child.outfile_fd > 2)
 		{
@@ -112,8 +113,6 @@ static void	setup_middle_commands(t_exec *exec, int child_number, int is_child)
 
 void	init_child(t_exec *exec, int child_number, int is_child)
 {
-	int	i;
-
 	child_save(exec, is_child);
 	if ((child_number == 0 && child_number == exec->cmdc - 1))
 		one_command_only(exec, child_number);
@@ -123,15 +122,6 @@ void	init_child(t_exec *exec, int child_number, int is_child)
 		setup_middle_commands(exec, child_number, is_child);
 	if (is_child)
 	{
-		i = 0;
-		while (i < exec->cmdc - 1)
-		{
-			if (exec->pipe_fd[i][0] > 2)
-				(close(exec->pipe_fd[i][0]), exec->pipe_fd[i][0] = -1);
-			if (exec->pipe_fd[i][1] > 2)
-				(close(exec->pipe_fd[i][1]), exec->pipe_fd[i][1] = -1);
-			i++;
-		}
 		close_heredoc_fd(exec);
 	}
 }

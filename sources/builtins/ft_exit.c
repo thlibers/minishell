@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:27 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/12 15:36:23 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 09:03:10 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ void	ft_exit(t_minishell *minishell, t_exec *exec, int child_number)
 {
 	int	exit_code;
 
-	init_child(exec, child_number, 0);
+	(void)child_number;
 	if (exec->child.argc > 0 && !ft_strisdigit(exec->child.cmd[1]))
 	{
 		ft_fprintf(STDERR_FILENO, "exit: %s: numeric argument required",
 			exec->child.cmd[1]);
-		full_clean(minishell);
+		clean_all(minishell);
 		exit(2);
 	}
 	if (exec->child.argc > 1)
@@ -34,7 +34,7 @@ void	ft_exit(t_minishell *minishell, t_exec *exec, int child_number)
 		exit_code = minishell->exit_code;
 	else
 		exit_code = ft_atoi(exec->child.cmd[1]) % 256;
-	full_clean(minishell);
+	clean_all(minishell);
 	printf("exit\n");
 	exit(exit_code);
 }

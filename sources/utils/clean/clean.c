@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 19:27:19 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/12 16:08:30 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 08:11:36 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,23 @@ void	cleanup_pipe(t_exec *exec)
 	}
 	if (exec->pipe_fd)
 		free(exec->pipe_fd);
+}
+
+void	clear_exec(t_minishell *minishell)
+{
+	if (minishell->pid)
+		(free(minishell->pid), minishell->pid = NULL);
+	if (minishell->exec.env)
+		ptr_free_tab(&minishell->exec.env);
+	if (minishell->exec.limiter)
+		free(minishell->exec.limiter);
+	if (minishell->exec.child.cmd)
+		ptr_free_tab(&minishell->exec.child.cmd);
+	if (minishell->exec.child.infile_fd && *minishell->exec.child.infile_fd > 2)
+		(close(*minishell->exec.child.infile_fd), *minishell->exec.child.infile_fd = -1);
+	if (minishell->exec.child.outfile_fd && *minishell->exec.child.outfile_fd > 2)
+		(close(*minishell->exec.child.outfile_fd), *minishell->exec.child.outfile_fd = -1);
+	if (minishell->exec.pipe_fd)
+		pipes_close(&minishell->exec);
+	close_heredoc_fd(&minishell->exec);
 }

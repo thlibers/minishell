@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 16:23:21 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/12 15:31:33 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 09:28:53 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	child_process(t_minishell *minishell, int child_number)
 	if (!cmd_path)
 	{
 		ft_fprintf(STDERR_FILENO, ECMDFOUND, minishell->exec.child.cmd[0]);
-		full_clean(minishell);
+		clean_all(minishell);
 		exit(127);
 	};
-	// half_clean(minishell);
+	clean_keep_cmd(minishell);
 	if (execve(cmd_path, minishell->exec.child.cmd, minishell->exec.env) == -1)
 	{
 		ft_fprintf(STDERR_FILENO, "execve failed\n");

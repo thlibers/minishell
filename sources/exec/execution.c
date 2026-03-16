@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/13 13:01:09 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 08:29:43 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	clean_child_creation(t_minishell *minishell, t_ast *tmp)
 	if (minishell->exec.child.outfile_fd && *minishell->exec.child.outfile_fd > 2)
 	{
 		close(*minishell->exec.child.outfile_fd);
-	 	*minishell->exec.child.outfile_fd = -1;
+		*minishell->exec.child.outfile_fd = -1;
 	}
 }
 
@@ -81,7 +81,7 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 	}
 }
 
-static void	execution_step(t_minishell *minishell)
+static void	execution_wait(t_minishell *minishell)
 {
 	int	i;
 	int	code;
@@ -116,13 +116,6 @@ void	execution(t_minishell *minishell)
 	}
 	pipes_creation(&minishell->exec);
 	children_creation(minishell, minishell->pid);
-	pipes_close(&minishell->exec);
-	execution_step(minishell);
-	if (minishell->pid)
-	{
-		free(minishell->pid);
-		minishell->pid = NULL;
-	}
-	ptr_free_tab(&minishell->exec.env);
-	close_heredoc_fd(&minishell->exec);
+	execution_wait(minishell);
+	clear_exec(minishell);
 }

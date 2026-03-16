@@ -3,44 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   clean_structure.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:13:06 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/05 19:27:14 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/03/16 08:52:47 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 #include "includes/prototypes.h"
 
-void	ft_clear(t_minishell *minishell)
-{
-	env_clean(minishell->env, NULL);
-	close(minishell->fd_history);
-}
-
-void	child_clear(t_minishell *minishell)
-{
-	env_clean(minishell->env, NULL);
-	close(minishell->fd_history);
-	free_ast(&minishell->ast);
-}
-
-void	env_clean(t_env *env, char **tab)
+void	ptr_env_clean(t_env **env, char **tab)
 {
 	t_env	*checkpoint;
 
-	if (env)
+	if (env && *env)
 	{
-		while (env)
+		while (env && *env)
 		{
-			checkpoint = env->next;
-			free(env->name);
-			free(env->value);
-			free(env);
-			env = checkpoint;
+			checkpoint = (*env)->next;
+			free((*env)->name);
+			free((*env)->value);
+			free(*env);
+			*env = checkpoint;
 		}
-		env = NULL;
+		*env = NULL;
 	}
 	if (tab)
 	{

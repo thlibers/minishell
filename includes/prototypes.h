@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototypes.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 13:25:31 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/13 13:06:23 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 08:50:57 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,15 +171,18 @@ void	free_tab(char **s);
 /* ======================= UTILS ======================= */
 /* ----- clean.c ----- */
 void	ft_clear(t_minishell *minishell);
-void	env_clean(t_env *env, char **tab);
 void	free_ast(t_ast **ast);
 void	free_tok(t_tok **tok);
 void	child_clear(t_minishell *minishell);
-void	full_clean(t_minishell *minishell);
-void	half_clean(t_minishell *minishell);
+void	clean_all(t_minishell *minishell);
+void	clean_keep_cmd(t_minishell *minishell);
 void	clean_heredoc(t_minishell *minishell);
 void	close_heredoc_fd(t_exec *exec);
 void	clean_useless_child(t_minishell *minishell);
+void	clear_exec(t_minishell *minishell);
+void	close_files_fd(t_exec *exec);
+void	ptr_env_clean(t_env **env, char **tab);
+
 
 /* ----- signal.c ----- */
 void	handler_heredoc(void);

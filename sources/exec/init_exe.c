@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_exe.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:18:25 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/12 17:19:37 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 08:36:18 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,9 @@ int	heredoc_fd_init(t_minishell *minishell, t_ast *save)
 	if (!child_heredoc(&minishell->exec, minishell))
 	{
 		signal(SIGINT, handler_sigint);
-		return (ptr_free_tab(&minishell->exec.env), 0);
+		ptr_free_tab(&minishell->exec.env);
+		close_heredoc_fd(&minishell->exec);
+		return (0);
 	}
 	if (!terminate_heredoc(&minishell->exec))
 		return (signal(SIGINT, handler_sigint), 0);
