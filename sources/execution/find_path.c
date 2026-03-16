@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:20:34 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/09 17:20:50 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/03/16 14:17:53 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ static char	*build_path(char *cmd, char **paths)
 	{
 		tmp = ft_strjoin(paths[i], "/");
 		if (!tmp)
-			return (free_tab(paths), NULL);
+			return (ptr_free_tab(&paths), NULL);
 		full_path = ft_strjoin(tmp, cmd);
 		free(tmp);
 		if (!full_path)
-			return (free_tab(paths), NULL);
+			return (ptr_free_tab(&paths), NULL);
 		if (access(full_path, X_OK) == 0)
 			return (full_path);
 		free(full_path);
@@ -67,7 +67,7 @@ char	*find_command_path(t_minishell *minishell, char *cmd)
 		return (NULL);
 	if (ft_strchr(cmd, '/'))
 	{
-		if (access(cmd, X_OK) == 0)
+		if (access(cmd, X_OK) == 0 || errno != 0)
 			return (ft_strdup(cmd));
 		return (NULL);
 	}
@@ -75,6 +75,6 @@ char	*find_command_path(t_minishell *minishell, char *cmd)
 	if (!path)
 		return (NULL);
 	full_path = build_path(cmd, path);
-	free_tab(path);
+	ptr_free_tab(&path);
 	return (full_path);
 }

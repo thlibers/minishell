@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_vars.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 11:03:43 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/13 16:00:59 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 14:28:07 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,19 @@ void	ft_tilde(t_env *env, t_tok **token, int i)
 void	ft_questionmark(t_minishell *minishell, t_tok **token, int i)
 {
 	char	*arg;
+	char	*exit_code;
 	int		y;
 
 	y = i + 1;
+	exit_code = ft_itoa(minishell->exit_code);
 	arg = malloc(ft_strlen((*token)->str) - y + 1);
 	ft_strlcpy(arg, &(*token)->str[y + 1], ft_strlen((*token)->str) - y + 1);
 	(*token)->str = ft_hoelalloc((*token)->str, ft_strlen((*token)->str),
-			ft_strlen((*token)->str) - (y - i)
-			+ ft_strlen(ft_itoa(minishell->exit_code)) + 1);
-	ft_strlcpy(&(*token)->str[i], ft_itoa(minishell->exit_code),
-		ft_strlen(ft_itoa(minishell->exit_code)) + 1);
+			ft_strlen((*token)->str) - (y - i) + ft_strlen(exit_code) + 1);
+	ft_strlcpy(&(*token)->str[i], exit_code, ft_strlen(exit_code) + 1);
 	(*token)->str = ft_strfreejoin((*token)->str, arg);
+	if (arg)
+		free(arg);
+	if (exit_code)
+		free(exit_code);
 }

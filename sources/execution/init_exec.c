@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_exe.c                                         :+:      :+:    :+:   */
+/*   init_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:18:25 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/13 15:50:26 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 14:08:56 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-#include "includes/structure.h"
-#include "mylibft/libft.h"
 
 static bool	child_heredoc(t_exec *exec, t_minishell *minishell)
 {
@@ -56,7 +54,9 @@ static int	heredoc_fd_init(t_minishell *minishell, t_ast *save)
 	if (!child_heredoc(&minishell->exec, minishell))
 	{
 		signal(SIGINT, handler_sigint);
-		return (ptr_free_tab(&minishell->exec.env), 0);
+		ptr_free_tab(&minishell->exec.env);
+		close_heredoc_fd(&minishell->exec);
+		return (0);
 	}
 	if (!terminate_heredoc(&minishell->exec))
 		return (signal(SIGINT, handler_sigint), 0);
@@ -68,10 +68,6 @@ int	init_exec(t_env *env, t_ast *ast, t_exec *exec, t_minishell *minishell)
 {
 	t_ast	*save;
 
-	if (exec->child.infile_fd > 2)
-		close(exec->child.infile_fd);
-	if (exec->child.outfile_fd > 2)
-		close(exec->child.outfile_fd);
 	ft_memset(&minishell->exec, 0, sizeof(t_exec));
 	ft_memset(&minishell->exec.files, 0, sizeof(t_files));
 	exec->cmdc = cmd_count(ast);

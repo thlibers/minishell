@@ -1,8 +1,7 @@
 _This project has been created as part of the 42 curriculum by **nclavel**, **thlibers**_
 
 <div align="center">
-    <h1>STILL IN BUILD</h1>
-    <img src=".images/logo.png"> <!--  Mettre le logo en vert + mettre le fond en transparent (nom = bloody) --->
+    <img src=".images/logo.png">
 </div>
 
 ## Description:
@@ -67,7 +66,7 @@ An Abstract Syntax Tree (AST) is a tree-shaped data structure used to represent 
     <img width=64 src=".images/placeholder.jpg">
 </div>
 
-## Ressources used:
+## Part of ressources used:
 - [Bash documentation](https://pubs.opengroup.org/onlinepubs/9699919799/functions/contents.html)
 - [Readline documentation](https://web.mit.edu/gnu/doc/html/rlman_2.html#IDX113)
 - [Tokenize a string](https://www.geeksforgeeks.org/cpp/string-tokenization-in-c/)

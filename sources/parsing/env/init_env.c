@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_vars.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 15:28:32 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/06 06:44:41 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 08:51:30 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,15 @@ bool	init_env(t_env **env, char **envp)
 	{
 		tab = env_spliter(envp[i]);
 		if (!tab)
-			return (env_clean(head, NULL), false);
+			return (ptr_env_clean(&head, NULL), false);
 		var = create_env_var(tab[0], tab[1], ft_strchr(envp[i], '='));
 		if (!var)
-			return (env_clean(head, tab), NULL);
+			return (ptr_env_clean(&head, tab), NULL);
 		if (!head)
 			head = var;
 		else
 			add_env_back(&head, var);
-		env_clean(NULL, tab);
+		ptr_env_clean(NULL, tab);
 		i++;
 	}
 	*env = head;

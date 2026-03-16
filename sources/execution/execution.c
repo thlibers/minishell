@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/13 13:01:09 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 14:29:53 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+#include "includes/structure.h"
 
 static void	pipes_creation(t_exec *exec)
 {
@@ -33,20 +34,21 @@ static void	pipes_creation(t_exec *exec)
 
 static void	clean_child_creation(t_minishell *minishell, t_ast *tmp)
 {
+	(void)tmp;
 	if (minishell->exec.child.cmd && minishell->exec.child.cmd[0])
 	{
 		ptr_free_tab(&minishell->exec.child.cmd);
-		close_file(&minishell->exec, tmp);
 	}
-	if (minishell->exec.child.infile_fd > 2)
+	if (minishell->exec.child.infile_fd && *minishell->exec.child.infile_fd > 2)
 	{
-		close(minishell->exec.child.infile_fd);
-		minishell->exec.child.infile_fd = -1;
+		close(*minishell->exec.child.infile_fd);
+		*minishell->exec.child.infile_fd = -1;
 	}
-	if (minishell->exec.child.outfile_fd > 2)
+	if (minishell->exec.child.outfile_fd
+		&& *minishell->exec.child.outfile_fd > 2)
 	{
-		close(minishell->exec.child.outfile_fd);
-		minishell->exec.child.outfile_fd = -1;
+		close(*minishell->exec.child.outfile_fd);
+		*minishell->exec.child.outfile_fd = -1;
 	}
 }
 
@@ -59,6 +61,7 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 	tmp = minishell->ast;
 	while (i < minishell->exec.cmdc)
 	{
+		pid[i] = -1;
 		ft_memset(&minishell->exec.child, 0, sizeof(t_child));
 		minishell->exec.child.cmd = ast_to_arr(&minishell->exec, &tmp);
 		if (minishell->exec.child.cmd && minishell->exec.child.cmd[0])
@@ -73,13 +76,12 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 					child_process(minishell, i);
 			}
 		}
-		clean_child_creation(minishell, tmp);
-		i++;
+		(clean_child_creation(minishell, tmp), i++);
 		tmp = tmp->leaf_right;
 	}
 }
 
-static void	execution_step(t_minishell *minishell)
+static void	execution_wait(t_minishell *minishell)
 {
 	int	i;
 	int	code;
@@ -88,6 +90,11 @@ static void	execution_step(t_minishell *minishell)
 	code = 0;
 	while (i < minishell->exec.cmdc)
 	{
+		if (minishell->pid[i] <= 0)
+		{
+			i++;
+			continue ;
+		}
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, handler_sigint_exec);
 		waitpid(minishell->pid[i], &code, 0);
@@ -114,13 +121,8 @@ void	execution(t_minishell *minishell)
 	}
 	pipes_creation(&minishell->exec);
 	children_creation(minishell, minishell->pid);
-	pipes_close(&minishell->exec);
-	execution_step(minishell);
-	if (minishell->pid)
-	{
-		free(minishell->pid);
-		minishell->pid = NULL;
-	}
-	ptr_free_tab(&minishell->exec.env);
-	clean_heredoc_fd(&minishell->exec);
+	if (minishell->exec.pipe_fd)
+		pipes_close(&minishell->exec);
+	execution_wait(minishell);
+	clear_exec(minishell);
 }

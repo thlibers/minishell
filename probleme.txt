@@ -8,6 +8,10 @@
 
 - open fds pour les builtin "pwd"
 
+- pwd | cat bloquer dans une boucle infinit
+
 - already close fds quand on blinde notre line de heredoc
+
+- echo -n -n -n -n -n < Makefil
 
 /home/thlibers/42_minishell_tester/tester.sh: line 217: 2013947 Done                    echo -n "$INPUT"

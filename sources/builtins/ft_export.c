@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 15:05:28 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/12 16:33:12 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 08:50:57 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static void	ft_export_noarg(t_minishell *minishell)
 			printf("export %s\n", cpy->name);
 		cpy = cpy->next;
 	}
-	env_clean(save, NULL);
+	ptr_env_clean(&save, NULL);
 	minishell->exit_code = 0;
 }
 

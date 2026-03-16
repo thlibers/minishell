@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast_to_arr.c                                       :+:      :+:    :+:   */
+/*   convert_ast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 14:20:35 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/13 15:32:55 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 14:15:13 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	**ast_to_arr(t_exec *exec, t_ast **ast)
 			arr = ft_realloc(arr, sizeof(char *) * (i + 1));
 			arr[i] = ft_strdup((*ast)->data);
 			if (!arr[i])
-				return (arr[i] = NULL, free_tab(arr), NULL);
+				return (arr[i] = NULL, ptr_free_tab(&arr), NULL);
 			i++;
 			*ast = (*ast)->leaf_left;
 		}

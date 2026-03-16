@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 14:06:53 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/12 15:57:51 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 12:18:18 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@
 # define ECMDFOUND "\e[0;31mMinishell: %s: Command not found\n\e[0m"
 # define ENOPERM "\e[0;31mMinishell: %s: Permission denied\n\e[0m"
 
+/* --- BUILTIN ---  */
 # define ECDARGC "Minishell: cd: too many arguments\n\e[0m"
+
+/* --- EXEC ---  */
+# define EEXECVE "\e[0;31mMinishell: Failed to execute \"%s\"\n\e[0m"
 
 #endif // !ERROR_H

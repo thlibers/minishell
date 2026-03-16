@@ -15,9 +15,9 @@
 void	clean_pipe_fd(t_exec *exec, int child_number, int is_child)
 {
 	if (is_child && exec->pipe_fd[child_number - 1][0] > 2)
-		(close(exec->pipe_fd[child_number - 1][0]),
-			exec->pipe_fd[child_number - 1][0] = -1);
+		(close(exec->pipe_fd[child_number - 1][0]), exec->pipe_fd[child_number
+			- 1][0] = -1);
 	if (is_child && exec->pipe_fd[child_number - 1][1] > 2)
-		(close(exec->pipe_fd[child_number - 1][1]),
-			exec->pipe_fd[child_number - 1][1] = -1);
+		(close(exec->pipe_fd[child_number - 1][1]), exec->pipe_fd[child_number
+			- 1][1] = -1);
 }

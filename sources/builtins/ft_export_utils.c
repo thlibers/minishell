@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 13:51:09 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/12 15:36:34 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 14:14:34 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool	check_env_name(t_minishell *minishell, char **tab, int *i)
 {
 	if (!tab || !check_valarg(tab))
 	{
-		free_tab(tab);
+		ptr_free_tab(&tab);
 		minishell->exit_code = 1;
 		(*i)++;
 		return (false);

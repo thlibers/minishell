@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototypes.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 13:25:31 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/13 16:12:01 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 14:07:31 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ int		here_doc(t_exec *exec, t_minishell *minishell);
 bool	redirection_choser(t_exec *exec, t_ast *ast);
 
 /* ----- redirection/open_redirection.c */
-int		open_infile(char *filename, int trunc, t_child *child);
-int		open_outfile(char *filename, int trunc, t_child *child);
-bool	file_opener(t_child *child, t_ast *ast, int flag, int (*ptr)(char *,
-				int, t_child *));
+int		open_infile(char *filename, int trunc, t_child *child, t_files *files);
+int		open_outfile(char *filename, int trunc, t_child *child, t_files *files);
+bool	file_opener(t_exec *exec, t_ast *ast, int flag, int (*ptr)(char *, int,
+				t_child *, t_files *));
 
 /* ----- exec_utils.c ----- */
 void	close_file(t_exec *exec, t_ast *curr_branch);
@@ -170,16 +170,17 @@ int		is_inquote(int *quote, char c);
 /* ======================= UTILS ======================= */
 /* ----- clean.c ----- */
 void	ft_clear(t_minishell *minishell);
-void	env_clean(t_env *env, char **tab);
 void	free_ast(t_ast **ast);
 void	free_tok(t_tok **tok);
 void	child_clear(t_minishell *minishell);
-void	full_clean(t_minishell *minishell);
-void	half_clean(t_minishell *minishell);
+void	clean_all(t_minishell *minishell);
+void	clean_keep_cmd(t_minishell *minishell);
 void	clean_heredoc(t_minishell *minishell);
-void	clean_heredoc_fd(t_exec *exec);
+void	close_heredoc_fd(t_exec *exec);
 void	clean_useless_child(t_minishell *minishell);
-void	free_tab(char **s);
+void	clear_exec(t_minishell *minishell);
+void	close_files_fd(t_exec *exec);
+void	ptr_env_clean(t_env **env, char **tab);
 
 /* ----- signal.c ----- */
 void	handler_heredoc(void);

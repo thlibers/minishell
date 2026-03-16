@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:46:29 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/12 15:54:56 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 14:29:08 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ int	main(int argc, char **argv, char **envp)
 			free_ast(&minishell.ast);
 		}
 	}
-	full_clean(&minishell);
+	clean_all(&minishell);
 	return (0);
 }

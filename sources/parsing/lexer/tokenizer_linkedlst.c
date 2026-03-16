@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer_linked_list.c                            :+:      :+:    :+:   */
+/*   tokenizer_linkedlst.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 10:16:09 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/13 16:09:33 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 14:19:05 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,16 @@ t_tok	*tok_create_back(t_tok **tok, t_data_type data_type, char *line)
 		*tok = head;
 	}
 	return (node);
+}
+
+t_tok	*tok_get_head(t_tok **tok)
+{
+	t_tok	*head;
+
+	head = *tok;
+	if (!head)
+		return (NULL);
+	while (head->prev)
+		head = head->prev;
+	return (head);
 }
