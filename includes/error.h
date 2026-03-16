@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 14:06:53 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/16 12:18:18 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 14:42:24 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_H
 # define ERROR_H
-
-# include "includes/color.h"
 
 /* --- CASUAL ---  */
 # define ECRPIPE "\e[0;31mMinishell: Pipe creation failed\n\e[0m"

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 21:45:44 by nclavel           #+#    #+#             */
-/*   Updated: 2026/02/24 15:10:22 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 14:44:48 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 # define IN_SINGLE_QUOTE 1
 # define IN_DOUBLE_QUOTE 2
 
-# include "color.h"
 # include "mylibft/libft.h"
 # include <ctype.h>
 # include <errno.h>
