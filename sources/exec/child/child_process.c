@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 16:23:21 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/16 09:28:53 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/03/16 12:11:33 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,11 @@ void	child_process(t_minishell *minishell, int child_number)
 	clean_keep_cmd(minishell);
 	if (execve(cmd_path, minishell->exec.child.cmd, minishell->exec.env) == -1)
 	{
-		ft_fprintf(STDERR_FILENO, "execve failed\n");
+		ft_fprintf(STDERR_FILENO, EEXECVE, minishell->exec.child.cmd[0]);
+		if (cmd_path)
+			free(cmd_path);
+		clean_all(minishell);
 		exit(126);
 	}
 }
+

@@ -6,7 +6,7 @@
 /*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:20:34 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/09 17:20:50 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/03/16 12:08:51 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*find_command_path(t_minishell *minishell, char *cmd)
 		return (NULL);
 	if (ft_strchr(cmd, '/'))
 	{
-		if (access(cmd, X_OK) == 0)
+		if (access(cmd, X_OK) == 0 || errno != 0)
 			return (ft_strdup(cmd));
 		return (NULL);
 	}

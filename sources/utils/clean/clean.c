@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 19:27:19 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/16 08:11:36 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/03/16 11:58:00 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	cleanup_pipe(t_exec *exec)
 		i++;
 	}
 	if (exec->pipe_fd)
-		free(exec->pipe_fd);
+		(free(exec->pipe_fd), exec->pipe_fd = NULL);
 }
 
 void	clear_exec(t_minishell *minishell)
