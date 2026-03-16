@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 09:33:32 by nclavel           #+#    #+#             */
-/*   Updated: 2026/03/12 15:36:05 by thlibers         ###   ########.fr       */
+/*   Updated: 2026/03/16 10:36:25 by nclavel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	ft_echo_nline(t_exec *exec, int *i)
 {
-	while (exec->child.cmd[*i][0] == '-' && exec->child.cmd[*i][1] == 'n')
+	while (exec->child.cmd[*i] && exec->child.cmd[*i][0] == '-' && exec->child.cmd[*i][1] == 'n')
 		(*i)++;
 	if (exec->child.cmd[*i - 1][0] == '-' && exec->child.cmd[*i - 1][1] == 'n')
 		return (false);
