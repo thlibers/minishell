@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclavel <nclavel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thlibers <thlibers@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:22:08 by thlibers          #+#    #+#             */
-/*   Updated: 2026/03/16 10:39:22 by nclavel          ###   ########.fr       */
+/*   Updated: 2026/03/16 13:08:23 by thlibers         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static void	children_creation(t_minishell *minishell, pid_t *pid)
 	tmp = minishell->ast;
 	while (i < minishell->exec.cmdc)
 	{
+		pid[i] = -1;
 		ft_memset(&minishell->exec.child, 0, sizeof(t_child));
 		minishell->exec.child.cmd = ast_to_arr(&minishell->exec, &tmp);
 		if (minishell->exec.child.cmd && minishell->exec.child.cmd[0])
@@ -90,6 +91,11 @@ static void	execution_wait(t_minishell *minishell)
 	code = 0;
 	while (i < minishell->exec.cmdc)
 	{
+		if (minishell->pid[i] <= 0)
+		{
+			i++;
+			continue ;
+		}
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, handler_sigint_exec);
 		waitpid(minishell->pid[i], &code, 0);
@@ -116,6 +122,8 @@ void	execution(t_minishell *minishell)
 	}
 	pipes_creation(&minishell->exec);
 	children_creation(minishell, minishell->pid);
+	if (minishell->exec.pipe_fd)
+		pipes_close(&minishell->exec);
 	execution_wait(minishell);
 	clear_exec(minishell);
 }
